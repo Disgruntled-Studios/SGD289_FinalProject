@@ -10,14 +10,19 @@ public class PlayerTankMovement : MonoBehaviour
 
 
     [Header("---GroundMovement Vars---")]
+
     [Tooltip("The speed at which the player walks.")]
     [SerializeField] float speed = 6f;
+
     [Tooltip("The speed at which the player turns.")]
     [SerializeField] float rotationSpeed = 6f;
+
     [Tooltip("How much drag is applied to the player while they are on the ground.")]
     [SerializeField] float groundDrag = 5f;
+
     [Tooltip("This is a reference to the empty GameObject that will keep track of the player's orientation.")]
     public Transform orientation;
+    private Vector3 rotationAmont;
 
     Vector2 horizontalInput;
 
@@ -32,7 +37,6 @@ public class PlayerTankMovement : MonoBehaviour
     bool isGrounded;
 
     #endregion Gravity Vars
-    private Vector3 rotationAmont;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,23 +71,27 @@ public class PlayerTankMovement : MonoBehaviour
 
     void HandleInput()
     {
+        //Whenever we detect the player pressing left or right they will rotate in that direction
         if (horizontalInput.x < 0 || horizontalInput.x > 0)
         {
-            Debug.Log("Input Detected " + horizontalInput.x);
-            rotationAmont = new Vector3(0,horizontalInput.x,0);
+            //Debug.Log("Input Detected " + horizontalInput.x);
+            rotationAmont = new Vector3(0, horizontalInput.x, 0);
         }
         else if (horizontalInput.x == 0)
         {
+            //if there is no player input don't rotate.
             rotationAmont = Vector3.zero;
         }
 
+        //If the player presses forward or backward move in that direction according to the players current orientation.
         if (horizontalInput.y != 0)
         {
-            Debug.Log("Moving");
+            //Debug.Log("Moving");
             rb.AddForce(orientation.forward * horizontalInput.y * speed * 10f, ForceMode.Force);
         }
         else
         {
+            //If we recieve no input reset velocity
             rb.angularVelocity = Vector3.zero;
         }
 
