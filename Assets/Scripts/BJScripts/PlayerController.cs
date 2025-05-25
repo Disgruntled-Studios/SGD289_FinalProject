@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Rotation Settings")]
     [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private Camera _mainCam;
+    [SerializeField] private Transform _cameraTransform;
 
     private Rigidbody _rb;
     private Vector2 _inputVector;
@@ -21,31 +21,36 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
-        HandleRotation();
-    }
-    
-    private void HandleMovement()
-    {
-        var move = new Vector3(_inputVector.x, 0f, _inputVector.y) * _movementSpeed;
-        _rb.linearVelocity = new Vector3(move.x, _rb.linearVelocity.y, move.z);
+        HandleMovementAndRotation();
     }
 
-    private void HandleRotation()
+    private void HandleMovementAndRotation()
     {
-        var playerScreenPos = _mainCam.WorldToScreenPoint(transform.position);
-        var mouseScreenPos = Mouse.current.position.ReadValue();
+        var camForward = _cameraTransform.forward;
+        var camRight = _cameraTransform.right;
 
-        var direction = (mouseScreenPos - new Vector2(playerScreenPos.x, playerScreenPos.y)).normalized;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
 
-        var angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+        // Convert 2D input into a 3D direction relative to the camera
+        var moveDirection = camRight * _inputVector.x + camForward * _inputVector.y;
 
-        var targetRotation = Quaternion.Euler(0f, angle, 0f);
+        // Move the player
+        var newVelocity = new Vector3(moveDirection.x * _movementSpeed, _rb.linearVelocity.y, moveDirection.z * _movementSpeed);
+        _rb.linearVelocity = newVelocity;
+
+        // Rotate toward movement direction
+        if (!(moveDirection.sqrMagnitude > 0.001f)) return;
+        
+        var targetRotation = Quaternion.LookRotation(moveDirection);
         _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime));
     }
-    
+
     public void OnMove(InputAction.CallbackContext context)
     {
         _inputVector = context.ReadValue<Vector2>();
     }
 }
+
