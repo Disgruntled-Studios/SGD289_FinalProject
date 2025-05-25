@@ -7,9 +7,9 @@ public class WorldTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            CameraManager.Instance.SwitchTo(_world);
-        }
+        if (!other.CompareTag("Player")) return;
+        
+        Debug.Log($"Transition to {_world}");
+        GameManager.Instance.SwitchPlayerMode(_world);
     }
 }
