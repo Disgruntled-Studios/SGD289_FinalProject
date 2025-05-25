@@ -4,50 +4,45 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement Settings")] 
-    [SerializeField] private float _movementSpeed = 5f;
-
-    [Header("Rotation Settings")]
-    [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private Transform _cameraTransform;
+    private Vector2 _movementInput;
+    private Vector2 _lookInput;
+    private bool _crouchPressed;
 
     private Rigidbody _rb;
-    private Vector2 _inputVector;
     
-    public void OnMove(InputAction.CallbackContext context) => _inputVector = context.ReadValue<Vector2>();
+    public IPlayerMode CurrentMode { get; set; }
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
+    public void OnLook(InputAction.CallbackContext context) => _lookInput = context.ReadValue<Vector2>();
+
+    public void OnJump(InputAction.CallbackContext context)
     {
-        HandleMovementAndRotation();
+        if (context.started)
+        {
+            CurrentMode?.Jump();
+        }
     }
 
-    private void HandleMovementAndRotation()
+    public void OnCrouch(InputAction.CallbackContext context)
     {
-        var camForward = _cameraTransform.forward;
-        var camRight = _cameraTransform.right;
+        _crouchPressed = context.ReadValue<float>() > 0.5f;
+        CurrentMode?.Crouch(_crouchPressed);
+    }
 
-        camForward.y = 0;
-        camRight.y = 0;
-        camForward.Normalize();
-        camRight.Normalize();
+    private void FixedUpdate()
+    {
+        CurrentMode?.Move(_rb, _movementInput, transform);
+    }
 
-        // Convert 2D input into a 3D direction relative to the camera
-        var moveDirection = camRight * _inputVector.x + camForward * _inputVector.y;
-
-        // Move the player
-        var newVelocity = new Vector3(moveDirection.x * _movementSpeed, _rb.linearVelocity.y, moveDirection.z * _movementSpeed);
-        _rb.linearVelocity = newVelocity;
-
-        // Rotate toward movement direction
-        if (!(moveDirection.sqrMagnitude > 0.001f)) return;
-        
-        var targetRotation = Quaternion.LookRotation(moveDirection);
-        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime));
+    private void Update()
+    {
+        CurrentMode?.Look(_lookInput);
+        CurrentMode?.Tick();
     }
 }
 
