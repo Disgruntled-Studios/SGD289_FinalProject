@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
     private Vector2 _inputVector;
+    
+    public void OnMove(InputAction.CallbackContext context) => _inputVector = context.ReadValue<Vector2>();
 
     private void Awake()
     {
@@ -48,9 +50,22 @@ public class PlayerController : MonoBehaviour
         _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime));
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    private void OnTriggerEnter(Collider other)
     {
-        _inputVector = context.ReadValue<Vector2>();
+        if (other.CompareTag("FPSWorldTrigger"))
+        {
+            Debug.Log("FPS");
+        }
+
+        if (other.CompareTag("PlatformWorldTrigger"))
+        {
+            Debug.Log("Platform");
+        }
+
+        if (other.CompareTag("StealthWorldTrigger"))
+        {
+            Debug.Log("Stealth");
+        }
     }
 }
 
