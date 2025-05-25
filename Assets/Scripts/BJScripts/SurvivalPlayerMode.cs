@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class FPSPlayerMode : IPlayerMode
+public class SurvivalPlayerMode : IPlayerMode
 {
     private readonly float _speed;
     private readonly Transform _player;
     private float _pitch;
 
-    public FPSPlayerMode(float speed, Transform player)
+    public SurvivalPlayerMode(float speed, Transform player)
     {
         _speed = speed;
         _player = player;

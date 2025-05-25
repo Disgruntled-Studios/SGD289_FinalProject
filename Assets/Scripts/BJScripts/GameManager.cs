@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
             case World.Hub:
                 SwitchToHub();
                 break;
-            case World.FPS:
-                SwitchToFPS();
+            case World.Survival:
+                SwitchToSurvival();
                 break;
             case World.Platform:
                 SwitchToPlatform();
@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.SwitchTo(World.Hub);
     }
 
-    private void SwitchToFPS()
+    private void SwitchToSurvival()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: 6f, player: _playerController.transform);
-        CameraManager.Instance.SwitchTo(World.FPS);
+        _playerController.CurrentMode = new SurvivalPlayerMode(speed: 6f, player: _playerController.transform);
+        CameraManager.Instance.SwitchTo(World.Survival);
     }
 
     private void SwitchToPlatform()
