@@ -49,23 +49,5 @@ public class PlayerController : MonoBehaviour
         var targetRotation = Quaternion.LookRotation(moveDirection);
         _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime));
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("FPSWorldTrigger"))
-        {
-            Debug.Log("FPS");
-        }
-
-        if (other.CompareTag("PlatformWorldTrigger"))
-        {
-            Debug.Log("Platform");
-        }
-
-        if (other.CompareTag("StealthWorldTrigger"))
-        {
-            Debug.Log("Stealth");
-        }
-    }
 }
 
