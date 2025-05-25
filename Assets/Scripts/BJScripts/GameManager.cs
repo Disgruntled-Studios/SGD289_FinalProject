@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private GameObject _player;
+    [SerializeField] private LayerMask _groundLayerMask;
     private PlayerController _playerController;
     private Rigidbody _playerRb;
 
@@ -34,8 +35,8 @@ public class GameManager : MonoBehaviour
             case World.Hub:
                 SwitchToHub();
                 break;
-            case World.FPS:
-                SwitchToFPS();
+            case World.Tank:
+                SwitchToTank();
                 break;
             case World.Platform:
                 SwitchToPlatform();
@@ -56,6 +57,12 @@ public class GameManager : MonoBehaviour
     {
         _playerController.CurrentMode = new FPSPlayerMode(speed: 6f, player: _playerController.transform);
         CameraManager.Instance.SwitchTo(World.FPS);
+    }
+
+    private void SwitchToTank()
+    {
+        _playerController.CurrentMode = new TankPlayerMode(speed: 6f, player: _playerController.transform, rotationSpeed: 10f, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
+        //CameraManager.Instance.SwitchTo(World.FPS);
     }
 
     private void SwitchToPlatform()

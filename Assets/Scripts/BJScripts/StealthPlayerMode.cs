@@ -11,7 +11,7 @@ public class StealthPlayerMode : IPlayerMode
         _speed = speed;
         _playerTransform = playerTransform;
     }
-    
+
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
         var currentSpeed = _isCrouching ? _speed * 0.5f : _speed;
