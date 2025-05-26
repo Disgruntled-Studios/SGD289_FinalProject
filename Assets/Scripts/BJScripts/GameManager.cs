@@ -53,16 +53,10 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.SwitchTo(World.Hub);
     }
 
-    private void SwitchToFPS()
-    {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: 6f, player: _playerController.transform);
-        CameraManager.Instance.SwitchTo(World.FPS);
-    }
-
     private void SwitchToTank()
     {
         _playerController.CurrentMode = new TankPlayerMode(speed: 6f, player: _playerController.transform, rotationSpeed: 10f, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
-        //CameraManager.Instance.SwitchTo(World.FPS);
+        CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()

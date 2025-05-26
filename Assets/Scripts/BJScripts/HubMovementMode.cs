@@ -14,17 +14,23 @@ public class HubMovementMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        var moveDirection = context.forward * input.y + context.right * input.x;
-        moveDirection.y = 0;
-
-        var velocity = new Vector3(moveDirection.x * _speed, rb.linearVelocity.y, moveDirection.z * _speed);
-        rb.linearVelocity = velocity;
-
-        if (moveDirection.sqrMagnitude > 0.01f)
+        // No movement? Exit early
+        if (input == Vector2.zero)
         {
-            var targetRotation = Quaternion.LookRotation(moveDirection);
-            context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+            return;
         }
+
+        // Calculate move direction in world space
+        Vector3 moveDir = new Vector3(input.x, 0f, input.y).normalized;
+
+        // Apply movement
+        Vector3 velocity = moveDir * _speed;
+        rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
+
+        // Rotate to face direction of movement
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
     public void Look(Vector2 input) { } // Look is handled by camera in hub

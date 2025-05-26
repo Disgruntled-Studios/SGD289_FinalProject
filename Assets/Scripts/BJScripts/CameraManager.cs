@@ -1,12 +1,12 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.Serialization;
 
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
     [SerializeField] private CinemachineVirtualCameraBase _hubCamera;
-    [SerializeField] private CinemachineVirtualCameraBase _fpsCamera;
 
     private void Awake()
     {
@@ -22,6 +22,5 @@ public class CameraManager : MonoBehaviour
     public void SwitchTo(World mode)
     {
         _hubCamera.Priority = (mode == World.Hub) ? 10 : 0;
-        _fpsCamera.Priority = (mode == World.FPS) ? 10 : 0;
     }
 }
