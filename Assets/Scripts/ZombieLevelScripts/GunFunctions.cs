@@ -8,6 +8,7 @@ public class GunFunctions : MonoBehaviour
     [SerializeField] private Transform gunBarrelTransform;
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private float damageAmount;
+    [SerializeField] private LineRenderer lr;
     bool isAiming;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,6 +34,7 @@ public class GunFunctions : MonoBehaviour
     {
         if (isAiming)
         {
+                Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
             //Play SFX 
 
             //Play VFX
@@ -40,7 +42,7 @@ public class GunFunctions : MonoBehaviour
             //Shoot a ray to see if a monster is going to get hit.
             RaycastHit hit;
 
-            if (Physics.Raycast(gunBarrelTransform.position, Vector3.forward, out hit, 500, enemyLayerMask))
+            if (Physics.Raycast(gunBarrelTransform.position, lr.GetPosition(1), out hit, enemyLayerMask))
             {
                 Debug.Log("Enemy " + hit.collider.transform.gameObject.name + " Found");
                 //Affect enemies health.
@@ -49,12 +51,12 @@ public class GunFunctions : MonoBehaviour
     }
 
 
-    public void StartGunAim(InputAction.CallbackContext context)
+    public void StartGunAim()
     {
         isAiming = true;
     }
 
-    public void EndGunAim(InputAction.CallbackContext context)
+    public void EndGunAim()
     {
         isAiming = false;
     }

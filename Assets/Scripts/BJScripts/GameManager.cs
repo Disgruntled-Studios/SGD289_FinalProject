@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private GameObject _player;
+    [SerializeField] private LayerMask _groundLayerMask;
     private PlayerController _playerController;
     private Rigidbody _playerRb;
 
@@ -34,8 +35,8 @@ public class GameManager : MonoBehaviour
             case World.Hub:
                 SwitchToHub();
                 break;
-            case World.Survival:
-                SwitchToSurvival();
+            case World.Tank:
+                SwitchToTank();
                 break;
             case World.Platform:
                 SwitchToPlatform();
@@ -52,10 +53,10 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.SwitchTo(World.Hub);
     }
 
-    private void SwitchToSurvival()
+    private void SwitchToTank()
     {
-        _playerController.CurrentMode = new SurvivalPlayerMode(speed: 6f, player: _playerController.transform);
-        CameraManager.Instance.SwitchTo(World.Survival);
+        _playerController.CurrentMode = new TankPlayerMode(speed: 6f, player: _playerController.transform, rotationSpeed: 10f, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
+        CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()

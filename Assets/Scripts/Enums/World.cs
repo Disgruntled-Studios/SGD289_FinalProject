@@ -3,7 +3,7 @@ using UnityEngine;
 public enum World
 {
     Hub,
-    Survival,
+    Tank,
     Platform,
     Stealth
 }

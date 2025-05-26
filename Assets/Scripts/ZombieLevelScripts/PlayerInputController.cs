@@ -41,8 +41,6 @@ public class PlayerInputController : MonoBehaviour
 
         //in_Game.Attack.performed += _ => gunFunc.Shoot;
 
-        in_Game.Aim.performed += gunFunc.StartGunAim;
-        in_Game.Aim.canceled += gunFunc.EndGunAim;
 
     }
 
