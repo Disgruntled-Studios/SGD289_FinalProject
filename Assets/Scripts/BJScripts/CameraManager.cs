@@ -21,6 +21,9 @@ public class CameraManager : MonoBehaviour
 
     public void SwitchTo(World mode)
     {
-        _hubCamera.Priority = (mode == World.Hub) ? 10 : 0;
+        if (_hubCamera)
+        {
+            _hubCamera.Priority = (mode == World.Hub) ? 10 : 0;
+        }
     }
 }

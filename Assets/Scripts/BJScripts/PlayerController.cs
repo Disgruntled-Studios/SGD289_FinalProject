@@ -5,9 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool isTestingHub;
+    public bool isTestingTank;
+    public bool isTestingPlatform;
+    public bool isTestingStealth;
+    
     private Vector2 _movementInput;
     private Vector2 _lookInput;
-    private bool _crouchPressed;
+    private bool _isCrouching;
     private GunFunctions _gunReference;
 
     private Rigidbody _rb;
@@ -51,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
             CurrentMode?.Jump();
         }
@@ -59,8 +64,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        _crouchPressed = context.ReadValue<float>() > 0.5f;
-        CurrentMode?.Crouch(_crouchPressed);
+        if (context.performed)
+        {
+            _isCrouching = !_isCrouching;
+            CurrentMode?.Crouch(_isCrouching);
+        }
     }
 
     private void FixedUpdate()
