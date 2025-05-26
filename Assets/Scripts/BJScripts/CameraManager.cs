@@ -17,6 +17,7 @@ public class CameraManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SwitchTo(World mode)

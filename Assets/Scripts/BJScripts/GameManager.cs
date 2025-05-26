@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
     }
