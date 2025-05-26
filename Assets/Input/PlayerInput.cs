@@ -419,7 +419,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ae62e4b0-88b2-433b-996a-181edf005667"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

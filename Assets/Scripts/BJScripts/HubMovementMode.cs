@@ -22,14 +22,14 @@ public class HubMovementMode : IPlayerMode
         }
 
         // Calculate move direction in world space
-        Vector3 moveDir = new Vector3(input.x, 0f, input.y).normalized;
+        var moveDir = new Vector3(input.x, 0f, input.y).normalized;
 
         // Apply movement
-        Vector3 velocity = moveDir * _speed;
+        var velocity = moveDir * _speed;
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
 
         // Rotate to face direction of movement
-        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        var targetRotation = Quaternion.LookRotation(moveDir);
         context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 

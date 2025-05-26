@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _playerRb;
 
+    private const float DefaultMovementSpeed = 5f;
+    private const float DefaultRotationSpeed = 10f;
+    
+    public World? CurrentWorld { get; private set; } // Make current world nullable for initial world processing
+
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -25,11 +30,30 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        SwitchPlayerMode(World.Hub);
+
+        if (_playerController.isTestingTank)
+        {
+            SwitchPlayerMode(World.Tank);
+        }
+        else if (_playerController.isTestingPlatform)
+        {
+            SwitchPlayerMode(World.Platform);
+        }
+        else if (_playerController.isTestingStealth)
+        {
+            SwitchPlayerMode(World.Stealth);
+        }
+        else
+        {
+            SwitchPlayerMode(World.Hub);
+        }
     }
 
     public void SwitchPlayerMode(World mode)
     {
+        if (CurrentWorld == mode) return;
+        CurrentWorld = mode;
+        
         switch (mode)
         {
             case World.Hub:
@@ -49,26 +73,26 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToHub()
     {
-        _playerController.CurrentMode = new HubMovementMode(speed: 5f, rotationSpeed: 10f);
+        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed);
         CameraManager.Instance.SwitchTo(World.Hub);
     }
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: 6f, player: _playerController.transform, rotationSpeed: 10f, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
+        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
         CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: 5f, jumpForce: 7f, playerTransform: _player.transform);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform);
         CameraManager.Instance.SwitchTo(World.Platform);
     }
 
     private void SwitchToStealth()
     {
-        _playerController.CurrentMode = new StealthPlayerMode(speed: 3.5f, playerTransform: _player.transform);
+        _playerController.CurrentMode = new StealthPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform);
         CameraManager.Instance.SwitchTo(World.Stealth);
     }
 }
