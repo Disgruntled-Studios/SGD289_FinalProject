@@ -12,6 +12,7 @@ public class TankPlayerMode : IPlayerMode
     private float groundDrag = 5f;
     private float playerHeight = 2f;
     LayerMask _groundLayerMask;
+    public TankPlayerMode() {}
 
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -30,6 +31,7 @@ public class TankPlayerMode : IPlayerMode
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
     }
+
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {

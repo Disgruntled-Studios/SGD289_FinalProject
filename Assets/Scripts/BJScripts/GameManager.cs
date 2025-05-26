@@ -49,11 +49,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.F1))
+        {
+            SwitchPlayerMode(World.Hub);
+            Debug.Log("DevKey: Switching PlayerMode to Hub");
+        }
+        if (Input.GetKey(KeyCode.F2))
+        {
+            SwitchPlayerMode(World.Tank);
+            Debug.Log("DevKey: Switching PlayerMode to Tank");
+        }
+        if (Input.GetKey(KeyCode.F3))
+        {
+            SwitchPlayerMode(World.Platform);
+            Debug.Log("DevKey: Switching PlayerMode to Platform");
+        }
+        if (Input.GetKey(KeyCode.F4))
+        {
+            SwitchPlayerMode(World.Stealth);
+            Debug.Log("DevKey: Switching PlayerMode to Stealth");
+        }
+    }
+
+#endif
+
     public void SwitchPlayerMode(World mode)
     {
         if (CurrentWorld == mode) return;
         CurrentWorld = mode;
-        
+
         switch (mode)
         {
             case World.Hub:
@@ -80,7 +108,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToTank()
     {
         _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
-        CameraManager.Instance.SwitchTo(World.Tank);
+        //CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()
