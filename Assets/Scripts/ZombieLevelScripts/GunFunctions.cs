@@ -7,7 +7,7 @@ public class GunFunctions : MonoBehaviour
     [SerializeField] private GameObject gunModel;
     [SerializeField] private Transform gunBarrelTransform;
     [SerializeField] private LayerMask enemyLayerMask;
-    [SerializeField] private float damageAmount;
+    [SerializeField] private float damageAmount = 50f;
     [SerializeField] private LineRenderer lr;
     bool isAiming;
 
@@ -34,7 +34,9 @@ public class GunFunctions : MonoBehaviour
     {
         if (isAiming)
         {
-                Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
+            //Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
+            //Debug.DrawRay(gunBarrelTransform.position, gunBarrelTransform.forward, Color.green ,3f);
+            //Debug.Log("Shot fired");
             //Play SFX 
 
             //Play VFX
@@ -42,10 +44,16 @@ public class GunFunctions : MonoBehaviour
             //Shoot a ray to see if a monster is going to get hit.
             RaycastHit hit;
 
-            if (Physics.Raycast(gunBarrelTransform.position, lr.GetPosition(1), out hit, enemyLayerMask))
+            if (Physics.Raycast(gunBarrelTransform.position, gunBarrelTransform.forward, out hit, enemyLayerMask))
             {
-                Debug.Log("Enemy " + hit.collider.transform.gameObject.name + " Found");
+                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
+                if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
+                {
+                    hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(damageAmount);
+                    Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
+                }
             }
         }
     }
