@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
-    public void OnLook(InputAction.CallbackContext context) => _lookInput = context.ReadValue<Vector2>();
+    public void OnRotate(InputAction.CallbackContext context) => _lookInput = context.ReadValue<Vector2>();
 
     public void OnAim(InputAction.CallbackContext context)
     {
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CurrentMode?.Look(_lookInput);
+        CurrentMode?.Rotate(_lookInput);
         CurrentMode?.Tick();
     }
 }

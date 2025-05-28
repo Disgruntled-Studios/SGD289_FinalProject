@@ -33,7 +33,7 @@ public class HubMovementMode : IPlayerMode
         context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
-    public void Look(Vector2 input) { } // Look is handled by camera in hub
+    public void Rotate(Vector2 input) { } // Look is handled by camera in hub
     public void Jump() { } // No jumping in hub
     public void Crouch(bool isPressed) { } // No crouching in hub
 
