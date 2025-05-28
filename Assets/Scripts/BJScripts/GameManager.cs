@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToTank()
     {
         _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
-        //CameraManager.Instance.SwitchTo(World.Tank);
+        CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()

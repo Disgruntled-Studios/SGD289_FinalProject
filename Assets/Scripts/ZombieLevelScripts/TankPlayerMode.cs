@@ -7,7 +7,7 @@ public class TankPlayerMode : IPlayerMode
     private readonly Rigidbody _rb;
     public float _rotationSpeed;
     private float currentRotationSpeed;
-    private bool _isAiming;
+    //private bool _isAiming;
     private bool isGrounded;
     private float groundDrag = 5f;
     private float playerHeight = 2f;
@@ -52,7 +52,7 @@ public class TankPlayerMode : IPlayerMode
     {
         if (currentRotationSpeed == _rotationSpeed)
         {
-            currentRotationSpeed *= 0.5f;
+            currentRotationSpeed *= 0.25f;
         }
         else
         {

@@ -36,13 +36,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        TankPlayerMode tank = new TankPlayerMode();
+        TankPlayerMode tankRef = new TankPlayerMode();
         bool isInTank = false;
         
         switch (CurrentMode)
         {
             case TankPlayerMode:
-                tank = CurrentMode.ConvertTo<TankPlayerMode>();
+                tankRef = CurrentMode.ConvertTo<TankPlayerMode>();
                 isInTank = true;
                 break;
         }
@@ -50,12 +50,12 @@ public class PlayerController : MonoBehaviour
         if (context.performed && isInTank)
         {
             _gunReference.StartGunAim();
-            tank.ToggleRotationSpeed();
+            tankRef.ToggleRotationSpeed();
         }
         else if (context.canceled && isInTank)
         {
             _gunReference.EndGunAim();
-            tank.ToggleRotationSpeed();
+            tankRef.ToggleRotationSpeed();
         }
     }
 
