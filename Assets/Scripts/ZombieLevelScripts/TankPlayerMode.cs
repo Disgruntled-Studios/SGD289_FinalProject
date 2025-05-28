@@ -60,7 +60,7 @@ public class TankPlayerMode : IPlayerMode
         }
     }
 
-    public void Look(Vector2 input)
+    public void Rotate(Vector2 input)
     { }
 
     public void Jump()

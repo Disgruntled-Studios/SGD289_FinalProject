@@ -29,7 +29,7 @@ public class PlatformPlayerMode : IPlayerMode
         }
     }
 
-    public void Look(Vector2 input) { } // Not used in platformer
+    public void Rotate(Vector2 input) { } // Not used in platformer
 
     public void Jump()
     {
