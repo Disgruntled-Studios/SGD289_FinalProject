@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.Serialization;
@@ -7,8 +8,7 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
-    [SerializeField] private CinemachineVirtualCameraBase _hubCamera;
-    [SerializeField] private CinemachineVirtualCameraBase _tankCamera;
+    private readonly Dictionary<string, CinemachineCamera> _cameraRegistry = new();
 
     private void Awake()
     {
@@ -22,17 +22,32 @@ public class CameraManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SwitchTo(World mode)
+    public void RegisterCamera(string id, CinemachineCamera cam)
     {
-        if (_hubCamera)
+        _cameraRegistry.TryAdd(id, cam);
+    }
+
+    public void UnregisterCamera(string id)
+    {
+        if (_cameraRegistry.ContainsKey(id))
         {
-            _hubCamera.Priority = (mode == World.Hub) ? 10 : 0;
+            _cameraRegistry.Remove(id);
+        }
+    }
+
+    public bool TrySwitchToCamera(string id)
+    {
+        if (_cameraRegistry.TryGetValue(id, out var cam))
+        {
+            foreach (var vCam in _cameraRegistry.Values)
+            {
+                vCam.Priority = 0;
+            }
+
+            cam.Priority = 10;
+            return true;
         }
 
-        if (_tankCamera)
-        {
-            _tankCamera.Priority = (mode == World.Tank) ? 10 : 0;
-            GetComponent<CinemachineBrain>().DefaultBlend.Style = 0;
-        }
+        return false;
     }
 }
