@@ -40,13 +40,13 @@ public class GunFunctions : MonoBehaviour
             //Play SFX 
 
             //Play VFX
-
+            
             //Shoot a ray to see if a monster is going to get hit.
             RaycastHit hit;
 
-            if (Physics.Raycast(gunBarrelTransform.position, gunBarrelTransform.forward, out hit, enemyLayerMask))
+            if (Physics.Raycast(gunBarrelTransform.position, gunBarrelTransform.forward, out hit, 100f, enemyLayerMask))
             {
-                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                Debug.Log("hit " + hit.collider.transform.gameObject.name);
                 //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
                 if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
@@ -54,6 +54,7 @@ public class GunFunctions : MonoBehaviour
                     hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(damageAmount);
                     Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
                 }
+                // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
         }
     }
