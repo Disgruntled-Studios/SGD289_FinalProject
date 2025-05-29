@@ -59,7 +59,7 @@ public class StealthPlayerMode : IPlayerMode
         context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
-    public void Rotate(Vector2 input)
+    public void Rotate(Vector2 input, Transform context)
     {
         const float sensitivity = 2f;
         _playerTransform.Rotate(Vector3.up, input.x * sensitivity);

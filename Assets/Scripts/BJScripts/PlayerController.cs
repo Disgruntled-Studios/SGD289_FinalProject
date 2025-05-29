@@ -62,11 +62,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CurrentMode?.Move(_rb, _movementInput, transform);
+        CurrentMode?.Rotate(_lookInput, transform);
     }
 
     private void Update()
     {
-        CurrentMode?.Rotate(_lookInput);
         CurrentMode?.Tick();
     }
 }

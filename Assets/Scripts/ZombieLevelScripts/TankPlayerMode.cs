@@ -65,8 +65,7 @@ public class TankPlayerMode : IPlayerMode
         }
     }
 
-    public void Rotate(Vector2 input)
-    { }
+    public void Rotate(Vector2 input, Transform context) { }
 
     public void Jump()
     { } // Not used in Tank
