@@ -107,25 +107,25 @@ public class GameManager : MonoBehaviour
     private void SwitchToHub()
     {
         _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed);
-        CameraManager.Instance.SwitchTo(World.Hub);
+        //CameraManager.Instance.SwitchTo(World.Hub);
     }
 
     private void SwitchToTank()
     {
         _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, gunRef: _gunFunctions);
-        CameraManager.Instance.SwitchTo(World.Tank);
+        //CameraManager.Instance.SwitchTo(World.Tank);
     }
 
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
             new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform);
-        CameraManager.Instance.SwitchTo(World.Platform);
+        //CameraManager.Instance.SwitchTo(World.Platform);
     }
 
     private void SwitchToStealth()
     {
         _playerController.CurrentMode = new StealthPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform);
-        CameraManager.Instance.SwitchTo(World.Stealth);
+        //CameraManager.Instance.SwitchTo(World.Stealth);
     }
 }
