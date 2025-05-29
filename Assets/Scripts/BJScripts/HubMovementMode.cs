@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HubMovementMode : IPlayerMode
 {
@@ -38,4 +39,13 @@ public class HubMovementMode : IPlayerMode
     public void Crouch(bool isPressed) { } // No crouching in hub
 
     public void Tick() { } // No per-frame behavior right now
+    public void Aim(InputAction.CallbackContext context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

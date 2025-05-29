@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlatformPlayerMode : IPlayerMode
 {
@@ -42,4 +43,13 @@ public class PlatformPlayerMode : IPlayerMode
     public void Crouch(bool isPressed) { } // Not used in platformer
 
     public void Tick() { } // Not used in platformer
+    public void Aim(InputAction.CallbackContext context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

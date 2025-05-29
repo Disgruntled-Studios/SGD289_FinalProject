@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _player;
     [SerializeField] private LayerMask _groundLayerMask;
+    
     private PlayerController _playerController;
     private Rigidbody _playerRb;
-
+    private GunFunctions _gunFunctions;
+    
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
     
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
         
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
+        _gunFunctions = _player.GetComponent<GunFunctions>();
     }
 
     private void Start()
@@ -109,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask);
+        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, gunRef: _gunFunctions);
         CameraManager.Instance.SwitchTo(World.Tank);
     }
 
