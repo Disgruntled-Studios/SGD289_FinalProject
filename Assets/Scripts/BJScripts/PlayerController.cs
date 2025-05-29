@@ -31,10 +31,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            CurrentMode?.Aim(context);
-        }
+        CurrentMode?.Aim(context);
     }
 
     public void OnAttack(InputAction.CallbackContext context)

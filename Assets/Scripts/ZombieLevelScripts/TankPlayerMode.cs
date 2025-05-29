@@ -95,7 +95,8 @@ public class TankPlayerMode : IPlayerMode
             _gunReference.StartGunAim();
             ToggleRotationSpeed();
         }
-        else if (context.canceled)
+        
+        if (context.canceled)
         {
             _gunReference.EndGunAim();
             ToggleRotationSpeed();
