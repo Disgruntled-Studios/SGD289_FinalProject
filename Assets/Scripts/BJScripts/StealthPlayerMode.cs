@@ -65,21 +65,27 @@ public class StealthPlayerMode : IPlayerMode
         _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
     }
 
-    public void Jump() { } // Not used in stealth
+    public void Jump()
+    {
+        return;
+    } // Not used in stealth
 
     public void Crouch(bool isPressed)
     {
         _isCrouching = isPressed;
     }
 
-    public void Tick() { } // Not used in stealth
+    public void Tick()
+    {
+        return;
+    } // Not used in stealth
     public void Aim(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void Attack()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

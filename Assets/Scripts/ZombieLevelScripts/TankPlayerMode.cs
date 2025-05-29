@@ -68,8 +68,14 @@ public class TankPlayerMode : IPlayerMode
     public void Rotate(Vector2 input, Transform context) { }
 
     public void Jump()
-    { } // Not used in Tank
-    public void Crouch(bool isPressed) { } // Not used in Tank
+    {
+        return;
+    } // Not used in Tank
+
+    public void Crouch(bool isPressed)
+    {
+        return;
+    } // Not used in Tank
     public void Tick()
     {
         //Each frame we check if the player is grounded or not.

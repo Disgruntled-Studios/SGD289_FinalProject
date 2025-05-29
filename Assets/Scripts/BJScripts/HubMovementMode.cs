@@ -39,17 +39,26 @@ public class HubMovementMode : IPlayerMode
         var targetRotation = Quaternion.LookRotation(moveDirection);
         context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
-    public void Jump() { } // No jumping in hub
-    public void Crouch(bool isPressed) { } // No crouching in hub
+
+    public void Jump()
+    {
+        return;
+    } // No jumping in hub
+    
+
+    public void Crouch(bool isPressed)
+    {
+        return;
+    } // No crouching in hub
 
     public void Tick() { } // No per-frame behavior right now
     public void Aim(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void Attack()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }
