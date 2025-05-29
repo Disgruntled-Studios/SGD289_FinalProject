@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
         
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
-        _gunFunctions = _player.GetComponent<GunFunctions>();
+       // _gunFunctions = _player.GetComponent<GunFunctions>();
+
     }
 
     private void Start()
