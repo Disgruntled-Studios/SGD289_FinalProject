@@ -30,7 +30,7 @@ public class PlatformPlayerMode : IPlayerMode
         }
     }
 
-    public void Rotate(Vector2 input) { } // Not used in platformer
+    public void Rotate(Vector2 input, Transform context) { } // Not used in platformer
 
     public void Jump()
     {
