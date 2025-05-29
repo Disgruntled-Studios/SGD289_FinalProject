@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,13 +29,16 @@ public class HubMovementMode : IPlayerMode
         // Apply movement
         var velocity = moveDir * _speed;
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
-
-        // Rotate to face direction of movement
-        var targetRotation = Quaternion.LookRotation(moveDir);
-        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
-    public void Rotate(Vector2 input) { } // Look is handled by camera in hub
+    public void Rotate(Vector2 input, Transform context)
+    {
+        if (input == Vector2.zero) return;
+
+        var moveDirection = new Vector3(input.x, 0f, input.y).normalized;
+        var targetRotation = Quaternion.LookRotation(moveDirection);
+        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
+    }
     public void Jump() { } // No jumping in hub
     public void Crouch(bool isPressed) { } // No crouching in hub
 

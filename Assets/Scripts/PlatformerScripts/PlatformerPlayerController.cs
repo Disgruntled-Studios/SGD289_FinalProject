@@ -77,7 +77,7 @@ public class PlatformerPlayerController : MonoBehaviour
 
     private void Update()
     {
-        CurrentMode?.Rotate(_lookInput);
+        CurrentMode?.Rotate(_lookInput, transform);
         CurrentMode?.Tick();
     }
 }
