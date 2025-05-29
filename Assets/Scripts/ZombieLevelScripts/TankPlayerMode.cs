@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TankPlayerMode : IPlayerMode
 {
@@ -12,6 +13,9 @@ public class TankPlayerMode : IPlayerMode
     private float groundDrag = 5f;
     private float playerHeight = 2f;
     LayerMask _groundLayerMask;
+
+    private GunFunctions _gunReference;
+    
     public TankPlayerMode() {}
 
     /// <summary>
@@ -22,7 +26,7 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="rotationSpeed">How fast the player will rotate the character model.</param>
     /// <param name="rbComponent">The Rigidbody component that is attached to the player object.</param>
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
-    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask)
+    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, GunFunctions gunRef)
     {
         _speed = speed;
         _player = player;
@@ -30,13 +34,14 @@ public class TankPlayerMode : IPlayerMode
         currentRotationSpeed = rotationSpeed;
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
+        _gunReference = gunRef;
     }
 
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
 
-        rb.AddForce(context.forward * input.y * _speed * 10f, ForceMode.Force);
+        rb.AddForce(context.forward * (input.y * _speed * 10f), ForceMode.Force);
         if (input.x == 0)
         {
             _rb.angularVelocity = Vector3.zero;
@@ -50,7 +55,7 @@ public class TankPlayerMode : IPlayerMode
 
     public void ToggleRotationSpeed()
     {
-        if (currentRotationSpeed == _rotationSpeed)
+        if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
         {
             currentRotationSpeed *= 0.25f;
         }
@@ -81,5 +86,24 @@ public class TankPlayerMode : IPlayerMode
         {
             _rb.linearDamping = 0;
         }
+    }
+
+    public void Aim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _gunReference.StartGunAim();
+            ToggleRotationSpeed();
+        }
+        else if (context.canceled)
+        {
+            _gunReference.EndGunAim();
+            ToggleRotationSpeed();
+        }
+    }
+
+    public void Attack()
+    {
+        _gunReference.Shoot();
     }
 }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StealthPlayerMode : IPlayerMode
 {
@@ -72,4 +73,13 @@ public class StealthPlayerMode : IPlayerMode
     }
 
     public void Tick() { } // Not used in stealth
+    public void Aim(InputAction.CallbackContext context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Attack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public interface IPlayerMode
 {
@@ -7,4 +8,6 @@ public interface IPlayerMode
     void Jump(); // How the player jumps
     void Crouch(bool isPressed); // How the player crouches
     void Tick(); // Per-frame behavior if necessary
+    void Aim(InputAction.CallbackContext context);
+    void Attack();
 }

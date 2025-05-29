@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movementInput;
     private Vector2 _lookInput;
     private bool _isCrouching;
-    private GunFunctions _gunReference;
 
     private Rigidbody _rb;
 
@@ -23,10 +22,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if (GetComponent<GunFunctions>())
-        {
-            _gunReference = GetComponent<GunFunctions>();
-        }
         _rb = GetComponent<Rigidbody>();
         playerHealth = new UnitHealth(maxHealth);
     }
@@ -36,26 +31,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        TankPlayerMode tankRef = new TankPlayerMode();
-        bool isInTank = false;
-        
-        switch (CurrentMode)
+        if (context.performed)
         {
-            case TankPlayerMode:
-                tankRef = CurrentMode.ConvertTo<TankPlayerMode>();
-                isInTank = true;
-                break;
-        }
-
-        if (context.performed && isInTank)
-        {
-            _gunReference.StartGunAim();
-            tankRef.ToggleRotationSpeed();
-        }
-        else if (context.canceled && isInTank)
-        {
-            _gunReference.EndGunAim();
-            tankRef.ToggleRotationSpeed();
+            CurrentMode?.Aim(context);
         }
     }
 
@@ -63,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            _gunReference.Shoot();
+            CurrentMode?.Attack();
         }
     }
 
