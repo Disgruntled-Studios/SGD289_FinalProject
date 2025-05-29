@@ -24,7 +24,7 @@ public class HubMovementMode : IPlayerMode
         }
 
         // Calculate move direction in world space
-        var moveDir = new Vector3(input.x, 0f, input.y).normalized;
+        var moveDir = context.TransformDirection(new Vector3(input.x, 0f, input.y)).normalized;
 
         // Apply movement
         var velocity = moveDir * _speed;
@@ -33,11 +33,25 @@ public class HubMovementMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        if (input == Vector2.zero) return;
+        if (Mouse.current != null)
+        {
+            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var groundPlane = new Plane(Vector3.up, context.position);
 
-        var moveDirection = new Vector3(input.x, 0f, input.y).normalized;
-        var targetRotation = Quaternion.LookRotation(moveDirection);
-        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
+            if (groundPlane.Raycast(ray, out var distance))
+            {
+                var hitPoint = ray.GetPoint(distance);
+                var direction = (hitPoint - context.position).normalized;
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    var targetRotation = Quaternion.LookRotation(direction);
+                    context.rotation = Quaternion.Slerp(context.rotation, targetRotation,
+                        Time.fixedDeltaTime * _rotationSpeed);
+                }
+            }
+        }
     }
 
     public void Jump()
