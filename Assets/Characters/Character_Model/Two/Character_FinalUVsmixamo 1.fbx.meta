@@ -3,7 +3,47 @@ guid: 4271ea937538ee54b9eb6335c8c57e55
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body0001
+    second: {fileID: 2100000, guid: f755a3909896d574089290cc529fd1bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes1_2
+    second: {fileID: 2100000, guid: c2cd528a365c0bf48880d9e73acb480a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair001
+    second: {fileID: 2100000, guid: cd0180db16d713440827dd8eba47ef74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeftFootMat
+    second: {fileID: 2100000, guid: 8d980a2dcdba590439f8f7dc423ed096, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PantsMat
+    second: {fileID: 2100000, guid: 7f78163345a3dc14c886a424b7051fb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RightFootMat
+    second: {fileID: 2100000, guid: 362013efe7451e44b8c28c0e234b00cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Scalp
+    second: {fileID: 2100000, guid: b955656ca3108ea4292f5434aba45285, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shirt001
+    second: {fileID: 2100000, guid: 0f376acb62594da4ca7e494436a82925, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +73,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.25
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -88,7 +128,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
