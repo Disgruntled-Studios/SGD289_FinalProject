@@ -387,7 +387,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8dd98b5e-57a3-4b5a-87af-9c5b7af51d80"",
                     ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",

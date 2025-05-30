@@ -5,5 +5,6 @@ public enum World
     Hub,
     Tank,
     Platform,
-    Stealth
+    Stealth,
+    Mirror
 }

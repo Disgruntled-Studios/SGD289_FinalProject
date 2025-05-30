@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 566506458669336387}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -113,7 +113,19 @@ MonoBehaviour:
     m_ActionId: 9bfa42b7-de0f-4285-b236-ced847d9d737
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1685884930930213568}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 8a8652f2-480c-4756-b519-bc4988e66803
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
@@ -303,10 +315,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 5.7534328
+  m_Radius: 0.2288135
+  m_Height: 1.4825784
   m_Direction: 1
-  m_Center: {x: 0, y: 2.8682835, z: 0}
+  m_Center: {x: 0.0007162392, y: 0.73285633, z: 0}
 --- !u!82 &1631882390750520044
 AudioSource:
   m_ObjectHideFlags: 0
@@ -429,7 +441,7 @@ Transform:
   m_GameObject: {fileID: 3273021112394213413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.75, z: 0}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -444,16 +456,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 3139514279518245266}
     m_Modifications:
     - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
-      propertyPath: m_LocalPosition.y
+      propertyPath: m_LocalScale.x
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.078
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: -0.059
       objectReference: {fileID: 0}
     - target: {fileID: 6435968995929671093, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_LocalRotation.w
