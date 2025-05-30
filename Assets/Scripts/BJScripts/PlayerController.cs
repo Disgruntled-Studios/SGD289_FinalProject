@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         if ((other.TryGetComponent<IInteractable>(out var interactable) || other.transform.parent.TryGetComponent(out interactable)) && interactable == _currentInteractable)
         {
+            _currentInteractable?.OnExit();
             _currentInteractable = null;
         }
     }

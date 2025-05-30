@@ -92,4 +92,9 @@ public class MirrorController : MonoBehaviour, IInteractable
         GameManager.Instance.SwitchPlayerMode(World.Hub);
         CameraManager.Instance.TrySwitchToCamera("HUBMAIN");
     }
+
+    public void OnExit()
+    {
+        return;
+    }
 }
