@@ -6,6 +6,6 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(Transform player);
-    void OnExit();
+    void Interact(Transform player); // Called when player presses interact in the trigger zone
+    void OnExit(); // Automatically calls when player leaves trigger zone
 }
