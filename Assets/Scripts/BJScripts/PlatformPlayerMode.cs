@@ -18,7 +18,7 @@ public class PlatformPlayerMode : IPlayerMode
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        var moveDirection = _playerTransform.right * input.x;
+        var moveDirection = _playerTransform.forward * input.x;
         var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
         _rb.linearVelocity = velocity;
 
