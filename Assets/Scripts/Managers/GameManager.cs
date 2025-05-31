@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToHub()
     {
-        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed);
+        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: 2f);
     }
 
     private void SwitchToTank()

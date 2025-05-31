@@ -7,6 +7,8 @@ public class HubMovementMode : IPlayerMode
 {
     private readonly float _speed;
     private readonly float _rotationSpeed;
+    private readonly float _snapThreshold = 25f;
+    private readonly float _snapSpeed = 15f;
 
     public HubMovementMode(float speed, float rotationSpeed = 10f)
     {
@@ -16,32 +18,34 @@ public class HubMovementMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        // No movement? Exit early
         if (input == Vector2.zero)
         {
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
             return;
         }
 
-        // Calculate move direction in world space
-        var moveDir = context.TransformDirection(new Vector3(input.x, 0f, input.y)).normalized;
+        var camera = Camera.main;
+        var camForward = camera.transform.forward;
+        var camRight = camera.transform.right;
 
-        // Apply movement
-        var velocity = moveDir * _speed;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        var moveDirection = (camForward * input.y + camRight * input.x).normalized;
+
+        var velocity = moveDirection * _speed;
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
     }
 
     public void Rotate(Vector2 input, Transform context)
     {
-        // Use right stick (or mouse) for rotation
+        // NEED TO DIFFERENTIATE BETWEEN MOUSE AND CONTROLLER
         if (input.sqrMagnitude < 0.001f) return;
 
-        // Smoothly rotate towards the look direction
-        var targetAngle = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;
-        targetAngle += Camera.main.transform.eulerAngles.y; // Add camera rotation for third-person feel
-
-        var targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
-        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
+        var yaw = input.x * _rotationSpeed;
+        context.Rotate(0f, yaw, 0f);
     }
 
     public void Jump()
