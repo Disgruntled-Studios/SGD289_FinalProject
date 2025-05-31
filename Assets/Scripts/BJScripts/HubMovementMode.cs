@@ -33,25 +33,15 @@ public class HubMovementMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        if (Mouse.current != null)
-        {
-            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            var groundPlane = new Plane(Vector3.up, context.position);
+        // Use right stick (or mouse) for rotation
+        if (input.sqrMagnitude < 0.001f) return;
 
-            if (groundPlane.Raycast(ray, out var distance))
-            {
-                var hitPoint = ray.GetPoint(distance);
-                var direction = (hitPoint - context.position).normalized;
-                direction.y = 0f;
+        // Smoothly rotate towards the look direction
+        var targetAngle = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;
+        targetAngle += Camera.main.transform.eulerAngles.y; // Add camera rotation for third-person feel
 
-                if (direction.sqrMagnitude > 0.001f)
-                {
-                    var targetRotation = Quaternion.LookRotation(direction);
-                    context.rotation = Quaternion.Slerp(context.rotation, targetRotation,
-                        Time.fixedDeltaTime * _rotationSpeed);
-                }
-            }
-        }
+        var targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
     public void Jump()

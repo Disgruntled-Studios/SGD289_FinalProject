@@ -34,6 +34,8 @@ public class GunFunctions : MonoBehaviour
     {
         if (isAiming)
         {
+            Debug.Log("Shooting");
+            
             //Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
             //Debug.DrawRay(gunBarrelTransform.position, gunBarrelTransform.forward, Color.green ,3f);
             //Debug.Log("Shot fired");
