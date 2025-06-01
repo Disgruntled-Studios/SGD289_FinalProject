@@ -45,11 +45,11 @@ public class PlatformPlayerMode : IPlayerMode
     public void Tick() { } // Not used in platformer
     public void Aim(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void Attack()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
