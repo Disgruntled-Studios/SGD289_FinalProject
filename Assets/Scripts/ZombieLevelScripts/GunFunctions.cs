@@ -50,10 +50,10 @@ public class GunFunctions : MonoBehaviour
     private void UpdateLaser()
     {
         _lr.enabled = true;
-        _lr.SetPosition(0, _gunBarrel.position);
+        _lr.SetPosition(0, _gunBarrel.localPosition);
 
-        var camera = Camera.main;
-        var centerRay = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        var cam = Camera.main;
+        var centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 targetPoint;
         if (Physics.Raycast(centerRay, out var hit, 100f))
@@ -65,24 +65,49 @@ public class GunFunctions : MonoBehaviour
             targetPoint = centerRay.origin + centerRay.direction * 100f;
         }
 
-        _lr.SetPosition(1, targetPoint);
+        var direction = (targetPoint - cam.transform.position).normalized;
+        var laserEnd = _gunBarrel.position + direction * 100f;
+
+        if (Physics.Linecast(_gunBarrel.position, laserEnd, out var finalHit))
+        {
+            _lr.SetPosition(1, finalHit.point);
+        }
+        else
+        {
+            _lr.SetPosition(1, laserEnd);
+        }
     }
 
     public void Shoot()
     {
         if (!isAiming) return;
 
-        var cameraTransform = Camera.main.transform;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out var hit, 100f, _enemyLayer))
+        var cam = Camera.main;
+        var centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(centerRay, out var hit, 100f))
         {
-            var enemy = hit.collider.GetComponent<EnemyBehavior>();
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = centerRay.origin + centerRay.direction * 100f;
+        }
+
+        var direction = (targetPoint - cam.transform.position).normalized;
+        var laserEnd = _gunBarrel.position + direction * 100f;
+
+        if (Physics.Linecast(_gunBarrel.position, laserEnd, out var finalHit, _enemyLayer))
+        {
+            var enemy = finalHit.collider.GetComponent<EnemyBehavior>();
             if (enemy != null)
             {
                 enemy.health.Damage(_damageAmount);
             }
-            else if (hit.collider.transform.parent != null)
+            else if (finalHit.collider.transform.parent != null)
             {
-                enemy = hit.collider.transform.parent.GetComponent<EnemyBehavior>();
+                enemy = finalHit.collider.transform.parent.GetComponent<EnemyBehavior>();
                 if (enemy != null)
                 {
                     enemy.health.Damage(_damageAmount);
@@ -90,4 +115,5 @@ public class GunFunctions : MonoBehaviour
             }
         }
     }
+
 }
