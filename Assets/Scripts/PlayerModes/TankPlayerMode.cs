@@ -57,10 +57,12 @@ public class TankPlayerMode : IPlayerMode
     {
         if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
         {
+            Debug.Log("Changing speed to a quarter of current speed");
             currentRotationSpeed *= 0.25f;
         }
         else
         {
+            Debug.Log("Changing speed to original speed");
             currentRotationSpeed = _rotationSpeed;
         }
     }
@@ -104,12 +106,12 @@ public class TankPlayerMode : IPlayerMode
         if (context.canceled)
         {
             _gunReference.EndGunAim();
-            ToggleRotationSpeed();
+            //ToggleRotationSpeed();
         }
     }
 
     public void Attack()
     {
-        _gunReference.Shoot();
+        _gunReference.ShootForTank();
     }
 }
