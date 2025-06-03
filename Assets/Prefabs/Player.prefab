@@ -275,7 +275,7 @@ MonoBehaviour:
   isTestingHub: 0
   isTestingTank: 1
   isTestingPlatform: 0
-  isTestingStealth: 0
+  isTestingFPS: 0
   maxHealth: 100
 --- !u!114 &3250522029149283989
 MonoBehaviour:
@@ -289,13 +289,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581e5d7ccecab494085b14d40848c260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 6999248939152927278}
-  gunBarrelTransform: {fileID: 1116125233679676244}
-  enemyLayerMask:
+  _gunModel: {fileID: 6999248939152927278}
+  _gunBarrel: {fileID: 4929485730339602895}
+  _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  damageAmount: 50
-  lr: {fileID: 7802326864684409885}
+  _damageAmount: 50
+  _lr: {fileID: 7802326864684409885}
+  isAiming: 0
 --- !u!136 &9107562140772942605
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -606,9 +607,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
---- !u!4 &1116125233679676244 stripped
+--- !u!4 &4929485730339602895 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3816889451122403821, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+  m_CorrespondingSourceObject: {fileID: 9217769339484789622, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
   m_PrefabInstance: {fileID: 4288857615485999801}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6999248939152927278 stripped
