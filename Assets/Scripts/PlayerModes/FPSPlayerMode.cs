@@ -77,10 +77,7 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Tick()
     {
-        if (_gunRef.isAiming)
-        {
-            _gunRef.UpdateLaser();
-        }
+        return;
     } 
     
     public void Aim(InputAction.CallbackContext context)

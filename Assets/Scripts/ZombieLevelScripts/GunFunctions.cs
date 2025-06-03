@@ -4,49 +4,39 @@ using UnityEngine.InputSystem;
 
 public class GunFunctions : MonoBehaviour
 {
+    [Header("Gun")] 
+    [SerializeField] private GameObject _gunModel;
+    [SerializeField] private Transform _gunBarrel;
+    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private float _damageAmount = 50f;
 
-    [SerializeField] private GameObject gunModel;
-    [SerializeField] private Transform gunBarrelTransform;
-    [SerializeField] private LayerMask enemyLayerMask;
-    [SerializeField] private float damageAmount = 50f;
-    [SerializeField] private LineRenderer lr;
-    [SerializeField] private LaserSight _laserSight;
+    [Header("Laser")] 
+    [SerializeField] private LineRenderer _lr;
+
     public bool isAiming;
 
-    // Update is called once per frame
-    private void Update()
+    private void Start()
     {
-        gunModel.SetActive(isAiming);
-    }
-
-    public void UpdateLaser()
-    {
-        _laserSight.UpdateLaser(_laserSight.transform, isAiming);
-    }
-    
-    public void Shoot()
-    {
-        if (!isAiming) return;
-
-        var cameraTransform = Camera.main.transform;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out var hit, 100f, enemyLayerMask))
+        if (_lr != null)
         {
-            var enemy = hit.collider.GetComponent<EnemyBehavior>();
-            if (enemy != null)
-            {
-                enemy.health.Damage(damageAmount);
-            }
-            else if (hit.collider.transform.parent != null)
-            {
-                enemy = hit.collider.transform.parent.GetComponent<EnemyBehavior>();
-                if (enemy != null)
-                {
-                    enemy.health.Damage(damageAmount);
-                }
-            }
+            _lr.enabled = false;
         }
     }
 
+    private void Update()
+    {
+        _gunModel.SetActive(isAiming);
+
+        if (isAiming && _lr != null)
+        {
+            UpdateLaser();
+        }
+        else if (_lr != null)
+        {
+            _lr.enabled = false;
+        }
+    }
+    
     public void StartGunAim()
     {
         isAiming = true;
@@ -55,5 +45,49 @@ public class GunFunctions : MonoBehaviour
     public void EndGunAim()
     {
         isAiming = false;
+    }
+
+    private void UpdateLaser()
+    {
+        _lr.enabled = true;
+        _lr.SetPosition(0, _gunBarrel.position);
+
+        var camera = Camera.main;
+        var centerRay = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(centerRay, out var hit, 100f))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = centerRay.origin + centerRay.direction * 100f;
+        }
+
+        _lr.SetPosition(1, targetPoint);
+    }
+
+    public void Shoot()
+    {
+        if (!isAiming) return;
+
+        var cameraTransform = Camera.main.transform;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out var hit, 100f, _enemyLayer))
+        {
+            var enemy = hit.collider.GetComponent<EnemyBehavior>();
+            if (enemy != null)
+            {
+                enemy.health.Damage(_damageAmount);
+            }
+            else if (hit.collider.transform.parent != null)
+            {
+                enemy = hit.collider.transform.parent.GetComponent<EnemyBehavior>();
+                if (enemy != null)
+                {
+                    enemy.health.Damage(_damageAmount);
+                }
+            }
+        }
     }
 }
