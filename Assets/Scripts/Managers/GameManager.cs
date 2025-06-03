@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _player;
     [SerializeField] private LayerMask _groundLayerMask;
+    [SerializeField] private Transform _cameraPivot;
     
     private PlayerController _playerController;
     private Rigidbody _playerRb;
@@ -45,9 +46,9 @@ public class GameManager : MonoBehaviour
         {
             SwitchPlayerMode(World.Platform);
         }
-        else if (_playerController.isTestingStealth)
+        else if (_playerController.isTestingFPS)
         {
-            SwitchPlayerMode(World.Stealth);
+            SwitchPlayerMode(World.FPS);
         }
         else
         {
@@ -76,8 +77,8 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.F4))
         {
-            SwitchPlayerMode(World.Stealth);
-            Debug.Log("DevKey: Switching PlayerMode to Stealth");
+            SwitchPlayerMode(World.FPS);
+            Debug.Log("DevKey: Switching PlayerMode to FPS");
         }
     }
 
@@ -99,8 +100,8 @@ public class GameManager : MonoBehaviour
             case World.Platform:
                 SwitchToPlatform();
                 break;
-            case World.Stealth:
-                SwitchToStealth();
+            case World.FPS:
+                SwitchToFPS();
                 break;
             case World.Mirror:
                 SwitchToMirror();
@@ -124,9 +125,10 @@ public class GameManager : MonoBehaviour
             new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform);
     }
 
-    private void SwitchToStealth()
+    private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new StealthPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, gunRef: _gunFunctions, cameraPivot: _cameraPivot);
+        CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
     }
 
     private void SwitchToMirror()

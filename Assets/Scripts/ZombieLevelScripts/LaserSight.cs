@@ -10,26 +10,31 @@ public class LaserSight : MonoBehaviour
         lr = GetComponent<LineRenderer>();
     }
 
-    void Update()
+    public void UpdateLaser(Transform laserStart, bool isAiming)
     {
-        CastLaser();
-    }
-
-    void CastLaser()
-    {
-        RaycastHit hit;
-
-        //Shoot a ray forward to see if there is an object to hit.
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if (!isAiming)
         {
-            if (hit.collider)
-            {
-                //If we hit something and it has a collider set the lasers endpoint to that raycast hitpoint
-                lr.SetPosition(1, new Vector3(0, 0, hit.distance));
-                return;
-            }
+            lr.enabled = false;
+            return;
         }
-        //if we hit nothing push the endpoint of the laser far out.
-        lr.SetPosition(1, new Vector3(0, 0, 5000));
+
+        lr.enabled = true;
+
+        var cam = Camera.main;
+        var centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        lr.SetPosition(0, centerRay.origin);
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(centerRay, out var hit, 100f))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = centerRay.origin + centerRay.direction * 100f;
+        }
+
+        lr.SetPosition(1, targetPoint);
     }
 }

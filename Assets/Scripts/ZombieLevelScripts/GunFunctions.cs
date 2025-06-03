@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,58 +10,42 @@ public class GunFunctions : MonoBehaviour
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private float damageAmount = 50f;
     [SerializeField] private LineRenderer lr;
-    bool isAiming;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
+    [SerializeField] private LaserSight _laserSight;
+    public bool isAiming;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isAiming)
-        {
-            gunModel.SetActive(true);
-        }
-        else
-        {
-            gunModel.SetActive(false);
-        }
+        gunModel.SetActive(isAiming);
     }
 
+    public void UpdateLaser()
+    {
+        _laserSight.UpdateLaser(_laserSight.transform, isAiming);
+    }
+    
     public void Shoot()
     {
-        if (isAiming)
+        if (!isAiming) return;
+
+        var cameraTransform = Camera.main.transform;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out var hit, 100f, enemyLayerMask))
         {
-            Debug.Log("Shooting");
-            
-            //Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
-            //Debug.DrawRay(gunBarrelTransform.position, gunBarrelTransform.forward, Color.green ,3f);
-            //Debug.Log("Shot fired");
-            //Play SFX 
-
-            //Play VFX
-            
-            //Shoot a ray to see if a monster is going to get hit.
-            RaycastHit hit;
-
-            if (Physics.Raycast(gunBarrelTransform.position, gunBarrelTransform.forward, out hit, 100f, enemyLayerMask))
+            var enemy = hit.collider.GetComponent<EnemyBehavior>();
+            if (enemy != null)
             {
-                Debug.Log("hit " + hit.collider.transform.gameObject.name);
-                //hit.transform.gameObject.SetActive(false);
-                //Affect enemies health.
-                if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
+                enemy.health.Damage(damageAmount);
+            }
+            else if (hit.collider.transform.parent != null)
+            {
+                enemy = hit.collider.transform.parent.GetComponent<EnemyBehavior>();
+                if (enemy != null)
                 {
-                    hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(damageAmount);
-                    Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
+                    enemy.health.Damage(damageAmount);
                 }
-                // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
         }
     }
-
 
     public void StartGunAim()
     {
