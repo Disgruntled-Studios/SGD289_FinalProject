@@ -8,7 +8,6 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly float _jumpForce;
     private readonly Transform _playerTransform;
     private readonly GunScript _gunScript;
-
     
     public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript)
     {

@@ -320,6 +320,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6435968995929671093}
+  - component: {fileID: 9027747185529771514}
+  - component: {fileID: 6845846807480318531}
+  - component: {fileID: 1511121943963971051}
   m_Layer: 3
   m_Name: Gun
   m_TagString: Untagged
@@ -345,3 +348,49 @@ Transform:
   - {fileID: 3816889451122403821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9027747185529771514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6532267389214060695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581e5d7ccecab494085b14d40848c260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gunModel: {fileID: 6532267389214060695}
+  laserStart: {fileID: 3816889451122403821}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _damageAmount: 50
+  _lr: {fileID: 6323752851621674660}
+  isAiming: 0
+--- !u!114 &6845846807480318531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6532267389214060695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3f9e0ec74005d4b9d04973273161cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 2144255047026004570, guid: ac2f84cb8dbf2c746ade2b6bf26d8247, type: 3}
+  startPointTransform: {fileID: 3816889451122403821}
+--- !u!114 &1511121943963971051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6532267389214060695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
