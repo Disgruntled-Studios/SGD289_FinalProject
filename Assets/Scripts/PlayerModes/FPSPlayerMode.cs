@@ -12,15 +12,15 @@ public class FPSPlayerMode : IPlayerMode
     private float _xRotation;
     private const float ClampAngle = 50f;
     private bool _isCrouching;
-    private GunFunctions _gunRef;
+    private FPSGunController _fpsGunController;
 
-    public FPSPlayerMode(float speed, float rotationSpeed, Transform playerTransform, GunFunctions gunRef, Transform cameraPivot)
+    public FPSPlayerMode(float speed, float rotationSpeed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
         _playerTransform = playerTransform;
-        _gunRef = gunRef;
         _cameraPivot = cameraPivot;
+        _fpsGunController = gunController;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -84,17 +84,17 @@ public class FPSPlayerMode : IPlayerMode
     {
         if (context.performed)
         {
-            _gunRef.StartGunAim();
+            _fpsGunController.StartGunAim();
         }
         
         if (context.canceled)
         {
-            _gunRef.EndGunAim();
+            _fpsGunController.EndGunAim();
         }
     }
 
     public void Attack()
     {
-        _gunRef.HandleShoot();
+        _fpsGunController.Shoot();
     }
 }

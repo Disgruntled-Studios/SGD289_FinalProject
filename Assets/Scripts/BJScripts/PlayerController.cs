@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool isTestingHub;
     public bool isTestingTank;
     public bool isTestingPlatform;
-    [FormerlySerializedAs("isTestingStealth")] public bool isTestingFPS;
+    public bool isTestingFPS;
 
     public UnitHealth playerHealth;
     [SerializeField] private float maxHealth; 

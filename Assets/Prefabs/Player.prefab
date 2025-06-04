@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2392127784452737548}
   - component: {fileID: 1685884930930213568}
   - component: {fileID: 3250522029149283989}
+  - component: {fileID: 6674930476015885892}
+  - component: {fileID: 7765028156852872917}
   - component: {fileID: 9107562140772942605}
   - component: {fileID: 1631882390750520044}
   m_Layer: 3
@@ -290,13 +292,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunModel: {fileID: 6999248939152927278}
-  _gunBarrel: {fileID: 4929485730339602895}
+  laserStart: {fileID: 0}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
   _damageAmount: 50
   _lr: {fileID: 7802326864684409885}
   isAiming: 0
+--- !u!114 &6674930476015885892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7765028156852872917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3f9e0ec74005d4b9d04973273161cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 0}
+  startPointTransform: {fileID: 0}
 --- !u!136 &9107562140772942605
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -607,11 +635,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
---- !u!4 &4929485730339602895 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9217769339484789622, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
-  m_PrefabInstance: {fileID: 4288857615485999801}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6999248939152927278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6532267389214060695, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
