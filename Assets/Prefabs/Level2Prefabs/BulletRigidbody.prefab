@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -9120695726532219192}
   - component: {fileID: 493508721819604498}
   m_Layer: 7
-  m_Name: Bullet
+  m_Name: BulletRigidbody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &493508721819604498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,5 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9121d4455b4614b92a084c2cfb14c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 3
-  usingAddForce: 0
+  bulletSpeed: 5

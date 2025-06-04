@@ -14,6 +14,11 @@ public class BulletScript : MonoBehaviour
 
     private GameObject player;
 
+    private Rigidbody rb;
+
+    [SerializeField]
+    private bool usingAddForce = false;
+
     void Start()
     {
         platformManager = GameObject.Find("Canvas").GetComponent<PlatformManager>();
@@ -34,17 +39,32 @@ public class BulletScript : MonoBehaviour
             print("problem in bullet direction if statement");
             direction = Vector3.up;
         }
+
+        if (usingAddForce)
+        {
+            rb = this.gameObject.GetComponent<Rigidbody>();
+            rb.AddForce(direction * bulletSpeed);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += direction * bulletSpeed * Time.deltaTime;
+        if (usingAddForce)
+        {
+            rb.AddForce(direction * bulletSpeed);
+        }
+        else
+        {
+            transform.position += direction * bulletSpeed * Time.deltaTime;
+        }
     }
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             platformManager.HandleDamage();
             platformManager.CheckGameOver();
@@ -52,4 +72,5 @@ public class BulletScript : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
+    */
 }
