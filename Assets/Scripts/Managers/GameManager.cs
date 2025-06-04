@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
 
     private PlayerController _playerController;
     private Rigidbody _playerRb;
-    private GunFunctions _gunFunctions;
-    private GunScript _gunScript;
     public TileSelection currentTileSelection;
+    
+    [Header("Gun Controllers")]
+    private TankGunController _tankGunController;
+    private GunScript _gunScript;
+    private FPSGunController _fpsGun;
 
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
@@ -32,28 +35,38 @@ public class GameManager : MonoBehaviour
 
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
-
         
-        try
-        {
-            _gunFunctions = _player.GetComponent<GunFunctions>();
-        }
-        catch
-        {
-            print("gunFunctions script is not on player");
-        }
+        LinkGunComponents();
+    }
 
-
-        try
+    private void LinkGunComponents()
+    {
+        if (!_player.TryGetComponent(out TankGunController tank))
         {
-            _gunScript = _player.GetComponent<GunScript>();
+            Debug.Log("Tank Gun Controller not attached to player object");
         }
-        catch
+        else
         {
-            print("gunScript script is not on player");
+            _tankGunController = tank;
         }
 
+        if (!_player.TryGetComponent(out GunScript platform))
+        {
+            Debug.Log("Platform Gun Controller not attached to player object");
+        }
+        else
+        {
+            _gunScript = platform;
+        }
 
+        if (!_player.TryGetComponent(out FPSGunController fps))
+        {
+            Debug.Log("FPS Gun Controller not attached to player object");
+        }
+        else
+        {
+            _fpsGun = fps;
+        }
     }
 
     private void Start()
@@ -141,7 +154,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, gunRef: _gunFunctions);
+        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController);
     }
 
     private void SwitchToPlatform()
@@ -152,7 +165,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, gunRef: _gunFunctions, cameraPivot: _cameraPivot);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
         CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
     }
 

@@ -2,7 +2,7 @@ using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GunFunctions : MonoBehaviour
+public class TankGunController : MonoBehaviour
 {
     [Header("Gun")]
     [SerializeField] private GameObject _gunModel;
@@ -49,32 +49,12 @@ public class GunFunctions : MonoBehaviour
 
     public void HandleLaser()
     {
-        switch (GameManager.Instance.CurrentWorld)
-        {
-            case World.Hub:
-                break;
-            case World.Tank:
-                UpdateTankLaser();
-                break;
-            case World.FPS:
-                UpdateLaser();
-                break;
-        }
+        UpdateTankLaser();
     }
 
     public void HandleShoot()
     {
-        switch (GameManager.Instance.CurrentWorld)
-        {
-            case World.Hub:
-                break;
-            case World.Tank:
-                ShootForTank();
-                break;
-            case World.FPS:
-                FPSShot();
-                break;
-        }
+        ShootForTank();
     }
 
     private void UpdateLaser()
