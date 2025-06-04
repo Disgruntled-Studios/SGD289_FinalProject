@@ -20,7 +20,7 @@ public class CometStart : MonoBehaviour
     [SerializeField]
     private float timeBetweenComets = 0.3f;
 
-    //used for generating a random time in between spawns of comets.
+    //used for generating a random time in between spawns of comets. May add later if time using waitTime mechanic to be more specific with comet spawns.
     //[SerializeField]
     //private float maxTimeBetweenComets=20f;
     //private float minTimeBetweenComets = 10f;

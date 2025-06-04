@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlatformerPlayerController : MonoBehaviour
 {
+    //get rid of this script.
 
     public UnitHealth playerHealth;
     [SerializeField] private float maxHealth; 

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _playerRb;
     private GunFunctions _gunFunctions;
+    private GunScript _gunScript;
     public TileSelection currentTileSelection;
 
     private const float DefaultMovementSpeed = 5f;
@@ -31,7 +32,27 @@ public class GameManager : MonoBehaviour
 
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
-        _gunFunctions = _player.GetComponent<GunFunctions>();
+
+        
+        try
+        {
+            _gunFunctions = _player.GetComponent<GunFunctions>();
+        }
+        catch
+        {
+            print("gunFunctions script is not on player");
+        }
+
+
+        try
+        {
+            _gunScript = _player.GetComponent<GunScript>();
+        }
+        catch
+        {
+            print("gunScript script is not on player");
+        }
+
 
     }
 
@@ -126,7 +147,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript);
     }
 
     private void SwitchToFPS()

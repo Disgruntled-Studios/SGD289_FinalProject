@@ -7,15 +7,19 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly float _speed;
     private readonly float _jumpForce;
     private readonly Transform _playerTransform;
+    private readonly GunScript _gunScript;
+
     
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript)
     {
         _rb = playerRb;
         _speed = speed;
         _jumpForce = jumpForce;
         _playerTransform = playerTransform;
+        _gunScript = gunScript;
     }
-    
+
+
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
         var moveDirection = _playerTransform.forward * input.x;
@@ -48,8 +52,12 @@ public class PlatformPlayerMode : IPlayerMode
         //throw new System.NotImplementedException();
     }
 
+    //left button
     public void Attack()
     {
         //throw new System.NotImplementedException();
+        _gunScript.Shoot();
     }
+
+
 }
