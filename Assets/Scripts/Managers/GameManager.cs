@@ -7,14 +7,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private Transform _cameraPivot;
-    
+
     private PlayerController _playerController;
     private Rigidbody _playerRb;
     private GunFunctions _gunFunctions;
-    
+    public TileSelection currentTileSelection;
+
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
-    
+
     public World? CurrentWorld { get; private set; } // Make current world nullable for initial world processing
 
     private void Awake()
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
         _gunFunctions = _player.GetComponent<GunFunctions>();
@@ -106,6 +107,9 @@ public class GameManager : MonoBehaviour
             case World.Mirror:
                 SwitchToMirror();
                 break;
+            case World.Puzzle:
+                SwitchToPuzzle();
+                break;
         }
     }
 
@@ -134,5 +138,10 @@ public class GameManager : MonoBehaviour
     private void SwitchToMirror()
     {
         _playerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
+    }
+
+    private void SwitchToPuzzle()
+    {
+        _playerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
     }
 }

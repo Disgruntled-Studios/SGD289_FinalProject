@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UnitHealth
 {
     private float _maxHealth, _currentHealth;
     private bool isInvincible;
+
+    public UnityEvent onDamageEvent;
 
     public float MaxHealth
     {
@@ -78,16 +81,28 @@ public class UnitHealth
         _maxHealth = maxHealth;
         _currentHealth = _maxHealth;
     }
+    
+    /// <summary>
+    /// Holds information/Functions on this unit's health system.
+    /// </summary>
+    /// <param name="maxHealth">How much health can possibly have and will the unit start with once this instance is created.</param>
+    public UnitHealth(float maxHealth, UnityEvent _onDamage)
+    {
+        _maxHealth = maxHealth;
+        _currentHealth = _maxHealth;
+        onDamageEvent = _onDamage;
+    }
 
     /// <summary>
     /// Holds information/Functions on this unit's health system.
     /// </summary>
     /// <param name="maxHealth">How much health can possibly have and will the unit start with once unit is instantiated.</param>
     /// <param name="currentHealth">Directly set the current health when the unit is instantiated.</param>
-    public UnitHealth(float maxHealth,float currentHealth)
+    public UnitHealth(float maxHealth, float currentHealth, UnityEvent _onDamage)
     {
         _maxHealth = maxHealth;
-        _currentHealth = _maxHealth;
+        _currentHealth = currentHealth;
+        onDamageEvent = _onDamage;
     }
 
     /// <summary>
@@ -99,6 +114,11 @@ public class UnitHealth
         if (!isInvincible)
         {
             _currentHealth -= damageAmount;
+            if (onDamageEvent != null)
+            {
+                Debug.Log("OnDamageEventInvoking");
+                onDamageEvent.Invoke();
+            }
         }
     }
 

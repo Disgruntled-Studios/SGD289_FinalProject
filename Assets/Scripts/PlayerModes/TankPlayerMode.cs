@@ -112,6 +112,6 @@ public class TankPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _gunReference.ShootForTank();
+        _gunReference.HandleShoot();
     }
 }

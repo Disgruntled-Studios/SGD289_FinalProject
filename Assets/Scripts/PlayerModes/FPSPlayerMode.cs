@@ -95,6 +95,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _gunRef.Shoot();
+        _gunRef.HandleShoot();
     }
 }

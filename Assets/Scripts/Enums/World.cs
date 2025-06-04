@@ -6,5 +6,6 @@ public enum World
     Tank,
     Platform,
     FPS,
-    Mirror
+    Mirror,
+    Puzzle
 }

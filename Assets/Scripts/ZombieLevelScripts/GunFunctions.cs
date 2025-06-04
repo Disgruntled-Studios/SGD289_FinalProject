@@ -29,8 +29,7 @@ public class GunFunctions : MonoBehaviour
 
         if (isAiming && _lr != null)
         {
-            UpdateLaser();
-            UpdateTankLaser();
+            HandleLaser();
         }
         else if (_lr != null)
         {
@@ -46,6 +45,36 @@ public class GunFunctions : MonoBehaviour
     public void EndGunAim()
     {
         isAiming = false;
+    }
+
+    public void HandleLaser()
+    {
+        switch (GameManager.Instance.CurrentWorld)
+        {
+            case World.Hub:
+                break;
+            case World.Tank:
+                UpdateTankLaser();
+                break;
+            case World.FPS:
+                UpdateLaser();
+                break;
+        }
+    }
+
+    public void HandleShoot()
+    {
+        switch (GameManager.Instance.CurrentWorld)
+        {
+            case World.Hub:
+                break;
+            case World.Tank:
+                ShootForTank();
+                break;
+            case World.FPS:
+                FPSShot();
+                break;
+        }
     }
 
     private void UpdateLaser()
@@ -102,7 +131,7 @@ public class GunFunctions : MonoBehaviour
 
     }
 
-    public void Shoot()
+    public void FPSShot()
     {
         if (!isAiming) return;
 
