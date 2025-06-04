@@ -21,11 +21,11 @@ public class BulletScript : MonoBehaviour
 
         var playerScale = player.transform.localScale;
 
-        if (Mathf.Sign(playerScale.x) == 1)
+        if (Mathf.Sign(playerScale.z) == 1)
         {
             direction = Vector3.right;
         }
-        else if (Mathf.Sign(playerScale.x) == -1)
+        else if (Mathf.Sign(playerScale.z) == -1)
         {
             direction = Vector3.left;
         }

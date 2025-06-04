@@ -29,7 +29,7 @@ public class PlatformPlayerMode : IPlayerMode
         if (Mathf.Abs(input.x) > 0.01f)
         {
             var newScale = _playerTransform.localScale;
-            newScale.x = Mathf.Sign(input.x) * Mathf.Abs(newScale.x);
+            newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
             _playerTransform.localScale = newScale;
         }
     }
