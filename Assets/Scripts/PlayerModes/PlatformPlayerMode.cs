@@ -22,16 +22,20 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        var moveDirection = _playerTransform.forward * input.x;
-        var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
-        _rb.linearVelocity = velocity;
+        //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
+        //{
+            var moveDirection = _playerTransform.forward * input.x;
+            var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
+            _rb.linearVelocity = velocity;
 
-        if (Mathf.Abs(input.x) > 0.01f)
-        {
-            var newScale = _playerTransform.localScale;
-            newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
-            _playerTransform.localScale = newScale;
-        }
+            if (Mathf.Abs(input.x) > 0.01f)
+            {
+                var newScale = _playerTransform.localScale;
+                newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
+                _playerTransform.localScale = newScale;
+            }
+        //}
+
     }
 
     public void Rotate(Vector2 input, Transform context) { } // Not used in platformer
