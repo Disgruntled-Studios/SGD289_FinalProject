@@ -164,5 +164,6 @@ public class GameManager : MonoBehaviour
     private void SwitchToPuzzle()
     {
         _playerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
+        
     }
 }

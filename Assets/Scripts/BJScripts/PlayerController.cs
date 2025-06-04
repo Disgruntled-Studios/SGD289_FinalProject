@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         CurrentMode?.Tick();
     }
 
-    /*
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IInteractable>(out var interactable))
@@ -102,6 +102,5 @@ public class PlayerController : MonoBehaviour
             _currentInteractable = null;
         }
     }
-    */
 }
 
