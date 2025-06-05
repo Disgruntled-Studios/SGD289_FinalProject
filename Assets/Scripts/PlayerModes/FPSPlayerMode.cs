@@ -12,7 +12,7 @@ public class FPSPlayerMode : IPlayerMode
     private float _xRotation;
     private const float ClampAngle = 50f;
     private bool _isCrouching;
-    private FPSGunController _fpsGunController;
+    private readonly FPSGunController _fpsGunController;
 
     public FPSPlayerMode(float speed, float rotationSpeed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
     {

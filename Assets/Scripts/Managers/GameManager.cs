@@ -118,33 +118,50 @@ public class GameManager : MonoBehaviour
     private void SwitchToHub()
     {
         _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: 2f);
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToTank()
     {
         _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController);
+        _tankGunController.enabled = true;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
             new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript);
+        _gunScript.enabled = true;
+        _tankGunController.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToFPS()
     {
         _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
         CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
+        _fpsGun.enabled = true;
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
     }
 
     private void SwitchToMirror()
     {
         _playerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToPuzzle()
     {
         _playerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
-        
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 }

@@ -7,9 +7,13 @@ public class FPSGunController : MonoBehaviour
 
     private bool _isAiming;
 
+    private void OnEnable()
+    {
+        _gunModel.SetActive(true);
+    }
+    
     private void Update()
     {
-        _gunModel.SetActive(_isAiming);
         _lr.enabled = _isAiming;
     }
     

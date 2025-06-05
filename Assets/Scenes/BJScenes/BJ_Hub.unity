@@ -403,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1685884930930213568, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: isTestingTank
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3250522029149283989, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: _laserSight
@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: _gunModel
       value: 
       objectReference: {fileID: 266296265}
+    - target: {fileID: 3422032175338403666, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4579355303186379407, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -485,8 +489,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5101476103794282307, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049495644817894551, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6999248939152927278, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124715319328088895, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242984614113747194, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802326864684409885, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8016657025286850767, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -586,7 +610,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
   m_Name: 
@@ -597,7 +621,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3f9e0ec74005d4b9d04973273161cb, type: 3}
   m_Name: 
@@ -608,7 +632,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 581e5d7ccecab494085b14d40848c260, type: 3}
   m_Name: 
