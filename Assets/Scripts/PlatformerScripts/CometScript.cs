@@ -5,7 +5,7 @@ public class CometScript : MonoBehaviour
     [SerializeField]
     private float cometSpeed;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //This script is on comet prefab and controls its movement. It also handles collisions with the player.
 
     PlatformManager platformManager;
 
@@ -17,7 +17,7 @@ public class CometScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(-1, -1, 0) * Time.deltaTime;
+        transform.position += new Vector3(-1, -1, 0) * cometSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

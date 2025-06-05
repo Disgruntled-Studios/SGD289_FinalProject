@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] float minPatrolPauseTime = 0f;
     [SerializeField] float maxPatrolPauseTime = 5f;
     [SerializeField] float maxHealth = 100f;
+    [SerializeField] UnityEvent onDamage;
+    [SerializeField] Material damagedMat;
+    [SerializeField] Material normalMat;
 
     public UnitHealth health;
     private NavMeshAgent meshAgent;
@@ -32,9 +36,11 @@ public class EnemyBehavior : MonoBehaviour
         playerRef = FindFirstObjectByType<PlayerController>().gameObject;
         meshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        health = new UnitHealth(maxHealth);
+        onDamage.AddListener(ToggleEnemyMaterial);
+        health = new UnitHealth(maxHealth,onDamage);
         meshAgent.stoppingDistance = attackDistance;
         GetComponentInChildren<DamageTrigger>().damageAmount = attackStrength;
+        GetComponentInChildren<MeshRenderer>().material = normalMat;
         isLingering = false;
     }
 
@@ -101,6 +107,23 @@ public class EnemyBehavior : MonoBehaviour
             HandleDeath();
         }
 
+    }
+
+    void ToggleEnemyMaterial()
+    {
+        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+        Debug.Log("ToggleMatIsCalled " + meshRenderer.gameObject.name);
+        if (meshRenderer.sharedMaterial == normalMat)
+        {
+            Debug.Log("Switching material to damaged");
+            meshRenderer.material = damagedMat;
+            Invoke("ToggleEnemyMaterial", 0.5f);
+        }
+        else if (meshRenderer.sharedMaterial == damagedMat)
+        {
+            Debug.Log("Switching material to normal");
+            meshRenderer.material = normalMat;
+        }
     }
 
     void HandleDeath()

@@ -2,13 +2,14 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
     public bool isTestingHub;
     public bool isTestingTank;
     public bool isTestingPlatform;
-    public bool isTestingStealth;
+    public bool isTestingFPS;
 
     public UnitHealth playerHealth;
     [SerializeField] private float maxHealth; 
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
         CurrentMode?.Tick();
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IInteractable>(out var interactable))

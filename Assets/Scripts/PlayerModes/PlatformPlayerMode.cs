@@ -7,27 +7,34 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly float _speed;
     private readonly float _jumpForce;
     private readonly Transform _playerTransform;
+    private readonly GunScript _gunScript;
     
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript)
     {
         _rb = playerRb;
         _speed = speed;
         _jumpForce = jumpForce;
         _playerTransform = playerTransform;
+        _gunScript = gunScript;
     }
-    
+
+
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        var moveDirection = _playerTransform.forward * input.x;
-        var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
-        _rb.linearVelocity = velocity;
+        //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
+        //{
+            var moveDirection = _playerTransform.forward * input.x;
+            var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
+            _rb.linearVelocity = velocity;
 
-        if (Mathf.Abs(input.x) > 0.01f)
-        {
-            var newScale = _playerTransform.localScale;
-            newScale.x = Mathf.Sign(input.x) * Mathf.Abs(newScale.x);
-            _playerTransform.localScale = newScale;
-        }
+            if (Mathf.Abs(input.x) > 0.01f)
+            {
+                var newScale = _playerTransform.localScale;
+                newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
+                _playerTransform.localScale = newScale;
+            }
+        //}
+
     }
 
     public void Rotate(Vector2 input, Transform context) { } // Not used in platformer
@@ -48,8 +55,12 @@ public class PlatformPlayerMode : IPlayerMode
         //throw new System.NotImplementedException();
     }
 
+    //left button
     public void Attack()
     {
         //throw new System.NotImplementedException();
+        _gunScript.Shoot();
     }
+
+
 }

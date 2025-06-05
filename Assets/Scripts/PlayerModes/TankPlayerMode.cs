@@ -14,9 +14,8 @@ public class TankPlayerMode : IPlayerMode
     private float playerHeight = 2f;
     LayerMask _groundLayerMask;
 
-    private GunFunctions _gunReference;
+    private TankGunController _tankGunReference;
     
-    public TankPlayerMode() {}
 
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -26,7 +25,7 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="rotationSpeed">How fast the player will rotate the character model.</param>
     /// <param name="rbComponent">The Rigidbody component that is attached to the player object.</param>
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
-    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, GunFunctions gunRef)
+    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef)
     {
         _speed = speed;
         _player = player;
@@ -34,7 +33,7 @@ public class TankPlayerMode : IPlayerMode
         currentRotationSpeed = rotationSpeed;
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
-        _gunReference = gunRef;
+        _tankGunReference = tankGunRef;
     }
 
 
@@ -57,10 +56,12 @@ public class TankPlayerMode : IPlayerMode
     {
         if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
         {
+            Debug.Log("Changing speed to a quarter of current speed");
             currentRotationSpeed *= 0.25f;
         }
         else
         {
+            Debug.Log("Changing speed to original speed");
             currentRotationSpeed = _rotationSpeed;
         }
     }
@@ -95,21 +96,21 @@ public class TankPlayerMode : IPlayerMode
 
     public void Aim(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
-            _gunReference.StartGunAim();
+            _tankGunReference.StartGunAim();
             ToggleRotationSpeed();
         }
         
         if (context.canceled)
         {
-            _gunReference.EndGunAim();
+            _tankGunReference.EndGunAim();
             ToggleRotationSpeed();
         }
     }
 
     public void Attack()
     {
-        _gunReference.Shoot();
+        _tankGunReference.HandleShoot();
     }
 }

@@ -2,27 +2,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class StealthPlayerMode : IPlayerMode
+public class FPSPlayerMode : IPlayerMode
 {
     private readonly float _speed;
     private readonly float _rotationSpeed;
     private readonly Transform _playerTransform;
-    private readonly Transform _cameraTransform;
-    private bool _isCrouching;
+    private readonly Transform _cameraPivot;
 
-    public StealthPlayerMode(float speed, float rotationSpeed, Transform playerTransform)
+    private float _xRotation;
+    private const float ClampAngle = 50f;
+    private bool _isCrouching;
+    private readonly FPSGunController _fpsGunController;
+
+    public FPSPlayerMode(float speed, float rotationSpeed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
         _playerTransform = playerTransform;
-    }
-    
-    public StealthPlayerMode(float speed, float rotationSpeed, Transform playerTransform, Transform cameraTransform)
-    {
-        _speed = speed;
-        _rotationSpeed = rotationSpeed;
-        _playerTransform = playerTransform;
-        _cameraTransform = cameraTransform;
+        _cameraPivot = cameraPivot;
+        _fpsGunController = gunController;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -53,16 +51,18 @@ public class StealthPlayerMode : IPlayerMode
         // Apply movement
         var velocity = moveDir * currentSpeed;
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
-        
-        // Rotate to face direction of movement
-        var targetRotation = Quaternion.LookRotation(moveDir);
-        context.rotation = Quaternion.Slerp(context.rotation, targetRotation, Time.fixedDeltaTime * _rotationSpeed);
     }
 
     public void Rotate(Vector2 input, Transform context)
     {
-        const float sensitivity = 2f;
+        const float sensitivity = 0.5f;
+
         _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
+
+        _xRotation -= input.y * sensitivity;
+        _xRotation = Mathf.Clamp(_xRotation, -ClampAngle, ClampAngle);
+
+        _cameraPivot.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
     }
 
     public void Jump()
@@ -78,14 +78,23 @@ public class StealthPlayerMode : IPlayerMode
     public void Tick()
     {
         return;
-    } // Not used in stealth
+    } 
+    
     public void Aim(InputAction.CallbackContext context)
     {
-        return;
+        if (context.started)
+        {
+            _fpsGunController.StartGunAim();
+        }
+        
+        if (context.canceled)
+        {
+            _fpsGunController.EndGunAim();
+        }
     }
 
     public void Attack()
     {
-        return;
+        _fpsGunController.Shoot();
     }
 }

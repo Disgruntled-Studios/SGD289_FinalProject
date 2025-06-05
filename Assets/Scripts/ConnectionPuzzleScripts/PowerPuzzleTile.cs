@@ -12,7 +12,6 @@ public class PowerPuzzleTile : MonoBehaviour
     public Material onMaterial;
     [HideInInspector]
     public List<GameObject> connectors;
-    public PowerPuzzleTile powerDependant;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,97 +22,50 @@ public class PowerPuzzleTile : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if (powerDependant != null && !powerDependant.isPowered)
-            {
-                isPowered = false;
-            }
-    }
-
-    /*
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponentInParent<PowerPuzzleTile>())
+        if (!isPowered)
         {
-            isConnected = true;
-            PowerPuzzleTile tileRef = other.gameObject.GetComponentInParent<PowerPuzzleTile>();
-            
-            if (tileRef.isPowerNode || tileRef.isPowered)
-            {
-                //powerDependant = tileRef;
-                Debug.Log("Power is on for " + name);
-                isPowered = true;
-                ToggleConnectionMaterial(true);
-            }
-            
-
-            if (this.isPowerNode && !tileRef.isPowered || this.isPowered && !tileRef.isPowered)
-            {
-                tileRef.powerDependant = this;
-                isPowered = true;
-                ToggleConnectionMaterial(true);
-            }
-            
-
+            ToggleConnectionMaterial(false);
+        }
+        else
+        {
+            ToggleConnectionMaterial(true);
         }
     }
 
     void OnTriggerStay(Collider other)
     {
+        if (isPowered && isConnected) return;
+        
         if (other.gameObject.GetComponentInParent<PowerPuzzleTile>())
         {
             isConnected = true;
             PowerPuzzleTile tileRef = other.gameObject.GetComponentInParent<PowerPuzzleTile>();
-            
+
             if (tileRef.isPowered || tileRef.isPowerNode)
             {
                 isPowered = true;
-                ToggleConnectionMaterial(true);
-            }
-            
-
-            if (this.isPowerNode && !tileRef.isPowered || this.isPowered && !tileRef.isPowered)
-            {
-                tileRef.powerDependant = this;
-                tileRef.isPowered = true;
-                ToggleConnectionMaterial(true);
             }
 
-            if (powerDependant != null && !powerDependant.isPowered)
-            {
-                isPowered = false;
-            }
         }
     }
-
-    void OnTriggerExit(Collider other)
-    {
-        isConnected = false;
-        if (other.gameObject.GetComponentInParent<PowerPuzzleTile>())
-        {
-            isPowered = false;
-            ToggleConnectionMaterial(false);
-        }
-    }
-    */
 
     public void ToggleConnectionMaterial(bool _isPowered)
-{
-    if (_isPowered)
     {
-        foreach (GameObject gameObject in connectors)
+        if (_isPowered)
         {
-            gameObject.GetComponent<MeshRenderer>().material = onMaterial;
+            foreach (GameObject gameObject in connectors)
+            {
+                gameObject.GetComponent<MeshRenderer>().material = onMaterial;
+            }
+        }
+        else
+        {
+            foreach (GameObject gameObject in connectors)
+            {
+                gameObject.GetComponent<MeshRenderer>().material = offMaterial;
+            }
         }
     }
-    else
-    {
-        foreach (GameObject gameObject in connectors)
-        {
-            gameObject.GetComponent<MeshRenderer>().material = offMaterial;
-        }
-    }
-}
 }

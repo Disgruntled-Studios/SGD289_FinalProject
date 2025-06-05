@@ -5,6 +5,7 @@ public enum World
     Hub,
     Tank,
     Platform,
-    Stealth,
-    Mirror
+    FPS,
+    Mirror,
+    Puzzle
 }
