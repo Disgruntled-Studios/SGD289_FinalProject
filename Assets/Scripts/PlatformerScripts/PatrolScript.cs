@@ -78,6 +78,7 @@ public class PatrolScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("InSight"))
         {
+            print("enteredInSight");
             inSight = true;
             this.enabled = true;
             //activated patrol script
@@ -88,6 +89,7 @@ public class PatrolScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("InSight"))
         {
+            print("exited. inSight = false");
             inSight = false;
             this.enabled = false;
         }
