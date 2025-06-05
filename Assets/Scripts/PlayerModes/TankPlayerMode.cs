@@ -96,7 +96,7 @@ public class TankPlayerMode : IPlayerMode
 
     public void Aim(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             _tankGunReference.StartGunAim();
             ToggleRotationSpeed();
@@ -105,7 +105,7 @@ public class TankPlayerMode : IPlayerMode
         if (context.canceled)
         {
             _tankGunReference.EndGunAim();
-            //ToggleRotationSpeed();
+            ToggleRotationSpeed();
         }
     }
 

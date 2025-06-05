@@ -57,41 +57,6 @@ public class TankGunController : MonoBehaviour
         ShootForTank();
     }
 
-    private void UpdateLaser()
-    {
-        if (GameManager.Instance.CurrentWorld == World.Tank)
-        {
-            return;
-        }
-        _lr.enabled = true;
-        _lr.SetPosition(0, laserStart.localPosition);
-
-        var cam = Camera.main;
-        var centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
-        Vector3 targetPoint;
-        if (Physics.Raycast(centerRay, out var hit, 100f))
-        {
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = centerRay.origin + centerRay.direction * 100f;
-        }
-
-        var direction = (targetPoint - cam.transform.position).normalized;
-        var laserEnd = laserStart.position + direction * 100f;
-
-        if (Physics.Linecast(laserStart.position, laserEnd, out var finalHit))
-        {
-            _lr.SetPosition(1, finalHit.point);
-        }
-        else
-        {
-            _lr.SetPosition(1, laserEnd);
-        }
-    }
-
     private void UpdateTankLaser()
     {
         _lr.enabled = true;
@@ -109,49 +74,6 @@ public class TankGunController : MonoBehaviour
         //if we hit nothing push the endpoint of the laser far out.
         _lr.SetPosition(1, new Vector3(0, 0, 5000));
 
-    }
-
-    public void FPSShot()
-    {
-        if (!isAiming) return;
-
-        var cam = Camera.main;
-        var centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
-        Vector3 targetPoint;
-        if (Physics.Raycast(centerRay, out var hit, 100f))
-        {
-            Debug.Log("hit!");
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = centerRay.origin + centerRay.direction * 100f;
-        }
-
-        var direction = (targetPoint - cam.transform.position).normalized;
-        var laserEnd = laserStart.position + direction * 100f;
-
-        if (Physics.Linecast(laserStart.position, laserEnd, out var finalHit, _enemyLayer))
-        {
-            Debug.Log("Enemy detected!");
-            Debug.DrawLine(laserStart.position, laserEnd, Color.green, 2f);
-            var enemy = finalHit.collider.GetComponent<EnemyBehavior>();
-            if (enemy != null)
-            {
-                enemy.health.Damage(_damageAmount);
-                Debug.Log("Enemy " + enemy.name + " hit!");
-            }
-            else if (finalHit.collider.transform.parent != null)
-            {
-                enemy = finalHit.collider.transform.parent.GetComponent<EnemyBehavior>();
-                if (enemy != null)
-                {
-                    enemy.health.Damage(_damageAmount);
-                    Debug.Log("Enemy " + enemy.name + " hit!");
-                }
-            }
-        }
     }
 
     public void ShootForTank()

@@ -82,7 +82,7 @@ public class FPSPlayerMode : IPlayerMode
     
     public void Aim(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             _fpsGunController.StartGunAim();
         }
