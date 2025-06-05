@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class FPSPlayerMode : IPlayerMode
 {
     private readonly float _speed;
-    private readonly float _rotationSpeed;
     private readonly Transform _playerTransform;
     private readonly Transform _cameraPivot;
 
@@ -14,10 +13,9 @@ public class FPSPlayerMode : IPlayerMode
     private bool _isCrouching;
     private readonly FPSGunController _fpsGunController;
 
-    public FPSPlayerMode(float speed, float rotationSpeed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
     {
         _speed = speed;
-        _rotationSpeed = rotationSpeed;
         _playerTransform = playerTransform;
         _cameraPivot = cameraPivot;
         _fpsGunController = gunController;
@@ -93,6 +91,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _fpsGunController.ShootRaycast();
+        _fpsGunController.Shoot();
     }
 }

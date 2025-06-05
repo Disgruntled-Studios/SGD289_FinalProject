@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
         CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;

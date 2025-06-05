@@ -1,16 +1,23 @@
+using System.Collections;
 using UnityEngine;
 
 public class FPSBulletController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Rigidbody _rb;
+    
+    private const float BulletLifespan = 0.5f;
+    private const float BulletSpeed = 15f;
+    
+    public void Initialize()
     {
-        
+        _rb.AddForce(transform.forward * BulletSpeed, ForceMode.Impulse);
+        StartCoroutine(BulletLifeCycle());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator BulletLifeCycle()
     {
-        
+        yield return new WaitForSeconds(BulletLifespan);
+
+        Destroy(gameObject);
     }
 }
