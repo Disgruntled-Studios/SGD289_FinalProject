@@ -322,9 +322,8 @@ GameObject:
   - component: {fileID: 6435968995929671093}
   - component: {fileID: 9027747185529771514}
   - component: {fileID: 6845846807480318531}
-  - component: {fileID: 1511121943963971051}
   m_Layer: 3
-  m_Name: Gun
+  m_Name: TPGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,18 +379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 2144255047026004570, guid: ac2f84cb8dbf2c746ade2b6bf26d8247, type: 3}
   startPointTransform: {fileID: 3816889451122403821}
---- !u!114 &1511121943963971051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6532267389214060695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7525855258550023726
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,6 @@ public class HubMovementMode : IPlayerMode
 {
     private readonly float _speed;
     private readonly float _rotationSpeed;
-    private readonly float _snapThreshold = 25f;
-    private readonly float _snapSpeed = 15f;
 
     public HubMovementMode(float speed, float rotationSpeed = 10f)
     {
