@@ -50,6 +50,11 @@ MonoBehaviour:
   _leftHand: {fileID: 4020422985625054081}
   _gunModel: {fileID: 6580140853005749321}
   _lr: {fileID: 7269396882082055363}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _laserStartPos: {fileID: 565271015731925898}
+  _cameraPivot: {fileID: 0}
 --- !u!1001 &3684065741169015399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +138,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+--- !u!4 &565271015731925898 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3816889451122403821, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+  m_PrefabInstance: {fileID: 3684065741169015399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6580140853005749321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7525855258550023726, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}

@@ -93,6 +93,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _fpsGunController.ShouldShoot = true;
+        _fpsGunController.Shoot();
     }
 }

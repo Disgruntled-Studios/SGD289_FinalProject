@@ -11,10 +11,10 @@ public class FPSGunController : MonoBehaviour
     [SerializeField] private LineRenderer _lr;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Transform _laserStartPos;
-    [SerializeField] private Transform _cameraPivot;
+
+    [SerializeField] private GameObject _bulletPrefab;
 
     private bool _isAiming;
-    public bool ShouldShoot { get; set; }
 
     private void OnEnable()
     {
@@ -33,42 +33,11 @@ public class FPSGunController : MonoBehaviour
         _isAiming = false;
     }
 
-    private void LateUpdate()
-    {
-        if (_isAiming && ShouldShoot)
-        {
-            Shoot();
-            ShouldShoot = false;
-        }
-    }
-
     public void Shoot()
     {
-        var origin = _cameraPivot.position;
-        var direction = _cameraPivot.forward;
+        var bullet = Instantiate(_bulletPrefab, _laserStartPos.position, Quaternion.identity);
+        var rb = bullet.GetComponent<Rigidbody>();
 
-        const float MaxDistance = 100f;
-        var hitPoint = origin + direction * MaxDistance;
-
-        if (Physics.Raycast(origin, direction, out var hit, MaxDistance, _enemyLayer))
-        {
-            hitPoint = hit.point;
-        }
-
-        if (_lr != null)
-        {
-            StartCoroutine(ShowShotLine(_laserStartPos.position, hitPoint));
-        }
-    }
-
-    private IEnumerator ShowShotLine(Vector3 start, Vector3 end)
-    {
-        _lr.SetPosition(0, start);
-        _lr.SetPosition(1, end);
-        _lr.enabled = true;
-
-        yield return new WaitForSeconds(1f);
-
-        _lr.enabled = false;
+        rb.AddForce(bullet.transform.forward, ForceMode.Impulse);
     }
 }
