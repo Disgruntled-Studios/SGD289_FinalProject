@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4579355303186379407}
   - component: {fileID: 2392127784452737548}
   - component: {fileID: 1685884930930213568}
+  - component: {fileID: 8755751124204630501}
   - component: {fileID: 9107562140772942605}
   - component: {fileID: 1631882390750520044}
   m_Layer: 3
@@ -275,7 +276,19 @@ MonoBehaviour:
   isTestingTank: 1
   isTestingPlatform: 0
   isTestingFPS: 0
-  maxHealth: 100
+--- !u!114 &8755751124204630501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f85f363c3766fd428ceae34574242d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
 --- !u!136 &9107562140772942605
 CapsuleCollider:
   m_ObjectHideFlags: 0

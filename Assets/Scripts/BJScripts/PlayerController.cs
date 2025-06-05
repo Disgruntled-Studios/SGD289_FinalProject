@@ -10,9 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool isTestingTank;
     public bool isTestingPlatform;
     public bool isTestingFPS;
-
-    public UnitHealth playerHealth;
-    [SerializeField] private float maxHealth; 
+    
     private Vector2 _movementInput;
     private Vector2 _lookInput;
     private bool _isCrouching;
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        playerHealth = new UnitHealth(maxHealth);
     }
 
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();

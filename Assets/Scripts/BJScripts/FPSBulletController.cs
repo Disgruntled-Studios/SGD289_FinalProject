@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,5 +20,10 @@ public class FPSBulletController : MonoBehaviour
         yield return new WaitForSeconds(BulletLifespan);
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        throw new NotImplementedException();
     }
 }
