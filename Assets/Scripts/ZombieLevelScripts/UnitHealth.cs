@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,34 +12,22 @@ public class UnitHealth
 
     public float MaxHealth
     {
-        get
-        {
-            return _maxHealth;
-        }
+        get => _maxHealth;
 
         set
         {
-            if (value >= 1000)
+            _maxHealth = value switch
             {
-                _maxHealth = 1000;
-            }
-            else if (value <= 0)
-            {
-                _maxHealth = 1;
-            }
-            else
-            {
-                _maxHealth = value;
-            }
+                >= 1000 => 1000,
+                <= 0 => 1,
+                _ => value
+            };
         }
     }
 
     public float CurrentHealth
     {
-        get
-        {
-            return _currentHealth;
-        }
+        get => _currentHealth;
 
         set
         {
@@ -57,20 +46,7 @@ public class UnitHealth
         }
     }
 
-    public bool IsDead
-    {
-        get
-        {
-            if (_currentHealth <= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+    public bool IsDead => _currentHealth <= 0;
 
     /// <summary>
     /// Holds information/Functions on this unit's health system.
