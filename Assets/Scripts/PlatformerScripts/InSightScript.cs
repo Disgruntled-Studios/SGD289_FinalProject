@@ -20,6 +20,4 @@ public class InSightScript : MonoBehaviour
     {
         transform.position = player.transform.position + inSightOffset;
     }
-
-
 }
