@@ -11,9 +11,6 @@ public class PatrolScript : MonoBehaviour
     [SerializeField]
     private float speed =3.0f;
 
-    private AIState nowState;
-    enum AIState{attacking, wandering}; //perhaps change to be enum later
-
     [SerializeField] private Transform[] patrolPoints;
 
     private GameObject player; //in case we want to add an attack state since we are working in 2.5d.
@@ -21,7 +18,7 @@ public class PatrolScript : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
 
-    private float distanceFromPlayer;
+    //private float distanceFromPlayer;
 
     //used to keep enemies from moving frame by frame but still allowing freedom from nav mesh pathing.
     [SerializeField]
@@ -29,9 +26,14 @@ public class PatrolScript : MonoBehaviour
     private float pathingTime;
 
     private bool playerInRange = false;
-    private bool InSight;
 
-    private float sightRangeFloat; //perhaps replace with box around player.
+    [SerializeField]
+    private bool inSight = false;
+
+    //[SerializeField]
+   // private float sightRangeFloat =20f; //perhaps replace with box around player.
+
+    private int point;
 
 
 
@@ -60,8 +62,8 @@ public class PatrolScript : MonoBehaviour
 
     private void Start()
     {
-        nowState = AIState.wandering;
         player = GameObject.FindGameObjectWithTag("Player");
+        point = 0;
     }
 
 
@@ -69,114 +71,59 @@ public class PatrolScript : MonoBehaviour
     {
 
         DecideStates();
-        
-        /*
-        if (stopPatrol != true) //used when turning enemies off.
-        {
-            if (movingLeft)
-            {
-                if (enemy.position.x >= leftEdge.position.x)
-                {
-                    MoveInDirection(-1);
-                }
-                else
-                {
-                    DirectionChange();
-                }
-            }
-            else
-            {
-                if (enemy.position.x <= rightEdge.position.x)
-                {
-                    MoveInDirection(1);
-                }
-                else
-                {
-                    DirectionChange();
-                }
-            }
-        }
+    }
 
-        */
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("InSight"))
+        {
+            inSight = true;
+            this.enabled = true;
+            //activated patrol script
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("InSight"))
+        {
+            inSight = false;
+            this.enabled = false;
+        }
     }
 
     public void DecideStates()
     {
-        distanceFromPlayer = Vector3.Distance(transform.position, player.transform.position);
 
+        print("wandering");
+        HandleWandering();
 
-        if(distanceFromPlayer > sightRangeFloat)
-        {
-            InSight = true;
-        }
-        else
-        {
-            InSight = false;
-        }
-
-
-        if ((!playerInRange) && (!InSight))
-        {
-            print("deactivated patrolScript");
-            
-            this.enabled = false;
-        }
-
-
-        if (playerInRange)
-        {
-            nowState = AIState.attacking;
-        }
-        else if((!playerInRange) && (InSight))
-        {
-            nowState = AIState.wandering;
-        }
-        else
-        {
-            print("error in DecideStates() if statement");
-        }
-
-        HandleStates();
     }
 
 
-    //Remove this handle states function??
-    private void HandleStates()
-    {
-        switch(nowState)
-        {
-            case AIState.wandering:
-                Debug.Log("Wandering");
-
-                //HandleWandering();
-
-                break;
-            case AIState.attacking:
-                Debug.Log("Attacking");
-                break;
-            default:
-                Debug.LogError("Error in Handle States switch");
-                break;
-        }
-    }
-
-    /*
     private void HandleWandering()
     {
-        //Set it so it randomly chooses a patrol point and ues 
-        patrolPoints[Random.Range[0,patrolPoints.Length)
+        //Set so it moves to each patrol point in order
 
-        if (Vector3.Distance(transform.position, target.position) < 0.001f)
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, patrolPoints[point].transform.position, step);
+
+        print("Point is equal to " + point);
+
+        // Checks if enemy reached destinatiton point and moves to next point or resets if so.
+        if (Vector3.Distance(transform.position, patrolPoints[point].transform.position) < 0.001f)
         {
-            //chooses another patrol Point as destination. Also use pathing delay like that video suggested to cut down on lag. 
+            if (point >= (patrolPoints.Length-1))
+            {
+                point = 0;
+            }
+            else
+            {
+                point++;
+            }
         }
-    }
-    */
 
-    private void MoveTowardsDestination(GameObject target)
-    {
-        var step = speed * Time.deltaTime;
-        enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, target.transform.position, step);
     }
     
 
