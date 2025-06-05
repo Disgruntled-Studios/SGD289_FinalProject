@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
 
     private PlayerController _playerController;
     private Rigidbody _playerRb;
-    private GunFunctions _gunFunctions;
-    private GunScript _gunScript;
     public TileSelection currentTileSelection;
+    
+    [Header("Gun Controllers")]
+    [SerializeField] private TankGunController _tankGunController;
+    [SerializeField] private GunScript _gunScript;
+    [SerializeField] private FPSGunController _fpsGun;
 
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
@@ -32,28 +35,6 @@ public class GameManager : MonoBehaviour
 
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
-
-        
-        try
-        {
-            _gunFunctions = _player.GetComponent<GunFunctions>();
-        }
-        catch
-        {
-            print("gunFunctions script is not on player");
-        }
-
-
-        try
-        {
-            _gunScript = _player.GetComponent<GunScript>();
-        }
-        catch
-        {
-            print("gunScript script is not on player");
-        }
-
-
     }
 
     private void Start()
@@ -137,32 +118,50 @@ public class GameManager : MonoBehaviour
     private void SwitchToHub()
     {
         _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: 2f);
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, gunRef: _gunFunctions);
+        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController);
+        _tankGunController.enabled = true;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
             new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript);
+        _gunScript.enabled = true;
+        _tankGunController.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, gunRef: _gunFunctions, cameraPivot: _cameraPivot);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, rotationSpeed: DefaultRotationSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
         CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
+        _fpsGun.enabled = true;
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
     }
 
     private void SwitchToMirror()
     {
         _playerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 
     private void SwitchToPuzzle()
     {
         _playerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
+        _tankGunController.enabled = false;
+        _gunScript.enabled = false;
+        _fpsGun.enabled = false;
     }
 }

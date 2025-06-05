@@ -4,7 +4,7 @@ public class PlayerInputController : MonoBehaviour
 {
 
     private PlayerTankMovement tankMovement;
-    private GunFunctions gunFunc;
+    private TankGunController _tankGunFunc;
 
     private PlayerInput controls;
     private PlayerInput.PlayerActions in_Game;
@@ -18,9 +18,9 @@ public class PlayerInputController : MonoBehaviour
         {
             tankMovement = GetComponent<PlayerTankMovement>();
         }
-        if (gunFunc == null)
+        if (_tankGunFunc == null)
         {
-            gunFunc = GetComponent<GunFunctions>();
+            _tankGunFunc = GetComponent<TankGunController>();
         }
         controls = new PlayerInput();
         SetInputFuncs();

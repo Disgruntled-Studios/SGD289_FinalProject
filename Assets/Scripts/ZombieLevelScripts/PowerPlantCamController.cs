@@ -33,7 +33,7 @@ public class PowerPlantCamController : MonoBehaviour
 
     public void ResetSceneCameras()
     {
-        int Priority = sceneCameras.Count * 5;
+        int Priority = sceneCameras.Count * 2;
 
         for (int i = 0; i <= sceneCameras.Count - 1; i++)
         {
@@ -44,7 +44,7 @@ public class PowerPlantCamController : MonoBehaviour
                 sceneCameras[i].gameObject.SetActive(false);
             }
 
-            Priority -= 5;
+            Priority -= 2;
         }
     }
 

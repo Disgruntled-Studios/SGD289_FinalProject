@@ -6,6 +6,13 @@ using UnityEngine.Serialization;
 public class GameCamera : MonoBehaviour
 {
     [SerializeField] private string _cameraId;
+    public string CameraID
+    {
+        get
+        {
+            return _cameraId;
+        }
+    }
     private CinemachineCamera _vCam;
 
     private void Start()

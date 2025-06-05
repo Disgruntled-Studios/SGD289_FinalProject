@@ -48,12 +48,6 @@ public class PowerPuzzleManager : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(mousePos);
         Debug.DrawRay(cam.gameObject.transform.position, mousePos - cam.gameObject.transform.position, Color.blue);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            RotateTile(playerSelection.selectedOBJ, false);
-            CheckTilesConnection();
-        }
-
         if (!powerNode.isConnected) CheckTilesConnection();
 
     }
@@ -82,6 +76,7 @@ public class PowerPuzzleManager : MonoBehaviour
             Debug.Log("Rotating left");
             tileRef.transform.Rotate(0, 0, -90f);
         }
+        CheckTilesConnection();
     }
 
 }
