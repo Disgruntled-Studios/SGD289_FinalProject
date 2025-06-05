@@ -34,10 +34,8 @@ public class FPSPlayerMode : IPlayerMode
             return;
         }
 
-        var cameraTransform = Camera.main!.transform;
-
-        var camForward = cameraTransform.forward;
-        var camRight = cameraTransform.right;
+        var camForward = _cameraPivot.forward;
+        var camRight = _cameraPivot.right;
 
         camForward.y = 0;
         camRight.y = 0;
@@ -55,7 +53,7 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        const float sensitivity = 0.5f;
+        const float sensitivity = 0.25f;
 
         _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
 
@@ -95,6 +93,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _fpsGunController.Shoot();
+        _fpsGunController.ShouldShoot = true;
     }
 }

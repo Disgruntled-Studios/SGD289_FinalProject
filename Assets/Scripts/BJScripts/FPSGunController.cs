@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class FPSGunController : MonoBehaviour
@@ -8,8 +10,11 @@ public class FPSGunController : MonoBehaviour
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private LineRenderer _lr;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private Transform _laserStartPos;
+    [SerializeField] private Transform _cameraPivot;
 
     private bool _isAiming;
+    public bool ShouldShoot { get; set; }
 
     private void OnEnable()
     {
@@ -28,19 +33,31 @@ public class FPSGunController : MonoBehaviour
         _isAiming = false;
     }
 
+    private void LateUpdate()
+    {
+        if (_isAiming && ShouldShoot)
+        {
+            Shoot();
+            ShouldShoot = false;
+        }
+    }
+
     public void Shoot()
     {
-        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        var endPoint = ray.origin + ray.direction * 100f;
+        var origin = _cameraPivot.position;
+        var direction = _cameraPivot.forward;
 
-        if (Physics.Raycast(ray, out var hit, 100f, _enemyLayer))
+        const float MaxDistance = 100f;
+        var hitPoint = origin + direction * MaxDistance;
+
+        if (Physics.Raycast(origin, direction, out var hit, MaxDistance, _enemyLayer))
         {
-            Debug.Log($"Hit: {hit.collider.name}");
+            hitPoint = hit.point;
         }
 
         if (_lr != null)
         {
-            StartCoroutine(ShowShotLine(ray.origin, endPoint));
+            StartCoroutine(ShowShotLine(_laserStartPos.position, hitPoint));
         }
     }
 
@@ -50,7 +67,7 @@ public class FPSGunController : MonoBehaviour
         _lr.SetPosition(1, end);
         _lr.enabled = true;
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(1f);
 
         _lr.enabled = false;
     }
