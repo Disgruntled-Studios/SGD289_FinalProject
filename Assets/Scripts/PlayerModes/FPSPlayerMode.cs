@@ -53,7 +53,7 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        const float sensitivity = 0.25f;
+        const float sensitivity = 0.33f;
 
         _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
 
@@ -93,6 +93,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Attack()
     {
-        _fpsGunController.Shoot();
+        _fpsGunController.ShootRaycast();
     }
 }

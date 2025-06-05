@@ -33,11 +33,23 @@ public class FPSGunController : MonoBehaviour
         _isAiming = false;
     }
 
+    public void ShootRaycast()
+    {
+        var origin = _laserStartPos.position;
+        var direction = _laserStartPos.rotation * Vector3.forward;
+
+        if (Physics.Raycast(origin, direction, out var hit, 100f, _enemyLayer))
+        {
+            Debug.Log($"Hit: {hit.collider.gameObject.name}");
+        }
+
+    }
+
     public void Shoot()
     {
-        var bullet = Instantiate(_bulletPrefab, _laserStartPos.position, Quaternion.identity);
+        var bullet = Instantiate(_bulletPrefab, _laserStartPos.position, _laserStartPos.rotation);
         var rb = bullet.GetComponent<Rigidbody>();
 
-        rb.AddForce(bullet.transform.forward, ForceMode.Impulse);
+        rb.AddForce(bullet.transform.forward * 50f, ForceMode.Impulse);
     }
 }
