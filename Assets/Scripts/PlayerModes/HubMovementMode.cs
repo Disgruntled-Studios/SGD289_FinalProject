@@ -48,7 +48,7 @@ public class HubMovementMode : IPlayerMode
 
     public void Jump()
     {
-        Debug.Log("Hello");
+        return;
     } 
     
 
@@ -70,6 +70,6 @@ public class HubMovementMode : IPlayerMode
 
     public void Special()
     {
-        Debug.Log("Special");
+        return;
     }
 }

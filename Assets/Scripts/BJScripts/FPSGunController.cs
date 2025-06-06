@@ -14,26 +14,27 @@ public class FPSGunController : MonoBehaviour
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private GameObject _gunHandle;
     [SerializeField] private GameObject _gunBarrel;
-    [SerializeField] private LineRenderer _lr;
     [SerializeField] private Transform _barrelEnd;
 
     [Header("Materials")] 
-    [SerializeField] private Material _blueMat;
-    [SerializeField] private Material _greenMat;
-    [SerializeField] private Material _redMat;
+    [SerializeField] private Material[] _materials;
+    private int _matIndex;
     
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _bulletPrefab;
 
     private bool _isAiming;
 
+    public Material CurrentMaterial => _materials[_matIndex];
+    
     private void OnEnable()
     {
         _rightHand.SetActive(true);
         _leftHand.SetActive(true);
         _gunModel.SetActive(true);
 
-        _lr.enabled = false;
+        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
+        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }
     
     public void StartGunAim()
@@ -51,6 +52,13 @@ public class FPSGunController : MonoBehaviour
         var bullet = Instantiate(_bulletPrefab, _barrelEnd.position, _barrelEnd.rotation);
         var bulletController = bullet.GetComponent<FPSBulletController>();
 
-        bulletController.Initialize();
+        bulletController.Initialize(CurrentMaterial);
+    }
+
+    public void ChangeColor()
+    {
+        _matIndex += 1 % _materials.Length;
+        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
+        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }
 }

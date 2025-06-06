@@ -96,6 +96,6 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Special()
     {
-        return;
+        _fpsGunController.ChangeColor();
     }
 }
