@@ -20,10 +20,10 @@ public class PatrolScript : MonoBehaviour
 
     //private float distanceFromPlayer;
 
-    //used to keep enemies from moving frame by frame but still allowing freedom from nav mesh pathing.
-    [SerializeField]
-    private float pathingDelay = 0.2f;
-    private float pathingTime;
+    //for optimization hopefully in future
+    //[SerializeField]
+    //private float pathingDelay = 0.2f;
+    //private float pathingTime;
 
     private bool playerInRange = false;
 
@@ -78,6 +78,7 @@ public class PatrolScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("InSight"))
         {
+            print("in sight");
             inSight = true;
             this.enabled = true;
             //activated patrol script
@@ -88,6 +89,7 @@ public class PatrolScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("InSight"))
         {
+            print("not in sight");
             inSight = false;
             this.enabled = false;
         }
