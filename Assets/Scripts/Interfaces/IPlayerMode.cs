@@ -10,4 +10,5 @@ public interface IPlayerMode
     void Tick(); // Per-frame behavior if necessary
     void Aim(InputAction.CallbackContext context); // How the player should aim
     void Attack(); // How the player should attack
+    void Special(); // Special mechanic for each level!
 }

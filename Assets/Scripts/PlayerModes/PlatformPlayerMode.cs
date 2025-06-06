@@ -62,5 +62,8 @@ public class PlatformPlayerMode : IPlayerMode
         _gunScript.Shoot();
     }
 
-
+    public void Special()
+    {
+        return;
+    }
 }

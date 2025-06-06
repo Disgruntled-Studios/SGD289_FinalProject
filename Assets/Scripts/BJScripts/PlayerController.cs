@@ -66,6 +66,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSpecial(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            CurrentMode?.Special();
+        }
+    }
+
     private void FixedUpdate()
     {
         CurrentMode?.Move(_rb, _movementInput, transform);

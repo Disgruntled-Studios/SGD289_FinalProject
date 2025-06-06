@@ -2,16 +2,27 @@ using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FPSGunController : MonoBehaviour
 {
+    [Header("Hands")]
     [SerializeField] private GameObject _rightHand;
     [SerializeField] private GameObject _leftHand;
+    
+    [Header("Gun")]
     [SerializeField] private GameObject _gunModel;
+    [SerializeField] private GameObject _gunHandle;
+    [SerializeField] private GameObject _gunBarrel;
     [SerializeField] private LineRenderer _lr;
-    [SerializeField] private LayerMask _enemyLayer;
-    [SerializeField] private Transform _laserStartPos;
+    [SerializeField] private Transform _barrelEnd;
 
+    [Header("Materials")] 
+    [SerializeField] private Material _blueMat;
+    [SerializeField] private Material _greenMat;
+    [SerializeField] private Material _redMat;
+    
+    [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _bulletPrefab;
 
     private bool _isAiming;
@@ -21,6 +32,8 @@ public class FPSGunController : MonoBehaviour
         _rightHand.SetActive(true);
         _leftHand.SetActive(true);
         _gunModel.SetActive(true);
+
+        _lr.enabled = false;
     }
     
     public void StartGunAim()
@@ -33,24 +46,9 @@ public class FPSGunController : MonoBehaviour
         _isAiming = false;
     }
 
-    public void ShootRaycast()
-    {
-        var origin = _laserStartPos.localPosition;
-        var direction = _laserStartPos.rotation * Vector3.forward;
-
-        if (Physics.Raycast(origin, direction, out var hit, 100f, _enemyLayer))
-        {
-            Debug.Log($"Hit: {hit.collider.gameObject.name}");
-            _lr.enabled = true;
-            _lr.SetPosition(0, origin);
-            _lr.SetPosition(1, hit.point);
-        }
-
-    }
-
     public void Shoot()
     {
-        var bullet = Instantiate(_bulletPrefab, _laserStartPos.position, _laserStartPos.rotation);
+        var bullet = Instantiate(_bulletPrefab, _barrelEnd.position, _barrelEnd.rotation);
         var bulletController = bullet.GetComponent<FPSBulletController>();
 
         bulletController.Initialize();

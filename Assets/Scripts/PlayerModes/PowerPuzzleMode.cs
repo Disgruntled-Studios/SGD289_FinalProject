@@ -43,4 +43,9 @@ public class PowerPuzzleMode : IPlayerMode
     {
         return;
     }
+
+    public void Special()
+    {
+        return;
+    }
 }

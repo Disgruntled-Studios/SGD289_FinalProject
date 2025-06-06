@@ -93,4 +93,9 @@ public class FPSPlayerMode : IPlayerMode
     {
         _fpsGunController.Shoot();
     }
+
+    public void Special()
+    {
+        return;
+    }
 }

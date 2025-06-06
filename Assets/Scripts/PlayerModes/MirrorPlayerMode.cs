@@ -49,4 +49,9 @@ public class MirrorPlayerMode : IPlayerMode
     {
         return;
     }
+
+    public void Special()
+    {
+        return;
+    }
 }

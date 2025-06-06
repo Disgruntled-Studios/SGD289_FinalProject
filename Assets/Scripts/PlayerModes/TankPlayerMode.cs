@@ -113,4 +113,9 @@ public class TankPlayerMode : IPlayerMode
     {
         _tankGunReference.HandleShoot();
     }
+
+    public void Special()
+    {
+        return;
+    }
 }

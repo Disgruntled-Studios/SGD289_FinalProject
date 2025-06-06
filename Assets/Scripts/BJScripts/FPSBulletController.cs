@@ -21,4 +21,9 @@ public class FPSBulletController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Destroy(gameObject);
+    }
 }

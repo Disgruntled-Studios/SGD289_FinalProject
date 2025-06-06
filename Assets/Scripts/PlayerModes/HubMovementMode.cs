@@ -48,8 +48,8 @@ public class HubMovementMode : IPlayerMode
 
     public void Jump()
     {
-        return;
-    } // No jumping in hub
+        Debug.Log("Hello");
+    } 
     
 
     public void Crouch(bool isPressed)
@@ -66,5 +66,10 @@ public class HubMovementMode : IPlayerMode
     public void Attack()
     {
         return;
+    }
+
+    public void Special()
+    {
+        Debug.Log("Special");
     }
 }
