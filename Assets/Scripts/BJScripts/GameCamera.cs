@@ -32,12 +32,4 @@ public class GameCamera : MonoBehaviour
             CameraManager.Instance.UnregisterCamera(_cameraId);
         }
     }
-
-    public void ReassignTarget(Transform target)
-    {
-        if (_vCam.Follow == null)
-        {
-            _vCam.Follow = target;
-        }
-    }
 }

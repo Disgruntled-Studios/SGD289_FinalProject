@@ -6,7 +6,8 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance { get; private set; }
 
-    private string _currentSceneName;
+    private Scene _currentScene;
+    private Scene? _previousScene;
 
     private void Awake()
     {
@@ -19,7 +20,8 @@ public class TransitionManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _currentSceneName = SceneManager.GetActiveScene().name;
+        _currentScene = SceneManager.GetActiveScene();
+        _previousScene = null;
     }
 
     public void TransitionToScene(string sceneName, string cameraId)
@@ -31,29 +33,37 @@ public class TransitionManager : MonoBehaviour
     private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
         var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        yield return new WaitUntil(() => loadOp.isDone);
+        if (loadOp != null)
+        {
+            yield return new WaitUntil(() => loadOp.isDone);
+        }
 
         yield return new WaitForEndOfFrame();
 
         DestroyDuplicatePlayers();
         
         var loadedScene = SceneManager.GetSceneByName(sceneName);
-        SetPlayerToSpawnPoint(loadedScene);
+        _previousScene = _currentScene;
+        _currentScene = loadedScene;
+        SetPlayerToSpawnPoint(_currentScene);
 
-        yield return new WaitUntil(() => CameraManager.Instance.HasCamera(cameraId));
+        SceneManager.SetActiveScene(_currentScene);
+
+        yield return new WaitUntil(() => CameraManager.Instance && CameraManager.Instance.HasCamera(cameraId));
 
         CameraManager.Instance.TrySetCameraTarget(cameraId, GameManager.Instance.CameraTarget);
         CameraManager.Instance.TrySwitchToCamera(cameraId);
 
         yield return new WaitForSeconds(0.1f);
 
-        if (_currentSceneName != sceneName)
+        if (_previousScene.HasValue)
         {
-            var unloadOp = SceneManager.UnloadSceneAsync(_currentSceneName);
-            yield return new WaitUntil(() => unloadOp.isDone);
+            var unloadOp = SceneManager.UnloadSceneAsync(_previousScene.Value);
+            if (unloadOp != null)
+            {
+                yield return new WaitUntil(() => unloadOp.isDone);
+            }
         }
-
-        _currentSceneName = sceneName;
     }
 
     private void SetPlayerToSpawnPoint(Scene scene)
