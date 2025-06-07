@@ -25,12 +25,7 @@ public class FPSPlayerMode : IPlayerMode
     {
         var currentSpeed = _isCrouching ? _speed * 0.5f : _speed;
 
-        // No movement? Exit early
-        if (input == Vector2.zero)
-        {
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-            return;
-        }
+        if (input == Vector2.zero) return;
 
         var camForward = _cameraPivot.forward;
         var camRight = _cameraPivot.right;
@@ -41,12 +36,11 @@ public class FPSPlayerMode : IPlayerMode
         camForward.Normalize();
         camRight.Normalize();
 
-        // Move based on camera's orientation
-        var moveDir = (camForward * input.y + camRight * input.x).normalized;
+        var moveDirection = (camForward * input.y + camRight * input.x).normalized;
 
-        // Apply movement
-        var velocity = moveDir * currentSpeed;
-        rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
+        var targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedUnscaledDeltaTime);
+
+        rb.MovePosition(targetPosition);
     }
 
     public void Rotate(Vector2 input, Transform context)

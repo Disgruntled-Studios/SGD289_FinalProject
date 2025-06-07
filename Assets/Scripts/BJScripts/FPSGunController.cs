@@ -18,16 +18,23 @@ public class FPSGunController : MonoBehaviour
     private int _matIndex;
 
     [Header("Recoil")] 
-    private float _rotationAmount = 5f;
-    private float _recoverySpeed = 10f;
-    private float _currentRecoilRotation;
-
+    [SerializeField] private float _recoilZRotation = -10f;
+    [SerializeField] private float _recoilSpeedUp = 25f;
+    [SerializeField] private float _recoilSpeedDown = 10f;
+    private float _currentZRotation;
+    private bool _isRecoiling;
+    
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _bulletPrefab;
 
     private bool _isAiming;
 
-    public Material CurrentMaterial => _materials[_matIndex];
+    private Material CurrentMaterial => _materials[_matIndex];
+
+    private void Awake()
+    {
+        _currentZRotation = transform.rotation.z;
+    }
     
     private void OnEnable()
     {
@@ -41,18 +48,33 @@ public class FPSGunController : MonoBehaviour
 
     private void Update()
     {
-        _currentRecoilRotation = Mathf.Lerp(_currentRecoilRotation, 0f, _recoverySpeed * Time.deltaTime);
-        transform.localRotation = Quaternion.Euler(-_currentRecoilRotation, 0f, 0f);
+        if (_isRecoiling)
+        {
+            _currentZRotation = Mathf.Lerp(_currentZRotation, _recoilZRotation, _recoilSpeedUp * Time.unscaledDeltaTime);
+
+            if (Mathf.Abs(_currentZRotation - _recoilZRotation) < 0.1f)
+            {
+                _isRecoiling = false;
+            }
+        }
+        else
+        {
+            _currentZRotation = Mathf.Lerp(_currentZRotation, 0f, _recoilSpeedDown * Time.unscaledDeltaTime);
+        }
+
+        var currentEuler = transform.localEulerAngles;
+        currentEuler.z = _currentZRotation;
+        transform.localEulerAngles = currentEuler;
     }
     
     public void StartGunAim()
     {
-        _isAiming = true;
+        Time.timeScale = 0.75f;
     }
 
     public void EndGunAim()
     {
-        _isAiming = false;
+        Time.timeScale = 1f;
     }
 
     public void Shoot()
@@ -62,7 +84,7 @@ public class FPSGunController : MonoBehaviour
 
         bulletController.InitializeAndFire(CurrentMaterial);
 
-        _currentRecoilRotation += _rotationAmount;
+        _isRecoiling = true;
     }
 
     public void ChangeColor()
