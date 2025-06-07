@@ -8,17 +8,18 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly float _jumpForce;
     private readonly Transform _playerTransform;
     private readonly GunScript _gunScript;
+    private readonly GameObject _gunModel;
     
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, GameObject gunModel)
     {
         _rb = playerRb;
         _speed = speed;
         _jumpForce = jumpForce;
         _playerTransform = playerTransform;
         _gunScript = gunScript;
+        _gunModel = gunModel;
     }
-
-
+    
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
         //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
@@ -41,7 +42,7 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Jump()
     {
-        if (Mathf.Abs(_rb.linearVelocity.y) < 0.05f)
+        if (Mathf.Abs(_rb.linearVelocity.y) < 0.01f)
         {
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
@@ -65,6 +66,11 @@ public class PlatformPlayerMode : IPlayerMode
     public void Special()
     {
         return;
+    }
+
+    public void OnModeEnter()
+    {
+        _gunModel.SetActive(true);
     }
 
     public void OnModeExit()

@@ -119,6 +119,11 @@ public class TankPlayerMode : IPlayerMode
         return;
     }
     
+    public void OnModeEnter()
+    {
+        return;
+    }
+    
     public void OnModeExit()
     {
         return;

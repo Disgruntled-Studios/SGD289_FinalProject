@@ -45,8 +45,6 @@ public class FPSGunController : MonoBehaviour
     
     private void OnEnable()
     {
-        ToggleGunAndHands(true);
-
         _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
         _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }

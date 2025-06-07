@@ -27,6 +27,7 @@ public class TransitionManager : MonoBehaviour
         StartCoroutine(TransitionRoutine(sceneName, cameraId));
     }
 
+    // TODO: Smooth out unload operation
     private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
         var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -34,24 +35,17 @@ public class TransitionManager : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        var loadedScene = SceneManager.GetSceneByName(sceneName);
-        
         DestroyDuplicatePlayers();
         
+        var loadedScene = SceneManager.GetSceneByName(sceneName);
         SetPlayerToSpawnPoint(loadedScene);
 
+        yield return new WaitUntil(() => CameraManager.Instance.HasCamera(cameraId));
+
         CameraManager.Instance.TrySetCameraTarget(cameraId, GameManager.Instance.CameraTarget);
+        CameraManager.Instance.TrySwitchToCamera(cameraId);
 
-        var retries = 10;
-        while (!CameraManager.Instance.TrySwitchToCamera(cameraId) && retries-- > 0)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        if (retries <= 0)
-        {
-            Debug.Log("failed to switch cameras");
-        }
+        yield return new WaitForSeconds(0.1f);
 
         if (_currentSceneName != sceneName)
         {

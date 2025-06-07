@@ -61,4 +61,9 @@ public class CameraManager : MonoBehaviour
 
         return false;
     }
+
+    public bool HasCamera(string id)
+    {
+        return _cameraRegistry.ContainsKey(id);
+    }
 }

@@ -7,11 +7,13 @@ public class HubMovementMode : IPlayerMode
 {
     private readonly float _speed;
     private readonly float _rotationSpeed;
+    private readonly GameObject _gunModel;
 
-    public HubMovementMode(float speed, float rotationSpeed)
+    public HubMovementMode(float speed, float rotationSpeed, GameObject gunModel)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
+        _gunModel = gunModel;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -69,6 +71,11 @@ public class HubMovementMode : IPlayerMode
     public void Special()
     {
         return;
+    }
+    
+    public void OnModeEnter()
+    {
+        _gunModel.SetActive(false);
     }
     
     public void OnModeExit()

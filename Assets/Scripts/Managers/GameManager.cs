@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TankGunController _tankGunController;
     [SerializeField] private GunScript _gunScript;
     [SerializeField] private FPSGunController _fpsGun;
+    [SerializeField] private GameObject _tpGunModel;
 
     [Header("Game Settings")]
     [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
@@ -111,28 +112,34 @@ public class GameManager : MonoBehaviour
         {
             case World.Hub:
                 SwitchToHub();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Tank:
                 SwitchToTank();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Platform:
                 SwitchToPlatform();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.FPS:
                 SwitchToFPS();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Mirror:
                 SwitchToMirror();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Puzzle:
                 SwitchToPuzzle();
+                _playerController.CurrentMode?.OnModeEnter();
                 break;
         }
     }
 
     private void SwitchToHub()
     {
-        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed);
+        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -149,7 +156,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript, gunModel: _tpGunModel);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;

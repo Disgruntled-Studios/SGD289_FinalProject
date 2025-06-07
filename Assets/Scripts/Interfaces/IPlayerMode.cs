@@ -11,5 +11,6 @@ public interface IPlayerMode
     void Aim(InputAction.CallbackContext context); // How the player should aim
     void Attack(); // How the player should attack
     void Special(); // Special mechanic for each level!
+    void OnModeEnter(); // Default behavior for entering this mode
     void OnModeExit(); // Default behavior for exiting this mode
 }
