@@ -1856,7 +1856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1088026818
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3291,7 +3291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 174610806}
-  _cameraTarget: {fileID: 0}
+  _cameraTarget: {fileID: 1088026820}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3299,6 +3299,7 @@ MonoBehaviour:
   _tankGunController: {fileID: 259617266}
   _gunScript: {fileID: 1843236091624525641}
   _fpsGun: {fileID: 702842417}
+  _tpGunModel: {fileID: 0}
   _isBulletTime: 0
 --- !u!4 &1954876345
 Transform:
