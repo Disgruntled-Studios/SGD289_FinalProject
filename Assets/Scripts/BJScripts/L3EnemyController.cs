@@ -1,14 +1,29 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class L3EnemyController : MonoBehaviour
 {
+    [SerializeField] private Material[] _materials;
+    
     private UnitHealth _health;
+
+    private MeshRenderer _mr;
+    
+    public Material CurrentMaterial { get; set; }
+
+    private void Awake()
+    {
+        _mr = GetComponent<MeshRenderer>();
+    }
     
     private void Start()
     {
         _health = new UnitHealth(10);
+        ChangeColor();
+        StartCoroutine(ChangeColorRoutine());
     }
 
     public void TakeDamage(float amount)
@@ -20,12 +35,30 @@ public class L3EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("L3Bullet"))
         {
-            TakeDamage(10);
-            Debug.Log(_health.CurrentHealth);
-            if (_health.IsDead)
+            if (other.gameObject.GetComponent<FPSBulletController>().CurrentMat == CurrentMaterial)
             {
-                Debug.Log("I'm dead");
+                Destroy(gameObject);
             }
+            else
+            {
+                Debug.Log("Wrong color");
+            }
+        }
+    }
+
+    private void ChangeColor()
+    {
+        var index = Random.Range(0, _materials.Length);
+        CurrentMaterial = _materials[index];
+        _mr.material = CurrentMaterial;
+    }
+    
+    private IEnumerator ChangeColorRoutine()
+    {
+        while (!_health.IsDead)
+        {
+            yield return new WaitForSeconds(Random.Range(2f, 5f));
+            ChangeColor();
         }
     }
 }

@@ -51,11 +51,11 @@ MonoBehaviour:
   _gunModel: {fileID: 6580140853005749321}
   _gunHandle: {fileID: 576263407616979079}
   _gunBarrel: {fileID: 7139856426775551344}
-  _lr: {fileID: 7269396882082055363}
   _barrelEnd: {fileID: 565271015731925898}
-  _blueMat: {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
-  _greenMat: {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
-  _redMat: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+  _materials:
+  - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+  - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
+  - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -169,11 +169,6 @@ GameObject:
 --- !u!1 &7139856426775551344 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5779723414389368599, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
-  m_PrefabInstance: {fileID: 3684065741169015399}
-  m_PrefabAsset: {fileID: 0}
---- !u!120 &7269396882082055363 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 6323752851621674660, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
   m_PrefabInstance: {fileID: 3684065741169015399}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7669992961773436882 stripped

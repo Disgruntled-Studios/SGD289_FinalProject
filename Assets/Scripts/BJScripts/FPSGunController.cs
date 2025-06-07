@@ -52,12 +52,12 @@ public class FPSGunController : MonoBehaviour
         var bullet = Instantiate(_bulletPrefab, _barrelEnd.position, _barrelEnd.rotation);
         var bulletController = bullet.GetComponent<FPSBulletController>();
 
-        bulletController.Initialize(CurrentMaterial);
+        bulletController.InitializeAndFire(CurrentMaterial);
     }
 
     public void ChangeColor()
     {
-        _matIndex += 1 % _materials.Length;
+        _matIndex = (_matIndex + 1) % _materials.Length;
         _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
         _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }

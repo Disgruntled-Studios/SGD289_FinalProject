@@ -9,9 +9,12 @@ public class FPSBulletController : MonoBehaviour
     private const float BulletLifespan = 0.5f;
     private const float BulletSpeed = 15f;
     
-    public void Initialize(Material startingMat)
+    public Material CurrentMat { get; set; }
+    
+    public void InitializeAndFire(Material startingMat)
     {
-        GetComponent<MeshRenderer>().material = startingMat;
+        CurrentMat = startingMat;
+        GetComponent<MeshRenderer>().material = CurrentMat;
         _rb.AddForce(transform.forward * BulletSpeed, ForceMode.Impulse);
         StartCoroutine(BulletLifeCycle());
     }

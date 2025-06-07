@@ -2112,6 +2112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
+  - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
+  - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3757,9 +3761,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.2
+  near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3817,8 +3821,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616201717}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -7.68, y: 1.375, z: -45.09}
+  m_LocalRotation: {x: 0.075198874, y: 0.70309687, z: -0.075198874, w: 0.70309687}
+  m_LocalPosition: {x: -9.2, y: 1.31, z: -34.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4542,6 +4546,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
+  - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
+  - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
 --- !u!1001 &935932753799426608
 PrefabInstance:
   m_ObjectHideFlags: 0
