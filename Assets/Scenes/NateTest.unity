@@ -763,6 +763,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &164798336 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6632937996530971679, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 6376975603726282315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &243016155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,6 +1445,9 @@ MonoBehaviour:
     m_Bits: 64
   _cameraPivot: {fileID: 0}
   currentTileSelection: {fileID: 0}
+  _tankGunController: {fileID: 6376975603726282318}
+  _gunScript: {fileID: 6376975603726282317}
+  _fpsGun: {fileID: 164798336}
 --- !u!4 &419757071
 Transform:
   m_ObjectHideFlags: 0
@@ -2442,8 +2456,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687504948}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071056, z: 0, w: 0.7071081}
-  m_LocalPosition: {x: -2.618, y: 2, z: -25.000002}
+  m_LocalRotation: {x: 0.28053254, y: -0.22880779, z: 0.06904809, w: 0.9296133}
+  m_LocalPosition: {x: 2.5357547, y: 3.4259818, z: -49.499832}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6551,6 +6565,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7121372938570653452, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 6376975603726282315}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6376975603726282317 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7242984614113747194, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 6376975603726282315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3f9e0ec74005d4b9d04973273161cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6376975603726282318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5101476103794282307, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 6376975603726282315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581e5d7ccecab494085b14d40848c260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
