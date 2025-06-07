@@ -8,7 +8,7 @@ public class HubMovementMode : IPlayerMode
     private readonly float _speed;
     private readonly float _rotationSpeed;
 
-    public HubMovementMode(float speed, float rotationSpeed = 10f)
+    public HubMovementMode(float speed, float rotationSpeed)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
@@ -16,11 +16,7 @@ public class HubMovementMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        if (input == Vector2.zero)
-        {
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-            return;
-        }
+        if (input == Vector2.zero) return;
 
         var camera = Camera.main;
         var camForward = camera.transform.forward;
@@ -33,8 +29,10 @@ public class HubMovementMode : IPlayerMode
 
         var moveDirection = (camForward * input.y + camRight * input.x).normalized;
 
-        var velocity = moveDirection * _speed;
-        rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
+        var moveOffset = moveDirection * (_speed * Time.fixedDeltaTime);
+        var targetPosition = rb.position + moveOffset;
+
+        rb.MovePosition(targetPosition);
     }
 
     public void Rotate(Vector2 input, Transform context)

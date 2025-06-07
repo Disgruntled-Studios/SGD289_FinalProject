@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private GameObject _player;
+    public GameObject Player => _player;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private Transform _cameraPivot;
 
@@ -18,11 +19,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FPSGunController _fpsGun;
 
     [Header("Game Settings")]
-    [SerializeField] private bool _isBulletTime;
+    [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
     public bool IsBulletTime => _isBulletTime;
 
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
+    private const float HubRotationSpeed = 1f;
 
     public World? CurrentWorld { get; private set; } // Make current world nullable for initial world processing
 
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (_player != null)
+        {
+            DontDestroyOnLoad(_player.gameObject);
+        }
 
         _playerController = _player.GetComponent<PlayerController>();
         _playerRb = _player.GetComponent<Rigidbody>();
@@ -121,7 +128,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToHub()
     {
-        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: 2f);
+        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -147,7 +154,6 @@ public class GameManager : MonoBehaviour
     private void SwitchToFPS()
     {
         _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun, isBulletTime: _isBulletTime);
-        CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
