@@ -6,20 +6,22 @@ using UnityEngine.Serialization;
 
 public class FPSGunController : MonoBehaviour
 {
-    [Header("Hands")]
-    [SerializeField] private GameObject _rightHand;
+    [Header("Hands")] [SerializeField] private GameObject _rightHand;
     [SerializeField] private GameObject _leftHand;
-    
-    [Header("Gun")]
-    [SerializeField] private GameObject _gunModel;
+
+    [Header("Gun")] [SerializeField] private GameObject _gunModel;
     [SerializeField] private GameObject _gunHandle;
     [SerializeField] private GameObject _gunBarrel;
     [SerializeField] private Transform _barrelEnd;
 
-    [Header("Materials")] 
-    [SerializeField] private Material[] _materials;
+    [Header("Materials")] [SerializeField] private Material[] _materials;
     private int _matIndex;
-    
+
+    [Header("Recoil")] 
+    private float _rotationAmount = 5f;
+    private float _recoverySpeed = 10f;
+    private float _currentRecoilRotation;
+
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private GameObject _bulletPrefab;
 
@@ -35,6 +37,12 @@ public class FPSGunController : MonoBehaviour
 
         _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
         _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
+    }
+
+    private void Update()
+    {
+        _currentRecoilRotation = Mathf.Lerp(_currentRecoilRotation, 0f, _recoverySpeed * Time.deltaTime);
+        transform.localRotation = Quaternion.Euler(-_currentRecoilRotation, 0f, 0f);
     }
     
     public void StartGunAim()
@@ -53,6 +61,8 @@ public class FPSGunController : MonoBehaviour
         var bulletController = bullet.GetComponent<FPSBulletController>();
 
         bulletController.InitializeAndFire(CurrentMaterial);
+
+        _currentRecoilRotation += _rotationAmount;
     }
 
     public void ChangeColor()
