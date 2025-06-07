@@ -54,4 +54,9 @@ public class MirrorPlayerMode : IPlayerMode
     {
         return;
     }
+    
+    public void OnModeExit()
+    {
+        return;
+    }
 }

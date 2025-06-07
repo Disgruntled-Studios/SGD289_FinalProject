@@ -6,13 +6,7 @@ using UnityEngine.Serialization;
 public class GameCamera : MonoBehaviour
 {
     [SerializeField] private string _cameraId;
-    public string CameraID
-    {
-        get
-        {
-            return _cameraId;
-        }
-    }
+    public string CameraID => _cameraId;
     private CinemachineCamera _vCam;
 
     private void Start()
@@ -36,6 +30,14 @@ public class GameCamera : MonoBehaviour
         if (CameraManager.Instance)
         {
             CameraManager.Instance.UnregisterCamera(_cameraId);
+        }
+    }
+
+    public void ReassignTarget(Transform target)
+    {
+        if (_vCam.Follow == null)
+        {
+            _vCam.Follow = target;
         }
     }
 }

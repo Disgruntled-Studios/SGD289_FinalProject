@@ -104,4 +104,9 @@ public class FPSPlayerMode : IPlayerMode
     {
         _fpsGunController.ChangeColor();
     }
+    
+    public void OnModeExit()
+    {
+        _fpsGunController.ToggleGunAndHands(false);
+    }
 }

@@ -1,16 +1,19 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [Header("Player")]
     [SerializeField] private GameObject _player;
     public GameObject Player => _player;
-    [SerializeField] private LayerMask _groundLayerMask;
-    [SerializeField] private Transform _cameraPivot;
-
+    [SerializeField] private Transform _cameraTarget;
+    public Transform CameraTarget => _cameraTarget;
     private PlayerController _playerController;
     private Rigidbody _playerRb;
+    
+    [SerializeField] private LayerMask _groundLayerMask;
     public TileSelection currentTileSelection;
     
     [Header("Gun Controllers")]
@@ -101,6 +104,7 @@ public class GameManager : MonoBehaviour
     public void SwitchPlayerMode(World mode)
     {
         if (CurrentWorld == mode) return;
+        _playerController.CurrentMode?.OnModeExit();
         CurrentWorld = mode;
 
         switch (mode)
@@ -153,7 +157,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun, isBulletTime: _isBulletTime);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;

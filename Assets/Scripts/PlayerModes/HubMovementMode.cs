@@ -70,4 +70,9 @@ public class HubMovementMode : IPlayerMode
     {
         return;
     }
+    
+    public void OnModeExit()
+    {
+        return;
+    }
 }

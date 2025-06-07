@@ -40,6 +40,8 @@ public class TransitionManager : MonoBehaviour
         
         SetPlayerToSpawnPoint(loadedScene);
 
+        CameraManager.Instance.TrySetCameraTarget(cameraId, GameManager.Instance.CameraTarget);
+
         var retries = 10;
         while (!CameraManager.Instance.TrySwitchToCamera(cameraId) && retries-- > 0)
         {

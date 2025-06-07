@@ -66,4 +66,9 @@ public class PlatformPlayerMode : IPlayerMode
     {
         return;
     }
+
+    public void OnModeExit()
+    {
+        return;
+    }
 }

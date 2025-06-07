@@ -50,4 +50,15 @@ public class CameraManager : MonoBehaviour
 
         return false;
     }
+
+    public bool TrySetCameraTarget(string cameraId, Transform target)
+    {
+        if (_cameraRegistry.TryGetValue(cameraId, out var vCam))
+        {
+            vCam.Follow = target;
+            return true;
+        }
+
+        return false;
+    }
 }

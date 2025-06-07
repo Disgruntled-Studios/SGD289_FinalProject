@@ -35,12 +35,17 @@ public class FPSGunController : MonoBehaviour
     {
         _currentZRotation = transform.rotation.z;
     }
+
+    public void ToggleGunAndHands(bool isActive)
+    {
+        _rightHand.SetActive(isActive);
+        _leftHand.SetActive(isActive);
+        _gunModel.SetActive(isActive);
+    }
     
     private void OnEnable()
     {
-        _rightHand.SetActive(true);
-        _leftHand.SetActive(true);
-        _gunModel.SetActive(true);
+        ToggleGunAndHands(true);
 
         _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
         _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
