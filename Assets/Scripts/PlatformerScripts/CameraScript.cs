@@ -6,10 +6,15 @@ public class CameraScript : MonoBehaviour
     //Or consider putting boss fight in another scene like mario does so easier to render.
 
     //Placeholder camera script
-
-    [SerializeField]
+    
     private GameObject player;
     private Vector3 camOffset;
+
+    private void Awake()
+    {
+        player = GameManager.Instance.Player;
+    }
+    
     void Start()
     {
         camOffset = transform.position - player.transform.position;
