@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GunScript _gunScript;
     [SerializeField] private FPSGunController _fpsGun;
 
+    [Header("Game Settings")]
+    [SerializeField] private bool _isBulletTime;
+    public bool IsBulletTime => _isBulletTime;
+
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
 
@@ -142,7 +146,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraPivot, gunController: _fpsGun, isBulletTime: _isBulletTime);
         CameraManager.Instance.TrySwitchToCamera("FPSMAIN");
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;

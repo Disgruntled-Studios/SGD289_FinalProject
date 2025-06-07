@@ -13,12 +13,15 @@ public class FPSPlayerMode : IPlayerMode
     private bool _isCrouching;
     private readonly FPSGunController _fpsGunController;
 
-    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController)
+    private readonly bool _isBulletTime;
+
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime)
     {
         _speed = speed;
         _playerTransform = playerTransform;
         _cameraPivot = cameraPivot;
         _fpsGunController = gunController;
+        _isBulletTime = isBulletTime;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -38,7 +41,16 @@ public class FPSPlayerMode : IPlayerMode
 
         var moveDirection = (camForward * input.y + camRight * input.x).normalized;
 
-        var targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedUnscaledDeltaTime);
+        Vector3 targetPosition;
+        
+        if (_isBulletTime)
+        {
+            targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedUnscaledDeltaTime);
+        }
+        else
+        {
+            targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedDeltaTime);
+        }
 
         rb.MovePosition(targetPosition);
     }

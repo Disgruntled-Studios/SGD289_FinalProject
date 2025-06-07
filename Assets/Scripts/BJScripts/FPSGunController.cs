@@ -50,21 +50,31 @@ public class FPSGunController : MonoBehaviour
     {
         if (_isRecoiling)
         {
-            _currentZRotation = Mathf.Lerp(_currentZRotation, _recoilZRotation, _recoilSpeedUp * Time.unscaledDeltaTime);
-
-            if (Mathf.Abs(_currentZRotation - _recoilZRotation) < 0.1f)
-            {
-                _isRecoiling = false;
-            }
+            ApplyRecoilEffect(GameManager.Instance.IsBulletTime);
         }
         else
         {
-            _currentZRotation = Mathf.Lerp(_currentZRotation, 0f, _recoilSpeedDown * Time.unscaledDeltaTime);
+            ResetRecoilEffect(GameManager.Instance.IsBulletTime);
         }
 
         var currentEuler = transform.localEulerAngles;
         currentEuler.z = _currentZRotation;
         transform.localEulerAngles = currentEuler;
+    }
+
+    private void ApplyRecoilEffect(bool isBulletTime)
+    {
+        _currentZRotation = isBulletTime ? Mathf.Lerp(_currentZRotation, _recoilZRotation, _recoilSpeedUp * Time.unscaledDeltaTime) : Mathf.Lerp(_currentZRotation, _recoilZRotation, _recoilSpeedUp * Time.deltaTime);
+
+        if (Mathf.Abs(_currentZRotation - _recoilZRotation) < 0.1f)
+        {
+            _isRecoiling = false;
+        }
+    }
+
+    private void ResetRecoilEffect(bool isBulletTime)
+    {
+        _currentZRotation = isBulletTime ? Mathf.Lerp(_currentZRotation, 0f, _recoilSpeedDown * Time.unscaledDeltaTime) : Mathf.Lerp(_currentZRotation, 0f, _recoilSpeedDown * Time.deltaTime);
     }
     
     public void StartGunAim()
