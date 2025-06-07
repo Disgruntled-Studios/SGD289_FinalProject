@@ -33,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerRef = FindFirstObjectByType<PlayerController>().gameObject;
+        playerRef = GameManager.Instance.Player;
         meshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         onDamage.AddListener(ToggleEnemyMaterial);
