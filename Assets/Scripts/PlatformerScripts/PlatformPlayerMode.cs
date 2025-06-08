@@ -79,5 +79,13 @@ public class PlatformPlayerMode : IPlayerMode
     public void OnModeExit()
     {
         _jumpOnEnemyObject.SetActive(false);
+
+        // Reset scale if player is flipped
+        if (_playerTransform.localScale.z < 1)
+        {
+            var scale = _playerTransform.localScale;
+            scale.z = 1;
+            _playerTransform.localScale = scale;
+        }
     }
 }
