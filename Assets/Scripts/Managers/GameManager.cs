@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 7f, playerTransform: _player.transform, gunScript: _gunScript, gunModel: _tpGunModel, jumpOnEnemy: _jumpOnEnemyObject);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, gunModel: _tpGunModel, jumpOnEnemy: _jumpOnEnemyObject);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;
