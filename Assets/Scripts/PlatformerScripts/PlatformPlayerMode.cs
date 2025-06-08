@@ -78,6 +78,6 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void OnModeExit()
     {
-        _jumpOnEnemyObject.SetActive(true);
+        _jumpOnEnemyObject.SetActive(false);
     }
 }
