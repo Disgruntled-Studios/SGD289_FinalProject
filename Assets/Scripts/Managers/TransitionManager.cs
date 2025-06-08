@@ -6,8 +6,8 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance { get; private set; }
 
-    private Scene _currentScene;
-    private Scene? _previousScene;
+    private string _currentSceneName;
+    private string _previousSceneName;
 
     private void Awake()
     {
@@ -20,35 +20,65 @@ public class TransitionManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _currentScene = SceneManager.GetActiveScene();
-        _previousScene = null;
+        var activeScene = SceneManager.GetActiveScene();
+        _currentSceneName = activeScene.name;
+        _previousSceneName = null;
+        
+        Debug.Log($"[Awake] Starting in scene: {_currentSceneName}");
     }
 
     public void TransitionToScene(string sceneName, string cameraId)
     {
+        Debug.Log($"[TransitionToScene] Request to transition to '{sceneName}' from '{_currentSceneName}'");
         StartCoroutine(TransitionRoutine(sceneName, cameraId));
     }
 
     // TODO: Smooth out unload operation
     private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
-        var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        if (loadOp != null)
+        Debug.Log($"[TOP] Starting transition. Current: {_currentSceneName}, Previous: {_previousSceneName}, Target: {sceneName}");
+
+        // Load the new scene additively, only if it’s not already loaded
+        if (!SceneManager.GetSceneByName(sceneName).isLoaded)
         {
-            yield return new WaitUntil(() => loadOp.isDone);
+            var loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            if (loadOp != null)
+            {
+                yield return new WaitUntil(() => loadOp.isDone);
+            }
         }
 
         yield return new WaitForEndOfFrame();
 
+        // List all loaded scenes for clarity
+        Debug.Log("[LOADED SCENES]:");
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Debug.Log($"- {SceneManager.GetSceneAt(i).name}");
+        }
+
         DestroyDuplicatePlayers();
-        
+
         var loadedScene = SceneManager.GetSceneByName(sceneName);
-        _previousScene = _currentScene;
-        _currentScene = loadedScene;
-        SetPlayerToSpawnPoint(_currentScene);
 
-        SceneManager.SetActiveScene(_currentScene);
+        // LOG: before updating names
+        Debug.Log($"[PRE-UPDATE] _currentSceneName: {_currentSceneName}, _previousSceneName: {_previousSceneName}");
 
+        // Update previous name only if current is valid and different
+        if (!string.IsNullOrEmpty(_currentSceneName) && _currentSceneName != sceneName)
+        {
+            _previousSceneName = _currentSceneName;
+        }
+        _currentSceneName = sceneName;
+
+        // LOG: after updating names
+        Debug.Log($"[POST-UPDATE] _currentSceneName: {_currentSceneName}, _previousSceneName: {_previousSceneName}");
+
+        SetPlayerToSpawnPoint(loadedScene);
+
+        SceneManager.SetActiveScene(loadedScene);
+
+        // Wait for the new scene’s camera(s) to register
         yield return new WaitUntil(() => CameraManager.Instance && CameraManager.Instance.HasCamera(cameraId));
 
         CameraManager.Instance.TrySetCameraTarget(cameraId, GameManager.Instance.CameraTarget);
@@ -56,14 +86,38 @@ public class TransitionManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        if (_previousScene.HasValue)
+        // LOG: check unload block top-level condition
+        Debug.Log($"[CHECK UNLOAD] _previousSceneName: {_previousSceneName}, _currentSceneName: {_currentSceneName}");
+
+        if (!string.IsNullOrEmpty(_previousSceneName) && _previousSceneName != _currentSceneName)
         {
-            var unloadOp = SceneManager.UnloadSceneAsync(_previousScene.Value);
-            if (unloadOp != null)
+            Debug.Log($"[ENTERING UNLOAD BLOCK] _previousSceneName: {_previousSceneName}, _currentSceneName: {_currentSceneName}");
+
+            var prevScene = SceneManager.GetSceneByName(_previousSceneName);
+            if (prevScene.IsValid() && prevScene.isLoaded)
             {
-                yield return new WaitUntil(() => unloadOp.isDone);
+                Debug.Log($"Unloading previous scene '{_previousSceneName}'");
+                var unloadOp = SceneManager.UnloadSceneAsync(prevScene);
+                if (unloadOp != null)
+                {
+                    yield return new WaitUntil(() => unloadOp.isDone);
+                }
+                else
+                {
+                    Debug.LogWarning($"Unload operation for '{_previousSceneName}' was null. It may already be unloaded.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Previous scene '{_previousSceneName}' is not valid or not loaded.");
             }
         }
+        else
+        {
+            Debug.Log("[SKIP UNLOAD] No previous scene to unload or same as current.");
+        }
+
+        Debug.Log($"[COMPLETE] Transition finished. Current scene: {_currentSceneName}");
     }
 
     private void SetPlayerToSpawnPoint(Scene scene)

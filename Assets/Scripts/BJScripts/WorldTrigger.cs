@@ -11,7 +11,6 @@ public class WorldTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         
-        Debug.Log($"Transition to {_world}");
         GameManager.Instance.SwitchPlayerMode(_world);
         TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId);
     }
