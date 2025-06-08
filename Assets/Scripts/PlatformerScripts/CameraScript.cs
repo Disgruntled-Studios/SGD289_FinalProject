@@ -10,14 +10,10 @@ public class CameraScript : MonoBehaviour
     [SerializeField]
     private GameObject player;
     private Vector3 camOffset;
-
-    private void Awake()
-    {
-        player = GameManager.Instance.Player;
-    }
     
     void Start()
     {
+        player = GameManager.Instance.Player;
         camOffset = transform.position - player.transform.position;
     }
 

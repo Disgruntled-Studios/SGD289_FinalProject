@@ -9,8 +9,9 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly Transform _playerTransform;
     private readonly GunScript _gunScript;
     private readonly GameObject _gunModel;
+    private readonly GameObject _jumpOnEnemyObject;
     
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, GameObject gunModel)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, GameObject gunModel, GameObject jumpOnEnemy)
     {
         _rb = playerRb;
         _speed = speed;
@@ -18,6 +19,7 @@ public class PlatformPlayerMode : IPlayerMode
         _playerTransform = playerTransform;
         _gunScript = gunScript;
         _gunModel = gunModel;
+        _jumpOnEnemyObject = jumpOnEnemy;
     }
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -71,10 +73,11 @@ public class PlatformPlayerMode : IPlayerMode
     public void OnModeEnter()
     {
         _gunModel.SetActive(true);
+        _jumpOnEnemyObject.SetActive(true);
     }
 
     public void OnModeExit()
     {
-        return;
+        _jumpOnEnemyObject.SetActive(true);
     }
 }

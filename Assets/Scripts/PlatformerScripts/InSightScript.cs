@@ -14,13 +14,9 @@ public class InSightScript : MonoBehaviour
     
     private Vector3 inSightOffset;
 
-    private void Awake()
+    private void Start()
     {
         player = GameManager.Instance.Player;
-    }
-    
-    void Start()
-    {
         inSightOffset = transform.position - player.transform.position;
     }
 
