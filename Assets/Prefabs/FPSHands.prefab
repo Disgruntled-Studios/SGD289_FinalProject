@@ -56,6 +56,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
   - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
   - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
+  _recoilZRotation: -10
+  _recoilSpeedUp: 25
+  _recoilSpeedDown: 10
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -71,6 +74,18 @@ PrefabInstance:
     - target: {fileID: 1511121943963971051, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3700309063304871935, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3700309063304871935, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3700309063304871935, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3816889451122403821, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_LocalPosition.x
