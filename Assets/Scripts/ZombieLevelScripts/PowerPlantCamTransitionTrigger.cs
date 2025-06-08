@@ -9,8 +9,8 @@ using UnityEditor;
 
 public class PowerPlantCamTransitionTrigger : MonoBehaviour
 {
-    public CinemachineCamera camRefOne;
-    public CinemachineCamera camRefTwo;
+    public GameCamera camRefOne;
+    public GameCamera camRefTwo;
 
     public bool switchToCamRefTwoFirst;
     public bool switchToCamRefOneFirst;
@@ -19,15 +19,20 @@ public class PowerPlantCamTransitionTrigger : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerController>())
         {
+            Debug.Log("Player Detected");
             if (switchToCamRefTwoFirst)
             {
-                PowerPlantCamController.Instance.SwitchSceneCameras(camRefTwo);
+                Debug.Log("Switching to cam two");
+                CameraManager.Instance.TrySwitchToCamera(camRefTwo.CameraID);
+                CameraManager.Instance.TrySetCameraTarget(camRefTwo.CameraID, GameManager.Instance.CameraTarget);
                 switchToCamRefTwoFirst = false;
                 switchToCamRefOneFirst = true;
             }
             else
             {
-                PowerPlantCamController.Instance.SwitchSceneCameras(camRefOne);
+                Debug.Log("Switching to cam two");
+                CameraManager.Instance.TrySwitchToCamera(camRefOne.CameraID);
+                CameraManager.Instance.TrySetCameraTarget(camRefOne.CameraID, GameManager.Instance.CameraTarget);
                 switchToCamRefTwoFirst = true;
                 switchToCamRefOneFirst = false;
             }

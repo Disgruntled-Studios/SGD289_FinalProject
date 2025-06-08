@@ -20,6 +20,7 @@ public class TankGunController : MonoBehaviour
         if (_lr != null)
         {
             _lr.enabled = false;
+            _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
     }
 
@@ -62,7 +63,7 @@ public class TankGunController : MonoBehaviour
         _lr.enabled = true;
         RaycastHit hit;
         //Shoot a ray forward to see if there is an object to hit.
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if (Physics.Raycast(laserStart.position, laserStart.forward, out hit))
         {
             if (hit.collider && !hit.collider.isTrigger)
             {
