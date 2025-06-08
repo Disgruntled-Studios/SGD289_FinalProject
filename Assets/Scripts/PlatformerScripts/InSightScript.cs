@@ -6,9 +6,10 @@ public class InSightScript : MonoBehaviour
     //Or consider putting boss fight in another scene like mario does so easier to render.
 
     //Placeholder camera script
-    
+
     // BJ Note: Player reference now comes from GameManager for transitioning
-    
+
+    [SerializeField]
     private GameObject player;
     
     private Vector3 inSightOffset;

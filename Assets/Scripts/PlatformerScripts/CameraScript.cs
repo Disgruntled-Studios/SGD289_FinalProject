@@ -6,7 +6,8 @@ public class CameraScript : MonoBehaviour
     //Or consider putting boss fight in another scene like mario does so easier to render.
 
     //Placeholder camera script
-    
+
+    [SerializeField]
     private GameObject player;
     private Vector3 camOffset;
 

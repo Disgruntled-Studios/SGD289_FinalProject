@@ -61,16 +61,22 @@ public class BulletScript : MonoBehaviour
         }
     }
 
-    /*
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("PlatformEnemy"))
         {
-            platformManager.HandleDamage();
-            platformManager.CheckGameOver();
-            //Implement Object pooling
-            this.gameObject.SetActive(false);
+            try
+            {
+                print("set parent of enemy to false");
+                other.transform.parent.gameObject.SetActive(false);
+            }
+            catch
+            {
+                print("couldn't find parent of enemy, so set enemy false");
+                other.gameObject.SetActive(false);
+            }
         }
     }
-    */
+    
 }
