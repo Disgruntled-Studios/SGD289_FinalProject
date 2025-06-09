@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         else
         {
             SwitchPlayerMode(World.Hub);
+            CameraManager.Instance.TrySwitchToCamera("HUBMAIN");
+            CameraManager.Instance.TrySetCameraTarget("HUBMAIN", CameraTarget);
         }
     }
 
