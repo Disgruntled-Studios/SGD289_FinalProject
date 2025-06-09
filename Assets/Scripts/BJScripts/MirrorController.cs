@@ -35,7 +35,7 @@ public class MirrorController : MonoBehaviour, IInteractable
 
         var rb = player.gameObject.GetComponent<Rigidbody>();
         rb.position = _mirrorPosition.position;
-        rb.rotation = Quaternion.Euler(0f, -90f, 0f);
+        rb.rotation = _mirrorPosition.rotation;
         
         _mirrorPanel.SetActive(true);
     }

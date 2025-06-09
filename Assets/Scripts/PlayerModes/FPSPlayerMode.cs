@@ -59,9 +59,11 @@ public class FPSPlayerMode : IPlayerMode
     {
         const float sensitivity = 0.33f;
 
-        _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
 
-        _xRotation -= input.y * sensitivity;
+        // TODO: Implement sensitivity
+        _playerTransform.Rotate(Vector3.up, input.x);
+
+        _xRotation -= input.y;
         _xRotation = Mathf.Clamp(_xRotation, -ClampAngle, ClampAngle);
 
         _cameraPivot.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
