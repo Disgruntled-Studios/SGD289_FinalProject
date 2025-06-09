@@ -58,4 +58,9 @@ public class PowerPuzzleMode : IPlayerMode
     {
         return;
     }
+    
+    public void Sprint()
+    {
+        return;
+    }
 }

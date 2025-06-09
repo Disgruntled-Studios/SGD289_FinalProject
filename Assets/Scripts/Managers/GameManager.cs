@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: _playerRb);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;

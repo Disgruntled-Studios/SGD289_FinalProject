@@ -58,6 +58,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            CurrentMode?.Sprint();
+        }
+    }
+
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed)

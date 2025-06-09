@@ -12,16 +12,20 @@ public class FPSPlayerMode : IPlayerMode
     private const float ClampAngle = 50f;
     private bool _isCrouching;
     private readonly FPSGunController _fpsGunController;
-
+    private Rigidbody _playerRb;
+    
     private readonly bool _isBulletTime;
 
-    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime)
+    private float _jumpForce = 10f;
+
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb)
     {
         _speed = speed;
         _playerTransform = playerTransform;
         _cameraPivot = cameraPivot;
         _fpsGunController = gunController;
         _isBulletTime = isBulletTime;
+        _playerRb = playerRb;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -59,7 +63,6 @@ public class FPSPlayerMode : IPlayerMode
     {
         const float sensitivity = 0.33f;
 
-
         // TODO: Implement sensitivity
         _playerTransform.Rotate(Vector3.up, input.x);
 
@@ -71,8 +74,11 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Jump()
     {
-        return;
-    } // Not used in stealth
+        if (Mathf.Abs(_playerRb.linearVelocity.y) < 0.01f)
+        {
+            _playerRb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        }
+    } 
 
     public void Crouch(bool isPressed)
     {
@@ -115,5 +121,10 @@ public class FPSPlayerMode : IPlayerMode
     public void OnModeExit()
     {
         _fpsGunController.ToggleGunAndHands(false);
+    }
+    
+    public void Sprint()
+    {
+        return;
     }
 }

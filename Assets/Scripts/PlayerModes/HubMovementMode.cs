@@ -80,4 +80,9 @@ public class HubMovementMode : IPlayerMode
     {
         return;
     }
+    
+    public void Sprint()
+    {
+        return;
+    }
 }

@@ -88,4 +88,9 @@ public class PlatformPlayerMode : IPlayerMode
             _playerTransform.localScale = scale;
         }
     }
+
+    public void Sprint()
+    {
+        return;
+    }
 }

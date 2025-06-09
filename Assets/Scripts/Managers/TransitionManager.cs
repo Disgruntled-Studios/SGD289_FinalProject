@@ -21,20 +21,15 @@ public class TransitionManager : MonoBehaviour
 
         var activeScene = SceneManager.GetActiveScene();
         _currentSceneName = activeScene.name;
-
-        Debug.Log($"[Awake] Starting in scene: {_currentSceneName}");
     }
 
     public void TransitionToScene(string sceneName, string cameraId)
     {
-        Debug.Log($"[TransitionToScene] Request to transition to '{sceneName}' from '{_currentSceneName}'");
         StartCoroutine(TransitionRoutine(sceneName, cameraId));
     }
 
     private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
-        Debug.Log($"[TOP] Starting transition. Current: {_currentSceneName}, Target: {sceneName}");
-
         // Load new scene additively if not already loaded
         if (!SceneManager.GetSceneByName(sceneName).isLoaded)
         {
@@ -52,17 +47,20 @@ public class TransitionManager : MonoBehaviour
         _currentSceneName = sceneName;
 
         // Unload all other loaded scenes except the active one
-        for (int i = 0; i < SceneManager.sceneCount; i++)
+        for (var i = 0; i < SceneManager.sceneCount; i++)
         {
             var scene = SceneManager.GetSceneAt(i);
             if (scene.isLoaded && scene.name != _currentSceneName)
             {
-                Debug.Log($"[UNLOADING] Scene: {scene.name}");
                 var unloadOp = SceneManager.UnloadSceneAsync(scene);
                 if (unloadOp != null)
+                {
                     yield return new WaitUntil(() => unloadOp.isDone);
+                }
                 else
+                {
                     Debug.LogWarning($"Unload operation for '{scene.name}' was null!");
+                }
             }
         }
 
@@ -77,14 +75,6 @@ public class TransitionManager : MonoBehaviour
         CameraManager.Instance.TrySwitchToCamera(cameraId);
 
         yield return new WaitForSeconds(0.1f);
-
-        Debug.Log("[LOADED SCENES AFTER CLEANUP]:");
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Debug.Log($"- {SceneManager.GetSceneAt(i).name}");
-        }
-
-        Debug.Log($"[COMPLETE] Transition finished. Current scene: {_currentSceneName}");
     }
 
 
@@ -93,16 +83,15 @@ public class TransitionManager : MonoBehaviour
         foreach (var rootObject in scene.GetRootGameObjects())
         {
             var spawnPoint = rootObject.GetComponentInChildren<LevelStartPoint>();
-            if (spawnPoint != null)
+            if (spawnPoint)
             {
                 var playerRb = GameManager.Instance.Player.GetComponent<Rigidbody>();
-                if (playerRb != null)
+                if (playerRb)
                 {
                     playerRb.MovePosition(spawnPoint.transform.position);
                     playerRb.MoveRotation(spawnPoint.transform.rotation);
                 }
-
-                Debug.Log($"[SPAWN] Player moved to spawn in scene '{scene.name}'");
+                
                 return;
             }
         }
@@ -119,7 +108,6 @@ public class TransitionManager : MonoBehaviour
             if (player != GameManager.Instance.Player)
             {
                 Destroy(player);
-                Debug.Log("[DESTROY DUPLICATE] Removed duplicate player object");
             }
         }
     }

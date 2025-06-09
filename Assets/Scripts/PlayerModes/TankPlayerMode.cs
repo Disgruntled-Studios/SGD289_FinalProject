@@ -128,4 +128,9 @@ public class TankPlayerMode : IPlayerMode
     {
         return;
     }
+    
+    public void Sprint()
+    {
+        return;
+    }
 }

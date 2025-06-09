@@ -64,4 +64,9 @@ public class MirrorPlayerMode : IPlayerMode
     {
         return;
     }
+    
+    public void Sprint()
+    {
+        return;
+    }
 }
