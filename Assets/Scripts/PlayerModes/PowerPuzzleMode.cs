@@ -31,7 +31,7 @@ public class PowerPuzzleMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        playerSelection.MoveSelection(input.x, input.y);
+        //playerSelection.MoveSelection(input.x, input.y);
     }
 
     public void Rotate(Vector2 input, Transform context)
