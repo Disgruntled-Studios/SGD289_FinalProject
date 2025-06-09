@@ -1061,6 +1061,297 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PuzzleMap"",
+            ""id"": ""60fb1195-46b9-4498-8947-3a5860267f91"",
+            ""actions"": [
+                {
+                    ""name"": ""RotateTileRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""7eef8006-7478-4f6e-89b9-6f505cfa69e4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateTileLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2ab552a-9ef7-4663-9c38-020e831bac21"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveSouth"",
+                    ""type"": ""Button"",
+                    ""id"": ""96f18432-48f1-47a0-94d8-2e86f958b3f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveNorth"",
+                    ""type"": ""Button"",
+                    ""id"": ""0728822b-6c0a-4daf-a0e2-36bcc7e53162"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveWest"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ef9bd0b-2690-4735-99e4-64d8e19e26aa"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveEast"",
+                    ""type"": ""Button"",
+                    ""id"": ""7367a37c-1bfe-4a10-82d8-9433b4fea06a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitPuzzle"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7f9dc64-52f3-46ba-9c0e-7ad400fe9aa8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9b178ac0-bf02-489b-a79e-dba949b60d94"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""RotateTileRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80ebf65b-c954-47f9-96e3-00e52f2bc6dc"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateTileRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48cdacdc-fce2-4d6c-ac0a-521b3d12547d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateTileRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16d24d3d-583c-497c-a378-0c2dc7ae5c8b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""RotateTileLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1305431a-daeb-4045-9729-d8f420889a1f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateTileLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af681956-9f39-4948-aa82-d3e41a188128"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RotateTileLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7b89bb1-3587-4ccf-9f9b-6d84b7b51e02"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""213dbf0a-e439-49bb-a02c-8a2f06ffef4b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dee7b425-7fb1-4fe4-8537-9accaa3196ae"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f5a60d4-ebe9-4d56-a421-52a78ad8f2e7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b78fe2e-414a-45e9-87cc-5b3bac1b735d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a7abe1d-f1cc-4e45-b4d3-cb2d60fb11e7"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveNorth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a75f46d0-b48f-4222-b8a3-54bc6033d2bd"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveWest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cf21ea0-5573-4ea3-9317-32755e96bba0"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveWest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dc564b0-1865-4b7e-accd-d3d66dfca7fc"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveWest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b18080f2-0cad-416a-ad05-2fecb31e42f5"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff080c3c-eb25-441d-bb47-89be7bf72e4f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MoveEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ac6ecd0-f453-46e1-aa44-2d718a8c636a"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveEast"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d55f4f42-c296-4e9e-bb46-ca60cdc8b684"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ExitPuzzle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6d720f3-59e7-42cb-a8b2-2aa7a963ee5d"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ExitPuzzle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1151,12 +1442,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // PuzzleMap
+        m_PuzzleMap = asset.FindActionMap("PuzzleMap", throwIfNotFound: true);
+        m_PuzzleMap_RotateTileRight = m_PuzzleMap.FindAction("RotateTileRight", throwIfNotFound: true);
+        m_PuzzleMap_RotateTileLeft = m_PuzzleMap.FindAction("RotateTileLeft", throwIfNotFound: true);
+        m_PuzzleMap_MoveSouth = m_PuzzleMap.FindAction("MoveSouth", throwIfNotFound: true);
+        m_PuzzleMap_MoveNorth = m_PuzzleMap.FindAction("MoveNorth", throwIfNotFound: true);
+        m_PuzzleMap_MoveWest = m_PuzzleMap.FindAction("MoveWest", throwIfNotFound: true);
+        m_PuzzleMap_MoveEast = m_PuzzleMap.FindAction("MoveEast", throwIfNotFound: true);
+        m_PuzzleMap_ExitPuzzle = m_PuzzleMap.FindAction("ExitPuzzle", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_PuzzleMap.enabled, "This will cause a leak and performance issues, PlayerInput.PuzzleMap.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1629,6 +1930,100 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // PuzzleMap
+    private readonly InputActionMap m_PuzzleMap;
+    private List<IPuzzleMapActions> m_PuzzleMapActionsCallbackInterfaces = new List<IPuzzleMapActions>();
+    private readonly InputAction m_PuzzleMap_RotateTileRight;
+    private readonly InputAction m_PuzzleMap_RotateTileLeft;
+    private readonly InputAction m_PuzzleMap_MoveSouth;
+    private readonly InputAction m_PuzzleMap_MoveNorth;
+    private readonly InputAction m_PuzzleMap_MoveWest;
+    private readonly InputAction m_PuzzleMap_MoveEast;
+    private readonly InputAction m_PuzzleMap_ExitPuzzle;
+    public struct PuzzleMapActions
+    {
+        private @PlayerInput m_Wrapper;
+        public PuzzleMapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RotateTileRight => m_Wrapper.m_PuzzleMap_RotateTileRight;
+        public InputAction @RotateTileLeft => m_Wrapper.m_PuzzleMap_RotateTileLeft;
+        public InputAction @MoveSouth => m_Wrapper.m_PuzzleMap_MoveSouth;
+        public InputAction @MoveNorth => m_Wrapper.m_PuzzleMap_MoveNorth;
+        public InputAction @MoveWest => m_Wrapper.m_PuzzleMap_MoveWest;
+        public InputAction @MoveEast => m_Wrapper.m_PuzzleMap_MoveEast;
+        public InputAction @ExitPuzzle => m_Wrapper.m_PuzzleMap_ExitPuzzle;
+        public InputActionMap Get() { return m_Wrapper.m_PuzzleMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PuzzleMapActions set) { return set.Get(); }
+        public void AddCallbacks(IPuzzleMapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Add(instance);
+            @RotateTileRight.started += instance.OnRotateTileRight;
+            @RotateTileRight.performed += instance.OnRotateTileRight;
+            @RotateTileRight.canceled += instance.OnRotateTileRight;
+            @RotateTileLeft.started += instance.OnRotateTileLeft;
+            @RotateTileLeft.performed += instance.OnRotateTileLeft;
+            @RotateTileLeft.canceled += instance.OnRotateTileLeft;
+            @MoveSouth.started += instance.OnMoveSouth;
+            @MoveSouth.performed += instance.OnMoveSouth;
+            @MoveSouth.canceled += instance.OnMoveSouth;
+            @MoveNorth.started += instance.OnMoveNorth;
+            @MoveNorth.performed += instance.OnMoveNorth;
+            @MoveNorth.canceled += instance.OnMoveNorth;
+            @MoveWest.started += instance.OnMoveWest;
+            @MoveWest.performed += instance.OnMoveWest;
+            @MoveWest.canceled += instance.OnMoveWest;
+            @MoveEast.started += instance.OnMoveEast;
+            @MoveEast.performed += instance.OnMoveEast;
+            @MoveEast.canceled += instance.OnMoveEast;
+            @ExitPuzzle.started += instance.OnExitPuzzle;
+            @ExitPuzzle.performed += instance.OnExitPuzzle;
+            @ExitPuzzle.canceled += instance.OnExitPuzzle;
+        }
+
+        private void UnregisterCallbacks(IPuzzleMapActions instance)
+        {
+            @RotateTileRight.started -= instance.OnRotateTileRight;
+            @RotateTileRight.performed -= instance.OnRotateTileRight;
+            @RotateTileRight.canceled -= instance.OnRotateTileRight;
+            @RotateTileLeft.started -= instance.OnRotateTileLeft;
+            @RotateTileLeft.performed -= instance.OnRotateTileLeft;
+            @RotateTileLeft.canceled -= instance.OnRotateTileLeft;
+            @MoveSouth.started -= instance.OnMoveSouth;
+            @MoveSouth.performed -= instance.OnMoveSouth;
+            @MoveSouth.canceled -= instance.OnMoveSouth;
+            @MoveNorth.started -= instance.OnMoveNorth;
+            @MoveNorth.performed -= instance.OnMoveNorth;
+            @MoveNorth.canceled -= instance.OnMoveNorth;
+            @MoveWest.started -= instance.OnMoveWest;
+            @MoveWest.performed -= instance.OnMoveWest;
+            @MoveWest.canceled -= instance.OnMoveWest;
+            @MoveEast.started -= instance.OnMoveEast;
+            @MoveEast.performed -= instance.OnMoveEast;
+            @MoveEast.canceled -= instance.OnMoveEast;
+            @ExitPuzzle.started -= instance.OnExitPuzzle;
+            @ExitPuzzle.performed -= instance.OnExitPuzzle;
+            @ExitPuzzle.canceled -= instance.OnExitPuzzle;
+        }
+
+        public void RemoveCallbacks(IPuzzleMapActions instance)
+        {
+            if (m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPuzzleMapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PuzzleMapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PuzzleMapActions @PuzzleMap => new PuzzleMapActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1856,5 +2251,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IPuzzleMapActions
+    {
+        void OnRotateTileRight(InputAction.CallbackContext context);
+        void OnRotateTileLeft(InputAction.CallbackContext context);
+        void OnMoveSouth(InputAction.CallbackContext context);
+        void OnMoveNorth(InputAction.CallbackContext context);
+        void OnMoveWest(InputAction.CallbackContext context);
+        void OnMoveEast(InputAction.CallbackContext context);
+        void OnExitPuzzle(InputAction.CallbackContext context);
     }
 }

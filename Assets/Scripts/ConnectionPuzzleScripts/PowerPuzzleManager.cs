@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
-public class PowerPuzzleManager : MonoBehaviour
+public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
 
     public PowerPuzzleTile powerNode;
     public PowerPuzzleTile recieverNode;
     public List<PowerPuzzleTile> tiles;
     public UnityEvent onPuzzleCompletion;
-    public TileSelection playerSelection;
+    public TileSelection tileSelection;
     public World outOfPuzzleWorld;
     public string outOfPuzzleCamID;
-    private Camera cam;
+    public GameCamera sceneCam;
     public bool isPuzzledone;
 
     void Awake()
@@ -29,8 +30,8 @@ public class PowerPuzzleManager : MonoBehaviour
             }
             tiles.Add(transform.GetChild(i).GetComponent<PowerPuzzleTile>());
         }
-        cam = Camera.main;
         isPuzzledone = false;
+        tileSelection = GetComponentInChildren<TileSelection>();
     }
 
     void Update()
@@ -39,20 +40,21 @@ public class PowerPuzzleManager : MonoBehaviour
         {
             Debug.Log("Puzzle complete");
             onPuzzleCompletion.Invoke();
-            GameManager.Instance.SwitchPlayerMode(outOfPuzzleWorld);
             CameraManager.Instance.TrySwitchToCamera(outOfPuzzleCamID);
+            ExitPuzzle();
         }
 
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 100f;
-        mousePos = cam.ScreenToWorldPoint(mousePos);
-        Debug.DrawRay(cam.gameObject.transform.position, mousePos - cam.gameObject.transform.position, Color.blue);
-
         if (!powerNode.isConnected) CheckTilesConnection();
-
     }
 
-    void CheckTilesConnection()
+    public void ExitPuzzle()
+    {
+        //GameManager.Instance.SwitchPlayerMode(outOfPuzzleWorld);
+        CameraManager.Instance.TrySwitchToCamera(outOfPuzzleCamID);
+        InputManager.ToggleActionMap(InputManager._inputActions.Player);
+    }
+
+    public void CheckTilesConnection()
     {
         foreach (PowerPuzzleTile tile in tiles)
         {
@@ -64,19 +66,91 @@ public class PowerPuzzleManager : MonoBehaviour
         }
     }
 
-    void RotateTile(GameObject tileRef, bool rotateRight)
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<PuzzleController>())
+        {
+            other.gameObject.GetComponent<PuzzleController>().SetVars(this);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<PuzzleController>())
+        {
+            other.gameObject.GetComponent<PuzzleController>().WipeVars();
+        }
+    }
+
+    public void MoveSelection(int dir)
+    {
+        switch (dir)
+        {
+            case 1:
+                //If its North
+                if (tileSelection.transform.localPosition.x <= tileSelection.xLimit)
+                {
+                    tileSelection.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 2, 0);
+                }
+                break;
+            case 2:
+                //South
+                if (tileSelection.transform.localPosition.x >= -tileSelection.xLimit)
+                {
+                    tileSelection.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 2, 0);
+                }
+                break;
+            case 3:
+                //West
+                if (transform.localPosition.y <= tileSelection.yLimit)
+                {
+                    tileSelection.transform.localPosition = new Vector3(transform.localPosition.x + 2, transform.localPosition.y, 0);
+                }
+                break;
+            case 4:
+                //East
+                if (transform.localPosition.y >= -tileSelection.yLimit)
+                {
+                    tileSelection.transform.localPosition = new Vector3(transform.localPosition.x - 2, transform.localPosition.y, 0);
+                }
+                break;
+        }
+    }
+
+    public void RotateTile(bool rotateRight)
     {
         if (rotateRight)
         {
-            Debug.Log("Rotating right");
-            tileRef.transform.Rotate(0, 0, 90f);
+            tileSelection.selectedOBJ.transform.Rotate(0, 0, 90f);
         }
         else
         {
-            Debug.Log("Rotating left");
-            tileRef.transform.Rotate(0, 0, -90f);
+            tileSelection.selectedOBJ.transform.Rotate(0, 0, -90f);
         }
         CheckTilesConnection();
+    }
+
+    public void Interact(Transform player)
+    {
+        Debug.Log("Interact function called");
+        if (!isPuzzledone)
+        {
+            Debug.Log("Starting puzzle");
+            //outOfPuzzleWorld = (World)GameManager.Instance.CurrentWorld;
+            outOfPuzzleCamID = sceneCam.CameraID;
+            //GameManager.Instance.currentTileSelection = tileSelection;
+            InputManager.ToggleActionMap(InputManager._inputActions.PuzzleMap);
+            CameraManager.Instance.TrySwitchToCamera("PowerPuzzleCam");
+        }
+        else
+        {
+            Debug.Log("Cannot Enter puzzle because it has already been solved");
+        }
+    }
+
+    public void OnExit()
+    {
+        return;
     }
 
 }
