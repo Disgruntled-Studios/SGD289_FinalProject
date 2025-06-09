@@ -59,7 +59,7 @@ public class PowerPuzzleMode : IPlayerMode
         return;
     }
     
-    public void Sprint()
+    public void Sprint(InputAction.CallbackContext context)
     {
         return;
     }

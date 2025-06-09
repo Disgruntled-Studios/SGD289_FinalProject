@@ -89,7 +89,7 @@ public class PlatformPlayerMode : IPlayerMode
         }
     }
 
-    public void Sprint()
+    public void Sprint(InputAction.CallbackContext context)
     {
         return;
     }

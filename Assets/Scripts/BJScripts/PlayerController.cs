@@ -60,10 +60,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            CurrentMode?.Sprint();
-        }
+        CurrentMode?.Sprint(context);
     }
 
     public void OnInteract(InputAction.CallbackContext context)

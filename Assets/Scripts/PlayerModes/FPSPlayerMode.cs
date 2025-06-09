@@ -12,11 +12,11 @@ public class FPSPlayerMode : IPlayerMode
     private const float ClampAngle = 50f;
     private bool _isCrouching;
     private readonly FPSGunController _fpsGunController;
-    private Rigidbody _playerRb;
-    
+    private readonly Rigidbody _playerRb;
     private readonly bool _isBulletTime;
-
+    
     private float _jumpForce = 10f;
+    private bool _isSprinting;
 
     public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb)
     {
@@ -30,7 +30,17 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        var currentSpeed = _isCrouching ? _speed * 0.5f : _speed;
+        var baseSpeed = _speed;
+
+        if (_isCrouching)
+        {
+            baseSpeed *= 0.5f;
+        }
+
+        if (_isSprinting)
+        {
+            baseSpeed *= 1.5f;
+        }
 
         if (input == Vector2.zero) return;
 
@@ -39,22 +49,13 @@ public class FPSPlayerMode : IPlayerMode
 
         camForward.y = 0;
         camRight.y = 0;
-        
         camForward.Normalize();
         camRight.Normalize();
 
         var moveDirection = (camForward * input.y + camRight * input.x).normalized;
 
-        Vector3 targetPosition;
-        
-        if (_isBulletTime)
-        {
-            targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedUnscaledDeltaTime);
-        }
-        else
-        {
-            targetPosition = rb.position + moveDirection * (currentSpeed * Time.fixedDeltaTime);
-        }
+        var deltaTime = _isBulletTime ? Time.fixedUnscaledDeltaTime : Time.fixedDeltaTime;
+        var targetPosition = rb.position + moveDirection * (baseSpeed * deltaTime);
 
         rb.MovePosition(targetPosition);
     }
@@ -123,8 +124,18 @@ public class FPSPlayerMode : IPlayerMode
         _fpsGunController.ToggleGunAndHands(false);
     }
     
-    public void Sprint()
+    public void Sprint(InputAction.CallbackContext context)
     {
-        return;
+        if (_isCrouching) return;
+        
+        if (context.started)
+        {
+            _isSprinting = true;
+        }
+
+        if (context.canceled)
+        {
+            _isSprinting = false;
+        }
     }
 }

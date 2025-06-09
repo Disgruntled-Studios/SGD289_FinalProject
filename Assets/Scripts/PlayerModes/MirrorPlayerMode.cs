@@ -65,7 +65,7 @@ public class MirrorPlayerMode : IPlayerMode
         return;
     }
     
-    public void Sprint()
+    public void Sprint(InputAction.CallbackContext context)
     {
         return;
     }
