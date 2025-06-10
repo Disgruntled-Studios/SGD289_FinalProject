@@ -18,15 +18,15 @@ public class PowerPuzzleInteration : MonoBehaviour, IInteractable
 
     void OnEnable()
     {
-        move_N = InputManager._inputActions.PuzzleMap.MoveNorth;
-        move_S = InputManager._inputActions.PuzzleMap.MoveSouth;
-        move_W = InputManager._inputActions.PuzzleMap.MoveWest;
-        move_E = InputManager._inputActions.PuzzleMap.MoveEast;
+        move_N = InputManager.Instance.PlayerInput.PuzzleMap.MoveNorth;
+        move_S = InputManager.Instance.PlayerInput.PuzzleMap.MoveSouth;
+        move_W = InputManager.Instance.PlayerInput.PuzzleMap.MoveWest;
+        move_E = InputManager.Instance.PlayerInput.PuzzleMap.MoveEast;
     }
 
     void OnDisable()
     {
-        //InputManager._inputActions.PuzzleMap.ExitPuzzle.performed -= manager.ExitPuzzle;
+        //InputManager.Instance.PlayerInput.PuzzleMap.ExitPuzzle.performed -= manager.ExitPuzzle;
     }
 
     public void Interact(Transform player)

@@ -10,11 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4838020050481297923}
   - component: {fileID: 4579355303186379407}
+  - component: {fileID: 162581117897990501}
   - component: {fileID: 2392127784452737548}
   - component: {fileID: 1685884930930213568}
   - component: {fileID: 8755751124204630501}
   - component: {fileID: 9107562140772942605}
   - component: {fileID: 1631882390750520044}
+  - component: {fileID: -3149225006463833514}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -257,11 +259,135 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f77ed0cd-bd3c-4a56-a867-9c3e4ce81d44
     m_ActionName: 'Player/Special[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: RotateTileRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7eef8006-7478-4f6e-89b9-6f505cfa69e4
+    m_ActionName: 'PuzzleMap/RotateTileRight[/Mouse/rightButton,/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: RotateTileLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c2ab552a-9ef7-4663-9c38-020e831bac21
+    m_ActionName: 'PuzzleMap/RotateTileLeft[/Mouse/leftButton,/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: MoveSouth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 96f18432-48f1-47a0-94d8-2e86f958b3f0
+    m_ActionName: 'PuzzleMap/MoveSouth[/Keyboard/s,/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: MoveNorth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0728822b-6c0a-4daf-a0e2-36bcc7e53162
+    m_ActionName: 'PuzzleMap/MoveNorth[/Keyboard/w,/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: MoveWest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8ef9bd0b-2690-4735-99e4-64d8e19e26aa
+    m_ActionName: 'PuzzleMap/MoveWest[/Keyboard/leftArrow,/Keyboard/a]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: MoveEast
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7367a37c-1bfe-4a10-82d8-9433b4fea06a
+    m_ActionName: 'PuzzleMap/MoveEast[/Keyboard/rightArrow,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3149225006463833514}
+        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
+        m_MethodName: ExitPuzzle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a7f9dc64-52f3-46ba-9c0e-7ad400fe9aa8
+    m_ActionName: 'PuzzleMap/ExitPuzzle[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &162581117897990501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c986d7b3972096b499b2ff413efcbf08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &2392127784452737548
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -438,6 +564,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3149225006463833514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e4a7e9c3659e4749a272c0dcb4b1d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1339413103774563053
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,7 +51,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     {
         //GameManager.Instance.SwitchPlayerMode(outOfPuzzleWorld);
         CameraManager.Instance.TrySwitchToCamera(outOfPuzzleCamID);
-        InputManager.ToggleActionMap(InputManager._inputActions.Player);
+        InputManager.Instance.SwitchToDefaultInput();
     }
 
     public void CheckTilesConnection()
@@ -139,7 +139,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             //outOfPuzzleWorld = (World)GameManager.Instance.CurrentWorld;
             outOfPuzzleCamID = sceneCam.CameraID;
             //GameManager.Instance.currentTileSelection = tileSelection;
-            InputManager.ToggleActionMap(InputManager._inputActions.PuzzleMap);
+            InputManager.Instance.SwitchToPuzzleInput();
             CameraManager.Instance.TrySwitchToCamera("PowerPuzzleCam");
         }
         else
