@@ -75,8 +75,11 @@ public class TankPlayerMode : IPlayerMode
 
     public void Crouch(bool isPressed)
     {
-        return;
-    } // Not used in Tank
+        if (isPressed)
+        {
+            
+        }
+    }
     public void Tick()
     {
         //Each frame we check if the player is grounded or not.

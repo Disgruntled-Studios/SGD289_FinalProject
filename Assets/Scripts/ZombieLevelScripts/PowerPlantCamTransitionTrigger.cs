@@ -19,10 +19,10 @@ public class PowerPlantCamTransitionTrigger : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerController>())
         {
-            Debug.Log("Player Detected");
+            //Debug.Log("Player Detected");
             if (switchToCamRefTwoFirst)
             {
-                Debug.Log("Switching to cam two");
+                //Debug.Log("Switching to cam two");
                 CameraManager.Instance.TrySwitchToCamera(camRefTwo.CameraID);
                 CameraManager.Instance.TrySetCameraTarget(camRefTwo.CameraID, GameManager.Instance.CameraTarget);
                 switchToCamRefTwoFirst = false;
@@ -30,7 +30,7 @@ public class PowerPlantCamTransitionTrigger : MonoBehaviour
             }
             else
             {
-                Debug.Log("Switching to cam two");
+                //Debug.Log("Switching to cam two");
                 CameraManager.Instance.TrySwitchToCamera(camRefOne.CameraID);
                 CameraManager.Instance.TrySetCameraTarget(camRefOne.CameraID, GameManager.Instance.CameraTarget);
                 switchToCamRefTwoFirst = true;

@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     
     private Vector2 _movementInput;
     private Vector2 _lookInput;
-    private bool _isCrouching;
+    [HideInInspector]
+    public bool _isCrouching { get; private set; }
 
     private Rigidbody _rb;
 
