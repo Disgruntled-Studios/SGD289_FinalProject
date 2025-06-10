@@ -6,17 +6,15 @@ using UnityEngine.Serialization;
 
 public class FPSGunController : MonoBehaviour
 {
-    [Header("Hands")] 
-    [SerializeField] private GameObject _rightHand;
+    [Header("Hands")] [SerializeField] private GameObject _rightHand;
     [SerializeField] private GameObject _leftHand;
-    [SerializeField] private LineRenderer _laser;
-    
-    [Header("Gun")] 
-    [SerializeField] private GameObject _gunModel;
+
+    [Header("Gun")] [SerializeField] private GameObject _gunModel;
+    [SerializeField] private GameObject _gunHandle;
+    [SerializeField] private GameObject _gunBarrel;
     [SerializeField] private Transform _barrelEnd;
 
-    [Header("Materials")] 
-    [SerializeField] private Material[] _materials;
+    [Header("Materials")] [SerializeField] private Material[] _materials;
     private int _matIndex;
 
     [Header("Recoil")] 
@@ -43,12 +41,12 @@ public class FPSGunController : MonoBehaviour
         _rightHand.SetActive(isActive);
         _leftHand.SetActive(isActive);
         _gunModel.SetActive(isActive);
-        _laser.gameObject.SetActive(isActive);
     }
     
     private void OnEnable()
     {
-        _laser.material = CurrentMaterial;
+        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
+        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }
 
     private void Update()
@@ -105,6 +103,7 @@ public class FPSGunController : MonoBehaviour
     public void ChangeColor()
     {
         _matIndex = (_matIndex + 1) % _materials.Length;
-        _laser.material = CurrentMaterial;
+        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
+        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }
 }
