@@ -1941,22 +1941,67 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PuzzleMap_MoveWest;
     private readonly InputAction m_PuzzleMap_MoveEast;
     private readonly InputAction m_PuzzleMap_ExitPuzzle;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "PuzzleMap".
+    /// </summary>
     public struct PuzzleMapActions
     {
         private @PlayerInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
         public PuzzleMapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/RotateTileRight".
+        /// </summary>
         public InputAction @RotateTileRight => m_Wrapper.m_PuzzleMap_RotateTileRight;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/RotateTileLeft".
+        /// </summary>
         public InputAction @RotateTileLeft => m_Wrapper.m_PuzzleMap_RotateTileLeft;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/MoveSouth".
+        /// </summary>
         public InputAction @MoveSouth => m_Wrapper.m_PuzzleMap_MoveSouth;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/MoveNorth".
+        /// </summary>
         public InputAction @MoveNorth => m_Wrapper.m_PuzzleMap_MoveNorth;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/MoveWest".
+        /// </summary>
         public InputAction @MoveWest => m_Wrapper.m_PuzzleMap_MoveWest;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/MoveEast".
+        /// </summary>
         public InputAction @MoveEast => m_Wrapper.m_PuzzleMap_MoveEast;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleMap/ExitPuzzle".
+        /// </summary>
         public InputAction @ExitPuzzle => m_Wrapper.m_PuzzleMap_ExitPuzzle;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_PuzzleMap; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
         public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="PuzzleMapActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
         public static implicit operator InputActionMap(PuzzleMapActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="PuzzleMapActions" />
         public void AddCallbacks(IPuzzleMapActions instance)
         {
             if (instance == null || m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Contains(instance)) return;
@@ -1984,6 +2029,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ExitPuzzle.canceled += instance.OnExitPuzzle;
         }
 
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="PuzzleMapActions" />
         private void UnregisterCallbacks(IPuzzleMapActions instance)
         {
             @RotateTileRight.started -= instance.OnRotateTileRight;
@@ -2009,12 +2061,25 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ExitPuzzle.canceled -= instance.OnExitPuzzle;
         }
 
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PuzzleMapActions.UnregisterCallbacks(IPuzzleMapActions)" />.
+        /// </summary>
+        /// <seealso cref="PuzzleMapActions.UnregisterCallbacks(IPuzzleMapActions)" />
         public void RemoveCallbacks(IPuzzleMapActions instance)
         {
             if (m_Wrapper.m_PuzzleMapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="PuzzleMapActions.AddCallbacks(IPuzzleMapActions)" />
+        /// <seealso cref="PuzzleMapActions.RemoveCallbacks(IPuzzleMapActions)" />
+        /// <seealso cref="PuzzleMapActions.UnregisterCallbacks(IPuzzleMapActions)" />
         public void SetCallbacks(IPuzzleMapActions instance)
         {
             foreach (var item in m_Wrapper.m_PuzzleMapActionsCallbackInterfaces)
@@ -2023,6 +2088,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             AddCallbacks(instance);
         }
     }
+    /// <summary>
+    /// Provides a new <see cref="PuzzleMapActions" /> instance referencing this action map.
+    /// </summary>
     public PuzzleMapActions @PuzzleMap => new PuzzleMapActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
@@ -2252,14 +2320,61 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PuzzleMap" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="PuzzleMapActions.AddCallbacks(IPuzzleMapActions)" />
+    /// <seealso cref="PuzzleMapActions.RemoveCallbacks(IPuzzleMapActions)" />
     public interface IPuzzleMapActions
     {
+        /// <summary>
+        /// Method invoked when associated input action "RotateTileRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRotateTileRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RotateTileLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRotateTileLeft(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveSouth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveSouth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveNorth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveNorth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveWest" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveWest(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveEast" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveEast(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ExitPuzzle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnExitPuzzle(InputAction.CallbackContext context);
     }
 }
