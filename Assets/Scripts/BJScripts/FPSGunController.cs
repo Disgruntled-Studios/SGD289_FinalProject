@@ -13,6 +13,7 @@ public class FPSGunController : MonoBehaviour
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform _barrelEnd;
     [SerializeField] private LineRenderer _lr;
+    [SerializeField] private GameObject _collider;
     
     [Header("Materials")] 
     [SerializeField] private Material[] _materials;
@@ -42,6 +43,7 @@ public class FPSGunController : MonoBehaviour
         _rightHand.SetActive(isActive);
         _leftHand.SetActive(isActive);
         _gunModel.SetActive(isActive);
+        _collider.SetActive(isActive);
         _lr.enabled = isActive;
     }
 
