@@ -74,6 +74,8 @@ public class PlatformPlayerMode : IPlayerMode
     {
         _gunModel.SetActive(true);
         _jumpOnEnemyObject.SetActive(true);
+        // Laser is disabled initially by default
+        _gunScript.ToggleLineRenderer(false);
     }
 
     public void OnModeExit()
