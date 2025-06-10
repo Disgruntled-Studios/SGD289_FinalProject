@@ -62,12 +62,26 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        const float sensitivity = 0.33f;
+        const float mouseSensitivity = 0.2f;
+        const float controllerSensitivity = 0.4f;
 
-        // TODO: Implement sensitivity
-        _playerTransform.Rotate(Vector3.up, input.x);
+        float sensitivity;
+        if (InputManager.Instance.IsUsingKeyboard)
+        {
+            sensitivity = mouseSensitivity;
+        }
+        else if (InputManager.Instance.IsUsingController)
+        {
+            sensitivity = controllerSensitivity;
+        }
+        else
+        {
+            sensitivity = mouseSensitivity;
+        }
+        
+        _playerTransform.Rotate(Vector3.up, input.x * sensitivity);
 
-        _xRotation -= input.y;
+        _xRotation -= input.y * sensitivity;
         _xRotation = Mathf.Clamp(_xRotation, -ClampAngle, ClampAngle);
 
         _cameraPivot.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);

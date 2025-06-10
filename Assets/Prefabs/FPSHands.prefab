@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7804080868921853202}
   - component: {fileID: 4337335802217291464}
-  - component: {fileID: 5787141719750450741}
   m_Layer: 0
   m_Name: FPSHands
   m_TagString: Untagged
@@ -65,27 +64,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _bulletPrefab: {fileID: 2144255047026004570, guid: 4bd9055efebf1b440954730b320aa9e6, type: 3}
---- !u!65 &5787141719750450741
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484778572590021609}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0152946, y: 0.37140858, z: 0.2945342}
-  m_Center: {x: -0.30845976, y: -0.23603219, z: 0.21162525}
 --- !u!1 &5749105315089289458
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2504280501950001026
 Transform:
   m_ObjectHideFlags: 0
@@ -112,7 +90,7 @@ Transform:
   m_GameObject: {fileID: 5749105315089289458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.265, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -173,7 +151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3816889451122403821, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.65
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3816889451122403821, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
       propertyPath: m_LocalRotation.w
