@@ -572,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1685884930930213568, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: isTestingFPS
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1685884930930213568, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: isTestingHub
@@ -754,7 +754,8 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3489635098473805026, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7628986085075216578, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_AddedGameObjects: []
