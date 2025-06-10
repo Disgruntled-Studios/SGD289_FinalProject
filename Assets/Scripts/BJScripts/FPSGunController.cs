@@ -9,9 +9,8 @@ public class FPSGunController : MonoBehaviour
     [Header("Hands")] [SerializeField] private GameObject _rightHand;
     [SerializeField] private GameObject _leftHand;
 
-    [Header("Gun")] [SerializeField] private GameObject _gunModel;
-    [SerializeField] private GameObject _gunHandle;
-    [SerializeField] private GameObject _gunBarrel;
+    [Header("Gun")] 
+    [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform _barrelEnd;
 
     [Header("Materials")] [SerializeField] private Material[] _materials;
@@ -45,8 +44,7 @@ public class FPSGunController : MonoBehaviour
     
     private void OnEnable()
     {
-        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
-        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
+        
     }
 
     private void Update()
@@ -103,7 +101,5 @@ public class FPSGunController : MonoBehaviour
     public void ChangeColor()
     {
         _matIndex = (_matIndex + 1) % _materials.Length;
-        _gunBarrel.GetComponent<MeshRenderer>().material = CurrentMaterial;
-        _gunHandle.GetComponent<MeshRenderer>().material = CurrentMaterial;
     }
 }

@@ -700,15 +700,15 @@ PrefabInstance:
       objectReference: {fileID: 1955208382}
     - target: {fileID: 7121372938570653452, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7121372938570653452, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7121372938570653452, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7124715319328088895, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_IsActive
@@ -751,7 +751,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7628986085075216578, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -2181,6 +2182,11 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1096946222704880799, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1098921463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7783969279390999060, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1102631052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2587,7 +2593,7 @@ MonoBehaviour:
   _tankGunController: {fileID: 54181946}
   _gunScript: {fileID: 54181945}
   _fpsGun: {fileID: 27478868}
-  _tpGunModel: {fileID: 266296265}
+  _tpGunModel: {fileID: 1098921463}
   _isBulletTime: 0
 --- !u!1 &1500785864
 GameObject:
@@ -2961,9 +2967,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.2
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3022,7 +3028,7 @@ Transform:
   m_GameObject: {fileID: 1616201717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73, y: 1.375, z: -21.81}
+  m_LocalPosition: {x: 0.23, y: 1.375, z: -19.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
