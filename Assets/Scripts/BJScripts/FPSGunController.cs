@@ -12,8 +12,10 @@ public class FPSGunController : MonoBehaviour
     [Header("Gun")] 
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform _barrelEnd;
-
-    [Header("Materials")] [SerializeField] private Material[] _materials;
+    [SerializeField] private LineRenderer _lr;
+    
+    [Header("Materials")] 
+    [SerializeField] private Material[] _materials;
     private int _matIndex;
 
     [Header("Recoil")] 
@@ -40,11 +42,7 @@ public class FPSGunController : MonoBehaviour
         _rightHand.SetActive(isActive);
         _leftHand.SetActive(isActive);
         _gunModel.SetActive(isActive);
-    }
-    
-    private void OnEnable()
-    {
-        
+        _lr.enabled = isActive;
     }
 
     private void Update()
@@ -101,5 +99,6 @@ public class FPSGunController : MonoBehaviour
     public void ChangeColor()
     {
         _matIndex = (_matIndex + 1) % _materials.Length;
+        _lr.material = _materials[_matIndex];
     }
 }

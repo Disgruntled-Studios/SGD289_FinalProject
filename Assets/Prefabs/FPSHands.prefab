@@ -50,6 +50,7 @@ MonoBehaviour:
   _leftHand: {fileID: 4020422985625054081}
   _gunModel: {fileID: 7251725395248169674}
   _barrelEnd: {fileID: 565271015731925898}
+  _lr: {fileID: 7269396882082055363}
   _materials:
   - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
   - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
@@ -204,6 +205,11 @@ Transform:
 --- !u!1 &7251725395248169674 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6305923033217562797, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
+  m_PrefabInstance: {fileID: 3684065741169015399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!120 &7269396882082055363 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 6323752851621674660, guid: 11b32115e06a66246a792c4f7f95f9ea, type: 3}
   m_PrefabInstance: {fileID: 3684065741169015399}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7669992961773436882 stripped
