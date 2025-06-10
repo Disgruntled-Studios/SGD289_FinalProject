@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         }
         else if (_playerController.isTestingFPS)
         {
+            TransitionManager.Instance.TransitionToScene("BJ_FPS", "FPSMAIN");
             SwitchPlayerMode(World.FPS);
         }
         else
@@ -128,6 +129,7 @@ public class GameManager : MonoBehaviour
             case World.FPS:
                 SwitchToFPS();
                 _playerController.CurrentMode?.OnModeEnter();
+                _tpGunModel.SetActive(false); // BJ TESTING
                 break;
             case World.Mirror:
                 SwitchToMirror();
