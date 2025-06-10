@@ -62,8 +62,9 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        const float mouseSensitivity = 0.2f;
-        const float controllerSensitivity = 0.4f;
+        // Higher = faster, lower = slower
+        const float mouseSensitivity = 0.4f;
+        const float controllerSensitivity = 0.6f;
 
         float sensitivity;
         if (InputManager.Instance.IsUsingKeyboard)
