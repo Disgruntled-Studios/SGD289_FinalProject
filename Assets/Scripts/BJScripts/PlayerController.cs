@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     
     private Vector2 _movementInput;
     private Vector2 _lookInput;
+
+    public Vector2 MovementInput => _movementInput;
+    public Vector2 LookInput => _lookInput;
+    
     [HideInInspector]
     public bool _isCrouching { get; private set; }
 
