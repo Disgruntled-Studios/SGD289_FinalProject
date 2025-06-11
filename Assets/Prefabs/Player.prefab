@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 1685884930930213568}
   - component: {fileID: 8755751124204630501}
   - component: {fileID: 9107562140772942605}
+  - component: {fileID: 6124709286696072186}
   - component: {fileID: 1631882390750520044}
   - component: {fileID: 5882779557340138336}
-  - component: {fileID: 6124709286696072186}
+  - component: {fileID: 4277027718331309823}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -446,6 +447,7 @@ MonoBehaviour:
   isTestingTank: 1
   isTestingPlatform: 0
   isTestingFPS: 0
+  _animationController: {fileID: 0}
 --- !u!114 &8755751124204630501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,6 +484,27 @@ CapsuleCollider:
   m_Height: 1.4825784
   m_Direction: 1
   m_Center: {x: 0.0007162392, y: 0.73285633, z: 0}
+--- !u!135 &6124709286696072186
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566506458669336387}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.3712422
+  m_Center: {x: 0, y: 0.3323922, z: 0}
 --- !u!82 &1631882390750520044
 AudioSource:
   m_ObjectHideFlags: 0
@@ -601,27 +624,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!135 &6124709286696072186
-SphereCollider:
+--- !u!114 &4277027718331309823
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566506458669336387}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.3712422
-  m_Center: {x: 0, y: 0.3323922, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04138ce1653dd74ebfe57c0cef71042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rb: {fileID: 2392127784452737548}
+  _anim: {fileID: 5882779557340138336}
 --- !u!1 &1339413103774563053
 GameObject:
   m_ObjectHideFlags: 0

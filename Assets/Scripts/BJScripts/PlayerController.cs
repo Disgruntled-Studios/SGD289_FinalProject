@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public IPlayerMode CurrentMode { get; set; }
     private IInteractable _currentInteractable;
 
+    [SerializeField] private PlayerAnimationController _animationController;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
