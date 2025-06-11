@@ -14,11 +14,13 @@ public class FPSPlayerMode : IPlayerMode
     private readonly FPSGunController _fpsGunController;
     private readonly Rigidbody _playerRb;
     private readonly bool _isBulletTime;
+    private readonly CapsuleCollider _standingCollider;
+    private readonly SphereCollider _crouchingCollider;
     
     private float _jumpForce = 10f;
     private bool _isSprinting;
 
-    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb)
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider)
     {
         _speed = speed;
         _playerTransform = playerTransform;
@@ -26,6 +28,8 @@ public class FPSPlayerMode : IPlayerMode
         _fpsGunController = gunController;
         _isBulletTime = isBulletTime;
         _playerRb = playerRb;
+        _standingCollider = standingCollider;
+        _crouchingCollider = crouchingCollider;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)

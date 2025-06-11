@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
     public bool IsBulletTime => _isBulletTime;
 
+    [Header("Colliders")] 
+    [SerializeField] private CapsuleCollider _standingCollider;
+    [SerializeField] private SphereCollider _crouchCollider;
+    
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
     private const float HubRotationSpeed = 1f;
@@ -152,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController);
+        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -169,7 +173,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: _playerRb);
+        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: _playerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;

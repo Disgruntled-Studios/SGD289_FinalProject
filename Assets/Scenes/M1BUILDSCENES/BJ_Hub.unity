@@ -766,10 +766,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7802326864684409885, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8016657025286850767, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2214,6 +2210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593bef32add22d742bdca06abe71b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &1078754790 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 6124709286696072186, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1078754793 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 9107562140772942605, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1095257887 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1096946222704880799, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -2689,6 +2695,8 @@ MonoBehaviour:
   _fpsGun: {fileID: 27478868}
   _tpGunModel: {fileID: 1098921463}
   _isBulletTime: 0
+  _standingCollider: {fileID: 1078754793}
+  _crouchCollider: {fileID: 1078754790}
 --- !u!1 &1500785864
 GameObject:
   m_ObjectHideFlags: 0
