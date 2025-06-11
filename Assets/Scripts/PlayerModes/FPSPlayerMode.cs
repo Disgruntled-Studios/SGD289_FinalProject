@@ -136,6 +136,7 @@ public class FPSPlayerMode : IPlayerMode
     public void OnModeEnter()
     {
         _fpsGunController.ToggleGunAndHands(true);
+        _fpsGunController.ToggleLaser(false);
     }
     
     public void OnModeExit()
