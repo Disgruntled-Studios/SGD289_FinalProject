@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
+            _isCrouching = _isCrouching;
+            CurrentMode?.Crouch(_isCrouching);
+        }
+        else if (context.canceled)
+        {
             _isCrouching = !_isCrouching;
             CurrentMode?.Crouch(_isCrouching);
         }

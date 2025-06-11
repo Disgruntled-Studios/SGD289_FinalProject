@@ -12,29 +12,22 @@ public class PowerPlantCamTransitionTrigger : MonoBehaviour
     public GameCamera camRefOne;
     public GameCamera camRefTwo;
 
-    public bool switchToCamRefTwoFirst;
-    public bool switchToCamRefOneFirst;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerController>())
         {
             //Debug.Log("Player Detected");
-            if (switchToCamRefTwoFirst)
+            if (camRefOne.GetComponent<CinemachineCamera>().Priority > 0)
             {
-                //Debug.Log("Switching to cam two");
+                Debug.Log("Switching to cam two");
                 CameraManager.Instance.TrySwitchToCamera(camRefTwo.CameraID);
                 CameraManager.Instance.TrySetCameraTarget(camRefTwo.CameraID, GameManager.Instance.CameraTarget);
-                switchToCamRefTwoFirst = false;
-                switchToCamRefOneFirst = true;
             }
-            else
+            else if (camRefTwo.GetComponent<CinemachineCamera>().Priority > 0)
             {
-                //Debug.Log("Switching to cam two");
+                Debug.Log("Switching to cam one");
                 CameraManager.Instance.TrySwitchToCamera(camRefOne.CameraID);
                 CameraManager.Instance.TrySetCameraTarget(camRefOne.CameraID, GameManager.Instance.CameraTarget);
-                switchToCamRefTwoFirst = true;
-                switchToCamRefOneFirst = false;
             }
         }
     }
@@ -69,11 +62,6 @@ public class PowerPlantCamTransitionTrigger_Editor : Editor
         DrawDefaultInspector();
 
         PowerPlantCamTransitionTrigger script = (PowerPlantCamTransitionTrigger)target;
-
-        if (script.switchToCamRefTwoFirst)
-        {
-            //script.Is_GO_Two_First = EditorGUILayout.Toggle(script.Is_GO_Two_First, typeof(bool), true) as bool;
-        }
     }
 }
 

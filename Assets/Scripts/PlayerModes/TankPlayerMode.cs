@@ -3,19 +3,24 @@ using UnityEngine.InputSystem;
 
 public class TankPlayerMode : IPlayerMode
 {
-    private readonly float _speed;
+    private readonly float _normalSpeed;
+    private readonly float _halfSpeed;
+    private float _currentSpeed;
     private readonly Transform _player;
     private readonly Rigidbody _rb;
     public float _rotationSpeed;
     private float currentRotationSpeed;
     //private bool _isAiming;
     private bool isGrounded;
+    private bool _isCrouching;
     private float groundDrag = 5f;
     private float playerHeight = 2f;
     LayerMask _groundLayerMask;
+    CapsuleCollider _standingCollider;
+    SphereCollider _crouchCollider;
 
     private TankGunController _tankGunReference;
-    
+
 
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -27,46 +32,71 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
     public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef)
     {
-        _speed = speed;
+        _normalSpeed = speed;
+        _halfSpeed = speed / 2f;
+        _currentSpeed = speed;
         _player = player;
         _rotationSpeed = rotationSpeed;
         currentRotationSpeed = rotationSpeed;
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
         _tankGunReference = tankGunRef;
+        _standingCollider = _player.GetComponent<CapsuleCollider>();
+        _crouchCollider = _player.GetComponent<SphereCollider>();
+        _crouchCollider.enabled = false;
     }
 
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
+        if (InputManager.Instance.IsInPuzzle) return;
 
-        rb.AddForce(context.forward * (input.y * _speed * 10f), ForceMode.Force);
-        if (input.x == 0)
+        if (_tankGunReference.isReloading)
         {
-            _rb.angularVelocity = Vector3.zero;
+            _currentSpeed = _halfSpeed;
+        }
+        else if (!_tankGunReference.isReloading && _currentSpeed == _halfSpeed && !_isCrouching)
+        {
+            _currentSpeed = _normalSpeed;
+        }
+
+        rb.AddForce(context.forward * (input.y * _currentSpeed * 10f), ForceMode.Force);
+        
+        if (input.x != 0 && InputManager.Instance.IsUsingKeyboard)
+        {
+            context.transform.Rotate(new Vector3(0, input.x, 0) * currentRotationSpeed);
         }
         else
         {
-            context.transform.Rotate(new Vector3(0, input.x, 0) * currentRotationSpeed);
+            _rb.angularVelocity = Vector3.zero;
         }
 
     }
 
     public void ToggleRotationSpeed()
     {
+        if (InputManager.Instance.IsInPuzzle) return;
         if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
         {
-            Debug.Log("Changing speed to a quarter of current speed");
             currentRotationSpeed *= 0.25f;
         }
         else
         {
-            Debug.Log("Changing speed to original speed");
             currentRotationSpeed = _rotationSpeed;
         }
     }
 
-    public void Rotate(Vector2 input, Transform context) { }
+    public void Rotate(Vector2 input, Transform context)
+    {
+        if (input.x != 0 && InputManager.Instance.IsUsingController)
+        {
+            context.transform.Rotate(new Vector3(0, input.x, 0) * currentRotationSpeed);
+        }
+        else
+        {
+            _rb.angularVelocity = Vector3.zero;
+        }
+    }
 
     public void Jump()
     {
@@ -75,16 +105,32 @@ public class TankPlayerMode : IPlayerMode
 
     public void Crouch(bool isPressed)
     {
-        if (isPressed)
+
+        if (InputManager.Instance.IsInPuzzle) return;
+
+        if (_standingCollider.enabled)
         {
-            
+            _isCrouching = true;
+            _currentSpeed = _halfSpeed;
+            _standingCollider.enabled = false;
+            _crouchCollider.enabled = true;
+            Debug.Log(_isCrouching);
+        }
+        else
+        {
+            _isCrouching = false;
+            _currentSpeed = _normalSpeed;
+            _standingCollider.enabled = true;
+            _crouchCollider.enabled = false;
+            Debug.Log("Not Crouching");
         }
     }
     public void Tick()
     {
+        if (InputManager.Instance.IsInPuzzle) return;
         //Each frame we check if the player is grounded or not.
         isGrounded = Physics.Raycast(_player.position, Vector3.down, playerHeight * 0.5f + 0.2f, _groundLayerMask);
-        Debug.DrawLine(_player.position, new Vector3(_player.position.x, (-1 * playerHeight * .5f + 0.2f), _player.position.z), Color.green);
+        Debug.DrawLine(_player.position, new Vector3(_player.position.x, (-1 * playerHeight * 0.5f + 0.2f), _player.position.z), Color.green);
 
         //If the player is grounded and has Velocity stored on the Y axis we reset their vertical velocity.X
         if (isGrounded)
@@ -99,6 +145,7 @@ public class TankPlayerMode : IPlayerMode
 
     public void Aim(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.IsInPuzzle) return;
         if (context.started)
         {
             _tankGunReference.StartGunAim();
@@ -114,6 +161,7 @@ public class TankPlayerMode : IPlayerMode
 
     public void Attack()
     {
+        if (InputManager.Instance.IsInPuzzle) return;
         _tankGunReference.HandleShoot();
     }
 

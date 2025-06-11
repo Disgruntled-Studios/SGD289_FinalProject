@@ -1,3 +1,4 @@
+using System.Collections;
 using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,11 +10,15 @@ public class TankGunController : MonoBehaviour
     [SerializeField] private Transform laserStart;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _damageAmount = 50f;
+    [SerializeField, Range(1,10)] float reloadSpeed = 5f;
+    [SerializeField] int maxMagLimit = 12;
+    [SerializeField] int currentAmmoMagAmt = 0;
 
     [Header("Laser")]
     [SerializeField] private LineRenderer _lr;
 
     public bool isAiming;
+    [HideInInspector] public bool isReloading;
 
     private void Start()
     {
@@ -22,6 +27,7 @@ public class TankGunController : MonoBehaviour
             _lr.enabled = false;
             _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
+        StartCoroutine(ReloadGun());
     }
 
     private void Update()
@@ -79,13 +85,11 @@ public class TankGunController : MonoBehaviour
 
     public void ShootForTank()
     {
-        if (isAiming)
+        if (isAiming && currentAmmoMagAmt > 0 && !isReloading)
         {
-            Debug.Log("Shooting");
-
-            //Debug.DrawLine(gunBarrelTransform.position, gunBarrelTransform.forward * 50);
-            //Debug.DrawRay(gunBarrelTransform.position, gunBarrelTransform.forward, Color.green ,3f);
-            //Debug.Log("Shot fired");
+            //Debug.Log("Shooting");
+            currentAmmoMagAmt--;
+            PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Ammo : " + currentAmmoMagAmt + "/" + maxMagLimit;
             //Play SFX 
             //Play VFX
 
@@ -94,17 +98,37 @@ public class TankGunController : MonoBehaviour
 
             if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _enemyLayer))
             {
-                Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
                 //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
                 if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
                 {
                     hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(_damageAmount);
-                    Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
+                    //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
                 }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
         }
+        else if (isAiming)
+        {
+            StartCoroutine(ReloadGun());
+        }
+    }
+
+    IEnumerator ReloadGun()
+    {
+        //Debug.Log("Is Reloading");
+        isReloading = true;
+
+
+        //call animation to reload
+
+        //Call reload SFX
+        yield return new WaitForSeconds(reloadSpeed);
+        currentAmmoMagAmt = maxMagLimit;
+        PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Ammo : " + currentAmmoMagAmt + "/" + maxMagLimit;
+        //Debug.Log("Is Reloaded");
+        isReloading = false;
     }
 
 }

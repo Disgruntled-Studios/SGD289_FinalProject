@@ -13,6 +13,7 @@ public class EnemyFOV : MonoBehaviour
 
     //public List<Transform> visibleTargets = new List<Transform>();
     public Transform visibleTarget = null;
+    public Vector3 visibleTargetLastPos;
     public bool isPlayerInSight;
 
     void Start()
@@ -52,7 +53,8 @@ public class EnemyFOV : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask) && target.gameObject == GameManager.Instance.Player)
                 {
                     //Whatever needs to happen when the target is in line of sight gets triggered here.
-                    visibleTarget = target.transform;
+                    visibleTarget = target;
+                    visibleTargetLastPos = target.position;
                     isPlayerInSight = true;
                     Debug.Log("Player is found");
                 }
