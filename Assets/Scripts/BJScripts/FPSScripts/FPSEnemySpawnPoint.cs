@@ -7,6 +7,7 @@ public class FPSEnemySpawnPoint : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _visibleDuration = 2f;
+    [SerializeField] private int _points = 1;
 
     private bool _isActive;
 

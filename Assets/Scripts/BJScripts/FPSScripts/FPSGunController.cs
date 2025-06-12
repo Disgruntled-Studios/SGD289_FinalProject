@@ -109,7 +109,13 @@ public class FPSGunController : MonoBehaviour
     public void ChangeColor()
     {
         _matIndex = (_matIndex + 1) % _materials.Length;
-        // _leftHandMr.materials[NailIndex] = _materials[_matIndex];
-        // _rightHandMr.materials[NailIndex] = _materials[_matIndex];
+        
+        var lhMats = _leftHandMr.materials;
+        lhMats[NailIndex] = _materials[_matIndex];
+        _leftHandMr.materials = lhMats;
+
+        var rhMats = _rightHandMr.materials;
+        rhMats[NailIndex] = _materials[_matIndex];
+        _rightHandMr.materials = rhMats;
     }
 }
