@@ -6,8 +6,12 @@ using UnityEngine.Serialization;
 
 public class FPSGunController : MonoBehaviour
 {
-    [Header("Hands")] [SerializeField] private GameObject _rightHand;
+    [Header("Hands")] 
+    [SerializeField] private GameObject _rightHand;
     [SerializeField] private GameObject _leftHand;
+    [SerializeField] private MeshRenderer _rightHandMr;
+    [SerializeField] private MeshRenderer _leftHandMr;
+    private const int NailIndex = 1;
 
     [Header("Gun")] 
     [SerializeField] private GameObject _gunModel;
@@ -105,6 +109,7 @@ public class FPSGunController : MonoBehaviour
     public void ChangeColor()
     {
         _matIndex = (_matIndex + 1) % _materials.Length;
-        _lr.material = _materials[_matIndex];
+        // _leftHandMr.materials[NailIndex] = _materials[_matIndex];
+        // _rightHandMr.materials[NailIndex] = _materials[_matIndex];
     }
 }

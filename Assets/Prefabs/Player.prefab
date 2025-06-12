@@ -1013,6 +1013,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4337335802217291464, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337335802217291464, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+      propertyPath: _leftHandMr
+      value: 
+      objectReference: {fileID: 5545680525102227587}
+    - target: {fileID: 4337335802217291464, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+      propertyPath: _rightHandMr
+      value: 
+      objectReference: {fileID: 407168663845858328}
+    - target: {fileID: 4337335802217291464, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
       propertyPath: _laserStartPos
       value: 
       objectReference: {fileID: 7486562475556682077}
@@ -1092,9 +1104,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+--- !u!23 &407168663845858328 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7321498015857264335, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+  m_PrefabInstance: {fileID: 6934877232143117015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &896225303542099909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7804080868921853202, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
+  m_PrefabInstance: {fileID: 6934877232143117015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5545680525102227587 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3227837487016610388, guid: 368ea9bea24168849a1f452b0e0e0bf4, type: 3}
   m_PrefabInstance: {fileID: 6934877232143117015}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7486562475556682077 stripped
