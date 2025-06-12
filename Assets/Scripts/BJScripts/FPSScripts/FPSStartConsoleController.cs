@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class FPSStartConsoleController : MonoBehaviour, IInteractable
 {
+    private bool _hasStarted;
+    
     public void Interact(Transform player)
     {
-        throw new System.NotImplementedException();
+        if (_hasStarted) return;
+
+        _hasStarted = true;
+        FPSManager.Instance.StartSimulation();
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }
