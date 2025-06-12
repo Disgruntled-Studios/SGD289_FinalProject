@@ -7,28 +7,14 @@ using Random = UnityEngine.Random;
 public class FPSEnemyController : MonoBehaviour
 {
     [SerializeField] private Material[] _materials;
-    
-    private UnitHealth _health;
-
-    private MeshRenderer _mr;
+    [SerializeField] private SkinnedMeshRenderer _skm;
     
     public Material CurrentMaterial { get; set; }
-
-    private void Awake()
-    {
-        _mr = GetComponent<MeshRenderer>();
-    }
     
-    private void Start()
+    public void Initialize()
     {
-        _health = new UnitHealth(10);
         ChangeColor();
         StartCoroutine(ChangeColorRoutine());
-    }
-
-    public void TakeDamage(float amount)
-    {
-        _health.Damage(amount);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -50,15 +36,15 @@ public class FPSEnemyController : MonoBehaviour
     {
         var index = Random.Range(0, _materials.Length);
         CurrentMaterial = _materials[index];
-        _mr.material = CurrentMaterial;
+
+        var mats = _skm.materials;
+        mats[0] = CurrentMaterial;
+        _skm.materials = mats;
     }
     
     private IEnumerator ChangeColorRoutine()
     {
-        while (!_health.IsDead)
-        {
-            yield return new WaitForSeconds(Random.Range(2f, 5f));
-            ChangeColor();
-        }
+        yield return new WaitForSeconds(Random.Range(2f, 5f));
+        ChangeColor();
     }
 }

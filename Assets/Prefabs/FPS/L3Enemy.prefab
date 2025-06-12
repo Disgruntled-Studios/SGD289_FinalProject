@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1314199449092853467}
   - component: {fileID: 4463919091756417587}
   - component: {fileID: 7672009977755771289}
+  - component: {fileID: 3540565276215099713}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: L3Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,6 +80,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3540565276215099713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7275797218674372128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
+  - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+  - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
+  _skm: {fileID: 8395502246109771640}
 --- !u!1001 &1410655681550206273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,5 +170,10 @@ PrefabInstance:
 --- !u!4 &1448222441436521130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cdab7d37cfe2dc49a2559145f631c18, type: 3}
+  m_PrefabInstance: {fileID: 1410655681550206273}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8395502246109771640 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1796523859072896455, guid: 4cdab7d37cfe2dc49a2559145f631c18, type: 3}
   m_PrefabInstance: {fileID: 1410655681550206273}
   m_PrefabAsset: {fileID: 0}

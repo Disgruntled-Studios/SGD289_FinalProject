@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class FPSManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class FPSManager : MonoBehaviour
     private bool _isRunning;
     private int _score;
 
+    private List<FPSEnemySpawnPoint> _spawnPoints;
+    
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -20,6 +23,7 @@ public class FPSManager : MonoBehaviour
         }
 
         Instance = this;
+        _spawnPoints = new List<FPSEnemySpawnPoint>(FindObjectsByType<FPSEnemySpawnPoint>(FindObjectsSortMode.None));
     }
 
     private void Update()
@@ -27,7 +31,6 @@ public class FPSManager : MonoBehaviour
         if (!_isRunning) return;
 
         _timeRemaining -= Time.deltaTime;
-        Debug.Log(_timeRemaining);
         if (_timeRemaining <= 0f)
         {
             EndSimulation();
@@ -40,14 +43,22 @@ public class FPSManager : MonoBehaviour
         _isRunning = true;
         _timeRemaining = _simulationDuration;
         _score = 0;
-        
-        // Spawn
+
+        foreach (var point in _spawnPoints) 
+        {
+            point.BeginSpawning();
+        }
     }
 
     private void EndSimulation()
     {
         _isRunning = false;
         Debug.Log("Ending");
+        
+        foreach (var point in _spawnPoints) 
+        {
+            point.StopSpawning();
+        }
     }
 
     public void RegisterHit()

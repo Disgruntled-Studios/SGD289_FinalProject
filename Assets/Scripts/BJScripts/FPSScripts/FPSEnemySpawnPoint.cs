@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class FPSEnemySpawnPoint : MonoBehaviour
@@ -26,7 +27,13 @@ public class FPSEnemySpawnPoint : MonoBehaviour
         {
             yield return new WaitForSeconds(_spawnDelay);
 
-            var enemy = Instantiate(_enemyPrefab, transform.position, transform.rotation);
+            var enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
+            var directionToPlayer = GameManager.Instance.Player.transform.position - enemy.transform.position;
+            directionToPlayer.y = 0f;
+            enemy.transform.rotation = Quaternion.LookRotation(directionToPlayer);
+
+            var enemyController = enemy.GetComponent<FPSEnemyController>();
+            enemyController.Initialize();
 
             yield return new WaitForSeconds(_visibleDuration);
 
