@@ -14,10 +14,11 @@ public class PlayerAnimationController : MonoBehaviour
         var isMoving = input.magnitude > MovementThreshold;
 
         _anim?.SetBool("IsMoving", isMoving);
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            _anim?.SetTrigger("Dance");
-        }
+        
+        // Having fun with animations
+        // if (Input.GetKeyDown(KeyCode.Y))
+        // {
+        //     _anim?.SetTrigger("Dance");
+        // }
     }
 }

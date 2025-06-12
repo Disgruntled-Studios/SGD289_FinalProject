@@ -27,6 +27,7 @@ public class FPSManager : MonoBehaviour
         if (!_isRunning) return;
 
         _timeRemaining -= Time.deltaTime;
+        Debug.Log(_timeRemaining);
         if (_timeRemaining <= 0f)
         {
             EndSimulation();
@@ -36,10 +37,16 @@ public class FPSManager : MonoBehaviour
     public void StartSimulation()
     {
         Debug.Log("Starting");
+        _isRunning = true;
+        _timeRemaining = _simulationDuration;
+        _score = 0;
+        
+        // Spawn
     }
 
     private void EndSimulation()
     {
+        _isRunning = false;
         Debug.Log("Ending");
     }
 
