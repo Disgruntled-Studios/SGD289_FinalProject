@@ -111,7 +111,7 @@ public class PatrolScript : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, patrolPoints[point].transform.position, step);
 
-        print("Point is equal to " + point);
+        //print("Point is equal to " + point);
 
         // Checks if enemy reached destinatiton point and moves to next point or resets if so.
         if (Vector3.Distance(transform.position, patrolPoints[point].transform.position) < 0.001f)

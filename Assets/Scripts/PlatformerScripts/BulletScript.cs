@@ -6,6 +6,10 @@ public class BulletScript : MonoBehaviour
     [SerializeField]
     private float bulletSpeed;
 
+    //Replace with object pooling
+    [SerializeField]
+    private float destroyTime = 4f;
+
     Vector3 direction;
 
     //This script is on comet prefab and controls its movement. It also handles collisions with the player.
@@ -45,6 +49,8 @@ public class BulletScript : MonoBehaviour
             rb = this.gameObject.GetComponent<Rigidbody>();
             rb.AddForce(direction * bulletSpeed);
         }
+
+        Destroy(gameObject, destroyTime);
 
     }
 

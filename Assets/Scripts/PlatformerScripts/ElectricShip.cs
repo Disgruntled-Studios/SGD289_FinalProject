@@ -17,7 +17,7 @@ public class ElectricShip : MonoBehaviour
 
 
     [SerializeField]
-    private float speed =3.0f;
+    private float speed = 3.0f;
 
     //private Transform[] patrolPoints = new Transform[3]; //made an array with 3 points
 
@@ -33,12 +33,6 @@ public class ElectricShip : MonoBehaviour
     private Transform endPoint;
     private Transform playerTransform;
 
-
-
-
-    [SerializeField]
-    private GameObject enemy;
-
     PlatformManager platformManager;
 
     //used for calculating parabola
@@ -52,38 +46,82 @@ public class ElectricShip : MonoBehaviour
     [SerializeField]
     private float stepDistance;
 
+    //[SerializeField]
+   // private float timeBetweenSteps = 0.05f;
+
+    
+    private bool equationFound = false;
+
+    private Vector3 destination;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        startPointObj = GameObject.Find("EShipSpawnPos");
+        endPointObj = GameObject.Find("EShipEndPos");
+
         startPoint = startPointObj.transform;
         endPoint = endPointObj.transform;
         playerTransform = player.transform;
 
-        a = FindEquation();
-
-
-        //put actual spawn in a trigger object for now and add a label.
-
+        try
+        {
+            a = FindEquation();
+            print("a is " + a);
+            equationFound = true;
+            destination = CalculateStep();
+        }
+        catch
+        {
+            print("unable to run FindEquation");
+        }
     }
-
 
     private void Update()
     {
-        TravelAlongCurve();
+        //makes sure player has found the correct a value
+        if (equationFound)
+        {
+              TravelAlongCurve();
+        }
     }
+
+
+    //Uses the vertex equation of the parabola to calculate arc of ship and moves along it by calculating a point and moving towards it.
     private void TravelAlongCurve()
     {
-        enemy.transform.position = CalculateStep();
+        float stepSpeed = speed * Time.deltaTime;
+
+        transform.position = Vector3.MoveTowards(transform.position, destination, stepSpeed);
+
+        print("Destination is equal to " + destination);
+        print("transform.position is " + transform.position);
+
+        // Checks if enemy reached destinatiton point and moves to next point or resets if so.
+        if (Vector3.Distance(transform.position, destination) < 0.001f)
+        {
+            print("next point reached. Recalculating steps");
+            try
+            {
+                CalculateStep();
+            }
+            catch
+            {
+                print("unable to calculate next step");
+            }
+        }
 
         //Checks if endpoint has been reached. May replace with a death zone above camera if this doesn't work.
-        if (Vector3.Distance(enemy.transform.position, endPoint.position) < 0.001f)
+        if (Vector3.Distance(transform.position, endPoint.position) < 0.001f)
         {
-            print("destination reached");
+            print("endpoint reached");
+            CancelInvoke();
+            print("canceled travel along curve invoke repeating");
             this.gameObject.SetActive(false);
         }
     }
 
-    //This 
+    //Uses the start or end point along with player as vertex to find a using vertex form of equation
     public float FindEquation()
     {
         //y = a(x-h)^2+k
@@ -95,16 +133,19 @@ public class ElectricShip : MonoBehaviour
         startX = startPoint.position.x;
         startY = startPoint.position.y;
 
-        //rewrite the equation and put answer in solution as I go
-        float side1 = 0;
-        float side2 = 0;
-        a = 0;
+        //Solving for a: endY = a(endX - (vertH))^2 + vertK;
 
+        //solving for (x-h)^2
+        float side1 = Mathf.Pow(startX - vertH, 2);
 
-        //endY = a(endX - (vertH))^2 + vertK;
-        side1 = Mathf.Pow(startX - vertH, 2);
-        side2 = startY - vertK;
-        a = side2 / side1;
+        //startY = a(side1)+k.
+        //Then, subtract the k from startY and make it equal to side2.
+        //startY-k = a(side1)
+        float side2 = startY - vertK;
+
+        //solve for side2 = a(side1)
+        //divide side2 by side1 to put a by itself.
+        float a = side2 / side1;
 
         return a;
 
@@ -113,31 +154,30 @@ public class ElectricShip : MonoBehaviour
 
     public Vector3 CalculateStep()
     {
-        //x has moved since last step. If we move the next step, subtract step distance and find y and move it there.
-        float x = enemy.transform.position.x - stepDistance;
-
-        float y = 0;
+        //find x of new position along chart.
+        float x = transform.position.x - stepDistance;
 
         //use this equation to find y by plugging in x. y = a(x - h) ^ 2 + k
 
         vertH = playerTransform.position.x;
         vertK = playerTransform.position.y;
 
-        startX = startPoint.position.x;
         startY = startPoint.position.y;
 
         //endY = a(endX - (vertH))^2 + vertK;
-        float part1 = Mathf.Pow(startX - vertH, 2);
-        y = (a * part1);
+
+        float part1 = Mathf.Pow(x - vertH, 2);
+        float y = (a * part1);
         y = y + vertK;
+
+        Vector3 vector = new Vector3(x, y, transform.position.z);
 
         //float step = speed * Time.deltaTime;
         //transform.position = Vector3.MoveTowards(transform.position, patrolPoints[point].transform.position, step);
 
-        x = x * speed * Time.deltaTime;
-        y = y * speed * Time.deltaTime;
+        //x = x * speed * Time.deltaTime;
+        //y = y * speed * Time.deltaTime;
 
-        Vector3 vector = new Vector3(x, y, enemy.transform.position.z);
 
         //vector = vector *speed * Time.deltaTime;
 
@@ -150,8 +190,11 @@ public class ElectricShip : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //platformManager.HandleDamage();
+            platformManager.HandleDamage();
             print("damaged player");
+            CancelInvoke();
+            print("canceled invoke");
+            this.gameObject.SetActive(false);
         }
     }
     //This enemy does not take damage from player.
