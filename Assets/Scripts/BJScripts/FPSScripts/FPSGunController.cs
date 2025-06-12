@@ -44,6 +44,10 @@ public class FPSGunController : MonoBehaviour
         _leftHand.SetActive(isActive);
         _gunModel.SetActive(isActive);
         _collider.SetActive(isActive);
+    }
+
+    public void ToggleLaser(bool isActive)
+    {
         _lr.enabled = isActive;
     }
 

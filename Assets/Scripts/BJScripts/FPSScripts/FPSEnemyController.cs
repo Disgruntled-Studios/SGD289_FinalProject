@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class L3EnemyController : MonoBehaviour
+public class FPSEnemyController : MonoBehaviour
 {
     [SerializeField] private Material[] _materials;
     
