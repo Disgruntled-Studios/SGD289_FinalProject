@@ -36,9 +36,22 @@ public class EnemyFOV : MonoBehaviour
         //Clear our list of targets each time this function is called
         //visibleTargets.Clear();
 
-        visibleTarget = null;
+        if (visibleTarget != null)
+        {
+            if (Vector3.Distance(transform.position, visibleTarget.position) > viewRadius)
+            {
+                visibleTargetLastPos = visibleTarget.position;
+                visibleTarget = null;
+                isPlayerInSight = false;
+            }
+            else
+            {
+                return;
+            }
+        }
+
          
-         //Create a list of objects that are within the viewRadius of the enemy. 
+        //Create a list of objects that are within the viewRadius of the enemy. 
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
@@ -54,7 +67,6 @@ public class EnemyFOV : MonoBehaviour
                 {
                     //Whatever needs to happen when the target is in line of sight gets triggered here.
                     visibleTarget = target;
-                    visibleTargetLastPos = target.position;
                     isPlayerInSight = true;
                     Debug.Log("Player is found");
                 }

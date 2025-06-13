@@ -108,6 +108,10 @@ public class TankPlayerMode : IPlayerMode
 
         if (InputManager.Instance.IsInPuzzle) return;
 
+        RaycastHit hitTest;
+
+        
+
         if (_standingCollider.enabled)
         {
             _isCrouching = true;
@@ -116,7 +120,7 @@ public class TankPlayerMode : IPlayerMode
             _crouchCollider.enabled = true;
             Debug.Log(_isCrouching);
         }
-        else
+        else if (!Physics.Raycast(_player.TransformPoint(_crouchCollider.center), Vector3.up, out hitTest, 1)) 
         {
             _isCrouching = false;
             _currentSpeed = _normalSpeed;
@@ -130,7 +134,8 @@ public class TankPlayerMode : IPlayerMode
         if (InputManager.Instance.IsInPuzzle) return;
         //Each frame we check if the player is grounded or not.
         isGrounded = Physics.Raycast(_player.position, Vector3.down, playerHeight * 0.5f + 0.2f, _groundLayerMask);
-        Debug.DrawLine(_player.position, new Vector3(_player.position.x, (-1 * playerHeight * 0.5f + 0.2f), _player.position.z), Color.green);
+        Debug.DrawLine(_player.position, new Vector3(_player.position.x, (-1 * playerHeight * 0.5f + 0.2f), _player.position.z), Color.blue);
+        Debug.DrawLine(_player.TransformPoint(_crouchCollider.center), new Vector3(_player.TransformPoint(_crouchCollider.center).x,_player.TransformPoint(_crouchCollider.center).y + 1, _player.TransformPoint(_crouchCollider.center).z), Color.blue);
 
         //If the player is grounded and has Velocity stored on the Y axis we reset their vertical velocity.X
         if (isGrounded)
