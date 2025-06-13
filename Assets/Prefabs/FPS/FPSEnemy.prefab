@@ -71,11 +71,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points: 10
-  _materials:
-  - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
-  - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
-  - {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
+  _redMat: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+  _blueMat: {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
+  _greenMat: {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
   _skm: {fileID: 5351214563580452341}
 --- !u!54 &4307119055541270261
 Rigidbody:

@@ -6,30 +6,74 @@ using Random = UnityEngine.Random;
 
 public class FPSEnemyController : MonoBehaviour
 {
-    [SerializeField] private int _points;
+    [Header("Materials")] 
+    [SerializeField] private Material _redMat;
+    [SerializeField] private Material _blueMat;
+    [SerializeField] private Material _greenMat;
     
-    [SerializeField] private Material[] _materials;
+    [Header("References")]
     [SerializeField] private SkinnedMeshRenderer _skm;
-    
-    public Material CurrentMaterial { get; set; }
+
+    private Material[] _materials;
+    private Material _currentMat;
+    public Material CurrentMat => _currentMat;
+    private EnemyType _type;
+    private int _pointValue;
 
     private FPSManager _manager;
     
-    public void Initialize(FPSManager manager)
+    public void Initialize(FPSManager manager, EnemyType type)
     {
         _manager = manager;
+        _type = type;
+
+        switch (_type)
+        {
+            case EnemyType.OneColor:
+                _pointValue = 10;
+                _materials = new[] { _greenMat, _blueMat, _redMat };
+                ChangeColor(); // Just once
+                break;
+            case EnemyType.TwoColor:
+                _pointValue = 20;
+                var allMats = new[] { _greenMat, _blueMat, _redMat };
+                var firstIndex = Random.Range(0, allMats.Length);
+
+                int secondIndex;
+                do
+                {
+                    secondIndex = Random.Range(0, allMats.Length);
+                } while (secondIndex == firstIndex);
+
+                _materials = new[] { allMats[firstIndex], allMats[secondIndex] };
+                StartCoroutine(ChangeColorRoutine());
+                break;
+            case EnemyType.ThreeColor:
+                _pointValue = 30;
+                _materials = new[] { _greenMat, _redMat, _blueMat };
+                StartCoroutine(ChangeColorRoutine());
+                break;
+        }
         
-        ChangeColor();
-        StartCoroutine(ChangeColorRoutine());
+        FacePlayer();
+    }
+
+    private void FacePlayer()
+    {
+        var player = GameManager.Instance.Player.transform;
+        var direction = player.position - transform.position;
+        direction.y = 0f;
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("L3Bullet"))
         {
-            if (other.gameObject.GetComponent<FPSBulletController>().CurrentMat == CurrentMaterial)
+            var bulletController = other.gameObject.GetComponent<FPSBulletController>();
+            if (bulletController.CurrentMat == _currentMat)
             {
-                _manager.RegisterHit(_points);
+                FPSManager.Instance?.RegisterHit(_pointValue);
                 Destroy(gameObject);
             }
             else
@@ -42,16 +86,16 @@ public class FPSEnemyController : MonoBehaviour
     private void ChangeColor()
     {
         var index = Random.Range(0, _materials.Length);
-        CurrentMaterial = _materials[index];
+        _currentMat = _materials[index];
 
         var mats = _skm.materials;
-        mats[0] = CurrentMaterial;
+        mats[0] = _currentMat;
         _skm.materials = mats;
     }
     
     private IEnumerator ChangeColorRoutine()
     {
-        yield return new WaitForSeconds(Random.Range(2f, 5f));
         ChangeColor();
+        yield return new WaitForSeconds(Random.Range(2f, 5f));
     }
 }
