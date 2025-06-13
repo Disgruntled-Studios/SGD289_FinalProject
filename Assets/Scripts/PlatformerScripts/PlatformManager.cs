@@ -17,8 +17,6 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private int score = 0;
 
-
-
     [SerializeField]
     private int coins = 0; //when coins reach coinGoal int, player gets a new life.
 
@@ -28,31 +26,40 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private float afterDeathTime = 5f;
 
+    //Timer:
+    [SerializeField]
+    private int timer;
+    [SerializeField]
+    private TMP_Text timeText;
+    private float timeCounter;
+    [SerializeField]
+    private float resetTime = 0;
+
+
+    //invincibility time
+    [SerializeField]
+    private float iTime;
+    private bool invincible = false;
+
 
     [SerializeField]
     private GameObject player;
+    [SerializeField]
+    private GameObject gameOverPanel;
 
-    //[SerializeField]
-    //private Transform playerStartPosition;
 
-    [Header("Health Parameters")]
+
+    [Header("TextFields")]
     [SerializeField]
     private TMP_Text nameText;
     [SerializeField]
     private TMP_Text scoreText;
     [SerializeField]
-    private TMP_Text coinText;
-    [SerializeField]
-    private TMP_Text timeText;
-    [SerializeField]
-    private TMP_Text timeCounter;
+    private TMP_Text coinsText;
     [SerializeField]
     private GameObject gameOverText;
     [SerializeField]
     private TMP_Text livesText;
-
-    [SerializeField]
-    private GameObject gameOverPanel;
 
 
 
@@ -62,17 +69,89 @@ public class PlatformManager : MonoBehaviour
         lives = startLives;
         livesText.text = "Lives: " + lives;
         score = 0;
-        scoreText.text = "Lives: " + lives;
+        CalculateScore(0);
         coins = 0;
+        CalculateCoins(0);
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
+    }
+
+    void Update()
+    {
+        //timer
+        timeCounter = (timeCounter + Time.deltaTime)-resetTime;
+        //timeCounter = timer - timeCounter;
+
+        //print(timeCounter);
+        UpdateTimer();
+
+    }
+
+    private void UpdateTimer()
+    {
+        int time = Mathf.FloorToInt(timeCounter);
+        time = timer - time;
+        string timeString = time.ToString();
+
+        //print("timeCounter is" +timeCounter);
+        //print("time.delta time is " + Time.deltaTime);
+
+/*
+        if (timeString.Length < 3)
+        {
+            string zero = "0";
+            while (timeString.Length < 3)
+            {
+                timeString = zero + timeString;
+            }
+            //print("time is " + timeString);
+        }
+*/
+
+        timeText.text = timeString;
+
     }
 
     public void CalculateScore(int value)
     {
         score = score + value;
+
+        if(score > 999999)
+        {
+            score = 999999;
+        }
+
         string displayScore = score.ToString();
-        scoreText.text = 
+
+        while(displayScore.Length < 6)
+        {
+            string zero = "0";
+            displayScore = zero + displayScore;
+            print("displayScore is " + displayScore);
+        }
+
+        scoreText.text = displayScore;
+    }
+
+    public void CalculateCoins(int value)
+    {
+        coins = coins + value;
+
+        if (coins > 99)
+        {
+            coins = 99;
+        }
+
+        string displayCoins = coins.ToString();
+
+        if (displayCoins.Length < 2)
+        {
+            string zero = "0";
+            displayCoins = zero + displayCoins;
+            //print("displayCoins " + displayCoins);
+        }
+
+        coinsText.text = displayCoins;
     }
 
 
@@ -80,10 +159,17 @@ public class PlatformManager : MonoBehaviour
     {
         lives--;
         print("player lives is " + lives);
-
-
         CheckGameOver();
         //sound effect or flinch, etc.
+    }
+
+    public void BecomeInvincible(float time)
+    {
+        if(invincible)
+        {
+            //make player flash.
+            //Make it so enemy doesn't harm player
+        }
     }
 
     public void CheckGameOver()
@@ -99,6 +185,7 @@ public class PlatformManager : MonoBehaviour
         else
         {
             //player becomes invincible for a few seconds and flashes. Code that in player collisions.
+            BecomeInvincible(iTime);
         }
     }
 
