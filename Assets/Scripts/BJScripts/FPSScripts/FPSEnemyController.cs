@@ -6,13 +6,19 @@ using Random = UnityEngine.Random;
 
 public class FPSEnemyController : MonoBehaviour
 {
+    [SerializeField] private int _points;
+    
     [SerializeField] private Material[] _materials;
     [SerializeField] private SkinnedMeshRenderer _skm;
     
     public Material CurrentMaterial { get; set; }
+
+    private FPSManager _manager;
     
-    public void Initialize()
+    public void Initialize(FPSManager manager)
     {
+        _manager = manager;
+        
         ChangeColor();
         StartCoroutine(ChangeColorRoutine());
     }
@@ -23,6 +29,7 @@ public class FPSEnemyController : MonoBehaviour
         {
             if (other.gameObject.GetComponent<FPSBulletController>().CurrentMat == CurrentMaterial)
             {
+                _manager.RegisterHit(_points);
                 Destroy(gameObject);
             }
             else

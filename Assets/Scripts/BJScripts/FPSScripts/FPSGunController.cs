@@ -25,8 +25,8 @@ public class FPSGunController : MonoBehaviour
 
     [Header("Recoil")] 
     [SerializeField] private float _recoilZRotation = -10f;
-    [SerializeField] private float _recoilSpeedUp = 25f;
-    [SerializeField] private float _recoilSpeedDown = 10f;
+    private float _recoilSpeedUp = 45f;
+    private float _recoilSpeedDown = 20f;
     private float _currentZRotation;
     private bool _isRecoiling;
     

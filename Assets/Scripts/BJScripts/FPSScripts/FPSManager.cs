@@ -5,6 +5,8 @@ public class FPSManager : MonoBehaviour
 {
     public static FPSManager Instance { get; private set; }
 
+    [SerializeField] private FPSUIController _ui;
+    
     private float _simulationDuration = 60f;
     private int _targetScore = 100;
 
@@ -31,6 +33,7 @@ public class FPSManager : MonoBehaviour
         if (!_isRunning) return;
 
         _timeRemaining -= Time.deltaTime;
+        _ui.UpdateTimer(_timeRemaining);
         if (_timeRemaining <= 0f)
         {
             EndSimulation();
@@ -59,11 +62,14 @@ public class FPSManager : MonoBehaviour
         {
             point.StopSpawning();
         }
+
+        _ui.ShowResult(_score >= _targetScore);
     }
 
-    public void RegisterHit()
+    public void RegisterHit(int value)
     {
-        return;
+        _score += value;
+        _ui.UpdateScore(_score);
     }
 
     public void RegisterMishit()

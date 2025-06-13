@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class FPSEnemySpawnPoint : MonoBehaviour
 {
+    [SerializeField] private FPSManager _manager;
+    
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _visibleDuration = 2f;
-    [SerializeField] private int _points = 1;
 
     private bool _isActive;
 
+    private void Awake()
+    {
+        if (!_manager)
+        {
+            _manager = FindAnyObjectByType<FPSManager>();
+        }
+    }
+    
     public void BeginSpawning()
     {
         _isActive = true;
@@ -34,11 +43,11 @@ public class FPSEnemySpawnPoint : MonoBehaviour
             enemy.transform.rotation = Quaternion.LookRotation(directionToPlayer);
 
             var enemyController = enemy.GetComponent<FPSEnemyController>();
-            enemyController.Initialize();
+            enemyController.Initialize(_manager);
 
             yield return new WaitForSeconds(_visibleDuration);
 
-            if (enemy != null)
+            if (enemy)
             {
                 Destroy(enemy);
             }

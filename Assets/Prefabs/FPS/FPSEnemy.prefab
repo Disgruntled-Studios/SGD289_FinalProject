@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _points: 10
   _materials:
   - {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
   - {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
@@ -100,9 +101,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_Interpolate: 1
+  m_Constraints: 46
+  m_CollisionDetection: 2
 --- !u!95 &9200509238905549172
 Animator:
   serializedVersion: 7
