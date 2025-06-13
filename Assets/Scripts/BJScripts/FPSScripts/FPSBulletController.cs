@@ -9,7 +9,7 @@ public class FPSBulletController : MonoBehaviour
     private const float BulletLifespan = 0.5f;
     private const float BulletSpeed = 15f;
     
-    public Material CurrentMat { get; set; }
+    public Material CurrentMat { get; private set; }
     
     public void InitializeAndFire(Material startingMat)
     {

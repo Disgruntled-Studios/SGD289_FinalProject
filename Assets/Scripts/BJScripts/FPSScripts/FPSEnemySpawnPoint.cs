@@ -1,14 +1,22 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FPSEnemySpawnPoint : MonoBehaviour
 {
-    [SerializeField] private FPSManager _manager;
-    
+    [Header("Spawn Settings")]
     [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private float _spawnDelay = 2f;
-    [SerializeField] private float _visibleDuration = 2f;
+    [SerializeField] private float _minSpawnDelay = 1f;
+    [SerializeField] private float _maxSpawnDelay = 5f;
+    [SerializeField] private float _minVisibleTime = 1f;
+    [SerializeField] private float _maxVisibleTime = 5f;
+    
+    [Header("Spawn Variety")]
+    [SerializeField] private SpawnVariety _spawnVariety;
+    [SerializeField] private EnemyType _enemyType;
+    
+    [SerializeField] private FPSManager _manager;
 
     private bool _isActive;
 
@@ -35,21 +43,27 @@ public class FPSEnemySpawnPoint : MonoBehaviour
     {
         while (_isActive)
         {
-            yield return new WaitForSeconds(_spawnDelay);
+            var delay = Random.Range(_minSpawnDelay, _maxSpawnDelay);
+            yield return new WaitForSeconds(delay);
 
-            var enemy = Instantiate(_enemyPrefab, transform.position, Quaternion.identity);
-            var directionToPlayer = GameManager.Instance.Player.transform.position - enemy.transform.position;
-            directionToPlayer.y = 0f;
-            enemy.transform.rotation = Quaternion.LookRotation(directionToPlayer);
+            var enemyObj = Instantiate(_enemyPrefab, transform.position, transform.rotation);
+            var controller = enemyObj.GetComponent<FPSEnemyController>();
 
-            var enemyController = enemy.GetComponent<FPSEnemyController>();
-            enemyController.Initialize(_manager);
-
-            yield return new WaitForSeconds(_visibleDuration);
-
-            if (enemy)
+            var typeToSpawn = _enemyType;
+            if (_spawnVariety == SpawnVariety.Random)
             {
-                Destroy(enemy);
+                var values = System.Enum.GetValues(typeof(EnemyType));
+                typeToSpawn = (EnemyType)values.GetValue(Random.Range(0, values.Length));
+            }
+
+            controller.Initialize(_manager, typeToSpawn);
+
+            var visibleTime = Random.Range(_minVisibleTime, _maxVisibleTime);
+            yield return new WaitForSeconds(visibleTime);
+
+            if (enemyObj)
+            {
+                Destroy(enemyObj);
             }
         }
     }
