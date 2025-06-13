@@ -17,6 +17,8 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private int score = 0;
 
+
+
     [SerializeField]
     private int coins = 0; //when coins reach coinGoal int, player gets a new life.
 
@@ -30,8 +32,8 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    [SerializeField]
-    private Transform playerStartPosition;
+    //[SerializeField]
+    //private Transform playerStartPosition;
 
     [Header("Health Parameters")]
     [SerializeField]
@@ -46,6 +48,8 @@ public class PlatformManager : MonoBehaviour
     private TMP_Text timeCounter;
     [SerializeField]
     private GameObject gameOverText;
+    [SerializeField]
+    private TMP_Text livesText;
 
     [SerializeField]
     private GameObject gameOverPanel;
@@ -55,23 +59,29 @@ public class PlatformManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ResetGame();
-
-    }
-
-    private void ResetGame()
-    {
         lives = startLives;
+        livesText.text = "Lives: " + lives;
         score = 0;
+        scoreText.text = "Lives: " + lives;
         coins = 0;
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
     }
 
+    public void CalculateScore(int value)
+    {
+        score = score + value;
+        string displayScore = score.ToString();
+        scoreText.text = 
+    }
+
+
     public void HandleDamage()
     {
         lives--;
         print("player lives is " + lives);
+
+
         CheckGameOver();
         //sound effect or flinch, etc.
     }
@@ -102,6 +112,12 @@ public class PlatformManager : MonoBehaviour
 
     }
 
+    public void ResetGame()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
+    }
+
     public void OnClickQuitButton()
     {
         Application.Quit();
@@ -110,9 +126,9 @@ public class PlatformManager : MonoBehaviour
 
     public void PlayAgainButton()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentScene);
+        ResetGame();
     }
+
 
 
 
