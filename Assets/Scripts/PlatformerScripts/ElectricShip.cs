@@ -67,13 +67,13 @@ public class ElectricShip : MonoBehaviour
         try
         {
             a = FindEquation();
-            print("a is " + a);
+            //print("a is " + a);
             equationFound = true;
             destination = CalculateStep();
         }
         catch
         {
-            print("unable to run FindEquation");
+            print("unable to run FindEquation in Electric Ship");
         }
     }
 
@@ -94,13 +94,13 @@ public class ElectricShip : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, destination, stepSpeed);
 
-        print("Destination is equal to " + destination);
+        //print("Destination is equal to " + destination);
         print("transform.position is " + transform.position);
 
         // Checks if enemy reached destinatiton point and moves to next point or resets if so.
         if (Vector3.Distance(transform.position, destination) < 0.001f)
         {
-            print("next point reached. Recalculating steps");
+            //print("next point reached. Recalculating steps");
             try
             {
                 destination = CalculateStep();
@@ -112,12 +112,15 @@ public class ElectricShip : MonoBehaviour
         }
 
         //Checks if endpoint has been reached. May replace with a death zone above camera if this doesn't work.
-        if (Vector3.Distance(transform.position, endPoint.position) < 0.001f)
+        if (transform.position.x < endPoint.position.x)
+            //Vector3.Distance(transform.position, endPoint.position) < 0.001f)
         {
-            print("endpoint reached");
+            //print("endpoint reached");
             CancelInvoke();
-            print("canceled travel along curve invoke repeating");
-            this.gameObject.SetActive(false);
+            //print("canceled travel along curve invoke repeating");
+            print("destroyed electric ship as it reached endpoint");
+            //this.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

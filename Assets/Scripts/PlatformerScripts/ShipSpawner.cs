@@ -56,11 +56,12 @@ public class ShipSpawner : MonoBehaviour
             shipCount++;
             //rolls to find ship type
 
-            int type = Random.Range(0, 1 + 1);
+            int type = 1;
 
             if (randomShips)
             {
-                return;
+                type = Random.Range(0, 1 + 1);
+                print("type is " + type);
             }
             else if (testingTargettingShip)
             {

@@ -97,8 +97,8 @@ public class BulletScript : MonoBehaviour
                 }
                 else if (other.gameObject.name == "ElectricShip(Clone)")
                 {
-                    //print("couldn't find parent of enemy, so set enemy false");
-                    other.gameObject.SetActive(false);
+                    //destroys the bullet, not the enemy
+                    this.gameObject.SetActive(false);
                 }
             }
         }
