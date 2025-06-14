@@ -796,7 +796,6 @@ GameObject:
   - component: {fileID: 424233321}
   - component: {fileID: 424233325}
   - component: {fileID: 424233324}
-  - component: {fileID: 424233323}
   - component: {fileID: 424233322}
   m_Layer: 0
   m_Name: EShipSpawnPos
@@ -834,27 +833,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObj: {fileID: 1088026817}
   objOffset: {x: 7.620018, y: 12.91, z: 6.179763}
---- !u!65 &424233323
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424233320}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &424233324
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1150,7 +1128,6 @@ GameObject:
   - component: {fileID: 427751260}
   - component: {fileID: 427751263}
   - component: {fileID: 427751262}
-  - component: {fileID: 427751261}
   m_Layer: 0
   m_Name: LowerRightCometBounds
   m_TagString: Untagged
@@ -1173,27 +1150,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1088026820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &427751261
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427751259}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &427751262
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1321,7 +1277,6 @@ GameObject:
   - component: {fileID: 510804668}
   - component: {fileID: 510804671}
   - component: {fileID: 510804670}
-  - component: {fileID: 510804669}
   m_Layer: 0
   m_Name: RightTopDeathZone
   m_TagString: Untagged
@@ -1344,27 +1299,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1088026820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &510804669
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510804667}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &510804670
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3633,7 +3567,6 @@ GameObject:
   - component: {fileID: 1832220205}
   - component: {fileID: 1832220208}
   - component: {fileID: 1832220207}
-  - component: {fileID: 1832220206}
   m_Layer: 0
   m_Name: LeftBotDeathZone
   m_TagString: Untagged
@@ -3656,27 +3589,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1088026820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1832220206
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832220204}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1832220207
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3823,7 +3735,6 @@ GameObject:
   - component: {fileID: 1952566831}
   - component: {fileID: 1952566835}
   - component: {fileID: 1952566834}
-  - component: {fileID: 1952566833}
   - component: {fileID: 1952566832}
   m_Layer: 0
   m_Name: TShipPos2
@@ -3861,27 +3772,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObj: {fileID: 1088026817}
   objOffset: {x: 7.620018, y: 12.91, z: 6.179763}
---- !u!65 &1952566833
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952566830}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1952566834
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4005,7 +3895,6 @@ GameObject:
   - component: {fileID: 1973344654}
   - component: {fileID: 1973344658}
   - component: {fileID: 1973344657}
-  - component: {fileID: 1973344656}
   - component: {fileID: 1973344655}
   m_Layer: 0
   m_Name: TShipSpawnPos
@@ -4043,27 +3932,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObj: {fileID: 1088026817}
   objOffset: {x: 7.620018, y: 12.91, z: 6.179763}
---- !u!65 &1973344656
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973344653}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1973344657
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4128,7 +3996,6 @@ GameObject:
   - component: {fileID: 2066385065}
   - component: {fileID: 2066385069}
   - component: {fileID: 2066385068}
-  - component: {fileID: 2066385067}
   - component: {fileID: 2066385066}
   m_Layer: 0
   m_Name: TopRightCometBounds
@@ -4166,27 +4033,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObj: {fileID: 1088026817}
   objOffset: {x: 7.620018, y: 12.91, z: 6.179763}
---- !u!65 &2066385067
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2066385064}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2066385068
 MeshRenderer:
   m_ObjectHideFlags: 0

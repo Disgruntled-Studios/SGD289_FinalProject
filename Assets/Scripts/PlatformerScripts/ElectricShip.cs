@@ -103,7 +103,7 @@ public class ElectricShip : MonoBehaviour
             print("next point reached. Recalculating steps");
             try
             {
-                CalculateStep();
+                destination = CalculateStep();
             }
             catch
             {
@@ -155,20 +155,25 @@ public class ElectricShip : MonoBehaviour
     public Vector3 CalculateStep()
     {
         //find x of new position along chart.
+        //subtracting since we are going right to left. May change later.
         float x = transform.position.x - stepDistance;
 
         //use this equation to find y by plugging in x. y = a(x - h) ^ 2 + k
 
-        vertH = playerTransform.position.x;
-        vertK = playerTransform.position.y;
+        //vertH = playerTransform.position.x;
+        //vertK = playerTransform.position.y;
+        //Instead of getting new player transform.position each time. Use the one that was found when player started.
 
-        startY = startPoint.position.y;
+        //startY = startPoint.position.y;
 
-        //endY = a(endX - (vertH))^2 + vertK;
+        //y = a(x-h)^2+k. Find y.
 
+        //solving (x-h)^2
         float part1 = Mathf.Pow(x - vertH, 2);
-        float y = (a * part1);
-        y = y + vertK;
+        //multiplying by a.
+        float part2 = (a * part1);
+        //adding k.
+        float y = part2 + vertK;
 
         Vector3 vector = new Vector3(x, y, transform.position.z);
 
