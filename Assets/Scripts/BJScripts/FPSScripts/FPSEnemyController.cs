@@ -94,18 +94,38 @@ public class FPSEnemyController : MonoBehaviour
         if (other.gameObject.CompareTag("L3Bullet"))
         {
             var bulletController = other.gameObject.GetComponent<FPSBulletController>();
+            
             if (bulletController.CurrentMat == _currentMat)
             {
-                FPSManager.Instance?.RegisterHit(_pointValue);
+                var isHeadshot = false;
+                foreach (var contact in other.contacts)
+                {
+                    if (contact.thisCollider.CompareTag("FPSHead"))
+                    {
+                        isHeadshot = true;
+                        break;
+                    }
+                }
+
+                var totalPoints = _pointValue;
+                if (isHeadshot)
+                {
+                    totalPoints += 5;
+                    Debug.Log("HEADSHOT");
+                }
+
+                FPSManager.Instance?.RegisterHit(totalPoints, isHeadshot);
 
                 var spawner = GetComponentInParent<FPSEnemySpawnPoint>();
                 spawner?.ClearReference();
+                
+                FPSManager.Instance?.UpdateEnemyCountUI();
                 
                 Destroy(gameObject);
             }
             else
             {
-                FPSManager.Instance.RegisterMishit();
+                FPSManager.Instance?.RegisterMishit();
                 Debug.Log("Wrong color");
             }
         }

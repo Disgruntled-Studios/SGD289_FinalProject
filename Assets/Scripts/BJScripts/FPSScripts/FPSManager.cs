@@ -8,9 +8,8 @@ public class FPSManager : MonoBehaviour
     [SerializeField] private GameObject _fpsUI;
     [SerializeField] private FPSUIController _ui;
     public FPSUIController UI => _ui;
-    
-    private float _simulationDuration = 100f;
-    private int _targetScore = 100;
+
+    private const float SimulationDuration = 100f;
 
     private float _timeRemaining;
     private bool _isRunning;
@@ -18,6 +17,7 @@ public class FPSManager : MonoBehaviour
     private int _shotsFired;
     private int _shotsHit;
     private int _wrongHits;
+    private int _headShotCount;
 
     private List<FPSEnemySpawnPoint> _spawnPoints;
     private bool _firstRunComplete;
@@ -40,7 +40,7 @@ public class FPSManager : MonoBehaviour
 
         _timeRemaining -= Time.deltaTime;
         _ui.UpdateTimer(_timeRemaining);
-        _ui.UpdateTimerBar(_timeRemaining, _simulationDuration);
+        _ui.UpdateTimerBar(_timeRemaining, SimulationDuration);
         
         if (_timeRemaining <= 0f || AllEnemiesCleared())
         {
@@ -53,12 +53,12 @@ public class FPSManager : MonoBehaviour
         Debug.Log("Starting");
         _fpsUI.SetActive(true);
         _isRunning = true;
-        _timeRemaining = _simulationDuration;
+        _timeRemaining = SimulationDuration;
         _score = 0;
         _shotsFired = 0;
         _shotsHit = 0;
         _wrongHits = 0;
-        _ui.UpdateScore(_score);
+        _ui.UpdateEnemiesRemaining(_score);
 
         foreach (var sp in _spawnPoints)
         {
@@ -68,18 +68,17 @@ public class FPSManager : MonoBehaviour
 
     public void RegisterShotFired() => _shotsFired++;
 
-    public void RegisterHit(int value)
+    public void RegisterHit(int value, bool isHeadshot = false)
     {
         _score += value;
         _shotsHit++;
-        _ui.UpdateScore(_score);
+        if (isHeadshot) _headShotCount++;
     }
 
     public void RegisterMishit()
     {
         _wrongHits++;
-        _score = Mathf.Max(0, _score - 5);
-        _ui.UpdateScore(_score);
+        _score = Mathf.Max(0, _score - 10);
     }
 
     private void EndSimulation()
@@ -90,27 +89,45 @@ public class FPSManager : MonoBehaviour
 
         var accuracyBonus = accuracy switch
         {
-            >= 0.8f => 20,
-            >= 0.7f => 10,
+            >= 0.95f => 30,
+            >= 0.90f => 25,
+            >= 0.80f => 20,
+            >= 0.70f => 15,
+            >= 0.60f => 10,
+            >= 0.50f => 5,
             _ => 0
         };
 
-        var timeBonus = (_timeRemaining >= _simulationDuration * 0.5f) ? 20 :
-            (_timeRemaining >= _simulationDuration * 0.3f) ? 10 : 0;
+        var percentTimeRemaining = _timeRemaining / SimulationDuration;
 
-        var aggregateScore = _score + accuracyBonus + timeBonus;
+        var timeBonus = percentTimeRemaining switch
+        {
+            >= 0.75f => 30,
+            >= 0.50f => 20,
+            >= 0.25f => 10,
+            _ => 0
+        };
 
-        var passed = !_firstRunComplete && aggregateScore >= _targetScore;
+        var headShotBonus = _headShotCount * 3;
+        
+        var aggregateScore = _score + accuracyBonus + timeBonus + headShotBonus;
+
+        var grade = CalculateGrade(aggregateScore);
+
+        var passed = !_firstRunComplete && AllEnemiesCleared();
 
         if (passed)
         {
             _firstRunComplete = true;
-            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus);
-            // Recruit npc
+            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus, headShotBonus, grade, passed);
+        }
+        else if (!_firstRunComplete)
+        {
+            _ui.ShowFailResult();
         }
         else
         {
-            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus);
+            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus, headShotBonus, grade, passed);
         }
     }
 
@@ -125,5 +142,37 @@ public class FPSManager : MonoBehaviour
         }
         
         return true;
+    }
+
+    private string CalculateGrade(int aggregate)
+    {
+        return aggregate switch
+        {
+            >= 500 => "S",
+            >= 400 => "A",
+            >= 300 => "B",
+            >= 200 => "C",
+            >= 100 => "D",
+            _ => "F"
+        };
+    }
+
+    private int GetEnemiesRemaining()
+    {
+        var remaining = 0;
+        foreach (var sp in _spawnPoints)
+        {
+            if (!sp.IsCleared())
+            {
+                remaining++;
+            }
+        }
+
+        return remaining;
+    }
+
+    public void UpdateEnemyCountUI()
+    {
+        _ui.UpdateEnemiesRemaining(GetEnemiesRemaining());
     }
 }

@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 199938216}
   - component: {fileID: 199938215}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: EnemyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -672,10 +672,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 817437503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170.59998, y: -221}
-  m_SizeDelta: {x: 298.8, y: 135.7121}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -67, y: -138}
+  m_SizeDelta: {x: 1121.3186, y: 74.0703}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &199938215
 MonoBehaviour:
@@ -697,9 +697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '0
-
-'
+  m_text: 'Enemies Remaining: 20 / 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -726,8 +724,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2662,7 +2660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef39dcb8255810043b2cac8de91f1efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 199938215}
+  _enemyText: {fileID: 199938215}
   _timerText: {fileID: 1771788791}
   _resultText: {fileID: 860858098}
   _tbc: {fileID: 1893554941}
@@ -2776,10 +2774,10 @@ RectTransform:
   - {fileID: 1180675668}
   m_Father: {fileID: 817437503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 14.8553, y: 70.70676}
-  m_SizeDelta: {x: 1595.6632, y: 45}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 283, y: 70.70676}
+  m_SizeDelta: {x: 500, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &281698837
 MonoBehaviour:
