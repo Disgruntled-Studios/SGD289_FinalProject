@@ -17,8 +17,15 @@ public class FPSPlayerMode : IPlayerMode
     private readonly CapsuleCollider _standingCollider;
     private readonly SphereCollider _crouchingCollider;
 
-    private const float JumpForce = 5f;
+    private const float JumpForce = 7f;
     private bool _isSprinting;
+
+    private float _currentStamina;
+    private const float MaxStamina = 100f;
+    private const float StaminaDrainRate = 20f;
+    private const float StaminaRegenRate = 10f;
+    private const float SprintMultiplier = 1.5f;
+    private bool CanSprint => _currentStamina > 0f;
 
     public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider)
     {
@@ -30,6 +37,7 @@ public class FPSPlayerMode : IPlayerMode
         _playerRb = playerRb;
         _standingCollider = standingCollider;
         _crouchingCollider = crouchingCollider;
+        _currentStamina = MaxStamina;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -41,9 +49,9 @@ public class FPSPlayerMode : IPlayerMode
             baseSpeed *= 0.5f;
         }
 
-        if (_isSprinting)
+        if (_isSprinting && CanSprint)
         {
-            baseSpeed *= 1.5f;
+            baseSpeed *= SprintMultiplier;
         }
 
         if (input == Vector2.zero) return;
@@ -107,7 +115,20 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Tick()
     {
-        return;
+        if (_isSprinting && CanSprint)
+        {
+            _currentStamina -= StaminaDrainRate * Time.deltaTime;
+            if (_currentStamina <= 0f)
+            {
+                _currentStamina = 0f;
+                _isSprinting = false;
+            }
+        }
+        else
+        {
+            _currentStamina += StaminaRegenRate * Time.deltaTime;
+            _currentStamina = Mathf.Min(_currentStamina, MaxStamina);
+        }
     } 
     
     public void Aim(InputAction.CallbackContext context)
@@ -148,7 +169,7 @@ public class FPSPlayerMode : IPlayerMode
     {
         if (_isCrouching) return;
         
-        if (context.started)
+        if (context.started && CanSprint)
         {
             _isSprinting = true;
         }

@@ -7,14 +7,18 @@ public class FPSManager : MonoBehaviour
 
     [SerializeField] private FPSUIController _ui;
     
-    private float _simulationDuration = 60f;
+    private float _simulationDuration = 100f;
     private int _targetScore = 100;
 
     private float _timeRemaining;
     private bool _isRunning;
     private int _score;
+    private int _shotsFired;
+    private int _shotsHit;
+    private int _wrongHits;
 
     private List<FPSEnemySpawnPoint> _spawnPoints;
+    private bool _firstRunComplete;
     
     private void Awake()
     {
@@ -34,7 +38,8 @@ public class FPSManager : MonoBehaviour
 
         _timeRemaining -= Time.deltaTime;
         _ui.UpdateTimer(_timeRemaining);
-        if (_timeRemaining <= 0f)
+        
+        if (_timeRemaining <= 0f || AllEnemiesCleared())
         {
             EndSimulation();
         }
@@ -46,34 +51,75 @@ public class FPSManager : MonoBehaviour
         _isRunning = true;
         _timeRemaining = _simulationDuration;
         _score = 0;
+        _shotsFired = 0;
+        _shotsHit = 0;
+        _wrongHits = 0;
+        _ui.UpdateScore(_score);
 
-        foreach (var point in _spawnPoints) 
+        foreach (var sp in _spawnPoints)
         {
-            point.BeginSpawning();
+            sp.SpawnOrReset();
         }
     }
 
-    private void EndSimulation()
-    {
-        _isRunning = false;
-        Debug.Log("Ending");
-        
-        foreach (var point in _spawnPoints) 
-        {
-            point.StopSpawning();
-        }
-
-        _ui.ShowResult(_score >= _targetScore);
-    }
+    public void RegisterShotFired() => _shotsFired++;
 
     public void RegisterHit(int value)
     {
         _score += value;
+        _shotsHit++;
         _ui.UpdateScore(_score);
     }
 
     public void RegisterMishit()
     {
-        return;
+        _wrongHits++;
+        _score = Mathf.Max(0, _score - 5);
+        _ui.UpdateScore(_score);
+    }
+
+    private void EndSimulation()
+    {
+        _isRunning = false;
+
+        var accuracy = _shotsFired > 0 ? (float)_shotsHit / _shotsFired : 1f;
+
+        var accuracyBonus = accuracy switch
+        {
+            >= 0.8f => 20,
+            >= 0.7f => 10,
+            _ => 0
+        };
+
+        var timeBonus = (_timeRemaining >= _simulationDuration * 0.5f) ? 20 :
+            (_timeRemaining >= _simulationDuration * 0.3f) ? 10 : 0;
+
+        var aggregateScore = _score + accuracyBonus + timeBonus;
+
+        var passed = !_firstRunComplete && aggregateScore >= _targetScore;
+
+        if (passed)
+        {
+            _firstRunComplete = true;
+            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus);
+            // Recruit npc
+        }
+        else
+        {
+            _ui.ShowResult(aggregateScore, accuracy, timeBonus, accuracyBonus);
+        }
+    }
+
+    private bool AllEnemiesCleared()
+    {
+        foreach (var sp in _spawnPoints)
+        {
+            if (!sp.IsCleared())
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

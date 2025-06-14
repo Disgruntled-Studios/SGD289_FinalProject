@@ -5,66 +5,38 @@ using Random = UnityEngine.Random;
 
 public class FPSEnemySpawnPoint : MonoBehaviour
 {
-    [Header("Spawn Settings")]
-    [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private float _minSpawnDelay = 1f;
-    [SerializeField] private float _maxSpawnDelay = 5f;
-    [SerializeField] private float _minVisibleTime = 1f;
-    [SerializeField] private float _maxVisibleTime = 5f;
-    
-    [Header("Spawn Variety")]
+    [Header("Setup")] [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private SpawnVariety _spawnVariety;
     [SerializeField] private EnemyType _enemyType;
-    
-    [SerializeField] private FPSManager _manager;
 
-    private bool _isActive;
+    private FPSEnemyController _currentEnemy;
 
-    private void Awake()
+    public void SpawnOrReset()
     {
-        if (!_manager)
+        if (!_currentEnemy)
         {
-            _manager = FindAnyObjectByType<FPSManager>();
+            var obj = Instantiate(_enemyPrefab, transform.position, transform.rotation, transform);
+            _currentEnemy = obj.GetComponent<FPSEnemyController>();
         }
-    }
-    
-    public void BeginSpawning()
-    {
-        _isActive = true;
-        StartCoroutine(SpawnLoop());
-    }
 
-    public void StopSpawning()
-    {
-        _isActive = false;
-    }
-
-    private IEnumerator SpawnLoop()
-    {
-        while (_isActive)
+        var assignedType = _enemyType;
+        if (_spawnVariety == SpawnVariety.Random)
         {
-            var delay = Random.Range(_minSpawnDelay, _maxSpawnDelay);
-            yield return new WaitForSeconds(delay);
-
-            var enemyObj = Instantiate(_enemyPrefab, transform.position, transform.rotation);
-            var controller = enemyObj.GetComponent<FPSEnemyController>();
-
-            var typeToSpawn = _enemyType;
-            if (_spawnVariety == SpawnVariety.Random)
-            {
-                var values = System.Enum.GetValues(typeof(EnemyType));
-                typeToSpawn = (EnemyType)values.GetValue(Random.Range(0, values.Length));
-            }
-
-            controller.Initialize(_manager, typeToSpawn);
-
-            var visibleTime = Random.Range(_minVisibleTime, _maxVisibleTime);
-            yield return new WaitForSeconds(visibleTime);
-
-            if (enemyObj)
-            {
-                Destroy(enemyObj);
-            }
+            var types = System.Enum.GetValues(typeof(EnemyType));
+            assignedType = (EnemyType)types.GetValue(Random.Range(0, types.Length));
         }
+
+        _currentEnemy.SetType(assignedType);
+        _currentEnemy.ResetForSimulation();
+    }
+
+    public bool IsCleared()
+    {
+        return !_currentEnemy;
+    }
+
+    public void ClearReference()
+    {
+        _currentEnemy = null;
     }
 }

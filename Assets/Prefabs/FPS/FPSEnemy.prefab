@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf424901a4086d04dbdf159dec1b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _redMat: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+  _redMat: {fileID: 2100000, guid: c36eeb9841ccc3d46b79ccd592293ab0, type: 2}
   _blueMat: {fileID: 2100000, guid: f431f53fa1615cc4c900568f7543027a, type: 2}
   _greenMat: {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
   _skm: {fileID: 5351214563580452341}
@@ -100,7 +100,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 46
+  m_Constraints: 126
   m_CollisionDetection: 2
 --- !u!95 &9200509238905549172
 Animator:
@@ -287,7 +287,7 @@ PrefabInstance:
     - target: {fileID: -1796523859072896455, guid: b6d99949dcc1da948afcc3910e31c506, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
+      objectReference: {fileID: 2100000, guid: c36eeb9841ccc3d46b79ccd592293ab0, type: 2}
     - target: {fileID: -1781356600409242780, guid: b6d99949dcc1da948afcc3910e31c506, type: 3}
       propertyPath: m_Layer
       value: 7

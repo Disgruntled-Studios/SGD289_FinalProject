@@ -22,11 +22,15 @@ public class FPSEnemyController : MonoBehaviour
 
     private FPSManager _manager;
     
-    public void Initialize(FPSManager manager, EnemyType type)
+    public void SetType(EnemyType type)
     {
-        _manager = manager;
         _type = type;
+    }
 
+    public void ResetForSimulation()
+    {
+        StopAllCoroutines();
+        
         switch (_type)
         {
             case EnemyType.OneColor:
@@ -57,6 +61,25 @@ public class FPSEnemyController : MonoBehaviour
         
         FacePlayer();
     }
+    
+    private void ChangeColor()
+    {
+        var index = Random.Range(0, _materials.Length);
+        _currentMat = _materials[index];
+
+        var mats = _skm.materials;
+        mats[0] = _currentMat;
+        _skm.materials = mats;
+    }
+    
+    private IEnumerator ChangeColorRoutine()
+    {
+        while (true)
+        {
+            ChangeColor();
+            yield return new WaitForSeconds(Random.Range(2f, 5f));
+        }
+    }
 
     private void FacePlayer()
     {
@@ -74,28 +97,19 @@ public class FPSEnemyController : MonoBehaviour
             if (bulletController.CurrentMat == _currentMat)
             {
                 FPSManager.Instance?.RegisterHit(_pointValue);
+
+                var spawner = GetComponentInParent<FPSEnemySpawnPoint>();
+                spawner?.ClearReference();
+                
                 Destroy(gameObject);
             }
             else
             {
+                FPSManager.Instance.RegisterMishit();
                 Debug.Log("Wrong color");
             }
         }
     }
-
-    private void ChangeColor()
-    {
-        var index = Random.Range(0, _materials.Length);
-        _currentMat = _materials[index];
-
-        var mats = _skm.materials;
-        mats[0] = _currentMat;
-        _skm.materials = mats;
-    }
     
-    private IEnumerator ChangeColorRoutine()
-    {
-        ChangeColor();
-        yield return new WaitForSeconds(Random.Range(2f, 5f));
-    }
+    
 }

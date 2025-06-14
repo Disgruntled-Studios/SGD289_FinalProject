@@ -2802,6 +2802,7 @@ MonoBehaviour:
   _gunScript: {fileID: 54181945}
   _fpsGun: {fileID: 27478868}
   _tpGunModel: {fileID: 1098921463}
+  _playerCollisions: {fileID: 0}
   _isBulletTime: 0
   _standingCollider: {fileID: 1078754793}
   _crouchCollider: {fileID: 1078754790}
@@ -3177,9 +3178,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.2
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3238,7 +3239,7 @@ Transform:
   m_GameObject: {fileID: 1616201717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73, y: 1.375, z: -21.81}
+  m_LocalPosition: {x: 0.23, y: 1.375, z: -19.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -102,7 +102,8 @@ public class FPSGunController : MonoBehaviour
         var bulletController = bullet.GetComponent<FPSBulletController>();
 
         bulletController.InitializeAndFire(CurrentMaterial);
-
+        FPSManager.Instance.RegisterShotFired();
+        
         _isRecoiling = true;
     }
 
