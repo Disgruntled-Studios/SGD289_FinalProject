@@ -14,7 +14,7 @@ public class PlayerCollisions : MonoBehaviour
     {
         if(other.gameObject.CompareTag("PlatformCoin"))
         {
-                print("platformCoin");
+                //print("platformCoin");
                 pm.CalculateCoins(1);
                 other.gameObject.SetActive(false);
         }

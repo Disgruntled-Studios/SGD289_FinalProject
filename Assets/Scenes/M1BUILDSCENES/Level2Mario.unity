@@ -1276,11 +1276,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1e6a5a4653b7e46915c2e373b0a7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLives: 3
   lives: 3
   score: 0
-  coins: 0
-  coinGoal: 20
+  coins: 9
+  coinGoal: 10
   afterDeathTime: 5
   timer: 400
   timeText: {fileID: 74844204}
@@ -4287,6 +4286,7 @@ MonoBehaviour:
   _gunScript: {fileID: 1830421142}
   _fpsGun: {fileID: 702842417}
   _tpGunModel: {fileID: 1777082248}
+  _playerCollisions: {fileID: 1843236091624525649}
   _isBulletTime: 0
   _standingCollider: {fileID: 0}
   _crouchCollider: {fileID: 0}

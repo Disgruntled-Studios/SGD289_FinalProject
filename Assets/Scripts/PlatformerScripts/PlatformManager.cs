@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlatformManager : MonoBehaviour
 {
-    //starting life count
-    [SerializeField]
-    private int startLives = 3;
 
     //current life count
     [SerializeField]
@@ -21,7 +18,7 @@ public class PlatformManager : MonoBehaviour
     private int coins = 0; //when coins reach coinGoal int, player gets a new life.
 
     [SerializeField]
-    private int coinGoal = 20;
+    private int coinGoal = 10;
 
     [SerializeField]
     private float afterDeathTime = 5f;
@@ -62,16 +59,15 @@ public class PlatformManager : MonoBehaviour
     private TMP_Text livesText;
 
     private bool coinCollecting = false;
+    private bool lifeCalc = false;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        lives = startLives;
-        livesText.text = "Lives: " + lives;
-        score = 0;
-        CalculateScore(0);
-        coins = 0;
+        DisplayLives();
+        CalculateScore(score);
         CalculateCoins(0);
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
@@ -97,17 +93,17 @@ public class PlatformManager : MonoBehaviour
         //print("timeCounter is" +timeCounter);
         //print("time.delta time is " + Time.deltaTime);
 
-/*
-        if (timeString.Length < 3)
-        {
-            string zero = "0";
-            while (timeString.Length < 3)
-            {
-                timeString = zero + timeString;
-            }
-            //print("time is " + timeString);
-        }
-*/
+        /*
+                if (timeString.Length < 3)
+                {
+                    string zero = "0";
+                    while (timeString.Length < 3)
+                    {
+                        timeString = zero + timeString;
+                    }
+                    //print("time is " + timeString);
+                }
+        */
 
         timeText.text = timeString;
 
@@ -139,12 +135,16 @@ public class PlatformManager : MonoBehaviour
         if (coinCollecting == false)
         {
             coinCollecting = true;
+
             print("coins is" + coins + "and value is " + value);
             coins = coins + value;
 
-            if (coins > 99)
+            //if player reaches coin goal, coins reset and they get a new life.
+            if (coins > (coinGoal-1))
             {
-                coins = 99;
+                lives++;
+                DisplayLives();
+                coins = 0;
             }
 
             string displayCoins = coins.ToString();
@@ -157,26 +157,51 @@ public class PlatformManager : MonoBehaviour
             }
 
             coinsText.text = "Coins     " + displayCoins;
-            StartCoroutine(Wait());
+            StartCoroutine(Wait(0.1f, "coin"));
 
             //print("displayed coin count. Coins = " + displayCoins);
         }
     }
 
-    IEnumerator Wait()
+    IEnumerator Wait(float waitTime, string type)
     {
-        yield return new WaitForSeconds(0.1f);
-        coinCollecting = false;
+        yield return new WaitForSeconds(waitTime);
+
+        if (type == "coin")
+        {
+            coinCollecting = false;
+        }
+        else if (type == "life")
+        {
+            lifeCalc = false;
+        }
     }
+
 
 
     public void HandleDamage()
     {
-        lives--;
-        print("player lives is " + lives);
-        CheckGameOver();
-        //sound effect or flinch, etc.
+        if (lifeCalc == false)
+        {
+            lifeCalc = true;
+            lives--;
+            if(lives<0)
+            {
+                lives = 0;
+            }
+            DisplayLives();
+            print("player lives is " + lives);
+            CheckGameOver();
+            //sound effect or flinch, etc
+            StartCoroutine(Wait(0.1f, "life"));
+        }
     }
+
+    public void DisplayLives()
+    {
+        livesText.text = "Lives: " + lives;
+    }
+
 
     public void BecomeInvincible(float time)
     {

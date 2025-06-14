@@ -10,14 +10,16 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly GunScript _gunScript;
     private readonly GameObject _gunModel;
     private readonly GameObject _jumpOnEnemyObject;
-    
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, GameObject gunModel, GameObject jumpOnEnemy)
+    private readonly PlayerCollisions _playerCollisions;
+
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject jumpOnEnemy)
     {
         _rb = playerRb;
         _speed = speed;
         _jumpForce = jumpForce;
         _playerTransform = playerTransform;
         _gunScript = gunScript;
+        _playerCollisions = playerCollisions;
         _gunModel = gunModel;
         _jumpOnEnemyObject = jumpOnEnemy;
     }
@@ -72,6 +74,10 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void OnModeEnter()
     {
+        if (_playerCollisions)
+        {
+            _playerCollisions.enabled = true;
+        }
         _gunModel.SetActive(true);
         _jumpOnEnemyObject.SetActive(true);
         // Laser is disabled initially by default
@@ -89,6 +95,7 @@ public class PlatformPlayerMode : IPlayerMode
             scale.z = 1;
             _playerTransform.localScale = scale;
         }
+        _playerCollisions.enabled = false;
     }
 
     public void Sprint(InputAction.CallbackContext context)
