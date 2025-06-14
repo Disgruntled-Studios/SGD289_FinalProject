@@ -22,8 +22,8 @@ public class FPSPlayerMode : IPlayerMode
 
     private float _currentStamina;
     private const float MaxStamina = 100f;
-    private const float StaminaDrainRate = 20f;
-    private const float StaminaRegenRate = 10f;
+    private const float StaminaDrainRate = 15f; // Per second
+    private const float StaminaRegenRate = 20; // Per second
     private const float SprintMultiplier = 1.5f;
     private bool CanSprint => _currentStamina > 0f;
 
@@ -129,6 +129,8 @@ public class FPSPlayerMode : IPlayerMode
             _currentStamina += StaminaRegenRate * Time.deltaTime;
             _currentStamina = Mathf.Min(_currentStamina, MaxStamina);
         }
+
+        FPSManager.Instance?.UI.UpdateStaminaBar(_currentStamina, MaxStamina);
     } 
     
     public void Aim(InputAction.CallbackContext context)

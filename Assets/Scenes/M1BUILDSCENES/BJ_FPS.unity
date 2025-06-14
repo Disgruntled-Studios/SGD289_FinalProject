@@ -2566,7 +2566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &238975216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2665,6 +2665,8 @@ MonoBehaviour:
   _scoreText: {fileID: 199938215}
   _timerText: {fileID: 1771788791}
   _resultText: {fileID: 860858098}
+  _tbc: {fileID: 1893554941}
+  _sbc: {fileID: 281698839}
 --- !u!1 &241149079
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2753,7 @@ GameObject:
   - component: {fileID: 281698836}
   - component: {fileID: 281698838}
   - component: {fileID: 281698837}
+  - component: {fileID: 281698839}
   m_Layer: 5
   m_Name: StaminaBarBackground
   m_TagString: Untagged
@@ -2773,9 +2776,9 @@ RectTransform:
   - {fileID: 1180675668}
   m_Father: {fileID: 817437503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.8553, y: -362.29324}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 14.8553, y: 70.70676}
   m_SizeDelta: {x: 1595.6632, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &281698837
@@ -2816,6 +2819,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281698835}
   m_CullTransparentMesh: 1
+--- !u!114 &281698839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281698835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3274a1d2d956263478b2e1691dc4ab9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _staminaFill: {fileID: 1180675669}
 --- !u!1001 &298552362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4873,8 +4889,8 @@ RectTransform:
   - {fileID: 199938214}
   - {fileID: 1771788790}
   - {fileID: 860858100}
-  - {fileID: 281698836}
   - {fileID: 1893554938}
+  - {fileID: 281698836}
   m_Father: {fileID: 238975219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8223,6 +8239,7 @@ GameObject:
   - component: {fileID: 1893554938}
   - component: {fileID: 1893554940}
   - component: {fileID: 1893554939}
+  - component: {fileID: 1893554941}
   m_Layer: 5
   m_Name: TimerBarBackground
   m_TagString: Untagged
@@ -8245,9 +8262,9 @@ RectTransform:
   - {fileID: 241149080}
   m_Father: {fileID: 817437503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.854, y: -229.94498}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -75, y: -79}
   m_SizeDelta: {x: 1595.7, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1893554939
@@ -8288,6 +8305,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893554937}
   m_CullTransparentMesh: 1
+--- !u!114 &1893554941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893554937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd1d3767dcf78546af2afd175c436b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerFill: {fileID: 241149081}
 --- !u!1 &1913875767
 GameObject:
   m_ObjectHideFlags: 0
@@ -8332,6 +8362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6deea4755c27b8642b15eb9a39816234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fpsUI: {fileID: 238975215}
   _ui: {fileID: 238975220}
 --- !u!1001 &1960566205
 PrefabInstance:

@@ -5,7 +5,9 @@ public class FPSManager : MonoBehaviour
 {
     public static FPSManager Instance { get; private set; }
 
+    [SerializeField] private GameObject _fpsUI;
     [SerializeField] private FPSUIController _ui;
+    public FPSUIController UI => _ui;
     
     private float _simulationDuration = 100f;
     private int _targetScore = 100;
@@ -38,6 +40,7 @@ public class FPSManager : MonoBehaviour
 
         _timeRemaining -= Time.deltaTime;
         _ui.UpdateTimer(_timeRemaining);
+        _ui.UpdateTimerBar(_timeRemaining, _simulationDuration);
         
         if (_timeRemaining <= 0f || AllEnemiesCleared())
         {
@@ -48,6 +51,7 @@ public class FPSManager : MonoBehaviour
     public void StartSimulation()
     {
         Debug.Log("Starting");
+        _fpsUI.SetActive(true);
         _isRunning = true;
         _timeRemaining = _simulationDuration;
         _score = 0;

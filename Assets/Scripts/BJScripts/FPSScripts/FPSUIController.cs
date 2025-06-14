@@ -7,6 +7,10 @@ public class FPSUIController : MonoBehaviour
     [SerializeField] private TMP_Text _timerText;
     [SerializeField] private TMP_Text _resultText;
 
+    [Header("Bar Controllers")]
+    [SerializeField] private TimerBarController _tbc;
+    [SerializeField] private StaminaBarController _sbc;
+
     private void Start()
     {
         _resultText.gameObject.SetActive(false);
@@ -28,5 +32,15 @@ public class FPSUIController : MonoBehaviour
         _scoreText.gameObject.SetActive(false);
         _timerText.gameObject.SetActive(false);
         _resultText.text = $"SIMULATION COMPLETE\nScore: {score}\nAccuracy: {accuracy:P0}\nTime Bonus: {timeBonus}\nAccuracy Bonus: {accBonus}";
+    }
+
+    public void UpdateTimerBar(float current, float max)
+    {
+        _tbc.UpdateTimer(current, max);
+    }
+
+    public void UpdateStaminaBar(float current, float max)
+    {
+        _sbc.UpdateStamina(current, max);
     }
 }
