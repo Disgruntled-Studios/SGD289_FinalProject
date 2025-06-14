@@ -53,7 +53,7 @@ public class TargetingShip : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player");
             tShipPos2 = GameObject.Find("TShipPos2");
-            leftDeathZone = GameObject.Find("LeftDeathZone");
+            leftDeathZone = GameObject.Find("LeftBotDeathZone");
         }
         catch
         {
@@ -127,7 +127,7 @@ public class TargetingShip : MonoBehaviour
                 state = "chargingForward";
             }
         }
-        else if(state == "chargingForward" && transform.position.x < leftDeathZone.transform.position.x)
+        else if(state == "chargingForward" && (transform.position.x < leftDeathZone.transform.position.x))
         {
             print("destroying Targeting ship");
             Destroy(this.gameObject);

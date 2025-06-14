@@ -36,7 +36,6 @@ public class PlatformManager : MonoBehaviour
     //invincibility time
     [SerializeField]
     private float iTime;
-    private bool invincible = false;
 
 
     [SerializeField]
@@ -61,6 +60,7 @@ public class PlatformManager : MonoBehaviour
     private bool coinCollecting = false;
     private bool lifeCalc = false;
 
+    PlayerCollisions pCollisions;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +71,9 @@ public class PlatformManager : MonoBehaviour
         CalculateCoins(0);
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
+
+        pCollisions = GameObject.Find("Player").GetComponent<PlayerCollisions>();
+
     }
 
     void Update()
@@ -136,7 +139,7 @@ public class PlatformManager : MonoBehaviour
         {
             coinCollecting = true;
 
-            print("coins is" + coins + "and value is " + value);
+            //print("coins is" + coins + "and value is " + value);
             coins = coins + value;
 
             //if player reaches coin goal, coins reset and they get a new life.
@@ -181,7 +184,8 @@ public class PlatformManager : MonoBehaviour
 
     public void HandleDamage()
     {
-        if (lifeCalc == false)
+        //makes sure player doesn't lose multiple lives at once.
+        if (lifeCalc == false && (pCollisions.invincible ==false))
         {
             lifeCalc = true;
             lives--;
@@ -203,15 +207,6 @@ public class PlatformManager : MonoBehaviour
     }
 
 
-    public void BecomeInvincible(float time)
-    {
-        if(invincible)
-        {
-            //make player flash.
-            //Make it so enemy doesn't harm player
-        }
-    }
-
     public void CheckGameOver()
     {
         if(lives < 1)
@@ -225,7 +220,7 @@ public class PlatformManager : MonoBehaviour
         else
         {
             //player becomes invincible for a few seconds and flashes. Code that in player collisions.
-            BecomeInvincible(iTime);
+            pCollisions.BecomeInvincibleDamage();
         }
     }
 
