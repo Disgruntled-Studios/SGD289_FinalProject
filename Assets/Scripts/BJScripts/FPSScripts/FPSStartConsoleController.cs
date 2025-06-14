@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FPSStartConsoleController : MonoBehaviour, IInteractable
 {
+    [SerializeField] private StartDoorController _sdc;
+    
     private bool _hasStarted;
     
     public void Interact(Transform player)
@@ -9,7 +11,7 @@ public class FPSStartConsoleController : MonoBehaviour, IInteractable
         if (_hasStarted) return;
 
         _hasStarted = true;
-        FPSManager.Instance.StartSimulation();
+        _sdc.StartCountdown();
     }
 
     public void OnExit()

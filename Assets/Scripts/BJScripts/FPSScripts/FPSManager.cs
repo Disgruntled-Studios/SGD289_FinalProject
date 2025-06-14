@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class FPSManager : MonoBehaviour
 {
     public static FPSManager Instance { get; private set; }
 
-    [SerializeField] private GameObject _fpsUI;
+    [SerializeField] private GameObject _fpsPanel;
+    [SerializeField] private GameObject _startDoor;
     [SerializeField] private FPSUIController _ui;
     public FPSUIController UI => _ui;
 
@@ -51,7 +53,7 @@ public class FPSManager : MonoBehaviour
     public void StartSimulation()
     {
         Debug.Log("Starting");
-        _fpsUI.SetActive(true);
+        _fpsPanel.SetActive(true);
         _isRunning = true;
         _timeRemaining = SimulationDuration;
         _score = 0;
