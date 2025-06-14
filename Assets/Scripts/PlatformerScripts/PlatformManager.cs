@@ -23,6 +23,15 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private float afterDeathTime = 5f;
 
+
+    [Header("EnemyPoints")]
+    public int littleAlienScore = 100;
+    public int FlyingAlienScore = 150;
+    public int TargetingShipScore = 300;
+    //Electric ship can only be dodged and so is worth no points.
+
+
+
     //Timer:
     [SerializeField]
     private int timer;

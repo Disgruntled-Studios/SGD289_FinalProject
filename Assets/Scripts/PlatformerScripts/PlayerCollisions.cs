@@ -68,6 +68,24 @@ public class PlayerCollisions : MonoBehaviour
                 pm.CalculateCoins(1);
                 other.gameObject.SetActive(false);
         }
+        else if (other.gameObject.CompareTag("SquashObj"))
+        {
+            //get point value script from parent and then set entire thing to false, maybe change for targeting
+            GameObject pnt = other.gameObject.transform.parent.gameObject;
+            
+            PointValue pv = pnt.GetComponent<PointValue>();
+
+            pv.GetPoints();
+
+            if (pnt.name == "TargetingShip")
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                other.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+        }
         else if (other.gameObject.CompareTag("PlatformEnemy"))
         {
             if (!invincible)
@@ -77,19 +95,39 @@ public class PlayerCollisions : MonoBehaviour
             else
             {
                 print("player is invincible and cannot be damaged");
+
+                //get point value script from parent and then set entire thing to false, maybe change for targeting
+
+                PointValue pointV = other.gameObject.GetComponent<PointValue>();
+
+                pointV.GetPoints();
             }
 
-            try
+            KillEnemy(other.gameObject);
+
+            
+        }
+    }
+
+    private void KillEnemy(GameObject obj)
+    {
+        try
+        {
+            //print("set parent of enemy to false");
+            obj.transform.parent.gameObject.SetActive(false);
+        }
+        catch
+        {
+            //print("couldn't find parent of enemy, so set enemy false");
+            if (obj.name == "TargetingShip")
             {
-                //print("set parent of enemy to false");
-                other.transform.parent.gameObject.SetActive(false);
+                Destroy(obj);
             }
-            catch
+            else
             {
-                //print("couldn't find parent of enemy, so set enemy false");
-                other.gameObject.SetActive(false);
-                //add functionality to turn enemies back on when they end up off screen but player returns maybe..
+                obj.gameObject.SetActive(false);
             }
+            //add functionality to turn enemies back on when they end up off screen but player returns maybe..
         }
     }
 }
