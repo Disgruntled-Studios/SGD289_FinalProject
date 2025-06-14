@@ -3,16 +3,17 @@ using UnityEngine.Windows;
 
 public class BulletScript : MonoBehaviour
 {
+    //This script is on bullet prefab and controls its movement. It also handles collisions with enemies and destroys bullets that go offscreen.
+
     [SerializeField]
     private float bulletSpeed;
 
-    //Replace with object pooling
     [SerializeField]
-    private float destroyTime = 4f;
+    private GameObject rightTopDeathZone;
+    [SerializeField]
+    private GameObject leftBotDeathZone;
 
     Vector3 direction;
-
-    //This script is on comet prefab and controls its movement. It also handles collisions with the player.
 
     PlatformManager platformManager;
 
@@ -25,7 +26,10 @@ public class BulletScript : MonoBehaviour
 
     void Start()
     {
-        platformManager = GameObject.Find("Canvas").GetComponent<PlatformManager>();
+        platformManager = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
+        rightTopDeathZone = GameObject.Find("RightTopDeathZone");
+        leftBotDeathZone = GameObject.Find("LeftBotDeathZone");
+
         player = GameObject.Find("Player");
 
         var playerScale = player.transform.localScale;
@@ -50,8 +54,6 @@ public class BulletScript : MonoBehaviour
             rb.AddForce(direction * bulletSpeed);
         }
 
-        Destroy(gameObject, destroyTime);
-
     }
 
     // Update is called once per frame
@@ -64,6 +66,12 @@ public class BulletScript : MonoBehaviour
         else
         {
             transform.position += direction * bulletSpeed * Time.deltaTime;
+        }
+
+        //destroys bullet if it goes off screen. Change to use object pooling later.
+        if(transform.position.x < leftBotDeathZone.transform.position.x || transform.position.y > rightTopDeathZone.transform.position.x)
+        {
+            Destroy(gameObject);
         }
     }
 

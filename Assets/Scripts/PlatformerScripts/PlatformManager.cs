@@ -61,6 +61,7 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     private TMP_Text livesText;
 
+    private bool coinCollecting = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -127,7 +128,7 @@ public class PlatformManager : MonoBehaviour
         {
             string zero = "0";
             displayScore = zero + displayScore;
-            print("displayScore is " + displayScore);
+           // print("displayScore is " + displayScore);
         }
 
         scoreText.text = displayScore;
@@ -135,23 +136,37 @@ public class PlatformManager : MonoBehaviour
 
     public void CalculateCoins(int value)
     {
-        coins = coins + value;
-
-        if (coins > 99)
+        if (coinCollecting == false)
         {
-            coins = 99;
+            coinCollecting = true;
+            print("coins is" + coins + "and value is " + value);
+            coins = coins + value;
+
+            if (coins > 99)
+            {
+                coins = 99;
+            }
+
+            string displayCoins = coins.ToString();
+
+            if (displayCoins.Length < 2)
+            {
+                string zero = "0";
+                displayCoins = zero + displayCoins;
+                //print("displayCoins " + displayCoins);
+            }
+
+            coinsText.text = "Coins     " + displayCoins;
+            StartCoroutine(Wait());
+
+            //print("displayed coin count. Coins = " + displayCoins);
         }
+    }
 
-        string displayCoins = coins.ToString();
-
-        if (displayCoins.Length < 2)
-        {
-            string zero = "0";
-            displayCoins = zero + displayCoins;
-            //print("displayCoins " + displayCoins);
-        }
-
-        coinsText.text = displayCoins;
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.1f);
+        coinCollecting = false;
     }
 
 

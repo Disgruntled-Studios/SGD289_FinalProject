@@ -98,7 +98,7 @@ public class PatrolScript : MonoBehaviour
     public void DecideStates()
     {
 
-        print("wandering");
+        //print("wandering");
         HandleWandering();
 
     }

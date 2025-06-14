@@ -11,7 +11,7 @@ public class CometScript : MonoBehaviour
 
     void Start()
     {
-        platformManager = GameObject.Find("Canvas").GetComponent<PlatformManager>();
+        platformManager = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
     }
 
     // Update is called once per frame

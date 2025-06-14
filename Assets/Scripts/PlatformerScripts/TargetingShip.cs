@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class TargettingShip : MonoBehaviour
+public class TargetingShip : MonoBehaviour
 {
     //I want enemies with this script to patrol between points in the air or on the ground.
 
@@ -57,7 +57,7 @@ public class TargettingShip : MonoBehaviour
         }
         catch
         {
-            print("objects not found in start function of targetting ships");
+            print("objects not found in start function of targeting ships");
         }
     }
 
@@ -129,7 +129,7 @@ public class TargettingShip : MonoBehaviour
         }
         else if(state == "chargingForward" && transform.position.x < leftDeathZone.transform.position.x)
         {
-            print("destroying Targetting ship");
+            print("destroying Targeting ship");
             Destroy(this.gameObject);
         }
 
