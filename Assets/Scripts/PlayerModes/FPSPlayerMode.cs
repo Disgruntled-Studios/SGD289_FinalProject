@@ -16,8 +16,8 @@ public class FPSPlayerMode : IPlayerMode
     private readonly bool _isBulletTime;
     private readonly CapsuleCollider _standingCollider;
     private readonly SphereCollider _crouchingCollider;
-    
-    private float _jumpForce = 10f;
+
+    private const float JumpForce = 5f;
     private bool _isSprinting;
 
     public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider)
@@ -96,7 +96,7 @@ public class FPSPlayerMode : IPlayerMode
     {
         if (Mathf.Abs(_playerRb.linearVelocity.y) < 0.01f)
         {
-            _playerRb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            _playerRb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
         }
     } 
 
