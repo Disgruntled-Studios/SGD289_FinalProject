@@ -82,13 +82,24 @@ public class BulletScript : MonoBehaviour
         {
             try
             {
-                print("set parent of enemy to false");
+                //print("set parent of enemy to false");
                 other.transform.parent.gameObject.SetActive(false);
             }
             catch
             {
-                print("couldn't find parent of enemy, so set enemy false");
-                other.gameObject.SetActive(false);
+                if (other.gameObject.name == "TargetingShip(Clone)")
+                {
+                    print("destroying Targeting ship");
+                    ShipSpawner shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
+                    shipSpawner.DecreaseShipCount();
+
+                    Destroy(other.gameObject);
+                }
+                else if (other.gameObject.name == "ElectricShip(Clone)")
+                {
+                    //print("couldn't find parent of enemy, so set enemy false");
+                    other.gameObject.SetActive(false);
+                }
             }
         }
     }

@@ -45,6 +45,8 @@ public class TargetingShip : MonoBehaviour
 
     private string state = "movingRight";
 
+    ShipSpawner shipSpawner;
+
     private void Start()
     {
         //ship spawns at start position using timedActionsTrigger
@@ -54,6 +56,7 @@ public class TargetingShip : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             tShipPos2 = GameObject.Find("TShipPos2");
             leftDeathZone = GameObject.Find("LeftBotDeathZone");
+            shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
         }
         catch
         {
@@ -130,6 +133,9 @@ public class TargetingShip : MonoBehaviour
         else if(state == "chargingForward" && (transform.position.x < leftDeathZone.transform.position.x))
         {
             print("destroying Targeting ship");
+            //when a ship is destroyed. decrease shipCount in shipSpawner so a new one can be spawned.
+            shipSpawner.DecreaseShipCount();
+
             Destroy(this.gameObject);
         }
 

@@ -43,6 +43,7 @@ public class ShipSpawner : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             //0.1 for start time to prevent potential issues with 0.
+            //consider changing later
             InvokeRepeating("SpawnShip", 0.1f, timeBetweenShips);
         }
     }
@@ -80,6 +81,15 @@ public class ShipSpawner : MonoBehaviour
             }
         }
 
+    }
+
+    public void DecreaseShipCount()
+    {
+        shipCount--;
+        if(shipCount <0)
+        {
+            shipCount = 0;
+        }
     }
 
 

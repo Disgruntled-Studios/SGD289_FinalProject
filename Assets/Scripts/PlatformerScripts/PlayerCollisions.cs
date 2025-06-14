@@ -21,12 +21,18 @@ public class PlayerCollisions : MonoBehaviour
     private GameObject invObj;
 
 
+    ShipSpawner shipSpawner;
+    Rigidbody rb;
 
+    [SerializeField]
+    private float bounceForce = 3f;
 
 
     private void Start()
     {
         pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
+        shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
+        rb = this.gameObject.GetComponent<Rigidbody>();
 
         baseTime = (baseTime + Time.deltaTime) - resetTime;
 
@@ -36,14 +42,14 @@ public class PlayerCollisions : MonoBehaviour
     private void Update()
     {
         baseTime = (baseTime + Time.deltaTime) - resetTime;
-        print("base time is" + baseTime + ". And endtime is " + endTime);
+        //print("base time is" + baseTime + ". And endtime is " + endTime);
 
         if(invincible)
         {
             //Check when invincibility ends
             if(baseTime > endTime)
             {
-                print("invincibility ended");
+                //print("invincibility ended");
                 invObj.SetActive(false);
                 invincible = false;
             }
@@ -60,6 +66,12 @@ public class PlayerCollisions : MonoBehaviour
 
     }
 
+    //Adds a little bounce after player squashes an enemy
+    public void Bounce()
+    {
+        rb.AddForce(Vector3.up * bounceForce);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("PlatformCoin"))
@@ -68,8 +80,11 @@ public class PlayerCollisions : MonoBehaviour
                 pm.CalculateCoins(1);
                 other.gameObject.SetActive(false);
         }
-        else if (other.gameObject.CompareTag("SquashObj"))
+        
+        if (other.gameObject.CompareTag("SquashObj"))
         {
+            Bounce();
+
             //get point value script from parent and then set entire thing to false, maybe change for targeting
             GameObject pnt = other.gameObject.transform.parent.gameObject;
             
@@ -77,14 +92,18 @@ public class PlayerCollisions : MonoBehaviour
 
             pv.GetPoints();
 
-            if (pnt.name == "TargetingShip")
+            if (pnt.name == "TargetingShip(Clone)")
             {
-                Destroy(gameObject);
+                print("squashing Targeting ship");
+                shipSpawner.DecreaseShipCount();
+
+                Destroy(pnt);
             }
             else
             {
                 other.gameObject.transform.parent.gameObject.SetActive(false);
             }
+            return;
         }
         else if (other.gameObject.CompareTag("PlatformEnemy"))
         {
@@ -119,8 +138,11 @@ public class PlayerCollisions : MonoBehaviour
         catch
         {
             //print("couldn't find parent of enemy, so set enemy false");
-            if (obj.name == "TargetingShip")
+            if (obj.name == "TargetingShip(Clone)")
             {
+                //print("destroying Targeting ship");
+                shipSpawner.DecreaseShipCount();
+
                 Destroy(obj);
             }
             else

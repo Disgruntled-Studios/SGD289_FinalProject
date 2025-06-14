@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6947500471265242478}
   - component: {fileID: 1579110269837646832}
   - component: {fileID: 3879637220920660598}
-  - component: {fileID: 1076837573221953444}
+  - component: {fileID: 9082949188519904193}
+  - component: {fileID: 7676801859345104828}
   m_Layer: 0
-  m_Name: TargetingShip
+  m_Name: SquashObj
   m_TagString: SquashObj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 5736195243601318073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.61, z: 0}
-  m_LocalScale: {x: 0.804385, y: 0.804385, z: 0.804385}
+  m_LocalPosition: {x: 0, y: 0.59, z: 0}
+  m_LocalScale: {x: 0.87800056, y: 1.0406063, z: 0.87800056}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7155313039107226150}
@@ -87,8 +88,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1076837573221953444
-CapsuleCollider:
+--- !u!65 &9082949188519904193
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,11 +106,30 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 1.0930079, y: 2, z: 1}
+  m_Center: {x: -0.0009800114, y: 0.00000006222726, z: 0}
+--- !u!65 &7676801859345104828
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5736195243601318073}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.994095, y: 1.902076, z: 0.9071585}
+  m_Center: {x: -0.0011856238, y: 0.5982597, z: -0.0034015777}
 --- !u!1 &7545765048336539145
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,9 +141,9 @@ GameObject:
   - component: {fileID: 7155313039107226150}
   - component: {fileID: 2836863406778403528}
   - component: {fileID: 8117462942130480241}
-  - component: {fileID: 8401781625289476366}
   - component: {fileID: 1329717816448949336}
   - component: {fileID: 7930843475290379902}
+  - component: {fileID: 4966156214464031242}
   m_Layer: 0
   m_Name: TargetingShip
   m_TagString: PlatformEnemy
@@ -200,29 +220,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8401781625289476366
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7545765048336539145}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1329717816448949336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,3 +254,24 @@ MonoBehaviour:
   chargingForwardSpeed: 5
   overshootDistance: 0
   playerPosRefinement: 0.7
+--- !u!65 &4966156214464031242
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545765048336539145}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9999998, y: 2.6654518, z: 0.9999998}
+  m_Center: {x: 0, y: 0.3327252, z: 0}
