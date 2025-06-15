@@ -80,7 +80,37 @@ public class PlayerCollisions : MonoBehaviour
                 pm.CalculateCoins(1);
                 other.gameObject.SetActive(false);
         }
-        
+
+        if (other.gameObject.CompareTag("LonelyShip"))
+        {
+            //player touches lonely ship. 
+            //code movement change. Move player to ship location and attach ship to player as child. 
+            
+
+            //get point value script from parent and then set entire thing to false, maybe change for targeting
+            GameObject pnt = other.gameObject.transform.parent.gameObject;
+
+            PointValue pv = pnt.GetComponent<PointValue>();
+
+            pv.GetPoints();
+
+            if (pnt.name == "TargetingShip(Clone)")
+            {
+                print("squashing Targeting ship");
+                shipSpawner.DecreaseShipCount();
+
+                Destroy(pnt);
+            }
+            else
+            {
+                other.gameObject.transform.parent.gameObject.SetActive(false);
+            }
+            return;
+        }
+
+
+
+
         if (other.gameObject.CompareTag("SquashObj"))
         {
             Bounce();
@@ -141,9 +171,11 @@ public class PlayerCollisions : MonoBehaviour
             if (obj.name == "TargetingShip(Clone)")
             {
                 //print("destroying Targeting ship");
-                shipSpawner.DecreaseShipCount();
+                //shipSpawner.DecreaseShipCount();
 
-                Destroy(obj);
+                //Destroy(obj);
+                TargetingShip targetingShip = obj.gameObject.GetComponent<TargetingShip>();
+                targetingShip.ReplaceWithLonelyShip();
             }
             else
             {

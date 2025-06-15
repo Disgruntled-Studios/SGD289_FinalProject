@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem.XR.Haptics;
+using UnityEngine.ProBuilder;
 
 public class TargetingShip : MonoBehaviour
 {
@@ -40,10 +41,10 @@ public class TargetingShip : MonoBehaviour
     private float playerPosRefinement;
     private float playerPos;
 
-    
-    
-
     private string state = "movingRight";
+
+    [SerializeField]
+    private GameObject lonelyShip;
 
     ShipSpawner shipSpawner;
 
@@ -132,14 +133,35 @@ public class TargetingShip : MonoBehaviour
         }
         else if(state == "chargingForward" && (transform.position.x < leftDeathZone.transform.position.x))
         {
-            print("destroying Targeting ship");
-            //when a ship is destroyed. decrease shipCount in shipSpawner so a new one can be spawned.
-            shipSpawner.DecreaseShipCount();
-
-            Destroy(this.gameObject);
+            DestroyTargetingShip();
         }
 
     }
+
+    public void DestroyTargetingShip()
+    {
+        print("destroying Targeting ship in destroyTargetingShipFunc");
+        //when a ship is destroyed. decrease shipCount in shipSpawner so a new one can be spawned.
+        shipSpawner.DecreaseShipCount();
+
+        //added slight delay so has time to create lonely ship
+        Destroy(this.gameObject, 0.01f);
+    }
+
+    public void ReplaceWithLonelyShip()
+    {
+        if(lonelyShip != null)
+        {
+            //create lonely ship. The lonely ship has its own programming from there.
+            print("replacingWithLonelyShip" + transform.position);
+            Instantiate(lonelyShip, transform.position, Quaternion.identity);
+            DestroyTargetingShip();
+
+        }
+        
+    }
+
+
     
 
 

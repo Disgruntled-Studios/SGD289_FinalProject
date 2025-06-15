@@ -89,16 +89,14 @@ public class BulletScript : MonoBehaviour
             {
                 if (other.gameObject.name == "TargetingShip(Clone)")
                 {
-                    print("destroying Targeting ship");
-                    ShipSpawner shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
-                    shipSpawner.DecreaseShipCount();
-
-                    Destroy(other.gameObject);
+                    TargetingShip targetingShip = other.gameObject.GetComponent<TargetingShip>();
+                    targetingShip.ReplaceWithLonelyShip();
                 }
                 else if (other.gameObject.name == "ElectricShip(Clone)")
                 {
                     //destroys the bullet, not the enemy
-                    this.gameObject.SetActive(false);
+                    Destroy(gameObject);
+                    //this.gameObject.SetActive(false);
                 }
             }
         }
