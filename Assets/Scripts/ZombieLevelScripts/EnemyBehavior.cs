@@ -112,7 +112,7 @@ public class EnemyBehavior : MonoBehaviour
             Debug.Log("Invoking set destination in 6 seconds");
             StartCoroutine(SetAgentDestToCurrentTarget(6));
         }
-        else if (playerDist <= attackDistance && currentState == BehaviorState.chasing)
+        else if (fov.isPlayerInSight && playerDist <= attackDistance && currentState == BehaviorState.chasing)
         {
             Vector3 direction = playerRef.transform.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -121,7 +121,7 @@ public class EnemyBehavior : MonoBehaviour
             anim.SetTrigger("Attacking");
             //Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
         }
-        else if (currentState == BehaviorState.chasing)
+        else if (fov.isPlayerInSight && currentState == BehaviorState.chasing)
         {
             Debug.Log("ChasingPlayer");
             meshAgent.SetDestination(playerRef.transform.position);
@@ -214,6 +214,7 @@ public class EnemyBehavior : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log("Player within sight range");
                         detectionLvl += detectionRate * Time.deltaTime;
                     }
                     break;
@@ -229,7 +230,7 @@ public class EnemyBehavior : MonoBehaviour
                     }
                     else
                     {
-                        //Debug.Log("Detection dropping");
+                        Debug.Log("Detection dropping");
                         detectionLvl -= detectionRate * Time.deltaTime;
                     }
                     break;
@@ -251,7 +252,7 @@ public class EnemyBehavior : MonoBehaviour
                 Debug.Log("Player has escaped returning to patrol");
             }
 
-            Debug.Log(detectionLvl + " = detection lvl / " + (detectionLvl / 10) + " = FillAmount");
+            Debug.Log(detectionLvl + " = detection lvl / " + (detectionLvl / 1) + " = FillAmount");
             awarenessImage.fillAmount = detectionLvl / 1;
             yield return new WaitForSeconds(delay);
         }

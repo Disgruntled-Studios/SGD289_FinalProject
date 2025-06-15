@@ -41,16 +41,15 @@ public class EnemyFOV : MonoBehaviour
             if (Vector3.Distance(transform.position, visibleTarget.position) > viewRadius)
             {
                 visibleTargetLastPos = visibleTarget.position;
-                visibleTarget = null;
-                isPlayerInSight = false;
             }
             else
             {
                 return;
             }
+            visibleTarget = null;
+            isPlayerInSight = false;
         }
 
-         
         //Create a list of objects that are within the viewRadius of the enemy. 
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
         for (int i = 0; i < targetsInViewRadius.Length; i++)
