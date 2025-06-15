@@ -47,8 +47,9 @@ public class ElectricShip : MonoBehaviour
     private float stepDistance;
 
     //[SerializeField]
-   // private float timeBetweenSteps = 0.05f;
+    // private float timeBetweenSteps = 0.05f;
 
+    ShipSpawner shipSpawner;
     
     private bool equationFound = false;
 
@@ -59,6 +60,7 @@ public class ElectricShip : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         startPointObj = GameObject.Find("EShipSpawnPos");
         endPointObj = GameObject.Find("EShipEndPos");
+        shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
 
         startPoint = startPointObj.transform;
         endPoint = endPointObj.transform;
@@ -119,8 +121,10 @@ public class ElectricShip : MonoBehaviour
             CancelInvoke();
             //print("canceled travel along curve invoke repeating");
             print("destroyed electric ship as it reached endpoint");
-            //this.gameObject.SetActive(false);
+            shipSpawner.DecreaseShipCount();
+
             Destroy(gameObject);
+
         }
     }
 
@@ -161,14 +165,6 @@ public class ElectricShip : MonoBehaviour
         //subtracting since we are going right to left. May change later.
         float x = transform.position.x - stepDistance;
 
-        //use this equation to find y by plugging in x. y = a(x - h) ^ 2 + k
-
-        //vertH = playerTransform.position.x;
-        //vertK = playerTransform.position.y;
-        //Instead of getting new player transform.position each time. Use the one that was found when player started.
-
-        //startY = startPoint.position.y;
-
         //y = a(x-h)^2+k. Find y.
 
         //solving (x-h)^2
@@ -179,15 +175,6 @@ public class ElectricShip : MonoBehaviour
         float y = part2 + vertK;
 
         Vector3 vector = new Vector3(x, y, transform.position.z);
-
-        //float step = speed * Time.deltaTime;
-        //transform.position = Vector3.MoveTowards(transform.position, patrolPoints[point].transform.position, step);
-
-        //x = x * speed * Time.deltaTime;
-        //y = y * speed * Time.deltaTime;
-
-
-        //vector = vector *speed * Time.deltaTime;
 
         return vector;
         

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4851288331254608743}
   - component: {fileID: 6655359078013490652}
   - component: {fileID: 4272666573302916377}
-  - component: {fileID: 6425799911632710837}
   - component: {fileID: 957851742905272968}
+  - component: {fileID: 6425799911632710837}
   m_Layer: 0
   m_Name: ElectricShip
   m_TagString: PlatformEnemy
@@ -89,6 +89,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &957851742905272968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211295340906131462}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6425799911632710837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,27 +127,6 @@ MonoBehaviour:
   endPointObj: {fileID: 0}
   player: {fileID: 0}
   stepDistance: 10
---- !u!65 &957851742905272968
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211295340906131462}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7129273891170595643
 GameObject:
   m_ObjectHideFlags: 0
