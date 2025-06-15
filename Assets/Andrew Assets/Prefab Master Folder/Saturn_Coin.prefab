@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Saturn_Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3e983590e40b9f8488269a5ff2be389e, type: 3}
+      propertyPath: m_TagString
+      value: PlatformCoin
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -59,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e983590e40b9f8488269a5ff2be389e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5977685798285674654}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e983590e40b9f8488269a5ff2be389e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5030075413521841985}
   m_SourcePrefab: {fileID: 100100000, guid: 3e983590e40b9f8488269a5ff2be389e, type: 3}
 --- !u!1 &8434091270556939942 stripped
 GameObject:
@@ -87,3 +94,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 9087627701186551200, guid: 3e983590e40b9f8488269a5ff2be389e, type: 3}
+--- !u!114 &5030075413521841985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434091270556939942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ca08a77ffaaac4c96bcdeaf0bfc777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xValue: 0
+  yValue: 45
+  zValue: 0

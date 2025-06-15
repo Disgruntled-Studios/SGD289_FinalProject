@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.LightTransport;
 
 public class PlatformManager : MonoBehaviour
 {
@@ -70,6 +71,12 @@ public class PlatformManager : MonoBehaviour
     private bool lifeCalc = false;
 
     PlayerCollisions pCollisions;
+
+
+    [Header("HubTransition")]
+    [SerializeField] private World _world;
+    [SerializeField] private string _sceneSwitchName;
+    [SerializeField] private string _cameraSwitchId;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -238,9 +245,24 @@ public class PlatformManager : MonoBehaviour
         // suspend execution for 5 seconds
         yield return new WaitForSeconds(5);
 
-        gameOverPanel.SetActive(true);
+        try
+        {
+            ReturnToHub();
+        }
+        catch
+        {
+            ResetGame();
+        }
+
+        //gameOverPanel.SetActive(true);
         //play sound effect.
 
+    }
+
+    public void ReturnToHub()
+    {
+        GameManager.Instance.SwitchPlayerMode(_world);
+        TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId);
     }
 
     public void ResetGame()
@@ -248,6 +270,7 @@ public class PlatformManager : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentScene);
     }
+
 
     public void OnClickQuitButton()
     {

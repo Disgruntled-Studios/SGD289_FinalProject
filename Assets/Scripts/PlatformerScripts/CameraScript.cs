@@ -20,6 +20,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //change to follow player's position x, but not y unless goes above a certain height.
         transform.position = player.transform.position + camOffset;
     }
 }

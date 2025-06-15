@@ -55,6 +55,16 @@ public class ElectricShip : MonoBehaviour
 
     private Vector3 destination;
 
+    void OnDisable()
+    {
+        CancelInvoke();
+    }
+
+    void OnDestroy()
+    {
+        CancelInvoke();
+    }
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -97,7 +107,7 @@ public class ElectricShip : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, destination, stepSpeed);
 
         //print("Destination is equal to " + destination);
-        print("transform.position is " + transform.position);
+        //print("transform.position is " + transform.position);
 
         // Checks if enemy reached destinatiton point and moves to next point or resets if so.
         if (Vector3.Distance(transform.position, destination) < 0.001f)
