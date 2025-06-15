@@ -13,9 +13,9 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly PlatformingCollisions _platformingCollisions;
     private readonly GameObject _invCube;
     private bool useGravity = true;
-    private PlayerAnimationController _anim;
+    private PlayerAnimationController _animationController;
 
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlatformingCollisions platformingCollisions, GameObject gunModel, GameObject groundCheck, GameObject invCube, PlayerAnimationController anim)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlatformingCollisions platformingCollisions, GameObject gunModel, GameObject groundCheck, GameObject invCube, PlayerAnimationController animationController)
     {
         _rb = playerRb;
         _speed = speed;
@@ -26,7 +26,7 @@ public class PlatformPlayerMode : IPlayerMode
         _gunModel = gunModel;
         _groundCheck = groundCheck;
         _invCube = invCube;
-        _anim = anim;
+        _animationController = animationController;
     }
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)

@@ -6,14 +6,14 @@ public class HubMovementMode : IPlayerMode
     private readonly float _speed;
     private readonly float _rotationSpeed;
     private readonly GameObject _gunModel;
-    private PlayerAnimationController _anim;
+    private PlayerAnimationController _animationController;
 
-    public HubMovementMode(float speed, float rotationSpeed, GameObject gunModel, PlayerAnimationController anim)
+    public HubMovementMode(float speed, float rotationSpeed, GameObject gunModel, PlayerAnimationController animationController)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
         _gunModel = gunModel;
-        _anim = anim;
+        _animationController = animationController;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)

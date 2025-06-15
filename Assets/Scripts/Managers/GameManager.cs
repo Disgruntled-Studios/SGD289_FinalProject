@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToHub()
     {
-        PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel, anim: AnimationController);
+        PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel, animationController: AnimationController);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, anim: AnimationController);
+        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         PlayerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, anim: AnimationController);
+            new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, animationController: AnimationController);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, anim: AnimationController);
+        PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;

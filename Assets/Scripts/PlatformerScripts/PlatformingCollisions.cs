@@ -34,12 +34,13 @@ public class PlatformingCollisions : MonoBehaviour
     private GameObject ship;
 
     // BJ: Changed to Initialize function to control timing of call
+    // Now called in OnModeEnter to ensure managers are loaded
     public void Initialize()
     {
         hasShip = false;
         pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
         shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
-        rb = this.gameObject.GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
 
         baseTime = (baseTime + Time.deltaTime) - resetTime;
 

@@ -15,10 +15,14 @@ public class PlayerAnimationController : MonoBehaviour
 
         _anim?.SetBool("IsMoving", isMoving);
         
-        // Having fun with animations
-        // if (Input.GetKeyDown(KeyCode.Y))
-        // {
-        //     _anim?.SetTrigger("Dance");
-        // }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            _anim?.SetTrigger("Dance");
+        }
+    }
+
+    public void Crouch(bool isCrouching)
+    {
+        _anim.SetBool("IsCrouching", isCrouching);
     }
 }

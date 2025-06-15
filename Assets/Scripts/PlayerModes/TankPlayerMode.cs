@@ -20,7 +20,7 @@ public class TankPlayerMode : IPlayerMode
     SphereCollider _crouchCollider;
 
     private TankGunController _tankGunReference;
-    private PlayerAnimationController _anim;
+    private PlayerAnimationController _animationController;
 
 
     /// <summary>
@@ -31,7 +31,7 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="rotationSpeed">How fast the player will rotate the character model.</param>
     /// <param name="rbComponent">The Rigidbody component that is attached to the player object.</param>
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
-    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider, PlayerAnimationController anim)
+    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider, PlayerAnimationController animationController)
     {
         _normalSpeed = speed;
         _halfSpeed = speed / 2f;
@@ -45,7 +45,7 @@ public class TankPlayerMode : IPlayerMode
         _standingCollider = standingCollider;
         _crouchCollider = crouchCollider;
         _crouchCollider.enabled = false;
-        _anim = anim;
+        _animationController = animationController;
     }
 
 
@@ -117,6 +117,7 @@ public class TankPlayerMode : IPlayerMode
         if (_standingCollider.enabled)
         {
             _isCrouching = true;
+            _animationController.Crouch(_isCrouching);
             _currentSpeed = _halfSpeed;
             _standingCollider.enabled = false;
             _crouchCollider.enabled = true;
@@ -125,6 +126,7 @@ public class TankPlayerMode : IPlayerMode
         else if (!Physics.Raycast(_player.TransformPoint(_crouchCollider.center), Vector3.up, out hitTest, 1)) 
         {
             _isCrouching = false;
+            _animationController.Crouch(_isCrouching);
             _currentSpeed = _normalSpeed;
             _standingCollider.enabled = true;
             _crouchCollider.enabled = false;
