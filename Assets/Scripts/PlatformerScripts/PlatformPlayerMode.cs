@@ -9,11 +9,12 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly Transform _playerTransform;
     private readonly GunScript _gunScript;
     private readonly GameObject _gunModel;
-    private readonly GameObject _jumpOnEnemyObject;
+    private readonly GameObject _groundCheck;
     private readonly PlayerCollisions _playerCollisions;
     private readonly GameObject _invCube;
+    private bool useGravity = true;
 
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject jumpOnEnemy, GameObject invCube)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject groundCheck, GameObject invCube)
     {
         _rb = playerRb;
         _speed = speed;
@@ -22,17 +23,26 @@ public class PlatformPlayerMode : IPlayerMode
         _gunScript = gunScript;
         _playerCollisions = playerCollisions;
         _gunModel = gunModel;
-        _jumpOnEnemyObject = jumpOnEnemy;
+        _groundCheck = groundCheck;
         _invCube = invCube;
     }
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
-        //{
+        if(!_playerCollisions.hasShip)
+        {
+            if (useGravity == false)
+            {
+                _rb.useGravity = true;
+            }
+            //want to change if player is in ship
+
+            //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
+            //{
             var moveDirection = _playerTransform.forward * input.x;
             var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
             _rb.linearVelocity = velocity;
+            rb.AddForce(velocity * _speed * Time.deltaTime);
 
             if (Mathf.Abs(input.x) > 0.01f)
             {
@@ -40,7 +50,28 @@ public class PlatformPlayerMode : IPlayerMode
                 newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
                 _playerTransform.localScale = newScale;
             }
-        //}
+        }
+        if(_playerCollisions.hasShip)
+        {
+            if (useGravity)
+            {
+                _rb.useGravity = false;
+                useGravity = false;
+            }
+
+            var moveDirection = _playerTransform.forward * input.x;
+            var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
+            _rb.linearVelocity = velocity;
+            //rb.AddForce(velocity * _speed * Time.deltaTime);
+
+            if (Mathf.Abs(input.x) > 0.01f)
+            {
+                var newScale = _playerTransform.localScale;
+                newScale.z = Mathf.Sign(input.x) * Mathf.Abs(newScale.z);
+                _playerTransform.localScale = newScale;
+            }
+
+        }
 
     }
 
@@ -48,8 +79,13 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Jump()
     {
+        //want to change if player is in ship to also free player of ship.
         if (Mathf.Abs(_rb.linearVelocity.y) < 0.01f)
         {
+            if (_playerCollisions.hasShip)
+            {
+                _playerCollisions.ExitShip();
+            }
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }
@@ -83,12 +119,14 @@ public class PlatformPlayerMode : IPlayerMode
         _gunModel.SetActive(true);
         // Laser is disabled initially by default
         _gunScript.ToggleLineRenderer(false);
-        _jumpOnEnemyObject.SetActive(true);
+        _groundCheck.SetActive(true);
+        useGravity = true;
+
     }
 
     public void OnModeExit()
     {
-        _jumpOnEnemyObject.SetActive(false);
+        _groundCheck.SetActive(false);
         _invCube.SetActive(false);
 
         // Reset scale if player is flipped
@@ -105,4 +143,10 @@ public class PlatformPlayerMode : IPlayerMode
     {
         return;
     }
+
+
+
+
+
+
 }

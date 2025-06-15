@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Transform CameraTarget => _cameraTarget;
     private PlayerController _playerController;
     private Rigidbody _playerRb;
-    [SerializeField] private GameObject _jumpOnEnemyObject;
+    [SerializeField] private GameObject _groundCheckObject;
     [SerializeField] private GameObject _invCube;
 
     [SerializeField] private LayerMask _groundLayerMask;
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, playerCollisions: _playerCollisions, gunModel: _tpGunModel, jumpOnEnemy: _jumpOnEnemyObject, invCube: _invCube);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, playerCollisions: _playerCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;

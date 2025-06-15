@@ -27,9 +27,16 @@ public class PlayerCollisions : MonoBehaviour
     [SerializeField]
     private float bounceForce = 3f;
 
+    [SerializeField]
+    public bool hasShip = false;
+
+    //this holds a reference to the ship if player has one.
+    private GameObject ship;
+
 
     private void Start()
     {
+        hasShip = false;
         pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
         shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
         rb = this.gameObject.GetComponent<Rigidbody>();
@@ -83,29 +90,17 @@ public class PlayerCollisions : MonoBehaviour
 
         if (other.gameObject.CompareTag("LonelyShip"))
         {
-            //player touches lonely ship. 
-            //code movement change. Move player to ship location and attach ship to player as child. 
-            
 
-            //get point value script from parent and then set entire thing to false, maybe change for targeting
-            GameObject pnt = other.gameObject.transform.parent.gameObject;
+            //Move player to same position as lonely ship.
+            transform.position = other.transform.position;
 
-            PointValue pv = pnt.GetComponent<PointValue>();
+            //Make ship a child of the player
+            other.gameObject.transform.parent = gameObject.transform;
 
-            pv.GetPoints();
+            ship = other.gameObject;
 
-            if (pnt.name == "TargetingShip(Clone)")
-            {
-                print("squashing Targeting ship");
-                shipSpawner.DecreaseShipCount();
-
-                Destroy(pnt);
-            }
-            else
-            {
-                other.gameObject.transform.parent.gameObject.SetActive(false);
-            }
-            return;
+            //Turn "hasShip to true in Platform Manager
+            hasShip = true;
         }
 
 
@@ -124,10 +119,12 @@ public class PlayerCollisions : MonoBehaviour
 
             if (pnt.name == "TargetingShip(Clone)")
             {
-                print("squashing Targeting ship");
-                shipSpawner.DecreaseShipCount();
+                //print("squashing Targeting ship");
+                //shipSpawner.DecreaseShipCount();
 
-                Destroy(pnt);
+                //Destroy(pnt);
+                TargetingShip targetingShip = pnt.gameObject.GetComponent<TargetingShip>();
+                targetingShip.ReplaceWithLonelyShip();
             }
             else
             {
@@ -156,6 +153,21 @@ public class PlayerCollisions : MonoBehaviour
 
             
         }
+    }
+
+    public void ExitShip()
+    {
+        hasShip = false;
+        if (ship)
+        {
+
+            ship.transform.parent = null;
+            LonelyShip lonelyShipScript = ship.GetComponent<LonelyShip>();
+            lonelyShipScript.CountDown();
+        }
+        ship = null;
+
+
     }
 
     private void KillEnemy(GameObject obj)

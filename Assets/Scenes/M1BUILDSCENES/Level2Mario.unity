@@ -3966,7 +3966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 174610806}
   _cameraTarget: {fileID: 1088026820}
-  _jumpOnEnemyObject: {fileID: 1560111298}
+  _groundCheckObject: {fileID: 1560111298}
   _invCube: {fileID: 808806259}
   _groundLayerMask:
     serializedVersion: 2
@@ -4272,6 +4272,10 @@ PrefabInstance:
       propertyPath: isTestingPlatform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2392127784452737548, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4838020050481297923, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.001993383
@@ -4425,6 +4429,7 @@ MonoBehaviour:
   dmgInvTime: 1
   invObj: {fileID: 808806259}
   bounceForce: 300
+  hasShip: 1
 --- !u!1001 &3777585560039643143
 PrefabInstance:
   m_ObjectHideFlags: 0
