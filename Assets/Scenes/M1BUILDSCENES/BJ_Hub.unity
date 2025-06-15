@@ -2794,6 +2794,7 @@ MonoBehaviour:
   _player: {fileID: 1078754784}
   _cameraTarget: {fileID: 1186793260}
   _jumpOnEnemyObject: {fileID: 1525781953}
+  _invCube: {fileID: 0}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3096,6 +3097,7 @@ GameObject:
   - component: {fileID: 1616201719}
   - component: {fileID: 1616201718}
   - component: {fileID: 1616201722}
+  - component: {fileID: 1616201723}
   m_Layer: 0
   m_Name: CameraSystem
   m_TagString: MainCamera
@@ -3257,6 +3259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634c3bd740c28a74389d8b4ff739b3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &1616201723
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616201717}
+  m_Enabled: 1
 --- !u!1 &1635580358
 GameObject:
   m_ObjectHideFlags: 0

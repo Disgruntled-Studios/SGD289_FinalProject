@@ -9,6 +9,10 @@ public class FPSManager : MonoBehaviour
     [SerializeField] private GameObject _fpsPanel;
     [SerializeField] private GameObject _startDoor;
     [SerializeField] private FPSUIController _ui;
+    [SerializeField] private FPSAudioManager _audio;
+
+    public FPSAudioManager Audio => _audio;
+    
     public FPSUIController UI => _ui;
 
     private const float SimulationDuration = 100f;

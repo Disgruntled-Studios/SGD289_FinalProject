@@ -5019,7 +5019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &817437503
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5563,6 +5563,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e800fd576414844818c874a0feb998, type: 3}
+--- !u!1 &966895939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 966895941}
+  - component: {fileID: 966895940}
+  m_Layer: 0
+  m_Name: FPSAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &966895940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966895939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd159d185fb9a2488c35d4f64085a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSourcePrefab: {fileID: 2848875172587181653, guid: b5f802d1726f26644b873ecd96a2a625, type: 3}
+  _audioLibrary: {fileID: 11400000, guid: 143ed69a91015a141bb03f37b074981c, type: 2}
+--- !u!4 &966895941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966895939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 683.1744, y: 358.65195, z: -933.57666}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1000571453
 Mesh:
   m_ObjectHideFlags: 0
@@ -9682,6 +9728,7 @@ MonoBehaviour:
   _fpsPanel: {fileID: 817437502}
   _startDoor: {fileID: 1219324381}
   _ui: {fileID: 238975220}
+  _audio: {fileID: 966895940}
 --- !u!1001 &1960566205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10883,6 +10930,7 @@ SceneRoots:
   - {fileID: 760653717}
   - {fileID: 1913875768}
   - {fileID: 238975219}
+  - {fileID: 966895941}
   - {fileID: 729269176}
   - {fileID: 2101892636}
   - {fileID: 223069210}

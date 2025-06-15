@@ -103,6 +103,7 @@ public class FPSGunController : MonoBehaviour
 
         bulletController.InitializeAndFire(CurrentMaterial);
         FPSManager.Instance.RegisterShotFired();
+        FPSManager.Instance.Audio.PlaySoundAtPosition("Shoot", _barrelEnd.position);
         
         _isRecoiling = true;
     }
