@@ -754,6 +754,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4860402795380597668, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Name
+      value: GroundCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860402795380597668, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5101476103794282307, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -891,7 +899,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3489635098473805026, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 7628986085075216578, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_AddedGameObjects: []
@@ -908,6 +916,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &27478869 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6733023839848698800, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &27478870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 566534123701202357, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078754784}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09ba68d772c01a458f126a8ecf11c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &27478871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4860402795380597668, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &54181945 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7242984614113747194, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -2328,6 +2357,17 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 9107562140772942605, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1078754795 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4277027718331309823, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+  m_PrefabInstance: {fileID: 27478867}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078754784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04138ce1653dd74ebfe57c0cef71042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &1095257887 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1096946222704880799, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -2793,8 +2833,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1078754784}
   _cameraTarget: {fileID: 1186793260}
-  _jumpOnEnemyObject: {fileID: 1525781953}
-  _invCube: {fileID: 0}
+  _groundCheckObject: {fileID: 27478871}
+  _invCube: {fileID: 27478869}
+  _animationController: {fileID: 1078754795}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -2803,7 +2844,7 @@ MonoBehaviour:
   _gunScript: {fileID: 54181945}
   _fpsGun: {fileID: 27478868}
   _tpGunModel: {fileID: 1098921463}
-  _playerCollisions: {fileID: 0}
+  _playerCollisions: {fileID: 27478870}
   _isBulletTime: 0
   _standingCollider: {fileID: 1078754793}
   _crouchCollider: {fileID: 1078754790}
@@ -2943,11 +2984,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500785864}
   m_CullTransparentMesh: 1
---- !u!1 &1525781953 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4860402795380597668, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-  m_PrefabInstance: {fileID: 27478867}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1544792836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,9 +3216,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.2
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -3241,7 +3277,7 @@ Transform:
   m_GameObject: {fileID: 1616201717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73, y: 1.375, z: -21.81}
+  m_LocalPosition: {x: 0.23, y: 1.375, z: -19.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

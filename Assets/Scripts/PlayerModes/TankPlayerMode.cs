@@ -20,6 +20,7 @@ public class TankPlayerMode : IPlayerMode
     SphereCollider _crouchCollider;
 
     private TankGunController _tankGunReference;
+    private PlayerAnimationController _anim;
 
 
     /// <summary>
@@ -30,7 +31,7 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="rotationSpeed">How fast the player will rotate the character model.</param>
     /// <param name="rbComponent">The Rigidbody component that is attached to the player object.</param>
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
-    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider)
+    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider, PlayerAnimationController anim)
     {
         _normalSpeed = speed;
         _halfSpeed = speed / 2f;
@@ -44,6 +45,7 @@ public class TankPlayerMode : IPlayerMode
         _standingCollider = standingCollider;
         _crouchCollider = crouchCollider;
         _crouchCollider.enabled = false;
+        _anim = anim;
     }
 
 

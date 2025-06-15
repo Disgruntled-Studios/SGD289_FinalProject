@@ -1,7 +1,7 @@
 using System.Reflection;
 using UnityEngine;
 
-public class PlayerCollisions : MonoBehaviour
+public class PlatformingCollisions : MonoBehaviour
 {
 
     PlatformManager pm;
@@ -33,8 +33,8 @@ public class PlayerCollisions : MonoBehaviour
     //this holds a reference to the ship if player has one.
     private GameObject ship;
 
-
-    private void Start()
+    // BJ: Changed to Initialize function to control timing of call
+    public void Initialize()
     {
         hasShip = false;
         pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();

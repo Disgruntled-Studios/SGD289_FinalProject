@@ -27,7 +27,9 @@ public class FPSPlayerMode : IPlayerMode
     private const float SprintMultiplier = 1.5f;
     private bool CanSprint => _currentStamina > 0f;
 
-    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider)
+    private PlayerAnimationController _anim;
+
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider, PlayerAnimationController anim)
     {
         _speed = speed;
         _playerTransform = playerTransform;
@@ -38,6 +40,7 @@ public class FPSPlayerMode : IPlayerMode
         _standingCollider = standingCollider;
         _crouchingCollider = crouchingCollider;
         _currentStamina = MaxStamina;
+        _anim = anim;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
