@@ -64,7 +64,7 @@ public class EnemyBehavior : MonoBehaviour
         onDamage.AddListener(ToggleEnemyMaterial);
         health = new UnitHealth(maxHealth, onDamage);
         GetComponentInChildren<DamageTrigger>().damageAmount = attackStrength;
-        GetComponentInChildren<MeshRenderer>().material = normalMat;
+        //GetComponentInChildren<MeshRenderer>().material = normalMat;
         meshAgent.isStopped = false;
         meshAgent.speed = patrolSpeed;
         meshAgent.stoppingDistance = attackDistance;
@@ -77,6 +77,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         StateHandler();
+        anim.SetBool("IsMoving", !meshAgent.isStopped);
     }
 
 
