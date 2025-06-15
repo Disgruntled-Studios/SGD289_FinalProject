@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour
     public GameObject Player => _player;
     [SerializeField] private Transform _cameraTarget;
     public Transform CameraTarget => _cameraTarget;
-    private PlayerController _playerController;
-    private Rigidbody _playerRb;
+    
+    public PlayerController PlayerController => _player.GetComponent<PlayerController>();
+    public Rigidbody PlayerRb => _player.GetComponent<Rigidbody>();
+    public PlayerAnimationController AnimationController => _player.GetComponent<PlayerAnimationController>();
+
     [SerializeField] private GameObject _groundCheckObject;
     [SerializeField] private GameObject _invCube;
-
+    
     [SerializeField] private LayerMask _groundLayerMask;
     public TileSelection currentTileSelection;
     
@@ -24,8 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FPSGunController _fpsGun;
     [SerializeField] private GameObject _tpGunModel;
 
+    [FormerlySerializedAs("_playerCollisions")]
     [Header("Platformer")]
-    [SerializeField] private PlayerCollisions _playerCollisions;
+    [SerializeField] private PlatformingCollisions _platformingCollisions;
 
 
     [Header("Game Settings")]
@@ -57,33 +61,28 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(_player.gameObject);
         }
-
-        _playerController = _player.GetComponent<PlayerController>();
-        _playerRb = _player.GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
 
-        if (_playerController.isTestingTank)
+        if (PlayerController.isTestingTank)
         {
-            SwitchPlayerMode(World.Tank);
+            TransitionManager.Instance.TransitionToScene("NateTest", "CAM01", World.Tank);
         }
-        else if (_playerController.isTestingPlatform)
+        else if (PlayerController.isTestingPlatform)
         {
-            SwitchPlayerMode(World.Platform);
+            TransitionManager.Instance.TransitionToScene("Level2Mario", "PLATFORMMAIN", World.Platform);
         }
-        else if (_playerController.isTestingFPS)
+        else if (PlayerController.isTestingFPS)
         {
-            TransitionManager.Instance.TransitionToScene("BJ_FPS", "FPSMAIN");
-            SwitchPlayerMode(World.FPS);
+            TransitionManager.Instance.TransitionToScene("BJ_FPS", "FPSMAIN", World.FPS);
         }
         else
         {
             SwitchPlayerMode(World.Hub);
-            CameraManager.Instance.TrySwitchToCamera("HUBMAIN");
-            CameraManager.Instance.TrySetCameraTarget("HUBMAIN", CameraTarget);
+            TransitionManager.Instance.TransitionToScene("BJ_Hub", "HUBCAM", World.Hub);
         }
     }
 
@@ -93,22 +92,22 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.F1))
         {
-            SwitchPlayerMode(World.Hub);
+            TransitionManager.Instance.TransitionToScene("BJ_Hub", "HUBMAIN", World.Hub);
             Debug.Log("DevKey: Switching PlayerMode to Hub");
         }
         if (Input.GetKey(KeyCode.F2))
         {
-            SwitchPlayerMode(World.Tank);
+            TransitionManager.Instance.TransitionToScene("NateTest", "CAM01", World.Tank);
             Debug.Log("DevKey: Switching PlayerMode to Tank");
         }
         if (Input.GetKey(KeyCode.F3))
         {
-            SwitchPlayerMode(World.Platform);
+            TransitionManager.Instance.TransitionToScene("Level2Mario", "PLATFORMMAIN", World.Platform);
             Debug.Log("DevKey: Switching PlayerMode to Platform");
         }
         if (Input.GetKey(KeyCode.F4))
         {
-            SwitchPlayerMode(World.FPS);
+            TransitionManager.Instance.TransitionToScene("BJ_FPS", "FPSMAIN", World.FPS);
             Debug.Log("DevKey: Switching PlayerMode to FPS");
         }
     }
@@ -118,42 +117,35 @@ public class GameManager : MonoBehaviour
     public void SwitchPlayerMode(World mode)
     {
         if (CurrentWorld == mode) return;
-        _playerController.CurrentMode?.OnModeExit();
         CurrentWorld = mode;
 
         switch (mode)
         {
             case World.Hub:
                 SwitchToHub();
-                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Tank:
                 SwitchToTank();
-                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Platform:
                 SwitchToPlatform();
-                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.FPS:
                 SwitchToFPS();
-                _playerController.CurrentMode?.OnModeEnter();
-                _tpGunModel.SetActive(false); // BJ TESTING
+                _tpGunModel.SetActive(false);
                 break;
             case World.Mirror:
                 SwitchToMirror();
-                _playerController.CurrentMode?.OnModeEnter();
                 break;
             case World.Puzzle:
                 SwitchToPuzzle();
-                _playerController.CurrentMode?.OnModeEnter();
                 break;
         }
     }
 
     private void SwitchToHub()
     {
-        _playerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel);
+        PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel, anim: AnimationController);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -161,7 +153,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        _playerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: _playerController.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: _playerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider);
+        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, anim: AnimationController);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -169,8 +161,8 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToPlatform()
     {
-        _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, playerCollisions: _playerCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube);
+        PlayerController.CurrentMode =
+            new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, anim: AnimationController);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;
@@ -178,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        _playerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: _playerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider);
+        PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, anim: AnimationController);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
@@ -186,7 +178,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToMirror()
     {
-        _playerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
+        PlayerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -194,7 +186,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToPuzzle()
     {
-        _playerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
+        PlayerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;

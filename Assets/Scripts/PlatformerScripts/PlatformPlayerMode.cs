@@ -10,26 +10,28 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly GunScript _gunScript;
     private readonly GameObject _gunModel;
     private readonly GameObject _groundCheck;
-    private readonly PlayerCollisions _playerCollisions;
+    private readonly PlatformingCollisions _platformingCollisions;
     private readonly GameObject _invCube;
     private bool useGravity = true;
+    private PlayerAnimationController _anim;
 
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject groundCheck, GameObject invCube)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlatformingCollisions platformingCollisions, GameObject gunModel, GameObject groundCheck, GameObject invCube, PlayerAnimationController anim)
     {
         _rb = playerRb;
         _speed = speed;
         _jumpForce = jumpForce;
         _playerTransform = playerTransform;
         _gunScript = gunScript;
-        _playerCollisions = playerCollisions;
+        _platformingCollisions = platformingCollisions;
         _gunModel = gunModel;
         _groundCheck = groundCheck;
         _invCube = invCube;
+        _anim = anim;
     }
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
-        if(!_playerCollisions.hasShip)
+        if(!_platformingCollisions.hasShip)
         {
             if (useGravity == false)
             {
@@ -52,7 +54,7 @@ public class PlatformPlayerMode : IPlayerMode
                 _playerTransform.localScale = newScale;
             }
         }
-        if(_playerCollisions.hasShip)
+        if(_platformingCollisions.hasShip)
         {
             /*
             if (useGravity)
@@ -107,9 +109,9 @@ public class PlatformPlayerMode : IPlayerMode
 
         if(groundCheckScript.canJump == true) 
         {
-            if (_playerCollisions.hasShip)
+            if (_platformingCollisions.hasShip)
             {
-                _playerCollisions.ExitShip();
+                _platformingCollisions.ExitShip();
             }
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
@@ -156,10 +158,12 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void OnModeEnter()
     {
-        if (_playerCollisions)
+        if (_platformingCollisions)
         {
-            _playerCollisions.enabled = true;
+            _platformingCollisions.enabled = true;
+            _platformingCollisions.Initialize();
         }
+        
         _gunModel.SetActive(true);
         // Laser is disabled initially by default
         _gunScript.ToggleLineRenderer(false);
@@ -180,7 +184,7 @@ public class PlatformPlayerMode : IPlayerMode
             scale.z = 1;
             _playerTransform.localScale = scale;
         }
-        _playerCollisions.enabled = false;
+        _platformingCollisions.enabled = false;
     }
 
     public void Sprint(InputAction.CallbackContext context)

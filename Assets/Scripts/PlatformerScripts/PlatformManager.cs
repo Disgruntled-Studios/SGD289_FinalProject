@@ -70,7 +70,7 @@ public class PlatformManager : MonoBehaviour
     private bool coinCollecting = false;
     private bool lifeCalc = false;
 
-    PlayerCollisions pCollisions;
+    PlatformingCollisions pCollisions;
 
 
     [Header("HubTransition")]
@@ -88,7 +88,7 @@ public class PlatformManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
 
-        pCollisions = GameObject.Find("Player").GetComponent<PlayerCollisions>();
+        pCollisions = GameObject.Find("Player").GetComponent<PlatformingCollisions>();
 
     }
 
@@ -261,8 +261,7 @@ public class PlatformManager : MonoBehaviour
 
     public void ReturnToHub()
     {
-        GameManager.Instance.SwitchPlayerMode(_world);
-        TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId);
+        TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId, World.Hub);
     }
 
     public void ResetGame()

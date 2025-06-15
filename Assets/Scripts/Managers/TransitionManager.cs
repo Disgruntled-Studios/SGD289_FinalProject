@@ -23,13 +23,15 @@ public class TransitionManager : MonoBehaviour
         _currentSceneName = activeScene.name;
     }
 
-    public void TransitionToScene(string sceneName, string cameraId)
+    public void TransitionToScene(string sceneName, string cameraId, World nextMode)
     {
-        StartCoroutine(TransitionRoutine(sceneName, cameraId));
+        StartCoroutine(TransitionRoutine(sceneName, cameraId, nextMode));
     }
 
-    private IEnumerator TransitionRoutine(string sceneName, string cameraId)
+    private IEnumerator TransitionRoutine(string sceneName, string cameraId, World nextMode)
     {
+        GameManager.Instance.PlayerController.CurrentMode?.OnModeExit();
+        
         // Load new scene additively if not already loaded
         if (!SceneManager.GetSceneByName(sceneName).isLoaded)
         {
@@ -75,6 +77,9 @@ public class TransitionManager : MonoBehaviour
         CameraManager.Instance.TrySwitchToCamera(cameraId);
 
         yield return new WaitForSeconds(0.1f);
+
+        GameManager.Instance.SwitchPlayerMode(nextMode);
+        GameManager.Instance.PlayerController.CurrentMode?.OnModeEnter();
     }
 
 
