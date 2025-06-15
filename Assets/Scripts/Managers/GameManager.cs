@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _playerRb;
     [SerializeField] private GameObject _jumpOnEnemyObject;
-    
+    [SerializeField] private GameObject _invCube;
+
     [SerializeField] private LayerMask _groundLayerMask;
     public TileSelection currentTileSelection;
     
@@ -23,8 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FPSGunController _fpsGun;
     [SerializeField] private GameObject _tpGunModel;
 
-    [Header("Scripts")]
+    [Header("Platformer")]
     [SerializeField] private PlayerCollisions _playerCollisions;
+
 
     [Header("Game Settings")]
     [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
@@ -168,7 +170,7 @@ public class GameManager : MonoBehaviour
     private void SwitchToPlatform()
     {
         _playerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, playerCollisions: _playerCollisions, gunModel: _tpGunModel, jumpOnEnemy: _jumpOnEnemyObject);
+            new PlatformPlayerMode(playerRb: _playerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, playerCollisions: _playerCollisions, gunModel: _tpGunModel, jumpOnEnemy: _jumpOnEnemyObject, invCube: _invCube);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;

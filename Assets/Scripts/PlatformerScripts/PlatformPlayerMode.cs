@@ -11,8 +11,9 @@ public class PlatformPlayerMode : IPlayerMode
     private readonly GameObject _gunModel;
     private readonly GameObject _jumpOnEnemyObject;
     private readonly PlayerCollisions _playerCollisions;
+    private readonly GameObject _invCube;
 
-    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject jumpOnEnemy)
+    public PlatformPlayerMode(Rigidbody playerRb, float speed, float jumpForce, Transform playerTransform, GunScript gunScript, PlayerCollisions playerCollisions, GameObject gunModel, GameObject jumpOnEnemy, GameObject invCube)
     {
         _rb = playerRb;
         _speed = speed;
@@ -22,6 +23,7 @@ public class PlatformPlayerMode : IPlayerMode
         _playerCollisions = playerCollisions;
         _gunModel = gunModel;
         _jumpOnEnemyObject = jumpOnEnemy;
+        _invCube = invCube;
     }
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -79,14 +81,15 @@ public class PlatformPlayerMode : IPlayerMode
             _playerCollisions.enabled = true;
         }
         _gunModel.SetActive(true);
-        _jumpOnEnemyObject.SetActive(true);
         // Laser is disabled initially by default
         _gunScript.ToggleLineRenderer(false);
+        _jumpOnEnemyObject.SetActive(true);
     }
 
     public void OnModeExit()
     {
         _jumpOnEnemyObject.SetActive(false);
+        _invCube.SetActive(false);
 
         // Reset scale if player is flipped
         if (_playerTransform.localScale.z < 1)
