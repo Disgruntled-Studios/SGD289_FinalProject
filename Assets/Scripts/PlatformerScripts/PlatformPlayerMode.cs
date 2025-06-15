@@ -34,6 +34,7 @@ public class PlatformPlayerMode : IPlayerMode
             if (useGravity == false)
             {
                 _rb.useGravity = true;
+                useGravity = true;
             }
             //want to change if player is in ship
 
@@ -53,16 +54,25 @@ public class PlatformPlayerMode : IPlayerMode
         }
         if(_playerCollisions.hasShip)
         {
+            /*
             if (useGravity)
             {
                 _rb.useGravity = false;
                 useGravity = false;
             }
+            */
 
-            var moveDirection = _playerTransform.forward * input.x;
-            var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
-            _rb.linearVelocity = velocity;
-            //rb.AddForce(velocity * _speed * Time.deltaTime);
+            //want to change if player is in ship
+
+            //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
+            //{
+
+
+            var horizInput = _playerTransform.forward * input.x;
+            var vertInput = _playerTransform.forward * input.y;
+            var velocity = new Vector3(horizInput.x * _speed, vertInput.y * _speed, 0);
+
+            rb.AddForce(velocity * _speed * Time.deltaTime, ForceMode.Impulse);
 
             if (Mathf.Abs(input.x) > 0.01f)
             {
@@ -79,6 +89,38 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Jump()
     {
+
+        /*
+        if (_playerCollisions.hasShip)
+        {
+            _playerCollisions.ExitShip();
+        }
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        */
+
+        //add code so player can jump when _hasShip = true, groundcheck is touching the ground, 
+        //or while squashing an enemy (when jump button is pressed within a few seconds of squashing one)
+
+        
+
+        GroundCheck groundCheckScript = _groundCheck.GetComponent<GroundCheck>();
+
+        if(groundCheckScript.canJump == true) 
+        {
+            if (_playerCollisions.hasShip)
+            {
+                _playerCollisions.ExitShip();
+            }
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        }
+        else
+        {
+            Debug.Log("can't jump");
+        }
+        
+
+
+        /*
         //want to change if player is in ship to also free player of ship.
         if (Mathf.Abs(_rb.linearVelocity.y) < 0.01f)
         {
@@ -88,6 +130,8 @@ public class PlatformPlayerMode : IPlayerMode
             }
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
+        */
+
     }
 
     public void Crouch(bool isPressed) { } // Not used in platformer
