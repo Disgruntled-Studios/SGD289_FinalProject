@@ -197,4 +197,11 @@ public class PlatformingCollisions : MonoBehaviour
             //add functionality to turn enemies back on when they end up off screen but player returns maybe..
         }
     }
+
+    /*
+    public void ClampPlayerZAxis()
+    {
+        this.gameObject.transform.position.z = (transform.position.x, transform.position.y, 0);
+    }
+    */
 }

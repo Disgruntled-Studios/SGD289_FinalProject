@@ -28,8 +28,12 @@ public class FPSPlayerMode : IPlayerMode
     private bool CanSprint => _currentStamina > 0f;
 
     private PlayerAnimationController _animationController;
+    private readonly LayerMask _groundLayer;
 
-    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider, PlayerAnimationController animationController)
+    private const float GroundCheckRadius = 0.2f;
+    private readonly Vector3 _groundCheckOffset = new(0, -0.9f, 0);
+
+    public FPSPlayerMode(float speed, Transform playerTransform, Transform cameraPivot, FPSGunController gunController, bool isBulletTime, Rigidbody playerRb, CapsuleCollider standingCollider, SphereCollider crouchingCollider, PlayerAnimationController animationController, LayerMask groundLayer)
     {
         _speed = speed;
         _playerTransform = playerTransform;
@@ -41,6 +45,15 @@ public class FPSPlayerMode : IPlayerMode
         _crouchingCollider = crouchingCollider;
         _currentStamina = MaxStamina;
         _animationController = animationController;
+        _groundLayer = groundLayer;
+    }
+
+    private bool IsGrounded()
+    {
+        var checkPosition = _playerTransform.position + _groundCheckOffset;
+        var grounded = Physics.CheckSphere(checkPosition, GroundCheckRadius, _groundLayer, QueryTriggerInteraction.Ignore);
+        Debug.DrawRay(checkPosition, Vector3.up * 0.1f, grounded ? Color.green : Color.red, 0.1f);
+        return grounded;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -105,7 +118,7 @@ public class FPSPlayerMode : IPlayerMode
 
     public void Jump()
     {
-        if (Mathf.Abs(_playerRb.linearVelocity.y) < 0.01f)
+        if (IsGrounded())
         {
             _playerRb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
         }

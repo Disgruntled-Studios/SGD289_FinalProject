@@ -18,7 +18,8 @@ public class FPSManager : MonoBehaviour
     private const float SimulationDuration = 100f;
 
     private float _timeRemaining;
-    private bool _isRunning;
+    private bool _simulationIsRunning;
+    public bool SimulationIsRunning => _simulationIsRunning;
     private int _score;
     private int _shotsFired;
     private int _shotsHit;
@@ -42,7 +43,7 @@ public class FPSManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_isRunning) return;
+        if (!_simulationIsRunning) return;
 
         _timeRemaining -= Time.deltaTime;
         _ui.UpdateTimer(_timeRemaining);
@@ -58,7 +59,7 @@ public class FPSManager : MonoBehaviour
     {
         Debug.Log("Starting");
         _fpsPanel.SetActive(true);
-        _isRunning = true;
+        _simulationIsRunning = true;
         _timeRemaining = SimulationDuration;
         _score = 0;
         _shotsFired = 0;
@@ -89,7 +90,7 @@ public class FPSManager : MonoBehaviour
 
     private void EndSimulation()
     {
-        _isRunning = false;
+        _simulationIsRunning = false;
 
         var accuracy = _shotsFired > 0 ? (float)_shotsHit / _shotsFired : 1f;
 

@@ -21,12 +21,18 @@ public class FPSUIController : MonoBehaviour
 
     public void UpdateEnemiesRemaining(int remaining)
     {
-        _enemyText.text = $"Enemies Remaining: {remaining} / 20";
+        if (GameManager.Instance.IsInFPS)
+        {
+            _enemyText.text = $"Enemies Remaining: {remaining} / 20";
+        }
     }
 
     public void UpdateTimer(float time)
     {
-        _timerText.text = $"Time: {Mathf.CeilToInt(time)}";
+        if (GameManager.Instance.IsInFPS)
+        {
+            _timerText.text = $"Time: {Mathf.CeilToInt(time)}";
+        }
     }
 
     public void ShowResult(int score, float accuracy, int timeBonus, int accBonus, int headBonus, string grade, bool passed = false)
@@ -67,12 +73,18 @@ public class FPSUIController : MonoBehaviour
 
     public void UpdateTimerBar(float current, float max)
     {
-        _tbc.UpdateTimer(current, max);
+        if (GameManager.Instance.IsInFPS)
+        {
+            _tbc.UpdateTimer(current, max);
+        }
     }
 
     public void UpdateStaminaBar(float current, float max)
     {
-        _sbc.UpdateStamina(current, max);
+        if (GameManager.Instance.IsInFPS)
+        {
+            _sbc.UpdateStamina(current, max);
+        }
     }
 
     private IEnumerator HideUI()
