@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6441563167835306374}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000055879354, y: -1, z: 0.00000003387686, w: -0.000000037252903}
-  m_LocalPosition: {x: 0, y: 0.3, z: -0.65000534}
+  m_LocalRotation: {x: 0.000000044703473, y: -0, z: 0.000000044703473, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3000005, z: 0.65000546}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6685861078293979671}
+  m_Father: {fileID: 4482201430828166729}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &6323752851621674660
 LineRenderer:
@@ -212,6 +212,8 @@ MonoBehaviour:
   bullet: {fileID: 2144255047026004570, guid: ac2f84cb8dbf2c746ade2b6bf26d8247, type: 3}
   startPointTransform: {fileID: 3816889451122403821}
   _lr: {fileID: 6323752851621674660}
+  adjustHeight: 0
+  heightAdj: 0.3
 --- !u!1 &7525855258550023726
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +244,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6685861078293979671}
+  - {fileID: 3816889451122403821}
   m_Father: {fileID: 6435968995929671093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6575900075857266172
@@ -252,6 +255,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4482201430828166729}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -298,10 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3816889451122403821}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe24f1401728a174391c6d820feba4dc, type: 3}
 --- !u!1 &6305923033217562797 stripped
