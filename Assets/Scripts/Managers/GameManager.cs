@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
         if (PlayerController.isTestingTank)
         {
-            TransitionManager.Instance.TransitionToScene("NateTest", "CAM01", World.Tank);
+            TransitionManager.Instance.TransitionToScene("PowerPlant", "CAM01", World.Tank);
         }
         else if (PlayerController.isTestingPlatform)
         {
