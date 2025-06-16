@@ -45,7 +45,6 @@ public class PlatformPlayerMode : IPlayerMode
             var moveDirection = _playerTransform.forward * input.x;
             var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
             _rb.linearVelocity = velocity;
-            //rb.AddForce(velocity * _speed * Time.deltaTime);
 
             if (Mathf.Abs(input.x) > 0.01f)
             {
@@ -56,25 +55,17 @@ public class PlatformPlayerMode : IPlayerMode
         }
         if(_platformingCollisions.hasShip)
         {
-            /*
+            
             if (useGravity)
             {
                 _rb.useGravity = false;
                 useGravity = false;
             }
-            */
-
-            //want to change if player is in ship
-
-            //if (!attacking) //gives short pause when player shoots bullet. maybe replace with anim later. //put movement in a different script instead maybe?
-            //{
-
 
             var horizInput = _playerTransform.forward * input.x;
             var vertInput = _playerTransform.up * input.y;
             var velocity = new Vector3(horizInput.x * _speed, vertInput.y * _speed, 0);
-
-            //rb.AddForce(velocity * _speed * Time.deltaTime, ForceMode.Impulse);
+            _rb.linearVelocity = velocity;
 
             if (Mathf.Abs(input.x) > 0.01f)
             {
