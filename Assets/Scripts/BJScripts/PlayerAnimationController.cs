@@ -35,5 +35,10 @@ public class PlayerAnimationController : MonoBehaviour
     {
         _anim.SetTrigger("Jump");
     }
+
+    public void Aim(bool isAiming)
+    {
+        _anim.SetBool("IsAiming", isAiming);
+    }
 }
 
