@@ -31,6 +31,11 @@ public class PlatformPlayerMode : IPlayerMode
     
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
+        if(_playerTransform.position.z != 0)
+        {
+            _playerTransform.position = new Vector3(_playerTransform.position.x, _playerTransform.position.y, 0);
+        }
+
         if(!_platformingCollisions.hasShip)
         {
             if (useGravity == false)
@@ -83,14 +88,6 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Jump()
     {
-
-        /*
-        if (_playerCollisions.hasShip)
-        {
-            _playerCollisions.ExitShip();
-        }
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        */
 
         //add code so player can jump when _hasShip = true, groundcheck is touching the ground, 
         //or while squashing an enemy (when jump button is pressed within a few seconds of squashing one)
@@ -173,6 +170,11 @@ public class PlatformPlayerMode : IPlayerMode
     {
         _groundCheck.SetActive(false);
         _invCube.SetActive(false);
+
+        if (_platformingCollisions.hasShip)
+        {
+            _platformingCollisions.ExitShip();
+        }
 
         // Reset scale if player is flipped
         if (_playerTransform.localScale.z < 1)
