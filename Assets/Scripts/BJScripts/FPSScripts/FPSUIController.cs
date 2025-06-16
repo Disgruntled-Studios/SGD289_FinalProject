@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -50,6 +51,8 @@ public class FPSUIController : MonoBehaviour
         {
             _resultText.text += "\nFailed to Recruit NPC";
         }
+
+        StartCoroutine(HideUI());
     }
 
     public void ShowFailResult()
@@ -58,6 +61,8 @@ public class FPSUIController : MonoBehaviour
         _enemyText.gameObject.SetActive(false);
         _timerText.gameObject.SetActive(false);
         _resultText.text = "SIMULATION FAILED\nYou must eliminate all enemies to pass.";
+
+        StartCoroutine(HideUI());
     }
 
     public void UpdateTimerBar(float current, float max)
@@ -68,5 +73,13 @@ public class FPSUIController : MonoBehaviour
     public void UpdateStaminaBar(float current, float max)
     {
         _sbc.UpdateStamina(current, max);
+    }
+
+    private IEnumerator HideUI()
+    {
+        yield return new WaitForSeconds(2f);
+        _resultText.gameObject.SetActive(false);
+        _enemyText.gameObject.SetActive(false);
+        _timerText.gameObject.SetActive(false);
     }
 }
