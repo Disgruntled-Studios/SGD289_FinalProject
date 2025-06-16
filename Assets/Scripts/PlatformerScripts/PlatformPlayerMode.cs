@@ -142,6 +142,7 @@ public class PlatformPlayerMode : IPlayerMode
     public void Attack()
     {
         //throw new System.NotImplementedException();
+        _gunScript.adjustHeight = true;
         _gunScript.Shoot();
     }
 
@@ -168,6 +169,7 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void OnModeExit()
     {
+        _gunScript.adjustHeight = false;
         _groundCheck.SetActive(false);
         _invCube.SetActive(false);
 

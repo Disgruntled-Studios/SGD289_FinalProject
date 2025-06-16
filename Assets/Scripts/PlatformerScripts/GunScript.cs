@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.ProBuilder;
+using UnityEngine.UIElements;
 
 public class GunScript : MonoBehaviour
 {
@@ -12,9 +13,23 @@ public class GunScript : MonoBehaviour
 
     [SerializeField] private LineRenderer _lr;
 
+    //adjust height of shooting before doing anims
+    [SerializeField]
+    public bool adjustHeight = false;
+    [SerializeField]
+    private float heightAdj = 0.3f;
+
     public void Shoot()
     {
-        Instantiate(bullet, startPointTransform.position, Quaternion.identity);
+        if (adjustHeight == true)
+        {
+            Vector3 bulletHeight = new Vector3(startPointTransform.position.x, startPointTransform.position.y +heightAdj, startPointTransform.position.z);
+            Instantiate(bullet, bulletHeight, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(bullet, startPointTransform.position, Quaternion.identity);
+        }
     }
 
     

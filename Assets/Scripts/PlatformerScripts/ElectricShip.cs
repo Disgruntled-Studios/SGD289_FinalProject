@@ -75,6 +75,7 @@ public class ElectricShip : MonoBehaviour
         startPointObj = GameObject.Find("EShipSpawnPos");
         endPointObj = GameObject.Find("EShipEndPos");
         shipSpawner = GameObject.Find("TimedActionsTrigger").GetComponent<ShipSpawner>();
+        platformManager = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
 
         startPoint = startPointObj.transform;
         endPoint = endPointObj.transform;
