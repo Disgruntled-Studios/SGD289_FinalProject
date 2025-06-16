@@ -185,6 +185,7 @@ public class PlatformPlayerMode : IPlayerMode
             scale.z = 1;
             _playerTransform.localScale = scale;
         }
+        
         _platformingCollisions.enabled = false;
     }
 

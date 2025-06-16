@@ -282,6 +282,13 @@ public class PlatformManager : MonoBehaviour
             print("exited ship");
         }
 
+        if (player.transform.localScale.z < 1)
+        {
+            var scale = player.transform.localScale;
+            scale.z = 1;
+            player.transform.localScale = scale;
+        }
+        
         TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId, World.Hub);
     }
 
