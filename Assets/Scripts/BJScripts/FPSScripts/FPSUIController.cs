@@ -89,7 +89,7 @@ public class FPSUIController : MonoBehaviour
 
     private IEnumerator HideUI()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         _resultText.gameObject.SetActive(false);
         _enemyText.gameObject.SetActive(false);
         _timerText.gameObject.SetActive(false);
