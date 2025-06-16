@@ -3,7 +3,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.LightTransport;
 
 public class PlatformManager : MonoBehaviour
 {
