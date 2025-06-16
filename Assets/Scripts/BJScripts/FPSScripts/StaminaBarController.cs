@@ -7,6 +7,9 @@ public class StaminaBarController : MonoBehaviour
 
     public void UpdateStamina(float current, float max)
     {
-        _staminaFill.fillAmount = current / max;
+        if (GameManager.Instance.IsInFPS)
+        {
+            _staminaFill.fillAmount = current / max;
+        }
     }
 }

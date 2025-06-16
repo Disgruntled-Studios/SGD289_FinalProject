@@ -7,6 +7,9 @@ public class TimerBarController : MonoBehaviour
 
     public void UpdateTimer(float current, float max)
     {
-        _timerFill.fillAmount = current / max;
+        if (GameManager.Instance.IsInFPS)
+        {
+            _timerFill.fillAmount = current / max;
+        }
     }
 }
