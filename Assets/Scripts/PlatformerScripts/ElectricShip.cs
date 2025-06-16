@@ -58,6 +58,10 @@ public class ElectricShip : MonoBehaviour
     void OnDisable()
     {
         CancelInvoke();
+        print("destroyed electric ship as it reached endpoint");
+        shipSpawner.DecreaseShipCount();
+
+        Destroy(gameObject);
     }
 
     void OnDestroy()

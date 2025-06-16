@@ -72,6 +72,9 @@ public class PlatformManager : MonoBehaviour
 
     PlatformingCollisions pCollisions;
 
+    [SerializeField]
+    private float gameOverWait;
+
 
     [Header("HubTransition")]
     [SerializeField] private World _world;
@@ -236,6 +239,13 @@ public class PlatformManager : MonoBehaviour
             print("player is dead");
             gameOverText.SetActive(true);
 
+            PlatformingCollisions pc = GameObject.Find("Player").GetComponent<PlatformingCollisions>();
+            if (pc.hasShip)
+            {
+                pc.ExitShip();
+                print("exited ship");
+            }
+
             StartCoroutine("GameOver");
         }
         else
@@ -248,7 +258,7 @@ public class PlatformManager : MonoBehaviour
     IEnumerator GameOver()
     {
         // suspend execution for 5 seconds
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(gameOverWait);
 
         try
         {
@@ -261,11 +271,17 @@ public class PlatformManager : MonoBehaviour
 
         //gameOverPanel.SetActive(true);
         //play sound effect.
-
     }
 
     public void ReturnToHub()
     {
+        PlatformingCollisions pc = GameObject.Find("Player").GetComponent<PlatformingCollisions>();
+        if (pc.hasShip)
+        {
+            pc.ExitShip();
+            print("exited ship");
+        }
+
         TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId, World.Hub);
     }
 

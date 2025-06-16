@@ -102,6 +102,9 @@ public class PlatformingCollisions : MonoBehaviour
 
             //Turn "hasShip to true in Platform Manager
             hasShip = true;
+
+            GroundCheck groundCheckScript = GameObject.Find("groundCheck").GetComponent<GroundCheck>();
+            groundCheckScript.canJump = true;
         }
 
 
