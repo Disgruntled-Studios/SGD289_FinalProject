@@ -96,7 +96,7 @@ public class PlatformPlayerMode : IPlayerMode
 
         GroundCheck groundCheckScript = _groundCheck.GetComponent<GroundCheck>();
 
-        if(groundCheckScript.canJump == true) 
+        if(groundCheckScript.canJump == true || _platformingCollisions.hasShip) 
         {
             if (_platformingCollisions.hasShip)
             {
