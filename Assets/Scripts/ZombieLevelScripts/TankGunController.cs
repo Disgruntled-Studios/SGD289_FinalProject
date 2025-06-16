@@ -18,7 +18,7 @@ public class TankGunController : MonoBehaviour
     [SerializeField] private LineRenderer _lr;
 
     public bool isAiming;
-    [HideInInspector] public bool isReloading;
+    public bool isReloading;
 
     private void Start()
     {
@@ -87,7 +87,7 @@ public class TankGunController : MonoBehaviour
     {
         if (isAiming && currentAmmoMagAmt > 0 && !isReloading)
         {
-            //Debug.Log("Shooting");
+            Debug.Log("Shooting");
             currentAmmoMagAmt--;
             PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Ammo : " + currentAmmoMagAmt + "/" + maxMagLimit;
             //Play SFX 
@@ -98,13 +98,18 @@ public class TankGunController : MonoBehaviour
 
             if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _enemyLayer))
             {
-                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                Debug.Log("hit " + hit.collider.transform.gameObject.name);
                 //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
                 if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
                 {
                     hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(_damageAmount);
                     //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
+                }
+                else if (hit.transform.gameObject.GetComponentInParent<EnemyBehavior>())
+                {
+                   hit.transform.gameObject.GetComponentInParent<EnemyBehavior>().health.Damage(_damageAmount);
+                    //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth); 
                 }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
@@ -119,7 +124,7 @@ public class TankGunController : MonoBehaviour
     {
         //Debug.Log("Is Reloading");
         isReloading = true;
-
+        PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Reloading";
 
         //call animation to reload
 
@@ -127,7 +132,7 @@ public class TankGunController : MonoBehaviour
         yield return new WaitForSeconds(reloadSpeed);
         currentAmmoMagAmt = maxMagLimit;
         PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Ammo : " + currentAmmoMagAmt + "/" + maxMagLimit;
-        //Debug.Log("Is Reloaded");
+        Debug.Log("Is Reloaded");
         isReloading = false;
     }
 

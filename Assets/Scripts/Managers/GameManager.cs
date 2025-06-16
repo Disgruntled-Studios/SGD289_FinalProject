@@ -43,13 +43,9 @@ public class GameManager : MonoBehaviour
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
     private const float HubRotationSpeed = 1f;
+    public bool IsInFPS;
 
     public World? CurrentWorld { get; private set; } // Make current world nullable for initial world processing
-    
-    public bool IsInHub { get; private set; }
-    public bool IsInTank { get; private set; }
-    public bool IsInPlatform { get; private set; }
-    public bool IsInFPS { get; private set; }
 
     private void Awake()
     {
@@ -121,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     public void SwitchPlayerMode(World mode)
     {
-        PlayerController.CurrentMode = null;
+        if (CurrentWorld == mode) return;
         CurrentWorld = mode;
 
         switch (mode)
@@ -151,60 +147,39 @@ public class GameManager : MonoBehaviour
     private void SwitchToHub()
     {
         PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel, animationController: AnimationController);
-        PlayerController.CurrentMode?.OnModeEnter();
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
-        IsInHub = true;
-        IsInPlatform = false;
-        IsInTank = false;
-        IsInFPS = false;
     }
 
     private void SwitchToTank()
     {
         PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController);
-        PlayerController.CurrentMode?.OnModeEnter();
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
-        IsInHub = false;
-        IsInPlatform = false;
-        IsInTank = true;
-        IsInFPS = false;
     }
 
     private void SwitchToPlatform()
     {
         PlayerController.CurrentMode =
             new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, animationController: AnimationController);
-        PlayerController.CurrentMode?.OnModeEnter();
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         _fpsGun.enabled = false;
-        IsInHub = false;
-        IsInPlatform = true;
-        IsInTank = false;
-        IsInFPS = false;
     }
 
     private void SwitchToFPS()
     {
-        PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController, groundLayer: _groundLayerMask);
-        PlayerController.CurrentMode?.OnModeEnter();
+        //PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
-        IsInHub = false;
-        IsInPlatform = false;
-        IsInTank = false;
-        IsInFPS = true;
     }
 
     private void SwitchToMirror()
     {
         PlayerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
-        PlayerController.CurrentMode?.OnModeEnter();
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -213,7 +188,6 @@ public class GameManager : MonoBehaviour
     private void SwitchToPuzzle()
     {
         PlayerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
-        PlayerController.CurrentMode?.OnModeEnter();
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
