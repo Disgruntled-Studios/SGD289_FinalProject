@@ -88,6 +88,11 @@ public class PlatformManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         gameOverText.SetActive(false);
 
+        if (!player)
+        {
+            player = GameManager.Instance.Player;
+        }
+        
         pCollisions = GameObject.Find("Player").GetComponent<PlatformingCollisions>();
 
     }

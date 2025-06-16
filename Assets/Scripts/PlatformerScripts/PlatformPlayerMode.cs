@@ -54,6 +54,7 @@ public class PlatformPlayerMode : IPlayerMode
                 _playerTransform.localScale = newScale;
             }
         }
+        
         if(_platformingCollisions.hasShip)
         {
             /*
@@ -114,6 +115,7 @@ public class PlatformPlayerMode : IPlayerMode
                 _platformingCollisions.ExitShip();
             }
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            _animationController.Jump();
         }
         else
         {
@@ -138,7 +140,11 @@ public class PlatformPlayerMode : IPlayerMode
 
     public void Crouch(bool isPressed) { } // Not used in platformer
 
-    public void Tick() { } // Not used in platformer
+    public void Tick()
+    {
+        var groundCheck = _groundCheck.GetComponent<GroundCheck>();
+        _animationController.SetGrounded(groundCheck.canJump);
+    }
     public void Aim(InputAction.CallbackContext context)
     {
         //throw new System.NotImplementedException();
