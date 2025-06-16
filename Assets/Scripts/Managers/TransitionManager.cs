@@ -70,16 +70,12 @@ public class TransitionManager : MonoBehaviour
         DestroyDuplicatePlayers();
         SetPlayerToSpawnPoint(loadedScene);
 
-        // Wait for camera registration
-        yield return new WaitUntil(() => CameraManager.Instance && CameraManager.Instance.HasCamera(cameraId));
-
         CameraManager.Instance.TrySetCameraTarget(cameraId, GameManager.Instance.CameraTarget);
         CameraManager.Instance.TrySwitchToCamera(cameraId);
 
         yield return new WaitForSeconds(0.1f);
 
         GameManager.Instance.SwitchPlayerMode(nextMode);
-        GameManager.Instance.PlayerController.CurrentMode?.OnModeEnter();
     }
 
 
