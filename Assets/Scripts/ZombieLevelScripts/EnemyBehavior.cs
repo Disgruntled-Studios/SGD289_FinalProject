@@ -153,10 +153,10 @@ public class EnemyBehavior : MonoBehaviour
 
     IEnumerator SetAgentDestToCurrentTarget(float delay)
     {
-        Debug.Log("Starting delay");
+        //Debug.Log("Starting delay");
         yield return new WaitForSeconds(delay);
         meshAgent.SetDestination(currentTargetPoint.position);
-        Debug.Log("Stopping delay");
+        //Debug.Log("Stopping delay");
     }
 
     void ToggleEnemyMaterial()
@@ -205,17 +205,17 @@ public class EnemyBehavior : MonoBehaviour
                 case true:
                     if (playerRef.GetComponent<PlayerController>()._isCrouching)
                     {
-                        Debug.Log("Enemy sees player crouched");
+                        //Debug.Log("Enemy sees player crouched");
                         detectionLvl += (detectionRate / 2) * Time.deltaTime;
                     }
                     else if (Vector3.Distance(transform.position, playerRef.transform.position) <= fov.viewRadius / 2)
                     {
-                        Debug.Log("Player in close proximity");
+                        //Debug.Log("Player in close proximity");
                         detectionLvl = (detectionRate * 2) * Time.deltaTime;
                     }
                     else
                     {
-                        Debug.Log("Player within sight range");
+                        //Debug.Log("Player within sight range");
                         detectionLvl += detectionRate * Time.deltaTime;
                     }
                     break;
@@ -231,7 +231,7 @@ public class EnemyBehavior : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Detection dropping");
+                        //Debug.Log("Detection dropping");
                         detectionLvl -= detectionRate * Time.deltaTime;
                     }
                     break;
@@ -250,11 +250,14 @@ public class EnemyBehavior : MonoBehaviour
                 detectionLvl = 0;
                 awarenessImage.fillAmount = 0;
                 currentState = BehaviorState.patrolling;
-                Debug.Log("Player has escaped returning to patrol");
+                //Debug.Log("Player has escaped returning to patrol");
+            }
+            else
+            {
+                Debug.Log(detectionLvl + " = detection lvl / " + (detectionLvl / 1) + " = FillAmount");
+                awarenessImage.fillAmount = detectionLvl / 1;
             }
 
-            Debug.Log(detectionLvl + " = detection lvl / " + (detectionLvl / 1) + " = FillAmount");
-            awarenessImage.fillAmount = detectionLvl / 1;
             yield return new WaitForSeconds(delay);
         }
     }
