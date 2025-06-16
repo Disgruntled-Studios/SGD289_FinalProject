@@ -9,6 +9,7 @@ public class GroundCheck : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             canJump = true;
+            Debug.Log(canJump);
             print("canJump = true");
         }
     }
@@ -18,6 +19,7 @@ public class GroundCheck : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             canJump = false;
+            Debug.Log(canJump);
             print("canJump = false");
         }
     }

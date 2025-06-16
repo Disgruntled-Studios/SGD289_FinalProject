@@ -2357,17 +2357,6 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 9107562140772942605, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 27478867}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1078754795 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4277027718331309823, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-  m_PrefabInstance: {fileID: 27478867}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078754784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04138ce1653dd74ebfe57c0cef71042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!137 &1095257887 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1096946222704880799, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -2835,7 +2824,6 @@ MonoBehaviour:
   _cameraTarget: {fileID: 1186793260}
   _groundCheckObject: {fileID: 27478871}
   _invCube: {fileID: 27478869}
-  _animationController: {fileID: 1078754795}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -2844,7 +2832,7 @@ MonoBehaviour:
   _gunScript: {fileID: 54181945}
   _fpsGun: {fileID: 27478868}
   _tpGunModel: {fileID: 1098921463}
-  _playerCollisions: {fileID: 27478870}
+  _platformingCollisions: {fileID: 27478870}
   _isBulletTime: 0
   _standingCollider: {fileID: 1078754793}
   _crouchCollider: {fileID: 1078754790}

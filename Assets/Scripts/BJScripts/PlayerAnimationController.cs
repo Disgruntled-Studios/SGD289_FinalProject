@@ -25,4 +25,15 @@ public class PlayerAnimationController : MonoBehaviour
     {
         _anim.SetBool("IsCrouching", isCrouching);
     }
+
+    public void SetGrounded(bool isGrounded)
+    {
+        _anim.SetBool("IsGrounded", isGrounded);
+    }
+
+    public void Jump()
+    {
+        _anim.SetTrigger("Jump");
+    }
 }
+
