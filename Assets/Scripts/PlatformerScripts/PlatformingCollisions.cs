@@ -84,7 +84,8 @@ public class PlatformingCollisions : MonoBehaviour
     {
         if(other.gameObject.CompareTag("PlatformCoin"))
         {
-                //print("platformCoin");
+            //print("platformCoin");
+                pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
                 pm.CalculateCoins(1);
                 other.gameObject.SetActive(false);
         }
@@ -140,6 +141,7 @@ public class PlatformingCollisions : MonoBehaviour
         {
             if (!invincible)
             {
+                pm = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
                 pm.HandleDamage();
             }
             else
