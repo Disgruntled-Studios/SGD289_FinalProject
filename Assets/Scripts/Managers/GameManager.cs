@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _groundCheckObject;
     [SerializeField] private GameObject _invCube;
+    [SerializeField] private LineRenderer _laser;
     
     [SerializeField] private LayerMask _groundLayerMask;
     public TileSelection currentTileSelection;
@@ -146,7 +147,8 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToHub()
     {
-        PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed, gunModel: _tpGunModel, animationController: AnimationController);
+        PlayerController.CurrentMode = new HubMovementMode(speed: DefaultMovementSpeed, rotationSpeed: HubRotationSpeed,
+            gunModel: _tpGunModel, animationController: AnimationController, laser: _laser);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;
@@ -154,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController);
+        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController, laser: _laser);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;

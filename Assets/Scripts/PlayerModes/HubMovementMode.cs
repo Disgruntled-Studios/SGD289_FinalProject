@@ -7,13 +7,15 @@ public class HubMovementMode : IPlayerMode
     private readonly float _rotationSpeed;
     private readonly GameObject _gunModel;
     private PlayerAnimationController _animationController;
-
-    public HubMovementMode(float speed, float rotationSpeed, GameObject gunModel, PlayerAnimationController animationController)
+    private LineRenderer _laser;
+    
+    public HubMovementMode(float speed, float rotationSpeed, GameObject gunModel, PlayerAnimationController animationController, LineRenderer laser)
     {
         _speed = speed;
         _rotationSpeed = rotationSpeed;
         _gunModel = gunModel;
         _animationController = animationController;
+        _laser = laser;
     }
 
     public void Move(Rigidbody rb, Vector2 input, Transform context)
@@ -76,6 +78,7 @@ public class HubMovementMode : IPlayerMode
     public void OnModeEnter()
     {
         _gunModel.SetActive(false);
+        _laser.enabled = false;
     }
     
     public void OnModeExit()

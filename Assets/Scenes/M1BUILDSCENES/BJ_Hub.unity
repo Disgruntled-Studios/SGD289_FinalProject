@@ -876,7 +876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7802326864684409885, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8016657025286850767, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2828,6 +2828,7 @@ MonoBehaviour:
   _cameraTarget: {fileID: 1186793260}
   _groundCheckObject: {fileID: 27478871}
   _invCube: {fileID: 27478869}
+  _laser: {fileID: 1956383311}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -2840,6 +2841,7 @@ MonoBehaviour:
   _isBulletTime: 0
   _standingCollider: {fileID: 1078754793}
   _crouchCollider: {fileID: 1078754790}
+  IsInFPS: 0
 --- !u!1 &1500785864
 GameObject:
   m_ObjectHideFlags: 0
