@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToFPS()
     {
-        //PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController);
+        PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController, groundLayer: _groundLayerMask);
         _fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
