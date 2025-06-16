@@ -45,7 +45,7 @@ public class PlatformPlayerMode : IPlayerMode
             var moveDirection = _playerTransform.forward * input.x;
             var velocity = new Vector3(moveDirection.x * _speed, _rb.linearVelocity.y, 0);
             _rb.linearVelocity = velocity;
-            rb.AddForce(velocity * _speed * Time.deltaTime);
+            //rb.AddForce(velocity * _speed * Time.deltaTime);
 
             if (Mathf.Abs(input.x) > 0.01f)
             {
@@ -71,10 +71,10 @@ public class PlatformPlayerMode : IPlayerMode
 
 
             var horizInput = _playerTransform.forward * input.x;
-            var vertInput = _playerTransform.forward * input.y;
+            var vertInput = _playerTransform.up * input.y;
             var velocity = new Vector3(horizInput.x * _speed, vertInput.y * _speed, 0);
 
-            rb.AddForce(velocity * _speed * Time.deltaTime, ForceMode.Impulse);
+            //rb.AddForce(velocity * _speed * Time.deltaTime, ForceMode.Impulse);
 
             if (Mathf.Abs(input.x) > 0.01f)
             {

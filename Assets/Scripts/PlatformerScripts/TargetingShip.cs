@@ -155,6 +155,7 @@ public class TargetingShip : MonoBehaviour
             //create lonely ship. The lonely ship has its own programming from there.
             print("replacingWithLonelyShip" + transform.position);
             Instantiate(lonelyShip, transform.position, Quaternion.identity);
+            shipSpawner.DecreaseShipCount();
             DestroyTargetingShip();
 
         }
