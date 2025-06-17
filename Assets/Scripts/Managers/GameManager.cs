@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToTank()
     {
-        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: DefaultRotationSpeed, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController, laser: _laser);
+        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: 50f, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController, laser: _laser);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
         _fpsGun.enabled = false;

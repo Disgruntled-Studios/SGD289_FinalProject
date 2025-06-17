@@ -1,5 +1,9 @@
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class TankPlayerMode : IPlayerMode
 {
@@ -23,6 +27,9 @@ public class TankPlayerMode : IPlayerMode
     private PlayerAnimationController _animationController;
     private LineRenderer _laser;
 
+    private float _currentMoveInput;
+    private const float AccelerationRate = 5f;
+    private const float DecelerationRate = 5f;
 
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -55,26 +62,30 @@ public class TankPlayerMode : IPlayerMode
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
-        if (_tankGunReference.isReloading)
-        {
-            _currentSpeed = _halfSpeed;
-        }
-        else if (!_tankGunReference.isReloading && _currentSpeed == _halfSpeed && !_isCrouching)
-        {
-            _currentSpeed = _normalSpeed;
-        }
+        var targetSpeed = _currentSpeed;
 
-        rb.AddForce(context.forward * (input.y * _currentSpeed * 10f), ForceMode.Force);
-        
-        if (input.x != 0 && InputManager.Instance.IsUsingKeyboard)
+        if (_tankGunReference.isReloading || _isCrouching)
         {
-            context.transform.Rotate(new Vector3(0, input.x, 0) * currentRotationSpeed);
+            targetSpeed = _halfSpeed;
         }
         else
         {
-            _rb.angularVelocity = Vector3.zero;
+            targetSpeed = _normalSpeed;
         }
 
+        // Smooth acceleration
+        if (Mathf.Abs(input.y) > 0.01f)
+        {
+            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, input.y, Time.deltaTime * AccelerationRate);
+        }
+        else
+        {
+            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, 0f, Time.deltaTime * DecelerationRate);
+        }
+
+        var targetVelocity = context.forward * (_currentMoveInput * targetSpeed);
+        targetVelocity.y = rb.linearVelocity.y;
+        rb.linearVelocity = targetVelocity;
     }
 
     public void ToggleRotationSpeed()
@@ -82,7 +93,7 @@ public class TankPlayerMode : IPlayerMode
         if (InputManager.Instance.IsInPuzzle) return;
         if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
         {
-            currentRotationSpeed *= 0.25f;
+            currentRotationSpeed = _rotationSpeed * 0.25f;
         }
         else
         {
@@ -92,13 +103,14 @@ public class TankPlayerMode : IPlayerMode
 
     public void Rotate(Vector2 input, Transform context)
     {
-        if (input.x != 0 && InputManager.Instance.IsUsingController)
+        if (InputManager.Instance.IsInPuzzle) return;
+
+        var rotationInput = input.x;
+        if (!Mathf.Approximately(rotationInput, 0f))
         {
-            context.transform.Rotate(new Vector3(0, input.x, 0) * currentRotationSpeed);
-        }
-        else
-        {
-            _rb.angularVelocity = Vector3.zero;
+            var rotationAmount = rotationInput * currentRotationSpeed * Time.deltaTime;
+            var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
+            _rb.MoveRotation(_rb.rotation * deltaRotation);
         }
     }
 
