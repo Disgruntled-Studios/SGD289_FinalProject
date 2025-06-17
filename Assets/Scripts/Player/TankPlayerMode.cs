@@ -10,22 +10,26 @@ public class TankPlayerMode : IPlayerMode
     private readonly float _normalSpeed;
     private readonly float _halfSpeed;
     private float _currentSpeed;
+    
     private readonly Transform _player;
     private readonly Rigidbody _rb;
-    public float _rotationSpeed;
-    private float currentRotationSpeed;
-    //private bool _isAiming;
-    private bool isGrounded;
-    private bool _isCrouching;
-    private float groundDrag = 8f;
-    private float playerHeight = 2f;
-    LayerMask _groundLayerMask;
-    CapsuleCollider _standingCollider;
-    SphereCollider _crouchCollider;
 
-    private TankGunController _tankGunReference;
-    private PlayerAnimationController _animationController;
-    private LineRenderer _laser;
+    private readonly float _rotationSpeed;
+    private float _currentRotationSpeed;
+    
+    private bool _isGrounded;
+    private bool _isCrouching;
+
+    private const float GroundDrag = 5f;
+    private const float PlayerHeight = 2f;
+
+    private readonly LayerMask _groundLayerMask;
+    private readonly CapsuleCollider _standingCollider;
+    private readonly SphereCollider _crouchCollider;
+
+    private readonly TankGunController _tankGunReference;
+    private readonly PlayerAnimationController _animationController;
+    private readonly LineRenderer _laser;
 
     private float _currentMoveInput;
     private const float AccelerationRate = 10f;
@@ -36,7 +40,9 @@ public class TankPlayerMode : IPlayerMode
     private const float RotationDecelerationRate = 10f;
     private const float RotationDeadZone = 0.05f;
 
-    private readonly float _aimRotationSpeedMultiplier = 0.25f;
+    private const float AimRotationSpeedMultiplier = 0.25f;
+    
+    private Vector3 _targetVelocity;
     
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -53,7 +59,7 @@ public class TankPlayerMode : IPlayerMode
         _currentSpeed = speed;
         _player = player;
         _rotationSpeed = rotationSpeed;
-        currentRotationSpeed = rotationSpeed;
+        _currentRotationSpeed = rotationSpeed;
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
         _tankGunReference = tankGunRef;
@@ -69,18 +75,8 @@ public class TankPlayerMode : IPlayerMode
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
-        var targetSpeed = _currentSpeed;
+        _currentSpeed = (_tankGunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
 
-        if (_tankGunReference.isReloading || _isCrouching)
-        {
-            targetSpeed = _halfSpeed;
-        }
-        else
-        {
-            targetSpeed = _normalSpeed;
-        }
-
-        // Smooth acceleration
         if (Mathf.Abs(input) > 0.01f)
         {
             _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, input, Time.deltaTime * AccelerationRate);
@@ -89,10 +85,6 @@ public class TankPlayerMode : IPlayerMode
         {
             _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, 0f, Time.deltaTime * DecelerationRate);
         }
-
-        var targetVelocity = context.forward * (_currentMoveInput * targetSpeed);
-        targetVelocity.y = rb.linearVelocity.y;
-        rb.linearVelocity = targetVelocity;
     }
 
     public void Rotate(float input, Transform context)
@@ -114,38 +106,27 @@ public class TankPlayerMode : IPlayerMode
         {
             _currentRotationInput = 0f;
         }
-
-        if (!Mathf.Approximately(_currentRotationInput, 0f))
-        {
-            var rotationAmount = _currentRotationInput * currentRotationSpeed * Time.deltaTime;
-            var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
-            _rb.MoveRotation(_rb.rotation * deltaRotation);
-        }
     }
 
     private void SetRotationSpeedForAim(bool isAiming)
     {
-        currentRotationSpeed = isAiming ? _rotationSpeed * _aimRotationSpeedMultiplier : _rotationSpeed;
+        _currentRotationSpeed = isAiming ? _rotationSpeed * AimRotationSpeedMultiplier : _rotationSpeed;
     }
 
     public void Look(Vector2 input, Transform context)
     {
-        
+        // Camera controls? 
     }
 
     public void Jump()
     {
         return;
-    } // Not used in Tank
+    } 
 
     public void Crouch(bool isPressed)
     {
 
         if (InputManager.Instance.IsInPuzzle) return;
-
-        RaycastHit hitTest;
-
-        
 
         if (_standingCollider.enabled)
         {
@@ -156,7 +137,7 @@ public class TankPlayerMode : IPlayerMode
             _crouchCollider.enabled = true;
             Debug.Log(_isCrouching);
         }
-        else if (!Physics.Raycast(_player.TransformPoint(_crouchCollider.center), Vector3.up, out hitTest, 1)) 
+        else if (!Physics.Raycast(_player.TransformPoint(_crouchCollider.center), Vector3.up, out var hitTest, 1)) 
         {
             _isCrouching = false;
             _animationController.Crouch(_isCrouching);
@@ -169,20 +150,25 @@ public class TankPlayerMode : IPlayerMode
     public void Tick()
     {
         if (InputManager.Instance.IsInPuzzle) return;
-        //Each frame we check if the player is grounded or not.
-        isGrounded = Physics.Raycast(_player.position, Vector3.down, playerHeight * 0.5f + 0.2f, _groundLayerMask);
-        Debug.DrawLine(_player.position, new Vector3(_player.position.x, (-1 * playerHeight * 0.5f + 0.2f), _player.position.z), Color.blue);
-        Debug.DrawLine(_player.TransformPoint(_crouchCollider.center), new Vector3(_player.TransformPoint(_crouchCollider.center).x,_player.TransformPoint(_crouchCollider.center).y + 1, _player.TransformPoint(_crouchCollider.center).z), Color.blue);
 
-        //If the player is grounded and has Velocity stored on the Y axis we reset their vertical velocity.X
-        if (isGrounded)
+        _isGrounded = Physics.Raycast(_player.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, _groundLayerMask);
+        _rb.linearDamping = _isGrounded ? GroundDrag : 0f;
+
+        // Apply rotation
+        if (!Mathf.Approximately(_currentRotationInput, 0f))
         {
-            _rb.linearDamping = groundDrag;
+            var rotationAmount = _currentRotationInput * _currentRotationSpeed * Time.deltaTime;
+            var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
+            _rb.MoveRotation(_rb.rotation * deltaRotation);
         }
-        else
-        {
-            _rb.linearDamping = 0;
-        }
+        
+        // Apply movement
+        var force = _rb.transform.forward * (_currentMoveInput * _currentSpeed);
+        _rb.AddForce(force, ForceMode.Acceleration);
+        
+        Debug.DrawLine(_player.position, _player.position + Vector3.down * (PlayerHeight * 0.5f + 0.2f), Color.blue);
+        Debug.DrawLine(_player.TransformPoint(_crouchCollider.center),
+            _player.TransformPoint(_crouchCollider.center) + Vector3.up, Color.blue);
     }
 
     public void Aim(InputAction.CallbackContext context)

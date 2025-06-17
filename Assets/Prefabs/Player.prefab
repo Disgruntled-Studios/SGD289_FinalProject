@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: FPSMAIN
+  _cameraId: TPCAM
 --- !u!1 &3273021112394213413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,7 +1271,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1562727748655262171, guid: 3c2b5a05ca560c4438dc631297cfb267, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6733116704610937730, guid: 3c2b5a05ca560c4438dc631297cfb267, type: 3}
