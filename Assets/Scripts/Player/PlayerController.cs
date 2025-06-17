@@ -87,6 +87,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            GameManager.Instance.TogglePauseGame();
+        }
+    }
+
     private void FixedUpdate()
     {
         CurrentMode?.Move(_rb, _movementInput, transform);

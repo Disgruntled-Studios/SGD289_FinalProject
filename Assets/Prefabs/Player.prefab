@@ -265,10 +265,10 @@ MonoBehaviour:
     m_ActionName: 'Player/Special[/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: RotateTileRight
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnRotateTileRight
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -281,10 +281,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/RotateTileRight[/Mouse/rightButton,/Keyboard/e]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: RotateTileLeft
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnRotateTileLeft
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -297,10 +297,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/RotateTileLeft[/Mouse/leftButton,/Keyboard/q]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: MoveSouth
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnMoveSouth
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -313,10 +313,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/MoveSouth[/Keyboard/s,/Keyboard/downArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: MoveNorth
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnMoveNorth
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -329,10 +329,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/MoveNorth[/Keyboard/w,/Keyboard/upArrow]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: MoveWest
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnMoveWest
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -345,10 +345,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/MoveWest[/Keyboard/leftArrow,/Keyboard/a]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: MoveEast
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnMoveEast
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -361,10 +361,10 @@ MonoBehaviour:
     m_ActionName: 'PuzzleMap/MoveEast[/Keyboard/rightArrow,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TESTPuzzleControlScheme, Assembly-CSharp
-        m_MethodName: ExitPuzzle
-        m_Mode: 1
+      - m_Target: {fileID: 1413294863027320353}
+        m_TargetAssemblyTypeName: PuzzleController, Assembly-CSharp
+        m_MethodName: OnExitPuzzle
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

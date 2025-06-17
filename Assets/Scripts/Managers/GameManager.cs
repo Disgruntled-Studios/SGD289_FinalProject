@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player => _player;
     [SerializeField] private Transform _cameraTarget;
     public Transform CameraTarget => _cameraTarget;
-    
+
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
     public Rigidbody PlayerRb => _player.GetComponent<Rigidbody>();
     public PlayerAnimationController AnimationController => _player.GetComponent<PlayerAnimationController>();
@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _groundCheckObject;
     [SerializeField] private GameObject _invCube;
     [SerializeField] private LineRenderer _laser;
-    
+
     [SerializeField] private LayerMask _groundLayerMask;
     public TileSelection currentTileSelection;
-    
+
     [Header("Gun Controllers")]
     [SerializeField] private TankGunController _tankGunController;
     [SerializeField] private GunScript _gunScript;
@@ -36,11 +36,15 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
     public bool IsBulletTime => _isBulletTime;
+    public bool isGamePaused { get; private set; }
 
-    [Header("Colliders")] 
-    [SerializeField] private CapsuleCollider _standingCollider;
-    [SerializeField] private SphereCollider _crouchCollider;
-    
+    [Header("Colliders")]
+    [SerializeField] private CapsuleCollider _standingCollider => _player.GetComponent<CapsuleCollider>();
+    [SerializeField] private SphereCollider _crouchCollider => _player.GetComponent<SphereCollider>();
+
+    public GameObject pauseMenuUI;
+    public GameObject settingMenuUI;
+
     private const float DefaultMovementSpeed = 5f;
     private const float DefaultRotationSpeed = 10f;
     private const float HubRotationSpeed = 1f;
@@ -193,5 +197,20 @@ public class GameManager : MonoBehaviour
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
         //_fpsGun.enabled = false;
+    }
+
+    public void TogglePauseGame()
+    {
+        if (isGamePaused)
+        {
+            pauseMenuUI.SetActive(false);
+            settingMenuUI.SetActive(false);
+        }
+        else
+        {
+            pauseMenuUI.SetActive(true);
+        }
+
+        isGamePaused = !isGamePaused;
     }
 }

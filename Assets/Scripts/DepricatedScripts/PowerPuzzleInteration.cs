@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
 public class PowerPuzzleInteration : MonoBehaviour, IInteractable
 {
     private InputAction move_N;
@@ -35,8 +36,6 @@ public class PowerPuzzleInteration : MonoBehaviour, IInteractable
         if (!manager.isPuzzledone)
         {
             Debug.Log("Starting puzzle");
-            manager.outOfPuzzleWorld = (World)GameManager.Instance.CurrentWorld;
-            manager.outOfPuzzleCamID = sceneCam.CameraID;
             //GameManager.Instance.currentTileSelection = tileSelection;
             GameManager.Instance.SwitchPlayerMode(World.Puzzle);
             CameraManager.Instance.TrySwitchToCamera("PowerPuzzleCam");
@@ -52,3 +51,4 @@ public class PowerPuzzleInteration : MonoBehaviour, IInteractable
         return;
     }
 }
+*/

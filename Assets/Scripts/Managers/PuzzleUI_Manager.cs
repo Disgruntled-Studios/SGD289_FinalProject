@@ -24,16 +24,9 @@ public class PuzzleUI_Manager : MonoBehaviour
         }
     }
 
-    public void TogglePuzzlePanel()
+    public void SetPuzzlePanel(bool isActive)
     {
-        if (puzzlePanelRef.activeInHierarchy)
-        {
-            puzzlePanelRef.SetActive(false);
-        }
-        else
-        {
-            puzzlePanelRef.SetActive(true);
-        }
+        puzzlePanelRef.SetActive(isActive);
     }
 
     public void ChangeControlsTxt(string newTextForMove, string newTextForRotate)

@@ -76,8 +76,11 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StateHandler();
-        anim.SetBool("IsMoving", !meshAgent.isStopped);
+        if (gameObject.activeInHierarchy)
+        {
+            StateHandler();
+            anim.SetBool("IsMoving", !meshAgent.isStopped);
+        }
     }
 
 

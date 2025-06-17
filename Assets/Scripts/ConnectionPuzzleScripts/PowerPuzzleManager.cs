@@ -13,9 +13,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     public List<PowerPuzzleTile> tiles;
     public UnityEvent onPuzzleCompletion;
     public TileSelection tileSelection;
-    public World outOfPuzzleWorld;
-    public string outOfPuzzleCamID;
     public GameCamera sceneCam;
+    public GameCamera puzzleCam;
     public bool isPuzzledone;
 
     void Awake()
@@ -43,7 +42,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             isPuzzledone = true;
             //Debug.Log("Puzzle complete");
             onPuzzleCompletion.Invoke();
-            CameraManager.Instance.TrySwitchToCamera(outOfPuzzleCamID);
+            CameraManager.Instance.TrySwitchToCamera(sceneCam.CameraID);
             ExitPuzzle();
         }
 
@@ -53,9 +52,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     public void ExitPuzzle()
     {
         //GameManager.Instance.SwitchPlayerMode(outOfPuzzleWorld);
-        CameraManager.Instance.TrySwitchToCamera(outOfPuzzleCamID);
+        CameraManager.Instance.TrySwitchToCamera(sceneCam.CameraID);
         InputManager.Instance.SwitchToDefaultInput();
-        PuzzleUI_Manager.Instance.TogglePuzzlePanel();
+        PuzzleUI_Manager.Instance.SetPuzzlePanel(false);
     }
 
     public void CheckTilesConnection()
@@ -141,13 +140,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         //Debug.Log("Interact function called");
         if (!isPuzzledone)
         {
-            //Debug.Log("Starting puzzle");
-            //outOfPuzzleWorld = (World)GameManager.Instance.CurrentWorld;
-            outOfPuzzleCamID = sceneCam.CameraID;
-            //GameManager.Instance.currentTileSelection = tileSelection;
             InputManager.Instance.SwitchToPuzzleInput();
-            CameraManager.Instance.TrySwitchToCamera("PowerPuzzleCam");
-            PuzzleUI_Manager.Instance.TogglePuzzlePanel();
+            CameraManager.Instance.TrySwitchToCamera(puzzleCam.CameraID);
+            PuzzleUI_Manager.Instance.SetPuzzlePanel(true);
 
         }
         else

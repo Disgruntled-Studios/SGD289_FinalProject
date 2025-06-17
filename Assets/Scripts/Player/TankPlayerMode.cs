@@ -152,6 +152,7 @@ public class TankPlayerMode : IPlayerMode
         if (InputManager.Instance.IsInPuzzle) return;
 
         _isGrounded = Physics.Raycast(_player.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, _groundLayerMask);
+        Debug.Log("IsGrounded = " + _isGrounded);
         _rb.linearDamping = _isGrounded ? GroundDrag : 0f;
 
         // Apply rotation
