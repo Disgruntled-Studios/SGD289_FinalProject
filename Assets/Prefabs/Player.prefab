@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 1631882390750520044}
   - component: {fileID: 5882779557340138336}
   - component: {fileID: 4277027718331309823}
-  - component: {fileID: 566534123701202357}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -639,23 +638,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 1685884930930213568}
   _anim: {fileID: 5882779557340138336}
---- !u!114 &566534123701202357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566506458669336387}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09ba68d772c01a458f126a8ecf11c81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  invincible: 0
-  dmgInvTime: 1
-  invObj: {fileID: 6733023839848698800}
-  bounceForce: 300
-  hasShip: 1
 --- !u!1 &1339413103774563053
 GameObject:
   m_ObjectHideFlags: 0
