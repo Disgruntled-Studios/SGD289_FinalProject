@@ -2660,7 +2660,7 @@ MonoBehaviour:
   currentTileSelection: {fileID: 0}
   _tankGunController: {fileID: 128257496}
   _gunScript: {fileID: 128257495}
-  _fpsGun: {fileID: 872821146}
+  _fpsGun: {fileID: 0}
   _tpGunModel: {fileID: 202486234}
   _platformingCollisions: {fileID: 0}
   _isBulletTime: 0
@@ -2892,10 +2892,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7783639661492652238, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 14.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985183703595019920, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: Priority.m_Value
+      value: 100
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7155924012543562699, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4860402795380597668, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     - {fileID: 6733023839848698800, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+    - {fileID: 8405788552679608638, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
@@ -4473,17 +4483,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8016657025286850767, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 464682822}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &872821146 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6632937996530971679, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-  m_PrefabInstance: {fileID: 464682822}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f34ad5761d55554a8422ac5e385979f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &916908834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6303,7 +6302,7 @@ Transform:
   m_GameObject: {fileID: 1409810674}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03825004, y: 0.9342595, z: -0.10523863, w: 0.3385574}
-  m_LocalPosition: {x: -5.8448215, y: 3.8112564, z: 44.671074}
+  m_LocalPosition: {x: -5.8448215, y: 3.8112571, z: 44.671074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

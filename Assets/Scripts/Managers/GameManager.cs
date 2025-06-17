@@ -151,15 +151,15 @@ public class GameManager : MonoBehaviour
             gunModel: _tpGunModel, animationController: AnimationController, laser: _laser);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
-        _fpsGun.enabled = false;
+        //_fpsGun.enabled = false;
     }
 
     private void SwitchToTank()
     {
-        PlayerController.CurrentMode = new TankPlayerMode(speed: DefaultMovementSpeed, player: Player.transform, rotationSpeed: 50f, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController, laser: _laser);
+        PlayerController.CurrentMode = new TankPlayerMode(speed: 3f, player: Player.transform, rotationSpeed: 150f, rbComponent: PlayerRb, groundLayerMask: _groundLayerMask, tankGunRef: _tankGunController, standingCollider: _standingCollider, crouchCollider: _crouchCollider, animationController: AnimationController, laser: _laser);
         _tankGunController.enabled = true;
         _gunScript.enabled = false;
-        _fpsGun.enabled = false;
+        //_fpsGun.enabled = false;
     }
 
     private void SwitchToPlatform()
@@ -168,13 +168,13 @@ public class GameManager : MonoBehaviour
             new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, animationController: AnimationController);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
-        _fpsGun.enabled = false;
+        //_fpsGun.enabled = false;
     }
 
     private void SwitchToFPS()
     {
         PlayerController.CurrentMode = new FPSPlayerMode(speed: DefaultMovementSpeed, playerTransform: _player.transform, cameraPivot: _cameraTarget, gunController: _fpsGun, isBulletTime: _isBulletTime, playerRb: PlayerRb, standingCollider: _standingCollider, crouchingCollider: _crouchCollider, animationController: AnimationController, groundLayer: _groundLayerMask);
-        _fpsGun.enabled = true;
+        //_fpsGun.enabled = true;
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
     }
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         PlayerController.CurrentMode = new MirrorPlayerMode(rotationSpeed: 100f);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
-        _fpsGun.enabled = false;
+        //_fpsGun.enabled = false;
     }
 
     private void SwitchToPuzzle()
@@ -192,6 +192,6 @@ public class GameManager : MonoBehaviour
         PlayerController.CurrentMode = new PowerPuzzleMode(currentTileSelection);
         _tankGunController.enabled = false;
         _gunScript.enabled = false;
-        _fpsGun.enabled = false;
+        //_fpsGun.enabled = false;
     }
 }

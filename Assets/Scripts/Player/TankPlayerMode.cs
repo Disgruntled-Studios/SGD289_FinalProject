@@ -17,7 +17,7 @@ public class TankPlayerMode : IPlayerMode
     //private bool _isAiming;
     private bool isGrounded;
     private bool _isCrouching;
-    private float groundDrag = 5f;
+    private float groundDrag = 8f;
     private float playerHeight = 2f;
     LayerMask _groundLayerMask;
     CapsuleCollider _standingCollider;
@@ -28,9 +28,16 @@ public class TankPlayerMode : IPlayerMode
     private LineRenderer _laser;
 
     private float _currentMoveInput;
-    private const float AccelerationRate = 5f;
-    private const float DecelerationRate = 5f;
+    private const float AccelerationRate = 10f;
+    private const float DecelerationRate = 15f;
 
+    private float _currentRotationInput;
+    private const float RotationAccelerationRate = 8f;
+    private const float RotationDecelerationRate = 10f;
+    private const float RotationDeadZone = 0.05f;
+
+    private readonly float _aimRotationSpeedMultiplier = 0.25f;
+    
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
     /// </summary>
@@ -92,27 +99,33 @@ public class TankPlayerMode : IPlayerMode
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
-        var rotationInput = input;
-
-        if (!Mathf.Approximately(rotationInput, 0f))
+        if (Mathf.Abs(input) > 0.01f)
         {
-            var rotationAmount = rotationInput * currentRotationSpeed * Time.deltaTime;
+            _currentRotationInput =
+                Mathf.MoveTowards(_currentRotationInput, input, Time.deltaTime * RotationAccelerationRate);
+        }
+        else
+        {
+            _currentRotationInput =
+                Mathf.MoveTowards(_currentRotationInput, 0f, Time.deltaTime * RotationDecelerationRate);
+        }
+
+        if (Mathf.Abs(_currentRotationInput) < RotationDeadZone)
+        {
+            _currentRotationInput = 0f;
+        }
+
+        if (!Mathf.Approximately(_currentRotationInput, 0f))
+        {
+            var rotationAmount = _currentRotationInput * currentRotationSpeed * Time.deltaTime;
             var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
             _rb.MoveRotation(_rb.rotation * deltaRotation);
         }
     }
 
-    public void ToggleRotationSpeed()
+    private void SetRotationSpeedForAim(bool isAiming)
     {
-        if (InputManager.Instance.IsInPuzzle) return;
-        if (Mathf.Approximately(currentRotationSpeed, _rotationSpeed))
-        {
-            currentRotationSpeed = _rotationSpeed * 0.25f;
-        }
-        else
-        {
-            currentRotationSpeed = _rotationSpeed;
-        }
+        currentRotationSpeed = isAiming ? _rotationSpeed * _aimRotationSpeedMultiplier : _rotationSpeed;
     }
 
     public void Look(Vector2 input, Transform context)
@@ -175,18 +188,19 @@ public class TankPlayerMode : IPlayerMode
     public void Aim(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.IsInPuzzle) return;
+        
         if (context.started)
         {
             _tankGunReference.StartGunAim();
             _animationController.Aim(true);
-            ToggleRotationSpeed();
+            SetRotationSpeedForAim(true);
         }
         
         if (context.canceled)
         {
             _tankGunReference.EndGunAim();
             _animationController.Aim(false);
-            ToggleRotationSpeed();
+            SetRotationSpeedForAim(false);
         }
     }
 
