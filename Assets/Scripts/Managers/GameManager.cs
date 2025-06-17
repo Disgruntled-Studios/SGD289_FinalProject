@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     private const float HubRotationSpeed = 1f;
     public bool IsInFPS;
 
-    public World? CurrentWorld { get; private set; } // Make current world nullable for initial world processing
+    public World? CurrentWorld { get; private set; }// Make current world nullable for initial world processing
 
     private void Awake()
     {

@@ -3,8 +3,9 @@ using UnityEngine.InputSystem;
 
 public interface IPlayerMode
 {
-    void Move(Rigidbody rb, Vector2 input, Transform context); // How the player will move
-    void Rotate(Vector2 input, Transform context); // How the model will rotate\
+    void Move(Rigidbody rb, float input, Transform context); // How the player will move
+    void Rotate(float input, Transform context); // How the model will rotate
+    void Look(Vector2 input, Transform context);
     void Jump(); // How the player jumps
     void Crouch(bool isPressed); // How the player crouches
     void Sprint(InputAction.CallbackContext context); // How the player should sprint (if needed)

@@ -84,6 +84,21 @@ public class PlatformPlayerMode : IPlayerMode
 
     }
 
+    public void Move(Rigidbody rb, float input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Rotate(float input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Look(Vector2 input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Rotate(Vector2 input, Transform context) { } // Not used in platformer
 
     public void Jump()

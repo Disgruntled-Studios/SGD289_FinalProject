@@ -39,6 +39,21 @@ public class HubMovementMode : IPlayerMode
         rb.MovePosition(targetPosition);
     }
 
+    public void Move(Rigidbody rb, float input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Rotate(float input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Look(Vector2 input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Rotate(Vector2 input, Transform context)
     {
         // NEED TO DIFFERENTIATE BETWEEN MOUSE AND CONTROLLER

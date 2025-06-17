@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour
     public bool isTestingPlatform;
     public bool isTestingFPS;
     
-    private Vector2 _movementInput;
+    private float _movementInput;
+    private float _rotationInput;
     private Vector2 _lookInput;
 
-    public Vector2 MovementInput => _movementInput;
+    public float MovementInput => _movementInput;
+    public float RotationInput => _rotationInput;
     public Vector2 LookInput => _lookInput;
     
     [HideInInspector]
@@ -30,8 +32,9 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
-    public void OnRotate(InputAction.CallbackContext context) => _lookInput = context.ReadValue<Vector2>();
+    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<float>();
+    public void OnRotate(InputAction.CallbackContext context) => _rotationInput = context.ReadValue<float>();
+    public void OnLook(InputAction.CallbackContext context) => _lookInput = context.ReadValue<Vector2>();
 
     public void OnAim(InputAction.CallbackContext context)
     {
@@ -87,7 +90,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CurrentMode?.Move(_rb, _movementInput, transform);
-        CurrentMode?.Rotate(_lookInput, transform);
+        CurrentMode?.Rotate(_rotationInput, transform);
+        CurrentMode?.Look(_lookInput, transform);
     }
 
     private void Update()

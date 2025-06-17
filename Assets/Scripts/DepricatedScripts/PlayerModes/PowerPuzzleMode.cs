@@ -24,6 +24,11 @@ public class PowerPuzzleMode : IPlayerMode
         return;
     }
 
+    public void Look(Vector2 input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Jump()
     {
         return;
@@ -32,6 +37,16 @@ public class PowerPuzzleMode : IPlayerMode
     public void Move(Rigidbody rb, Vector2 input, Transform context)
     {
         //playerSelection.MoveSelection(input.x, input.y);
+    }
+
+    public void Move(Rigidbody rb, float input, Transform context)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Rotate(float input, Transform context)
+    {
+        throw new System.NotImplementedException();
     }
 
     public void Rotate(Vector2 input, Transform context)

@@ -58,7 +58,7 @@ public class TankPlayerMode : IPlayerMode
     }
 
 
-    public void Move(Rigidbody rb, Vector2 input, Transform context)
+    public void Move(Rigidbody rb, float input, Transform context)
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
@@ -74,9 +74,9 @@ public class TankPlayerMode : IPlayerMode
         }
 
         // Smooth acceleration
-        if (Mathf.Abs(input.y) > 0.01f)
+        if (Mathf.Abs(input) > 0.01f)
         {
-            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, input.y, Time.deltaTime * AccelerationRate);
+            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, input, Time.deltaTime * AccelerationRate);
         }
         else
         {
@@ -86,6 +86,20 @@ public class TankPlayerMode : IPlayerMode
         var targetVelocity = context.forward * (_currentMoveInput * targetSpeed);
         targetVelocity.y = rb.linearVelocity.y;
         rb.linearVelocity = targetVelocity;
+    }
+
+    public void Rotate(float input, Transform context)
+    {
+        if (InputManager.Instance.IsInPuzzle) return;
+
+        var rotationInput = input;
+
+        if (!Mathf.Approximately(rotationInput, 0f))
+        {
+            var rotationAmount = rotationInput * currentRotationSpeed * Time.deltaTime;
+            var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
+            _rb.MoveRotation(_rb.rotation * deltaRotation);
+        }
     }
 
     public void ToggleRotationSpeed()
@@ -101,17 +115,9 @@ public class TankPlayerMode : IPlayerMode
         }
     }
 
-    public void Rotate(Vector2 input, Transform context)
+    public void Look(Vector2 input, Transform context)
     {
-        if (InputManager.Instance.IsInPuzzle) return;
-
-        var rotationInput = input.x;
-        if (!Mathf.Approximately(rotationInput, 0f))
-        {
-            var rotationAmount = rotationInput * currentRotationSpeed * Time.deltaTime;
-            var deltaRotation = Quaternion.Euler(0, rotationAmount, 0);
-            _rb.MoveRotation(_rb.rotation * deltaRotation);
-        }
+        
     }
 
     public void Jump()
