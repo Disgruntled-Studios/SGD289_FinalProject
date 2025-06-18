@@ -28,10 +28,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FPSGunController _fpsGun;
     [SerializeField] private GameObject _tpGunModel;
 
-    [FormerlySerializedAs("_playerCollisions")]
-    [Header("Platformer")]
-    [SerializeField] private PlatformingCollisions _platformingCollisions;
-
 
     [Header("Game Settings")]
     [SerializeField] private bool _isBulletTime; // With bullet time active, world slows down but player remains the same 
@@ -168,8 +164,8 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToPlatform()
     {
-        PlayerController.CurrentMode =
-            new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, animationController: AnimationController);
+        //PlayerController.CurrentMode =
+            //new PlatformPlayerMode(playerRb: PlayerRb, speed: DefaultMovementSpeed, jumpForce: 10f, playerTransform: _player.transform, gunScript: _gunScript, platformingCollisions: _platformingCollisions, gunModel: _tpGunModel, groundCheck: _groundCheckObject, invCube: _invCube, animationController: AnimationController);
         _gunScript.enabled = true;
         _tankGunController.enabled = false;
         //_fpsGun.enabled = false;
@@ -201,14 +197,18 @@ public class GameManager : MonoBehaviour
 
     public void TogglePauseGame()
     {
+        if (InputManager.Instance.IsInPuzzle) return;
+        
         if (isGamePaused)
         {
             pauseMenuUI.SetActive(false);
             settingMenuUI.SetActive(false);
+            InputManager.Instance.SwitchToDefaultInput();
         }
         else
         {
             pauseMenuUI.SetActive(true);
+            InputManager.Instance.SwitchToUIInput();
         }
 
         isGamePaused = !isGamePaused;

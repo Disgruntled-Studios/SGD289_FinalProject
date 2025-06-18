@@ -59,7 +59,7 @@ public class PuzzleController : MonoBehaviour
     }
     public void OnExitPuzzle(InputAction.CallbackContext context)
     {
-        if (context.performed && puzzleManager != null)
+        if (context.performed && puzzleManager != null && InputManager.Instance.IsInPuzzle)
         {
             puzzleManager.ExitPuzzle();
         }

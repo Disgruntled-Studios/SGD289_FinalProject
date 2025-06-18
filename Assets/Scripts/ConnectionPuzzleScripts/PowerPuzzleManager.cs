@@ -151,6 +151,11 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
     }
 
+    public void OnEnter()
+    {
+        return;
+    }
+
     public void OnExit()
     {
         return;

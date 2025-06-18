@@ -40,6 +40,11 @@ public class MirrorController : MonoBehaviour, IInteractable
         _mirrorPanel.SetActive(true);
     }
 
+    public void OnEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnClickEyes()
     {
         _currentEyeIndex = (_currentEyeIndex + 1) % _eyeMats.Length;

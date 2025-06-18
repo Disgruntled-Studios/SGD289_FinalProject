@@ -14,6 +14,11 @@ public class FPSStartConsoleController : MonoBehaviour, IInteractable
         _sdc.StartCountdown();
     }
 
+    public void OnEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnExit()
     {
         return;

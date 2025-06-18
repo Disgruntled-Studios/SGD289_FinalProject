@@ -16,8 +16,9 @@ public class InputManager : MonoBehaviour
     
     public bool IsUsingKeyboard => _lastUsedDevice == Keyboard;
     public bool IsUsingController => _lastUsedDevice == Controller;
-    
-    public bool IsInPuzzle { get; private set; }
+
+    public bool IsInPuzzle => _playerInput.PuzzleMap.enabled;
+    public bool IsInUI => _playerInput.UI.enabled;
 
     private void Awake()
     {
@@ -40,19 +41,30 @@ public class InputManager : MonoBehaviour
         var controllerTime = InputSystem.GetDevice<Gamepad>()?.lastUpdateTime ?? 0;
 
         _lastUsedDevice = keyboardTime > controllerTime ? Keyboard : Controller;
+
+        Debug.Log($"Is In Puzzle = {IsInPuzzle}");
+        Debug.Log($"Is In UI = {IsInUI}");
+        Debug.Log($"Default = {!IsInUI && !IsInPuzzle}");
     }
 
     public void SwitchToPuzzleInput()
     {
         _playerInput.Player.Disable();
+        _playerInput.UI.Disable();
         _playerInput.PuzzleMap.Enable();
-        IsInPuzzle = true;
     }
 
     public void SwitchToDefaultInput()
     {
         _playerInput.Player.Enable();
+        _playerInput.UI.Disable();
         _playerInput.PuzzleMap.Disable();
-        IsInPuzzle = false;
+    }
+
+    public void SwitchToUIInput()
+    {
+        _playerInput.UI.Enable();
+        _playerInput.PuzzleMap.Disable();
+        _playerInput.Player.Disable();
     }
 }

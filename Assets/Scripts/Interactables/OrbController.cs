@@ -7,6 +7,11 @@ public class OrbController : MonoBehaviour, IInteractable
         Debug.Log("Talking to orb");
     }
 
+    public void OnEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnExit()
     {
         return;

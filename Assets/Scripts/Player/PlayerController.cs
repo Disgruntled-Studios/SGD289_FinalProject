@@ -97,16 +97,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (InputManager.Instance.IsInUI) return;
+        CurrentMode?.Tick();
         CurrentMode?.Move(_rb, _movementInput, transform);
         CurrentMode?.Rotate(_rotationInput, transform);
         CurrentMode?.Look(_lookInput, transform);
     }
-
-    private void Update()
-    {
-        CurrentMode?.Tick();
-    }
-
     
     private void OnTriggerEnter(Collider other)
     {

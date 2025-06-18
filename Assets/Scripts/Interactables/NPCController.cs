@@ -13,6 +13,11 @@ public class NPCController : MonoBehaviour, IInteractable
         _dialogText.text = _dialogLines[0];
     }
 
+    public void OnEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnExit()
     {
         _dialogText.gameObject.SetActive(false);
