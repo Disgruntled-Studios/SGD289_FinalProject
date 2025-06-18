@@ -19,4 +19,9 @@ public class PlayerInventory : MonoBehaviour
             _items.Remove(item);
         }
     }
+
+    public void UseItem(InventoryItem item)
+    {
+        Debug.Log($"Using {item.itemName}");
+    }
 }

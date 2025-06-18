@@ -6,7 +6,7 @@ public class FPSStartConsoleController : MonoBehaviour, IInteractable
     
     private bool _hasStarted;
     
-    public void Interact(Transform player)
+    public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_hasStarted) return;
 

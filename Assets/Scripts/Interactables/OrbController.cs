@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OrbController : MonoBehaviour, IInteractable
 {
-    public void Interact(Transform player)
+    public void Interact(Transform player, PlayerInventory inventory)
     {
         Debug.Log("Talking to orb");
     }

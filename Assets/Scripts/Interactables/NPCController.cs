@@ -7,7 +7,7 @@ public class NPCController : MonoBehaviour, IInteractable
 
     [SerializeField] private string[] _dialogLines;
     
-    public void Interact(Transform player)
+    public void Interact(Transform player, PlayerInventory inventory)
     {
         _dialogText.gameObject.SetActive(true);
         _dialogText.text = _dialogLines[0];

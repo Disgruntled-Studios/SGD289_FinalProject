@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(Transform player); // Called when player presses interact in the trigger zone
+    void Interact(Transform player, PlayerInventory inventory); // Called when player presses interact in the trigger zone
     void OnEnter(); // Called when player enters the trigger zone
     void OnExit(); // Automatically calls when player leaves trigger zone
 }

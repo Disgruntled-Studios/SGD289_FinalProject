@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public bool _isCrouching { get; private set; }
 
     private Rigidbody _rb;
+    private PlayerInventory _inventory;
 
     public IPlayerMode CurrentMode { get; set; }
     private IInteractable _currentInteractable;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _inventory = GetComponent<PlayerInventory>();
     }
 
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<float>();
@@ -75,7 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            _currentInteractable?.Interact(transform);
+            _currentInteractable?.Interact(transform, _inventory);
         }
     }
 

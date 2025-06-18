@@ -135,7 +135,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         CheckTilesConnection();
     }
 
-    public void Interact(Transform player)
+    public void Interact(Transform player, PlayerInventory inventory)
     {
         //Debug.Log("Interact function called");
         if (!isPuzzledone)

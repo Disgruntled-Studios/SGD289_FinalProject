@@ -28,7 +28,7 @@ public class MirrorController : MonoBehaviour, IInteractable
     private int _currentHairIndex;
     private int _currentShirtIndex;
     
-    public void Interact(Transform player)
+    public void Interact(Transform player, PlayerInventory inventory)
     {
         GameManager.Instance.SwitchPlayerMode(World.Mirror);
         CameraManager.Instance.TrySwitchToCamera("MIRRORCAM");
