@@ -42,9 +42,9 @@ public class InputManager : MonoBehaviour
 
         _lastUsedDevice = keyboardTime > controllerTime ? Keyboard : Controller;
 
-        Debug.Log($"Is In Puzzle = {IsInPuzzle}");
-        Debug.Log($"Is In UI = {IsInUI}");
-        Debug.Log($"Default = {!IsInUI && !IsInPuzzle}");
+        // Debug.Log($"Is In Puzzle = {IsInPuzzle}");
+        // Debug.Log($"Is In UI = {IsInUI}");
+        // Debug.Log($"Default = {!IsInUI && !IsInPuzzle}");
     }
 
     public void SwitchToPuzzleInput()

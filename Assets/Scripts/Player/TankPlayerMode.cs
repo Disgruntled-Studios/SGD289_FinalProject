@@ -129,7 +129,7 @@ public class TankPlayerMode : IPlayerMode
             _currentSpeed = _halfSpeed;
             _standingCollider.enabled = false;
             _crouchCollider.enabled = true;
-            Debug.Log(_isCrouching);
+            //Debug.Log(_isCrouching);
         }
         else if (!Physics.Raycast(_player.TransformPoint(_crouchCollider.center), Vector3.up, out var hitTest, 1)) 
         {
@@ -138,7 +138,7 @@ public class TankPlayerMode : IPlayerMode
             _currentSpeed = _normalSpeed;
             _standingCollider.enabled = true;
             _crouchCollider.enabled = false;
-            Debug.Log("Not Crouching");
+            //Debug.Log("Not Crouching");
         }
         
         UpdateSpeedBasedOnState();
@@ -188,7 +188,7 @@ public class TankPlayerMode : IPlayerMode
         //     _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
         // }
 
-        Debug.Log(_rb.linearVelocity.z);
+        //Debug.Log(_rb.linearVelocity.z);
         
         Debug.DrawLine(_player.position, _player.position + Vector3.down * (PlayerHeight * 0.5f + 0.2f), Color.blue);
         Debug.DrawLine(_player.TransformPoint(_crouchCollider.center),

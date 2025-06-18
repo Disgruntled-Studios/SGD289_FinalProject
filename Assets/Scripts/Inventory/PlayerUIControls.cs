@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,9 +7,19 @@ public class PlayerUIControls : MonoBehaviour
     [SerializeField] private InventoryUI _ui;
     [SerializeField] private PlayerInventory _inventory;
 
+    private void OnEnable()
+    {
+        _inventory.OnInventoryChanged += RefreshInventoryUI;
+    }
+
+    private void OnDisable()
+    {
+        _inventory.OnInventoryChanged -= RefreshInventoryUI;
+    }
+
     public void OnInventoryNavigate(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         var input = context.ReadValue<Vector2>();
 
@@ -24,7 +35,7 @@ public class PlayerUIControls : MonoBehaviour
 
     public void OnInventorySubmit(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         var selectedItem = _ui.GetSelectedItem(_inventory.Items);
         if (selectedItem != null)
@@ -34,18 +45,23 @@ public class PlayerUIControls : MonoBehaviour
         }
     }
 
-    public void OnInventoryCancel(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-
-        _ui.gameObject.SetActive(false);
-        InputManager.Instance.SwitchToDefaultInput();
-    }
+    // public void OnInventoryCancel(InputAction.CallbackContext context)
+    // {
+    //     if (!context.performed || !InputManager.Instance.IsInUI) return;
+    //
+    //     _ui.gameObject.SetActive(false);
+    //     InputManager.Instance.SwitchToDefaultInput();
+    // }
 
     public void OpenInventoryUI()
     {
         _ui.RefreshUI(_inventory.Items);
         _ui.gameObject.SetActive(true);
         InputManager.Instance.SwitchToUIInput();
+    }
+
+    private void RefreshInventoryUI()
+    {
+        _ui.RefreshUI(_inventory.Items);
     }
 }

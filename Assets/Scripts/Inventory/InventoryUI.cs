@@ -30,21 +30,37 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(item);
         }
+        
         _slotObjects.Clear();
 
         foreach (var item in items)
         {
             var obj = Instantiate(_inventorySlotPrefab, _slotParent);
-            var text = obj.GetComponentInChildren<TMP_Text>();
+            var text = obj.transform.Find("ItemName").GetComponent<TMP_Text>();
             
             if (text)
             {
                 text.text = item.itemName;
             }
+            else
+            {
+                Debug.Log("No text");
+            }
+
+            var icon = obj.transform.Find("Icon").GetComponent<Image>();
+            if (icon)
+            {
+                icon.sprite = item.icon;
+                icon.enabled = item.icon != null;
+            }
+            else
+            {
+                Debug.Log("No icon");
+            }
 
             _slotObjects.Add(obj);
         }
-
+        
         if (_slotObjects.Count > 0)
         {
             _selectedIndex = 0;
