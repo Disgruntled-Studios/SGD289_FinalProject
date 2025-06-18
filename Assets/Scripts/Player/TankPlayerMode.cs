@@ -32,17 +32,15 @@ public class TankPlayerMode : IPlayerMode
     private readonly LineRenderer _laser;
 
     private float _currentMoveInput;
-    private const float AccelerationRate = 10f;
-    private const float DecelerationRate = 15f;
-
     private float _currentRotationInput;
+
     private const float RotationAccelerationRate = 8f;
     private const float RotationDecelerationRate = 10f;
     private const float RotationDeadZone = 0.05f;
-
     private const float AimRotationSpeedMultiplier = 0.25f;
-    
-    private Vector3 _targetVelocity;
+
+    private const float MoveResponsiveness = 10f;
+    private const float StopResponsiveness = 15f;
     
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -70,21 +68,12 @@ public class TankPlayerMode : IPlayerMode
         _laser = laser;
     }
 
-
     public void Move(Rigidbody rb, float input, Transform context)
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
         _currentSpeed = (_tankGunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
-
-        if (Mathf.Abs(input) > 0.01f)
-        {
-            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, input, Time.deltaTime * AccelerationRate);
-        }
-        else
-        {
-            _currentMoveInput = Mathf.MoveTowards(_currentMoveInput, 0f, Time.deltaTime * DecelerationRate);
-        }
+        _currentMoveInput = input;
     }
 
     public void Rotate(float input, Transform context)
@@ -125,7 +114,6 @@ public class TankPlayerMode : IPlayerMode
 
     public void Crouch(bool isPressed)
     {
-
         if (InputManager.Instance.IsInPuzzle) return;
 
         if (_standingCollider.enabled)
@@ -153,7 +141,7 @@ public class TankPlayerMode : IPlayerMode
 
         _isGrounded = Physics.Raycast(_player.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, _groundLayerMask);
         Debug.Log("IsGrounded = " + _isGrounded);
-        _rb.linearDamping = _isGrounded ? GroundDrag : 0f;
+        //_rb.linearDamping = _isGrounded ? GroundDrag : 0f;
 
         // Apply rotation
         if (!Mathf.Approximately(_currentRotationInput, 0f))
@@ -164,8 +152,18 @@ public class TankPlayerMode : IPlayerMode
         }
         
         // Apply movement
-        var force = _rb.transform.forward * (_currentMoveInput * _currentSpeed);
-        _rb.AddForce(force, ForceMode.Acceleration);
+        var targetVelocity = _rb.transform.forward * (_currentMoveInput * _currentSpeed);
+        _rb.linearVelocity = Vector3.MoveTowards(_rb.linearVelocity, targetVelocity,
+            Time.deltaTime * (_currentMoveInput != 0f ? MoveResponsiveness : StopResponsiveness));
+        
+        // if (Mathf.Approximately(_currentMoveInput, 0f))
+        // {
+        //     _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, Vector3.zero, Time.deltaTime * StopResponsiveness);
+        // }
+        // else
+        // {
+        //     _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
+        // }
         
         Debug.DrawLine(_player.position, _player.position + Vector3.down * (PlayerHeight * 0.5f + 0.2f), Color.blue);
         Debug.DrawLine(_player.TransformPoint(_crouchCollider.center),

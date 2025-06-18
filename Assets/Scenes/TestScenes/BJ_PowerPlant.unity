@@ -164,8 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 1717017368}
-  camRefTwo: {fileID: 1985686807}
+  camRef: {fileID: 0}
 --- !u!65 &43772922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -496,8 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 164219623}
-  camRefTwo: {fileID: 1985686807}
+  camRef: {fileID: 0}
 --- !u!65 &108374005
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1006,6 +1004,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7692832481250064177, guid: 0858ef7c52a758c438151ed2fa3d3660, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7831106321779511720, guid: 0858ef7c52a758c438151ed2fa3d3660, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1053,6 +1055,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7692832481250064177, guid: 0858ef7c52a758c438151ed2fa3d3660, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1716145594}
+    - targetCorrespondingSourceObject: {fileID: 7692832481250064177, guid: 0858ef7c52a758c438151ed2fa3d3660, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1716145595}
     - targetCorrespondingSourceObject: {fileID: 8666665579890341116, guid: 0858ef7c52a758c438151ed2fa3d3660, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288125366}
@@ -2735,8 +2740,8 @@ MonoBehaviour:
   _tpGunModel: {fileID: 202486234}
   _platformingCollisions: {fileID: 0}
   _isBulletTime: 0
-  _standingCollider: {fileID: 1728745590}
-  _crouchCollider: {fileID: 1728745589}
+  pauseMenuUI: {fileID: 0}
+  settingMenuUI: {fileID: 0}
   IsInFPS: 0
 --- !u!4 &432907883
 Transform:
@@ -3145,8 +3150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 164219623}
-  camRefTwo: {fileID: 1079813492}
+  camRef: {fileID: 0}
 --- !u!65 &550125628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3286,8 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 1759810735}
-  camRefTwo: {fileID: 1615245544}
+  camRef: {fileID: 0}
 --- !u!65 &568205522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5360,8 +5363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 164219623}
-  camRefTwo: {fileID: 1127266404}
+  camRef: {fileID: 0}
 --- !u!65 &1191453785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7129,8 +7131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 1079813492}
-  camRefTwo: {fileID: 661721394}
+  camRef: {fileID: 0}
 --- !u!65 &1595829808
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7666,6 +7667,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -629719859055844128, guid: 08d306ae4a389de4b8f87700754bab5a, type: 3}
+--- !u!114 &1716145595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716145590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 099c3ba9c65b6204a96868c22bebff8c, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1717017366
 GameObject:
   m_ObjectHideFlags: 0
@@ -7788,16 +7821,6 @@ MonoBehaviour:
 --- !u!1 &1728745584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566506458669336387, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-  m_PrefabInstance: {fileID: 464682822}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1728745589 stripped
-SphereCollider:
-  m_CorrespondingSourceObject: {fileID: 6124709286696072186, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
-  m_PrefabInstance: {fileID: 464682822}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1728745590 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 9107562140772942605, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
   m_PrefabInstance: {fileID: 464682822}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1743947303
@@ -8418,8 +8441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 1615245544}
-  camRefTwo: {fileID: 428452281}
+  camRef: {fileID: 0}
 --- !u!65 &1834192951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8559,8 +8581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 428452281}
-  camRefTwo: {fileID: 164219623}
+  camRef: {fileID: 0}
 --- !u!65 &1863819185
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9282,8 +9303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 1817648760}
-  camRefTwo: {fileID: 1759810735}
+  camRef: {fileID: 0}
 --- !u!65 &1974353455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9615,8 +9635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camRefOne: {fileID: 661721394}
-  camRefTwo: {fileID: 1717017368}
+  camRef: {fileID: 0}
 --- !u!65 &2002744410
 BoxCollider:
   m_ObjectHideFlags: 0
