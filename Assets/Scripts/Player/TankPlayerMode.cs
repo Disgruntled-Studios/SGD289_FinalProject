@@ -41,6 +41,8 @@ public class TankPlayerMode : IPlayerMode
 
     private const float MoveResponsiveness = 10f;
     private const float StopResponsiveness = 15f;
+
+    private bool _forcedInitialVelocityApplied;
     
     /// <summary>
     /// The TankPlayerMode will be the movement system based on the orientation of the player model not camera.
@@ -71,8 +73,7 @@ public class TankPlayerMode : IPlayerMode
     public void Move(Rigidbody rb, float input, Transform context)
     {
         if (InputManager.Instance.IsInPuzzle) return;
-
-        _currentSpeed = (_tankGunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
+        
         _currentMoveInput = input;
     }
 
@@ -100,6 +101,11 @@ public class TankPlayerMode : IPlayerMode
     private void SetRotationSpeedForAim(bool isAiming)
     {
         _currentRotationSpeed = isAiming ? _rotationSpeed * AimRotationSpeedMultiplier : _rotationSpeed;
+    }
+
+    private void UpdateSpeedBasedOnState()
+    {
+        _currentSpeed = (_tankGunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
     }
 
     public void Look(Vector2 input, Transform context)
@@ -134,13 +140,15 @@ public class TankPlayerMode : IPlayerMode
             _crouchCollider.enabled = false;
             Debug.Log("Not Crouching");
         }
+        
+        UpdateSpeedBasedOnState();
     }
     public void Tick()
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
         _isGrounded = Physics.Raycast(_player.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, _groundLayerMask);
-        Debug.Log("IsGrounded = " + _isGrounded);
+        //Debug.Log("IsGrounded = " + _isGrounded);
         //_rb.linearDamping = _isGrounded ? GroundDrag : 0f;
 
         // Apply rotation
@@ -153,8 +161,23 @@ public class TankPlayerMode : IPlayerMode
         
         // Apply movement
         var targetVelocity = _rb.transform.forward * (_currentMoveInput * _currentSpeed);
-        _rb.linearVelocity = Vector3.MoveTowards(_rb.linearVelocity, targetVelocity,
-            Time.deltaTime * (_currentMoveInput != 0f ? MoveResponsiveness : StopResponsiveness));
+
+        if (_currentMoveInput != 0f)
+        {
+            if (_rb.linearVelocity.magnitude < 0.01f && !_forcedInitialVelocityApplied)
+            {
+                _rb.linearVelocity = targetVelocity;
+                _forcedInitialVelocityApplied = true;
+            }
+            else
+            {
+                _rb.linearVelocity = Vector3.MoveTowards(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
+            }
+        }
+        else
+        {
+            _rb.linearVelocity = Vector3.MoveTowards(_rb.linearVelocity, Vector3.zero, Time.deltaTime * StopResponsiveness);
+        }
         
         // if (Mathf.Approximately(_currentMoveInput, 0f))
         // {
@@ -164,6 +187,8 @@ public class TankPlayerMode : IPlayerMode
         // {
         //     _rb.linearVelocity = Vector3.Lerp(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
         // }
+
+        Debug.Log(_rb.linearVelocity.z);
         
         Debug.DrawLine(_player.position, _player.position + Vector3.down * (PlayerHeight * 0.5f + 0.2f), Color.blue);
         Debug.DrawLine(_player.TransformPoint(_crouchCollider.center),
@@ -179,6 +204,7 @@ public class TankPlayerMode : IPlayerMode
             _tankGunReference.StartGunAim();
             _animationController.Aim(true);
             SetRotationSpeedForAim(true);
+            UpdateSpeedBasedOnState();
         }
         
         if (context.canceled)
@@ -186,6 +212,7 @@ public class TankPlayerMode : IPlayerMode
             _tankGunReference.EndGunAim();
             _animationController.Aim(false);
             SetRotationSpeedForAim(false);
+            UpdateSpeedBasedOnState();
         }
     }
 
@@ -203,6 +230,16 @@ public class TankPlayerMode : IPlayerMode
     public void OnModeEnter()
     {
         _laser.enabled = true;
+        
+        _rb.WakeUp();
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        _rb.linearDamping = GroundDrag;
+
+        _currentSpeed = _normalSpeed;
+        _forcedInitialVelocityApplied = false;
+        
+        Physics.SyncTransforms();
     }
     
     public void OnModeExit()
