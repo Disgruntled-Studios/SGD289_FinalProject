@@ -11,16 +11,13 @@ public class PlayerAnimationController : MonoBehaviour
     private void Update()
     {
         if (!_playerController) return;
-        
-        var input = _playerController.CurrentMoveInput;
-        var isMoving = Mathf.Abs(input) > MovementThreshold;
 
-        _anim?.SetBool("IsMoving", isMoving);
-        
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            _anim?.SetTrigger("Dance");
-        }
+        var forwardInput = Mathf.Clamp(_playerController.CurrentMoveInput, -1f, 1f);
+        var turnInput = Mathf.Clamp(_playerController.GetCurrentTurnInput(), -1f, 1f);
+
+        _anim.SetFloat("MoveSpeed", forwardInput);
+        _anim.SetFloat("TurnSpeed", turnInput);
+        _anim.SetBool("IsSprinting", _playerController.IsSprinting);
     }
 
     public void Crouch(bool isCrouching)
@@ -41,6 +38,11 @@ public class PlayerAnimationController : MonoBehaviour
     public void Aim(bool isAiming)
     {
         _anim.SetBool("IsAiming", isAiming);
+    }
+
+    public void Sprint(bool isSprinting)
+    {
+        _anim.SetBool("IsSprinting", isSprinting);
     }
 }
 

@@ -14,11 +14,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Settings")] 
     [SerializeField] private float _normalSpeed;
-    [SerializeField] private float _halfSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
     private const float PlayerHeight = 2f;
+    private const float SprintMultiplier = 1.5f;
+    private const float CrouchMultiplier = 0.5f;
 
     private float _currentSpeed;
     private float _currentMoveInput;
@@ -27,14 +28,17 @@ public class PlayerController : MonoBehaviour
     private float _smoothedRotationInput;
     private float _currentRotationVelocity;
     private float _currentRotationSpeed;
-    
-    private const float MoveResponsiveness = 10f;
-    private const float StopResponsiveness = 15f;
+
+    private const float AccelerationRate = 10f;
+    private const float DecelerationRate = 15f;
     private const float GroundDrag = 2.5f;
 
     private bool _isCrouching;
     public bool IsCrouching => _isCrouching;
     private bool _isGrounded;
+    public bool IsGrounded => _isGrounded;
+    private bool _isSprinting;
+    public bool IsSprinting => _isSprinting;
 
     private IInteractable _currentInteractable;
     
@@ -134,7 +138,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        return;
+        if (InputManager.Instance.IsInPuzzle) return;
+
+        if (context.started)
+        {
+            _isSprinting = true;
+            UpdateSpeed();
+        }
+
+        if (context.canceled)
+        {
+            _isSprinting = false;
+            UpdateSpeed();
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -176,13 +192,14 @@ public class PlayerController : MonoBehaviour
 
         if (_currentMoveInput != 0f)
         {
+            var acceleration = _isSprinting ? AccelerationRate * 1.25f : AccelerationRate;
             _rb.linearVelocity =
-                Vector3.MoveTowards(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
+                Vector3.MoveTowards(_rb.linearVelocity, targetVelocity, acceleration * Time.deltaTime);
         }
         else
         {
             _rb.linearVelocity =
-                Vector3.MoveTowards(_rb.linearVelocity, Vector3.zero, Time.deltaTime * StopResponsiveness);
+                Vector3.MoveTowards(_rb.linearVelocity, Vector3.zero, DecelerationRate * Time.deltaTime);
         }
     }
 
@@ -193,7 +210,18 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        _currentSpeed = (_gunController.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
+        if (_gunController.isReloading || _isCrouching)
+        {
+            _currentSpeed = _normalSpeed * CrouchMultiplier;
+        }
+        else if (_isSprinting && !_gunController.isAiming)
+        {
+            _currentSpeed = _normalSpeed * SprintMultiplier;
+        }
+        else
+        {
+            _currentSpeed = _normalSpeed;
+        }
     }
     
     private void OnTriggerEnter(Collider other)
@@ -219,5 +247,7 @@ public class PlayerController : MonoBehaviour
             _currentInteractable = null;
         }
     }
+
+    public float GetCurrentTurnInput() => _currentRotationInput;
 }
 
