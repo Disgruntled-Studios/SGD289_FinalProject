@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Components")] 
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private PlayerAnimationController _animationController;
-    [SerializeField] private TankGunController _gunController;
+    [SerializeField] private GunController _gunController;
     [SerializeField] private CapsuleCollider _standingCollider;
     [SerializeField] private SphereCollider _crouchCollider;
     [SerializeField] private LineRenderer _laser;
@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private const float PlayerHeight = 2f;
     private const float SprintMultiplier = 1.5f;
     private const float CrouchMultiplier = 0.5f;
+    private const float AimSpeedMultiplier = 0.75f;
+    private const float AimRotationMultiplier = 0.25f;
 
     private float _currentSpeed;
     private float _currentMoveInput;
@@ -109,7 +111,7 @@ public class PlayerController : MonoBehaviour
             _gunController.StartGunAim();
             _animationController.Aim(true);
             _laser.enabled = true;
-            _currentRotationSpeed = _rotationSpeed * 0.25f;
+            _currentRotationSpeed = _rotationSpeed * AimRotationMultiplier;
             UpdateSpeed();
         }
 
@@ -138,17 +140,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.IsInPuzzle) return;
+        if (InputManager.Instance.IsInPuzzle || _isCrouching) return;
 
         if (context.started)
         {
             _isSprinting = true;
+            _animationController.Sprint(_isSprinting);
             UpdateSpeed();
         }
 
         if (context.canceled)
         {
             _isSprinting = false;
+            _animationController.Sprint(_isSprinting);
             UpdateSpeed();
         }
     }
@@ -210,11 +214,15 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        if (_gunController.isReloading || _isCrouching)
+        if (_gunController.IsReloading || _isCrouching)
         {
             _currentSpeed = _normalSpeed * CrouchMultiplier;
         }
-        else if (_isSprinting && !_gunController.isAiming)
+        else if (_gunController.IsAiming)
+        {
+            _currentSpeed = _normalSpeed * AimSpeedMultiplier;
+        }
+        else if (_isSprinting)
         {
             _currentSpeed = _normalSpeed * SprintMultiplier;
         }

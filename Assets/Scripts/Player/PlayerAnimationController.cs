@@ -17,7 +17,6 @@ public class PlayerAnimationController : MonoBehaviour
 
         _anim.SetFloat("MoveSpeed", forwardInput);
         _anim.SetFloat("TurnSpeed", turnInput);
-        _anim.SetBool("IsSprinting", _playerController.IsSprinting);
     }
 
     public void Crouch(bool isCrouching)

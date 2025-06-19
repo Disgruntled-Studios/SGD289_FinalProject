@@ -27,7 +27,7 @@ public class TankPlayerMode : IPlayerMode
     private readonly CapsuleCollider _standingCollider;
     private readonly SphereCollider _crouchCollider;
 
-    private readonly TankGunController _tankGunReference;
+    private readonly GunController _gunReference;
     private readonly PlayerAnimationController _animationController;
     private readonly LineRenderer _laser;
 
@@ -52,7 +52,7 @@ public class TankPlayerMode : IPlayerMode
     /// <param name="rotationSpeed">How fast the player will rotate the character model.</param>
     /// <param name="rbComponent">The Rigidbody component that is attached to the player object.</param>
     /// <param name="groundLayerMask">The Rigidbody component that is attached to the player object.</param>
-    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, TankGunController tankGunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider, PlayerAnimationController animationController, LineRenderer laser)
+    public TankPlayerMode(float speed, Transform player, float rotationSpeed, Rigidbody rbComponent, LayerMask groundLayerMask, GunController gunRef, CapsuleCollider standingCollider, SphereCollider crouchCollider, PlayerAnimationController animationController, LineRenderer laser)
     {
         _normalSpeed = speed;
         _halfSpeed = speed / 2f;
@@ -62,7 +62,7 @@ public class TankPlayerMode : IPlayerMode
         _currentRotationSpeed = rotationSpeed;
         _rb = rbComponent;
         _groundLayerMask = groundLayerMask;
-        _tankGunReference = tankGunRef;
+        _gunReference = gunRef;
         _standingCollider = standingCollider;
         _crouchCollider = crouchCollider;
         _crouchCollider.enabled = false;
@@ -105,7 +105,7 @@ public class TankPlayerMode : IPlayerMode
 
     private void UpdateSpeedBasedOnState()
     {
-        _currentSpeed = (_tankGunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
+        // _currentSpeed = (_gunReference.isReloading || _isCrouching) ? _halfSpeed : _normalSpeed;
     }
 
     public void Look(Vector2 input, Transform context)
@@ -201,7 +201,7 @@ public class TankPlayerMode : IPlayerMode
         
         if (context.started)
         {
-            _tankGunReference.StartGunAim();
+            _gunReference.StartGunAim();
             _animationController.Aim(true);
             SetRotationSpeedForAim(true);
             UpdateSpeedBasedOnState();
@@ -209,7 +209,7 @@ public class TankPlayerMode : IPlayerMode
         
         if (context.canceled)
         {
-            _tankGunReference.EndGunAim();
+            _gunReference.EndGunAim();
             _animationController.Aim(false);
             SetRotationSpeedForAim(false);
             UpdateSpeedBasedOnState();
@@ -219,7 +219,7 @@ public class TankPlayerMode : IPlayerMode
     public void Attack()
     {
         if (InputManager.Instance.IsInPuzzle) return;
-        _tankGunReference.HandleShoot();
+        _gunReference.HandleShoot();
     }
 
     public void Special()

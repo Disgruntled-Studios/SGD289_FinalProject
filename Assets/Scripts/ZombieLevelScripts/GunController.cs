@@ -2,8 +2,9 @@ using System.Collections;
 using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-public class TankGunController : MonoBehaviour
+public class GunController : MonoBehaviour
 {
     [Header("Gun")]
     [SerializeField] private GameObject _gunModel;
@@ -17,9 +18,12 @@ public class TankGunController : MonoBehaviour
     [Header("Laser")]
     [SerializeField] private LineRenderer _lr;
 
-    public bool isAiming;
-    public bool isReloading;
-
+    private bool _isAiming;
+    public bool IsAiming => _isAiming;
+    
+    private bool _isReloading;
+    public bool IsReloading => _isReloading;
+    
     private void Start()
     {
         if (_lr != null)
@@ -32,9 +36,9 @@ public class TankGunController : MonoBehaviour
 
     private void Update()
     {
-        _gunModel.SetActive(isAiming);
+        _gunModel.SetActive(_isAiming);
 
-        if (isAiming && _lr != null)
+        if (_isAiming && _lr != null)
         {
             HandleLaser();
         }
@@ -46,12 +50,12 @@ public class TankGunController : MonoBehaviour
 
     public void StartGunAim()
     {
-        isAiming = true;
+        _isAiming = true;
     }
 
     public void EndGunAim()
     {
-        isAiming = false;
+        _isAiming = false;
     }
 
     public void HandleLaser()
@@ -85,7 +89,7 @@ public class TankGunController : MonoBehaviour
 
     public void ShootForTank()
     {
-        if (isAiming && currentAmmoMagAmt > 0 && !isReloading)
+        if (_isAiming && currentAmmoMagAmt > 0 && !_isReloading)
         {
             Debug.Log("Shooting");
             currentAmmoMagAmt--;
@@ -114,7 +118,7 @@ public class TankGunController : MonoBehaviour
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
         }
-        else if (isAiming)
+        else if (_isAiming)
         {
             StartCoroutine(ReloadGun());
         }
@@ -123,7 +127,7 @@ public class TankGunController : MonoBehaviour
     IEnumerator ReloadGun()
     {
         //Debug.Log("Is Reloading");
-        isReloading = true;
+        _isReloading = true;
         PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Reloading";
 
         //call animation to reload
@@ -133,7 +137,7 @@ public class TankGunController : MonoBehaviour
         currentAmmoMagAmt = maxMagLimit;
         PowerPlant_UI_Manager.Instance.ammoCountTxt.text = "Ammo : " + currentAmmoMagAmt + "/" + maxMagLimit;
         Debug.Log("Is Reloaded");
-        isReloading = false;
+        _isReloading = false;
     }
 
 }
