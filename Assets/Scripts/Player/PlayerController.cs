@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private float _currentSpeed;
     private float _currentMoveInput;
+    public float CurrentMoveInput => _currentMoveInput;
     private float _currentRotationInput;
     private float _currentRotationSpeed;
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private const float StopResponsiveness = 15f;
 
     private bool _isCrouching;
+    public bool IsCrouching => _isCrouching;
     private bool _isGrounded;
     private bool _forcedInitialVelocityApplied;
 
