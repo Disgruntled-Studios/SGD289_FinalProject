@@ -206,7 +206,7 @@ public class EnemyBehavior : MonoBehaviour
             switch (fov.isPlayerInSight)
             {
                 case true:
-                    if (playerRef.GetComponent<PlayerController>()._isCrouching)
+                    if (playerRef.GetComponent<PlayerController>().IsCrouching)
                     {
                         //Debug.Log("Enemy sees player crouched");
                         detectionLvl += (detectionRate / 2) * Time.deltaTime;

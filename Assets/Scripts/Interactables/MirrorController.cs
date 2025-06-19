@@ -30,7 +30,6 @@ public class MirrorController : MonoBehaviour, IInteractable
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        GameManager.Instance.SwitchPlayerMode(World.Mirror);
         CameraManager.Instance.TrySwitchToCamera("MIRRORCAM");
 
         var rb = player.gameObject.GetComponent<Rigidbody>();
@@ -94,7 +93,6 @@ public class MirrorController : MonoBehaviour, IInteractable
     public void OnClickExit()
     {
         _mirrorPanel.SetActive(false);
-        GameManager.Instance.SwitchPlayerMode(World.Hub);
         CameraManager.Instance.TrySwitchToCamera("HUBMAIN");
     }
 

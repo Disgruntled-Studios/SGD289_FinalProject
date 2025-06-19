@@ -12,7 +12,7 @@ public class PlayerAnimationController : MonoBehaviour
     {
         if (!_playerController) return;
         
-        var input = _playerController.MovementInput;
+        var input = _playerController.CurrentMoveInput;
         var isMoving = Mathf.Abs(input) > MovementThreshold;
 
         _anim?.SetBool("IsMoving", isMoving);
