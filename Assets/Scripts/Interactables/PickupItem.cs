@@ -8,18 +8,18 @@ public class PickupItem : MonoBehaviour, IInteractable
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem("Test Item", _icon, _dropPrefab);
+        var item = new InventoryItem(_itemName, _icon, _dropPrefab);
         inventory.AddItem(item);
         Destroy(transform.root.gameObject);
     }
 
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

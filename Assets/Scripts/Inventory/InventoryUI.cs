@@ -5,30 +5,18 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    private bool _isActive;
-
     [SerializeField] private GameObject _inventorySlotPrefab;
     [SerializeField] private Transform _slotParent;
 
     private readonly List<GameObject> _slotObjects = new();
     private int _selectedIndex;
-
-    private readonly Color _normalColor = Color.white;
-    private readonly Color _highlightedColor = Color.yellow;
-
-    public void Update()
-    {
-        if (GameManager.Instance)
-        {
-            _isActive = GameManager.Instance.isGamePaused;
-        }
-    }
     
     public void RefreshUI(IReadOnlyList<InventoryItem> items)
     {
-        foreach (var item in _slotObjects)
+        // Destroy previous inventory for proper arrangement
+        foreach (var obj in _slotObjects)
         {
-            Destroy(item);
+            Destroy(obj);
         }
         
         _slotObjects.Clear();
@@ -36,31 +24,16 @@ public class InventoryUI : MonoBehaviour
         foreach (var item in items)
         {
             var obj = Instantiate(_inventorySlotPrefab, _slotParent);
-            var text = obj.transform.Find("ItemName").GetComponent<TMP_Text>();
-            
-            if (text)
-            {
-                text.text = item.itemName;
-            }
-            else
-            {
-                Debug.Log("No text");
-            }
+            var controller = obj.GetComponent<InventorySlotController>();
 
-            var icon = obj.transform.Find("Icon").GetComponent<Image>();
-            if (icon)
+            if (controller)
             {
-                icon.sprite = item.icon;
-                icon.enabled = item.icon != null;
-            }
-            else
-            {
-                Debug.Log("No icon");
+                controller.SetSlot(item);
             }
 
             _slotObjects.Add(obj);
         }
-        
+
         if (_slotObjects.Count > 0)
         {
             _selectedIndex = 0;
@@ -85,10 +58,10 @@ public class InventoryUI : MonoBehaviour
     {
         for (var i = 0; i < _slotObjects.Count; i++)
         {
-            var img = _slotObjects[i].GetComponent<Image>();
-            if (img)
+            var controller = _slotObjects[i].GetComponent<InventorySlotController>();
+            if (controller)
             {
-                img.color = (i == index) ? _highlightedColor : _normalColor;
+                controller.SetHighlighted(i == index);
             }
         }
     }

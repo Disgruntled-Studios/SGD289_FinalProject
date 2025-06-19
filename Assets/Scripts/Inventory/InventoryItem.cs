@@ -9,7 +9,7 @@ public class InventoryItem
 
     public InventoryItem(string name, Sprite icon = null, GameObject prefab = null)
     {
-        itemName = null;
+        itemName = name;
         this.icon = icon;
         this.prefab = prefab;
     }

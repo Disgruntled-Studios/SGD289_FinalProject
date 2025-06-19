@@ -105,11 +105,6 @@ public class PlayerController : MonoBehaviour
         CurrentMode?.Rotate(_rotationInput, transform);
         CurrentMode?.Look(_lookInput, transform);
     }
-
-    private void Update()
-    {
-        Debug.Log(_currentInteractable);
-    }
     
     private void OnTriggerEnter(Collider other)
     {
