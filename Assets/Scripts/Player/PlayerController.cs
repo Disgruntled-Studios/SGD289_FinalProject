@@ -1,9 +1,5 @@
-using System;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,9 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInventory _inventory;
 
     [Header("Movement Settings")] 
-    [SerializeField] private float _normalSpeed = 3f;
-    [SerializeField] private float _halfSpeed = 1.5f;
-    [SerializeField] private float _rotationSpeed = 150f;
+    [SerializeField] private float _normalSpeed;
+    [SerializeField] private float _halfSpeed;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
     private const float PlayerHeight = 2f;
 
@@ -27,18 +24,17 @@ public class PlayerController : MonoBehaviour
     private float _currentMoveInput;
     public float CurrentMoveInput => _currentMoveInput;
     private float _currentRotationInput;
+    private float _smoothedRotationInput;
+    private float _currentRotationVelocity;
     private float _currentRotationSpeed;
-
-    private const float RotationAcceleration = 8f;
-    private const float RotationDeceleration = 10f;
-    private const float RotationDeadZone = 0.05f;
+    
     private const float MoveResponsiveness = 10f;
     private const float StopResponsiveness = 15f;
+    private const float GroundDrag = 1.5f;
 
     private bool _isCrouching;
     public bool IsCrouching => _isCrouching;
     private bool _isGrounded;
-    private bool _forcedInitialVelocityApplied;
 
     private IInteractable _currentInteractable;
     
@@ -48,6 +44,13 @@ public class PlayerController : MonoBehaviour
         _currentRotationSpeed = _rotationSpeed;
         _crouchCollider.enabled = false;
         _laser.enabled = false;
+        
+        _rb.WakeUp();
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        _rb.linearDamping = GroundDrag;
+        
+        Physics.SyncTransforms();
     }
 
     private void FixedUpdate()
@@ -59,25 +62,14 @@ public class PlayerController : MonoBehaviour
         ApplyMovement();
     }
 
-    public void OnMove(InputAction.CallbackContext context) => _currentMoveInput = context.ReadValue<float>();
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _currentMoveInput = context.ReadValue<float>();
+    } 
 
     public void OnRotate(InputAction.CallbackContext context)
     {
-        var input = context.ReadValue<float>();
-        if (Mathf.Abs(input) > 0.01f)
-        {
-            _currentRotationInput =
-                Mathf.MoveTowards(_currentRotationInput, input, Time.deltaTime * RotationAcceleration);
-        }
-        else
-        {
-            _currentRotationInput = Mathf.MoveTowards(_currentRotationInput, 0f, Time.deltaTime * RotationDeceleration);
-        }
-
-        if (Mathf.Abs(_currentRotationInput) < RotationDeadZone)
-        {
-            _currentRotationInput = 0f;
-        }
+        _currentRotationInput = context.ReadValue<float>();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
@@ -168,9 +160,12 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyRotation()
     {
-        if (Mathf.Approximately(_currentRotationInput, 0f)) return;
+        _smoothedRotationInput = Mathf.SmoothDamp(_smoothedRotationInput, _currentRotationInput,
+            ref _currentRotationVelocity, _rotationSmoothTime);
 
-        var rotationAmount = _currentRotationInput * _currentRotationSpeed * Time.deltaTime;
+        if (Mathf.Approximately(_smoothedRotationInput, 0f)) return;
+
+        var rotationAmount = _smoothedRotationInput * _currentRotationSpeed * Time.deltaTime;
         var deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
         _rb.MoveRotation(_rb.rotation * deltaRotation);
     }
@@ -181,16 +176,8 @@ public class PlayerController : MonoBehaviour
 
         if (_currentMoveInput != 0f)
         {
-            if (_rb.linearVelocity.magnitude < 0.01f && !_forcedInitialVelocityApplied)
-            {
-                _rb.linearVelocity = targetVelocity;
-                _forcedInitialVelocityApplied = true;
-            }
-            else
-            {
-                _rb.linearVelocity = Vector3.MoveTowards(_rb.linearVelocity, targetVelocity,
-                    Time.deltaTime * MoveResponsiveness);
-            }
+            _rb.linearVelocity =
+                Vector3.MoveTowards(_rb.linearVelocity, targetVelocity, Time.deltaTime * MoveResponsiveness);
         }
         else
         {
