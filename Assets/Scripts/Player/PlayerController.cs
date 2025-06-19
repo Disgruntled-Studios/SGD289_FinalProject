@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     
     private const float MoveResponsiveness = 10f;
     private const float StopResponsiveness = 15f;
-    private const float GroundDrag = 1.5f;
+    private const float GroundDrag = 2.5f;
 
     private bool _isCrouching;
     public bool IsCrouching => _isCrouching;
