@@ -1280,6 +1280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM05
+  _isCCTV: 0
 --- !u!114 &164219624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3800,6 +3801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM04
+  _isCCTV: 0
 --- !u!114 &428452282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5604,6 +5606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM07
+  _isCCTV: 0
 --- !u!114 &661721395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8199,6 +8202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM06
+  _isCCTV: 0
 --- !u!114 &1079813493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8553,6 +8557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM09
+  _isCCTV: 0
 --- !u!114 &1127266405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9790,6 +9795,55 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.301461, y: 4.25, z: 2}
   m_Center: {x: -0.15073049, y: 2.125, z: 0}
+--- !u!1 &1344976416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344976418}
+  - component: {fileID: 1344976417}
+  m_Layer: 0
+  m_Name: CCTVFilter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1344976417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344976416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 368e987fd4049474c873aabcce037dac, type: 2}
+--- !u!4 &1344976418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344976416}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.8069363, y: -12.817223, z: 33.26673}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1354120252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10079,6 +10133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _brain: {fileID: 1409810675}
+  _cctvVolume: {fileID: 1344976417}
 --- !u!114 &1409810677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10190,8 +10245,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409810674}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3820853, y: 2.5299988, z: 18.07}
+  m_LocalRotation: {x: -0.09788306, y: 0.873663, z: -0.1991947, w: -0.4329589}
+  m_LocalPosition: {x: -2.7506874, y: 3.753389, z: 15.328894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11452,6 +11507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM03
+  _isCCTV: 0
 --- !u!114 &1615245545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11906,6 +11962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM08
+  _isCCTV: 0
 --- !u!114 &1717017369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12268,6 +12325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM02
+  _isCCTV: 0
 --- !u!114 &1759810736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12603,6 +12661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM01
+  _isCCTV: 1
 --- !u!114 &1817648761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14269,6 +14328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: CAM09
+  _isCCTV: 0
 --- !u!114 &1985686808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18675,6 +18735,7 @@ SceneRoots:
   - {fileID: 4300574406307424762}
   - {fileID: 812464169290511480}
   - {fileID: 2073581799}
+  - {fileID: 1344976418}
   - {fileID: 1817648759}
   - {fileID: 1759810734}
   - {fileID: 1615245543}

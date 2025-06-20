@@ -8,9 +8,10 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
-    private readonly Dictionary<string, CinemachineCamera> _cameraRegistry = new();
+    private readonly Dictionary<string, CameraInfo> _cameraRegistry = new();
 
     [SerializeField] private CinemachineBrain _brain;
+    [SerializeField] private Volume _cctvVolume;
 
     private void Awake()
     {
@@ -29,9 +30,10 @@ public class CameraManager : MonoBehaviour
         TrySwitchToCamera("TPCAM");
     }
 
-    public void RegisterCamera(string id, CinemachineCamera cam)
+    public void RegisterCamera(string id, CinemachineCamera cam, bool isCctv, Volume cctvVolume = null)
     {
-        _cameraRegistry.TryAdd(id, cam);
+        var camInfo = new CameraInfo(cam, isCctv, cctvVolume);
+        _cameraRegistry.TryAdd(id, camInfo);
     }
 
     public void UnregisterCamera(string id)
@@ -44,14 +46,24 @@ public class CameraManager : MonoBehaviour
 
     public bool TrySwitchToCamera(string id)
     {
-        if (_cameraRegistry.TryGetValue(id, out var cam))
+        if (_cameraRegistry.TryGetValue(id, out var targetInfo))
         {
-            foreach (var vCam in _cameraRegistry.Values)
+            foreach (var camInfo in _cameraRegistry.Values)
             {
-                vCam.Priority = 0;
+                camInfo.VCam.Priority = 0;
+                if (camInfo.CCTVVolume)
+                {
+                    camInfo.CCTVVolume.enabled = false;
+                }
             }
 
-            cam.Priority = 10;
+            targetInfo.VCam.Priority = 10;
+            if (targetInfo.CCTVVolume)
+            {
+                targetInfo.CCTVVolume.enabled = true;
+            }
+
+            EnableCctvFilter(targetInfo.IsCCTV);
             return true;
         }
 
@@ -60,49 +72,21 @@ public class CameraManager : MonoBehaviour
 
     public bool TrySetCameraTarget(string cameraId, Transform target)
     {
-        if (_cameraRegistry.TryGetValue(cameraId, out var vCam))
+        if (_cameraRegistry.TryGetValue(cameraId, out var camInfo))
         {
-            vCam.Follow = target;
-            vCam.LookAt = target;
+            camInfo.VCam.Follow = target;
+            camInfo.VCam.LookAt = target;
             return true;
         }
-
+        
         return false;
     }
 
-    public bool HasCamera(string id)
+    private void EnableCctvFilter(bool enable)
     {
-        return _cameraRegistry.ContainsKey(id);
-    }
-
-    public void SetAllInactive()
-    {
-        foreach (var cam in _cameraRegistry.Values)
+        if (_cctvVolume)
         {
-            cam.Priority = 0;
-            cam.gameObject.SetActive(false);
-        }
-    }
-
-    public bool TryActivateCamera(string id)
-    {
-        if (_cameraRegistry.TryGetValue(id, out var cam))
-        {
-            SetAllInactive();
-            cam.gameObject.SetActive(true);
-            cam.Priority = 10;
-            return true;
-        }
-
-        return false;
-    }
-
-    public void SetCameraTargetForAll(Transform target)
-    {
-        foreach (var cam in _cameraRegistry.Values)
-        {
-            cam.Follow = target;
-            cam.LookAt = target;
+            _cctvVolume.enabled = enable;
         }
     }
 
