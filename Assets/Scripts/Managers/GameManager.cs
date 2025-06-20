@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
     
     [Header("Game Settings")]
     public bool IsGamePaused { get; private set; }
-
+    
     [Header("UI")] 
-    [SerializeField] private GameObject _pauseMenuUI;
+    [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject _settingsMenuUI;
 
     private void Awake()
@@ -47,13 +47,13 @@ public class GameManager : MonoBehaviour
 
         if (IsGamePaused)
         {
-            _pauseMenuUI.SetActive(false);
+            _inventoryUI.SetActive(false);
             _settingsMenuUI.SetActive(false);
             InputManager.Instance.SwitchToDefaultInput();
         }
         else
         {
-            _pauseMenuUI.SetActive(true);
+            _inventoryUI.SetActive(true);
             _settingsMenuUI.SetActive(false);
             InputManager.Instance.SwitchToUIInput();
         }

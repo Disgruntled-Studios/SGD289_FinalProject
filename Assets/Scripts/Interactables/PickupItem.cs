@@ -10,6 +10,9 @@ public class PickupItem : MonoBehaviour, IInteractable
     {
         var item = new InventoryItem(_itemName, _icon, _dropPrefab);
         inventory.AddItem(item);
+
+        GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
+        
         Destroy(transform.root.gameObject);
     }
 

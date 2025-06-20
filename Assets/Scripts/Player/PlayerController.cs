@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public bool IsSprinting => _isSprinting;
 
     private IInteractable _currentInteractable;
+    private IItemReceiver _currentItemReceiver;
+    public IItemReceiver CurrentItemReceiver => _currentItemReceiver;
     
     private void Awake()
     {
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviour
         
         Physics.SyncTransforms();
     }
+    
+    public float GetCurrentTurnInput() => _currentRotationInput;
 
     private void FixedUpdate()
     {
@@ -243,19 +247,73 @@ public class PlayerController : MonoBehaviour
         {
             _currentInteractable = interactable;
         }
+
+        if (other.TryGetComponent<IItemReceiver>(out var receiver))
+        {
+            _currentItemReceiver = receiver;
+        }
+        else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
+        {
+            _currentItemReceiver = receiver;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_currentInteractable == null) return;
-        
-        if ((other.TryGetComponent<IInteractable>(out var interactable) || other.transform.parent.TryGetComponent(out interactable)) && interactable == _currentInteractable)
+        if (_currentInteractable != null)
         {
-            _currentInteractable?.OnExit();
+            var isAMatch = false;
+
+            if (other.TryGetComponent<IInteractable>(out var interactable))
+            {
+                isAMatch = interactable == _currentInteractable;
+            }
+            else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out interactable))
+            {
+                isAMatch = interactable == _currentInteractable;
+            }
+
+            if (isAMatch)
+            {
+                _currentInteractable.OnExit();
+                ClearCurrentInteractable(_currentInteractable);
+            }
+        }
+
+        if (_currentItemReceiver != null)
+        {
+            var isAMatch = false;
+
+            if (other.TryGetComponent<IItemReceiver>(out var receiver))
+            {
+                isAMatch = receiver == _currentItemReceiver;
+            }
+            else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
+            {
+                isAMatch = receiver == _currentItemReceiver;
+            }
+
+            if (isAMatch)
+            {
+                ClearCurrentItemReceiver(_currentItemReceiver);
+            }
+        }
+    }
+
+    public void ClearCurrentInteractable(IInteractable interactable)
+    {
+        if (_currentInteractable == interactable)
+        {
             _currentInteractable = null;
         }
     }
 
-    public float GetCurrentTurnInput() => _currentRotationInput;
+    public void ClearCurrentItemReceiver(IItemReceiver receiver)
+    {
+        if (_currentItemReceiver == receiver)
+        {
+            _currentItemReceiver = null;
+        }
+    }
 }
 

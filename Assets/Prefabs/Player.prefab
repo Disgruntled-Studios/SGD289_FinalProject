@@ -915,7 +915,7 @@ Transform:
   m_GameObject: {fileID: 4988591631210404402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1154,7 +1154,6 @@ MonoBehaviour:
   _laser: {fileID: 1826581546318819583}
   _inventory: {fileID: 891657576446523209}
   _normalSpeed: 5
-  _halfSpeed: 2.5
   _rotationSpeed: 150
   _rotationSmoothTime: 0.12
   _groundLayer:
@@ -1584,7 +1583,7 @@ Animator:
   m_GameObject: {fileID: 6028521454305457700}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cde93e80cc880ec48a1ce9e4e5bf0bc3, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8da19771a448a954084392206d939cc0, type: 2}
+  m_Controller: {fileID: 9100000, guid: dd8b55a0e73b1874b81c9220ffaa3907, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1749,8 +1748,6 @@ MonoBehaviour:
   maxMagLimit: 12
   currentAmmoMagAmt: 0
   _lr: {fileID: 1826581546318819583}
-  isAiming: 0
-  isReloading: 0
 --- !u!114 &2429004968712001688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,8 +1791,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6327582249808093061}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.123338416, y: -0, z: -0, w: 0.99236465}
-  m_LocalPosition: {x: 0.5, y: 0.125, z: -1.229}
+  m_LocalRotation: {x: -0, y: -0.0439245, z: -0, w: 0.9990348}
+  m_LocalPosition: {x: 0.8800013, y: 0.2809999, z: -1.2499999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1857,6 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: TPCAM
+  _isCCTV: 0
 --- !u!1 &6346444687739910723
 GameObject:
   m_ObjectHideFlags: 0

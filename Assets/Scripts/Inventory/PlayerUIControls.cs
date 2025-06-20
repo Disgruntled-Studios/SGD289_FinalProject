@@ -33,18 +33,38 @@ public class PlayerUIControls : MonoBehaviour
         }
     }
 
+    // AKA USE ITEM
     public void OnInventorySubmit(InputAction.CallbackContext context)
     {
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         var selectedItem = _ui.GetSelectedItem(_inventory.Items);
-        if (selectedItem != null)
-        {
-            _inventory.UseItem(selectedItem);
-            _ui.RefreshUI(_inventory.Items);
-        }
-    }
+        if (selectedItem == null) return;
 
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null)
+        {
+            if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
+            {
+                Debug.Log($"Item: {selectedItem.itemName} used on receiver");
+            }
+            else
+            {
+                // Don't unpause? 
+                Debug.Log($"Receiver did not accept item {selectedItem.itemName}");
+            }
+        }
+        else
+        {
+            var dropPos = GameManager.Instance.Player.transform.position +
+                          GameManager.Instance.Player.transform.forward;
+            _inventory.DropItem(selectedItem, dropPos);
+            Debug.Log($"Dropped item {selectedItem.itemName}");
+        }
+
+        _ui.RefreshUI(_inventory.Items);
+        GameManager.Instance.TogglePauseGame();
+    }
+    
     // public void OnInventoryCancel(InputAction.CallbackContext context)
     // {
     //     if (!context.performed || !InputManager.Instance.IsInUI) return;

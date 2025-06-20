@@ -25,9 +25,16 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void UseItem(InventoryItem item)
+    public void DropItem(InventoryItem item, Vector3 dropPosition)
     {
-        Debug.Log($"Using {item.itemName}");
-        OnInventoryChanged?.Invoke();
+        if (item == null) return;
+
+        if (item.prefab != null)
+        {
+            Instantiate(item.prefab, dropPosition, Quaternion.identity);
+            Debug.Log($"Dropped item: {item.itemName}");
+        }
+
+        RemoveItem(item);
     }
 }

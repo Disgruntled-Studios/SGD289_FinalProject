@@ -13,12 +13,7 @@ public class InventorySlotController : MonoBehaviour
     {
         if (_itemNameText)
         {
-            Debug.Log($"Setting text to: {item.itemName}");
             _itemNameText.text = item.itemName;
-        }
-        else
-        {
-            Debug.Log("Not assigned");
         }
 
         if (_itemIconImage)
