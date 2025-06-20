@@ -341,12 +341,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
-  onMaterial: {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 2100000, guid: 85d2b4d0794d3dc46b37af665fe32084, type: 2}
+  _onMaterial: {fileID: 2100000, guid: a713a25f123ec204bb9ba8927a6db319, type: 2}
+  _connectors: []
 --- !u!1 &8003798628470297585
 GameObject:
   m_ObjectHideFlags: 0

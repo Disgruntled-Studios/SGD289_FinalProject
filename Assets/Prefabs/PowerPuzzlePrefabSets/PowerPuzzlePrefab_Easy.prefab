@@ -293,10 +293,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593bef32add22d742bdca06abe71b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTestingHub: 0
-  isTestingTank: 0
-  isTestingPlatform: 0
-  isTestingFPS: 0
+  _rb: {fileID: 0}
+  _animationController: {fileID: 0}
+  _gunController: {fileID: 0}
+  _standingCollider: {fileID: 0}
+  _crouchCollider: {fileID: 0}
+  _laser: {fileID: 0}
+  _inventory: {fileID: 0}
+  _normalSpeed: 0
+  _rotationSpeed: 0
+  _rotationSmoothTime: 0
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2038276363502146185
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraId: PowerPuzzleCam
+  _isCCTV: 0
 --- !u!1 &4879713358143208273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,7 +1304,7 @@ GameObject:
   - component: {fileID: 300129808771376799}
   m_Layer: 0
   m_Name: TilePuzzleManager
-  m_TagString: Untagged
+  m_TagString: PuzzleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1341,53 +1351,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a248edfc894d1a47b68614ddeea3d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerNode: {fileID: 0}
-  recieverNode: {fileID: 0}
-  tiles: []
-  onPuzzleCompletion:
+  _powerNode: {fileID: 0}
+  _receiverNode: {fileID: 0}
+  _tiles: []
+  _tileSelection: {fileID: 0}
+  _sceneCamera: {fileID: 0}
+  _puzzleCamera: {fileID: 0}
+  _onPuzzleComplete:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PlayAni
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: set_layer
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
-          m_FloatArgument: 0
-          m_StringArgument: UI
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Unity.AI.Navigation.NavMeshSurface, Unity.AI.Navigation
-        m_MethodName: BuildNavMesh
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  tileSelection: {fileID: 3096114842232028711}
-  outOfPuzzleWorld: 1
-  outOfPuzzleCamID: 
-  sceneCam: {fileID: 0}
-  isPuzzledone: 0
+      m_Calls: []
 --- !u!65 &300129808771376799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1862,13 +1834,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &421727698552095865
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1985,13 +1956,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &1455072640934747868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2547,13 +2517,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &5918840202183066902
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2854,13 +2823,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &3733950375338632058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3130,13 +3098,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &1853624821980344545
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3248,13 +3215,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &6580093858340544201
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3682,13 +3648,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207243a2d9316534baa34d34a2ee2901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 0
-  isPowerNode: 0
-  isConnected: 0
-  isRecieverNode: 0
-  offMaterial: {fileID: 0}
-  onMaterial: {fileID: 0}
-  connectors: []
+  _isPowerNode: 0
+  _isConnected: 0
+  _isReceiverNode: 0
+  _offMaterial: {fileID: 0}
+  _onMaterial: {fileID: 0}
+  _connectors: []
 --- !u!54 &3702414506080685637
 Rigidbody:
   m_ObjectHideFlags: 0
