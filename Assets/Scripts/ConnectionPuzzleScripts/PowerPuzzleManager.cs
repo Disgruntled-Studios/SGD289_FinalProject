@@ -1,153 +1,144 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
+    [SerializeField] private PowerPuzzleTile _powerNode;
+    [SerializeField] private PowerPuzzleTile _receiverNode;
+    [SerializeField] private List<PowerPuzzleTile> _tiles;
+    [SerializeField] private TileSelection _tileSelection;
+    [SerializeField] private GameCamera _sceneCamera;
+    [SerializeField] private GameCamera _puzzleCamera;
+    [SerializeField] private UnityEvent _onPuzzleComplete;
+    
+    private bool _isPuzzleDone;
 
-    [HideInInspector]
-    public PowerPuzzleTile powerNode;
-    [HideInInspector]
-    public PowerPuzzleTile recieverNode;
-    public List<PowerPuzzleTile> tiles;
-    public UnityEvent onPuzzleCompletion;
-    public TileSelection tileSelection;
-    public GameCamera sceneCam;
-    public GameCamera puzzleCam;
-    public bool isPuzzledone;
-
-    void Awake()
+    private void Awake()
     {
-        for (int i = 0; i <= gameObject.transform.childCount - 1; i++)
+        for (var i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<PowerPuzzleTile>().isPowerNode)
+            var tile = transform.GetChild(i).GetComponent<PowerPuzzleTile>();
+            if (tile.IsPowerNode)
             {
-                powerNode = transform.GetChild(i).GetComponent<PowerPuzzleTile>();
+                _powerNode = tile;
             }
-            else if (transform.GetChild(i).GetComponent<PowerPuzzleTile>().isRecieverNode)
+            else if (tile.IsReceiverNode)
             {
-                recieverNode = transform.GetChild(i).GetComponent<PowerPuzzleTile>();
+                _receiverNode = tile;
             }
-            tiles.Add(transform.GetChild(i).GetComponent<PowerPuzzleTile>());
+
+            _tiles.Add(tile);
+
+            tile.OnTileStateChanged += HandleTileStateChanged;
         }
-        isPuzzledone = false;
-        //tileSelection = GetComponentInChildren<TileSelection>();
+
+        _isPuzzleDone = false;
     }
 
-    void Update()
+    private void HandleTileStateChanged()
     {
-        if (recieverNode.isPowered && recieverNode.isConnected && isPuzzledone == false)
+        if (_receiverNode.IsPowered && _receiverNode.IsConnected && !_isPuzzleDone)
         {
-            isPuzzledone = true;
-            //Debug.Log("Puzzle complete");
-            onPuzzleCompletion.Invoke();
-            CameraManager.Instance.TrySwitchToCamera(sceneCam.CameraID);
+            _isPuzzleDone = true;
+            _onPuzzleComplete.Invoke();
+            CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
             ExitPuzzle();
         }
 
-        if (!powerNode.isConnected) CheckTilesConnection();
+        if (!_powerNode.IsConnected)
+        {
+            CheckTilesConnection();
+        }
     }
 
     public void ExitPuzzle()
     {
-        //GameManager.Instance.SwitchPlayerMode(outOfPuzzleWorld);
-        CameraManager.Instance.TrySwitchToCamera(sceneCam.CameraID);
+        CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
         InputManager.Instance.SwitchToDefaultInput();
-        PuzzleUI_Manager.Instance.SetPuzzlePanel(false);
+        UIManager.Instance.SetPuzzlePanelActive(false);
     }
 
     public void CheckTilesConnection()
     {
-        foreach (PowerPuzzleTile tile in tiles)
+        foreach (var tile in _tiles)
         {
-            if (tile != powerNode && tile.isPowered)
+            if (tile != _powerNode && tile.IsPowered)
             {
-                //Debug.Log(tile + " is not a power node turning it off");
-                tile.isPowered = false;
+                tile.IsPowered = false;
             }
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<PuzzleController>())
-        {
-            other.gameObject.GetComponent<PuzzleController>().SetVars(this);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.GetComponent<PuzzleController>())
-        {
-            other.gameObject.GetComponent<PuzzleController>().WipeVars();
-        }
-    }
-
-    public void MoveSelection(int dir)
+    public void MoveSelection(int direction)
     {
         if (!InputManager.Instance.IsInPuzzle) return;
 
-        switch (dir)
+        var pos = _tileSelection.transform.localPosition;
+
+        switch (direction)
         {
-            case 1:
-                //If its North
-                if (tileSelection.transform.localPosition.y < tileSelection.yLimit)
+            case 1: // North
+                if (pos.y < _tileSelection.yLimit)
                 {
-                    tileSelection.transform.localPosition = new Vector3(tileSelection.transform.localPosition.x, tileSelection.transform.localPosition.y + 2, 0);
+                    pos.y += 2;
                 }
+
                 break;
-            case 2:
-                //South
-                if (tileSelection.transform.localPosition.y > -tileSelection.yLimit)
+            case 2: // South
+                if (pos.y > -_tileSelection.yLimit)
                 {
-                    tileSelection.transform.localPosition = new Vector3(tileSelection.transform.localPosition.x, tileSelection.transform.localPosition.y - 2, 0);
+                    pos.y -= 2;
                 }
+
                 break;
             case 3:
-                //West
-                if (tileSelection.transform.localPosition.x > -tileSelection.xLimit)
+                if (pos.x > -_tileSelection.xLimit)
                 {
-                    tileSelection.transform.localPosition = new Vector3(tileSelection.transform.localPosition.x - 2, tileSelection.transform.localPosition.y, 0);
+                    pos.x -= 2;
                 }
+
                 break;
             case 4:
-                //East
-                if (tileSelection.transform.localPosition.x < tileSelection.xLimit)
+                if (pos.x < _tileSelection.xLimit)
                 {
-                    tileSelection.transform.localPosition = new Vector3(tileSelection.transform.localPosition.x + 2, tileSelection.transform.localPosition.y, 0);
+                    pos.x += 2;
                 }
+
                 break;
         }
+
+        _tileSelection.transform.localPosition = new Vector3(pos.x, pos.y, 0);
     }
 
     public void RotateTile(bool rotateRight)
     {
         if (rotateRight)
         {
-            tileSelection.selectedOBJ.transform.Rotate(0, 0, 90f);
+            _tileSelection.selectedOBJ.transform.Rotate(0, 0, 90f);
         }
         else
         {
-            tileSelection.selectedOBJ.transform.Rotate(0, 0, -90f);
+            _tileSelection.selectedOBJ.transform.Rotate(0, 0, -90f);
         }
+        
         CheckTilesConnection();
     }
 
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        //Debug.Log("Interact function called");
-        if (!isPuzzledone)
+        if (!_isPuzzleDone)
         {
             InputManager.Instance.SwitchToPuzzleInput();
-            CameraManager.Instance.TrySwitchToCamera(puzzleCam.CameraID);
-            PuzzleUI_Manager.Instance.SetPuzzlePanel(true);
-
+            CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID);
+            UIManager.Instance.SetPuzzlePanelActive(true);
         }
         else
         {
-            Debug.LogWarning("Cannot Enter puzzle because it has already been solved");
+            // Puzzle has already been completed
         }
     }
 
@@ -160,5 +151,4 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     {
         return;
     }
-
 }

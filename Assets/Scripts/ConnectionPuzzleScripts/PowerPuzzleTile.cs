@@ -1,70 +1,73 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerPuzzleTile : MonoBehaviour
 {
-    public bool isPowered;
-    public bool isPowerNode;
-    public bool isConnected;
-    public bool isRecieverNode;
-    public Material offMaterial;
-    public Material onMaterial;
-    [HideInInspector]
-    public List<GameObject> connectors;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private bool _isPowered;
+    public bool IsPowered
     {
-        for (int i = 0; i <= gameObject.transform.childCount - 1; i++)
+        get => _isPowered;
+        set
         {
-            connectors.Add(transform.GetChild(i).transform.gameObject);
-        }
-    }
-
-    void LateUpdate()
-    {
-        if (!isPowered)
-        {
-            ToggleConnectionMaterial(false);
-        }
-        else
-        {
-            ToggleConnectionMaterial(true);
-        }
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (isPowered && isConnected) return;
-        
-        if (other.gameObject.GetComponentInParent<PowerPuzzleTile>())
-        {
-            isConnected = true;
-            PowerPuzzleTile tileRef = other.gameObject.GetComponentInParent<PowerPuzzleTile>();
-
-            if (tileRef.isPowered || tileRef.isPowerNode)
+            if (_isPowered != value)
             {
-                isPowered = true;
-            }
-
-        }
-    }
-
-    public void ToggleConnectionMaterial(bool _isPowered)
-    {
-        if (_isPowered)
-        {
-            foreach (GameObject gameObject in connectors)
-            {
-                gameObject.GetComponent<MeshRenderer>().material = onMaterial;
+                _isPowered = value;
+                ToggleConnectionMaterial(_isPowered);
+                OnTileStateChanged?.Invoke();
             }
         }
-        else
+    }
+
+    [Header("Settings")]
+    [SerializeField] private bool _isPowerNode;
+    public bool IsPowerNode => _isPowerNode;
+    [SerializeField] private bool _isConnected;
+    public bool IsConnected => _isConnected;
+    [SerializeField] private bool _isReceiverNode;
+    public bool IsReceiverNode => _isReceiverNode;
+
+    [Header("Materials")]
+    [SerializeField] private Material _offMaterial;
+    [SerializeField] private Material _onMaterial;
+
+    [HideInInspector] 
+    [SerializeField] private List<GameObject> _connectors = new();
+
+    public event Action OnTileStateChanged;
+
+    private void Start()
+    {
+        for (var i = 0; i < transform.childCount; i++)
         {
-            foreach (GameObject gameObject in connectors)
+            _connectors.Add(transform.GetChild(i).gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (_isPowered && _isConnected) return;
+
+        var tileRef = other.GetComponentInParent<PowerPuzzleTile>();
+        if (tileRef)
+        {
+            _isConnected = true;
+            if (tileRef.IsPowered || tileRef.IsPowerNode)
             {
-                gameObject.GetComponent<MeshRenderer>().material = offMaterial;
+                IsPowered = true;
+            }
+        }
+    }
+
+    public void ToggleConnectionMaterial(bool powered)
+    {
+        foreach (var connector in _connectors)
+        {
+            var rend = connector.GetComponent<MeshRenderer>();
+            if (rend)
+            {
+                rend.material = powered ? _onMaterial : _offMaterial;
             }
         }
     }

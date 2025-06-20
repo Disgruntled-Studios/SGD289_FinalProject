@@ -2,11 +2,18 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerUIControls : MonoBehaviour
+public class UIControls : MonoBehaviour
 {
-    [SerializeField] private InventoryUI _ui;
     [SerializeField] private PlayerInventory _inventory;
 
+    private UIManager _ui;
+
+    private void Start()
+    {
+        _ui = UIManager.Instance;
+    }
+    
+    
     private void OnEnable()
     {
         _inventory.OnInventoryChanged += RefreshInventoryUI;
@@ -25,11 +32,11 @@ public class PlayerUIControls : MonoBehaviour
 
         if (input.y > 0.1f)
         {
-            _ui.Navigate(-1);
+            _ui.NavigateInventory(-1);
         }
         else if (input.y < -0.1f)
         {
-            _ui.Navigate(1);
+            _ui.NavigateInventory(1);
         }
     }
 
@@ -38,7 +45,7 @@ public class PlayerUIControls : MonoBehaviour
     {
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
-        var selectedItem = _ui.GetSelectedItem(_inventory.Items);
+        var selectedItem = _ui.GetSelectedInventoryItem(_inventory.Items);
         if (selectedItem == null) return;
 
         if (GameManager.Instance.PlayerController.CurrentItemReceiver != null)
@@ -61,7 +68,7 @@ public class PlayerUIControls : MonoBehaviour
             Debug.Log($"Dropped item {selectedItem.itemName}");
         }
 
-        _ui.RefreshUI(_inventory.Items);
+        _ui.RefreshInventoryUI(_inventory.Items);
         GameManager.Instance.TogglePauseGame();
     }
     
@@ -75,13 +82,13 @@ public class PlayerUIControls : MonoBehaviour
 
     public void OpenInventoryUI()
     {
-        _ui.RefreshUI(_inventory.Items);
+        _ui.RefreshInventoryUI(_inventory.Items);
         _ui.gameObject.SetActive(true);
         InputManager.Instance.SwitchToUIInput();
     }
 
     private void RefreshInventoryUI()
     {
-        _ui.RefreshUI(_inventory.Items);
+        _ui.RefreshInventoryUI(_inventory.Items);
     }
 }
