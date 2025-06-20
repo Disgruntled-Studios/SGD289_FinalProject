@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
     private const float PlayerHeight = 2f;
-    private const float SprintMultiplier = 1.5f;
+    private const float SprintMultiplier = 2.5f;
     private const float CrouchMultiplier = 0.5f;
     private const float AimSpeedMultiplier = 0.75f;
     private const float AimRotationMultiplier = 0.25f;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private const float AccelerationRate = 10f;
     private const float DecelerationRate = 15f;
-    private const float GroundDrag = 2.5f;
+    private const float GroundDrag = 2f;
 
     private bool _isCrouching;
     public bool IsCrouching => _isCrouching;
