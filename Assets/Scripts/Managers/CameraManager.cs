@@ -10,6 +10,8 @@ public class CameraManager : MonoBehaviour
 
     private readonly Dictionary<string, CinemachineCamera> _cameraRegistry = new();
 
+    [SerializeField] private CinemachineBrain _brain;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,6 +22,11 @@ public class CameraManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        TrySwitchToCamera("TPCAM");
     }
 
     public void RegisterCamera(string id, CinemachineCamera cam)
@@ -56,6 +63,7 @@ public class CameraManager : MonoBehaviour
         if (_cameraRegistry.TryGetValue(cameraId, out var vCam))
         {
             vCam.Follow = target;
+            vCam.LookAt = target;
             return true;
         }
 
@@ -65,5 +73,51 @@ public class CameraManager : MonoBehaviour
     public bool HasCamera(string id)
     {
         return _cameraRegistry.ContainsKey(id);
+    }
+
+    public void SetAllInactive()
+    {
+        foreach (var cam in _cameraRegistry.Values)
+        {
+            cam.Priority = 0;
+            cam.gameObject.SetActive(false);
+        }
+    }
+
+    public bool TryActivateCamera(string id)
+    {
+        if (_cameraRegistry.TryGetValue(id, out var cam))
+        {
+            SetAllInactive();
+            cam.gameObject.SetActive(true);
+            cam.Priority = 10;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void SetCameraTargetForAll(Transform target)
+    {
+        foreach (var cam in _cameraRegistry.Values)
+        {
+            cam.Follow = target;
+            cam.LookAt = target;
+        }
+    }
+
+    public void SetBlend(string style, float duration)
+    {
+        if (_brain)
+        {
+            _brain.DefaultBlend.Style = style switch
+            {
+                "EaseInOut" => CinemachineBlendDefinition.Styles.EaseInOut,
+                "Cut" => CinemachineBlendDefinition.Styles.Cut,
+                _ => CinemachineBlendDefinition.Styles.EaseInOut
+            };
+
+            _brain.DefaultBlend.Time = duration;
+        }
     }
 }
