@@ -9,11 +9,12 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
     [SerializeField] private PowerPuzzleTile _powerNode;
     [SerializeField] private PowerPuzzleTile _receiverNode;
-    [SerializeField] private List<PowerPuzzleTile> _tiles;
     [SerializeField] private TileSelection _tileSelection;
     [SerializeField] private GameCamera _sceneCamera;
     [SerializeField] private GameCamera _puzzleCamera;
     [SerializeField] private UnityEvent _onPuzzleComplete;
+
+    private readonly List<PowerPuzzleTile> _tiles = new();
     
     private bool _isPuzzleDone;
 
@@ -62,7 +63,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         UIManager.Instance.SetPuzzlePanelActive(false);
     }
 
-    public void CheckTilesConnection()
+    private void CheckTilesConnection()
     {
         foreach (var tile in _tiles)
         {
