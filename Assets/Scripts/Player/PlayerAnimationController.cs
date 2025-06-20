@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +8,17 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private Animator _anim;
 
     private const float MovementThreshold = 0.1f;
-    
+
+    private void OnEnable()
+    {
+        _anim.speed = 1f;
+    }
+
+    private void OnDisable()
+    {
+        _anim.speed = 0f;
+    }
+
     private void Update()
     {
         if (!_playerController) return;

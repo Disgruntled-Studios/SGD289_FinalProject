@@ -31,6 +31,7 @@ public class GunController : MonoBehaviour
             _lr.enabled = false;
             _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
+        
         StartCoroutine(ReloadGun());
     }
 
