@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &750654229710404780
+--- !u!1 &8706229589806803777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3989006487597779264}
-  - component: {fileID: 6280417772517293541}
-  - component: {fileID: 730045155530934462}
-  - component: {fileID: 7378195423926868697}
-  - component: {fileID: 654700918077104608}
+  - component: {fileID: 8184206849542834838}
+  - component: {fileID: 9080139304040851956}
+  - component: {fileID: 8108813841251445444}
+  - component: {fileID: 747793745095876483}
+  - component: {fileID: 5751539342602098619}
   m_Layer: 0
-  m_Name: HubWorldTransition
-  m_TagString: HubWorldTrigger
+  m_Name: L2Transitioner
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3989006487597779264
+--- !u!4 &8184206849542834838
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750654229710404780}
+  m_GameObject: {fileID: 8706229589806803777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0.076, z: -6.12}
-  m_LocalScale: {x: 5, y: 0.5, z: 5}
+  m_LocalPosition: {x: 6.595769, y: 0.141, z: 41.69}
+  m_LocalScale: {x: 2, y: 0.25, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6280417772517293541
+--- !u!33 &9080139304040851956
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750654229710404780}
+  m_GameObject: {fileID: 8706229589806803777}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &730045155530934462
+--- !u!23 &8108813841251445444
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750654229710404780}
+  m_GameObject: {fileID: 8706229589806803777}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f04a299c32a25eb439c29825fbb33bda, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,13 +88,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7378195423926868697
+--- !u!65 &747793745095876483
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750654229710404780}
+  m_GameObject: {fileID: 8706229589806803777}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -109,18 +109,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &654700918077104608
+--- !u!114 &5751539342602098619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750654229710404780}
+  m_GameObject: {fileID: 8706229589806803777}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8961fa51b604f0b448ee014930566650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _world: 0
-  _sceneSwitchName: BJ_Hub
-  _cameraSwitchId: HUBMAIN
+  _sceneSwitchName: L2MaintenanceTunnel
+  _cameraSwitchId: CAM21
