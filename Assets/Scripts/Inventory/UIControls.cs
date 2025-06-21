@@ -62,10 +62,7 @@ public class UIControls : MonoBehaviour
         }
         else
         {
-            var dropPos = GameManager.Instance.Player.transform.position +
-                          GameManager.Instance.Player.transform.forward;
-            _inventory.DropItem(selectedItem, dropPos);
-            Debug.Log($"Dropped item {selectedItem.itemName}");
+            _inventory.DropItem(selectedItem);
         }
 
         _ui.RefreshInventoryUI(_inventory.Items);

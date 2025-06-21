@@ -1049,6 +1049,37 @@ Transform:
   - {fileID: 6498301338459625006}
   m_Father: {fileID: 4545146554309328410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5981381563232048218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2172236877804500293}
+  m_Layer: 3
+  m_Name: DropPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2172236877804500293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5981381563232048218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6830290257046777792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6028521454305457700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1123,7 @@ Transform:
   m_Children:
   - {fileID: 5010209932232067655}
   - {fileID: 4058629250695770161}
+  - {fileID: 2172236877804500293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5021884028453812902
@@ -1665,6 +1697,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9084da1557bc2734689846a42286626a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dropPosition: {fileID: 2172236877804500293}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &4500418541447036845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1677,7 +1713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c062d64187fdc314eaf6a78a53e01689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleManager: {fileID: 0}
 --- !u!114 &6691330314164070428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,7 +1725,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d457c6745c66248b2b416ab549d4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 0}
   _inventory: {fileID: 891657576446523209}
 --- !u!1 &6255612458664486106
 GameObject:
