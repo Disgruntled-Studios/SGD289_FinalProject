@@ -23,12 +23,12 @@ public class TransitionManager : MonoBehaviour
         _currentSceneName = activeScene.name;
     }
 
-    public void TransitionToScene(string sceneName, string cameraId, World nextMode)
+    public void TransitionToScene(string sceneName, string cameraId)
     {
-        StartCoroutine(TransitionRoutine(sceneName, cameraId, nextMode));
+        StartCoroutine(TransitionRoutine(sceneName, cameraId));
     }
 
-    private IEnumerator TransitionRoutine(string sceneName, string cameraId, World nextMode)
+    private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
         // Load new scene additively if not already loaded
         if (!SceneManager.GetSceneByName(sceneName).isLoaded)

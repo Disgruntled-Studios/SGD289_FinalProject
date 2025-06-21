@@ -76,7 +76,6 @@ public class PlatformManager : MonoBehaviour
 
 
     [Header("HubTransition")]
-    [SerializeField] private World _world;
     [SerializeField] private string _sceneSwitchName;
     [SerializeField] private string _cameraSwitchId;
 
@@ -288,7 +287,7 @@ public class PlatformManager : MonoBehaviour
             player.transform.localScale = scale;
         }
         
-        TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId, World.Hub);
+        TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId);
     }
 
     public void ResetGame()
