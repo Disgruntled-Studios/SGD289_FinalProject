@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class ItemReceiver : MonoBehaviour, IItemReceiver
@@ -6,17 +7,28 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private string _requiredItemName;
     [SerializeField] private bool _consumeItem = true;
 
-    [Header("Action")] 
-    [SerializeField] private GameObject _targetObject;
-    [SerializeField] private string _action;
-
+    [SerializeField] private UnityEvent _onItemReceivedExternal; // External events
     [SerializeField] private ParticleSystem _particles;
+    
+    [Header("Materials")] 
+    [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private Material _defaultMaterial;
+    [SerializeField] private Material _glitchedMaterial;
 
     private PlayerInventory _playerInventory;
 
+    private void Awake()
+    {
+        if (!_meshRenderer)
+        {
+            _meshRenderer = GetComponentInParent<MeshRenderer>(); // Assuming script is attached to trigger box 
+        }
+    }
+    
     private void Start()
     {
         _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
+        _meshRenderer.material = _glitchedMaterial;
     }
 
     private void Update()
@@ -64,21 +76,14 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
             inventory.RemoveItem(item);
         }
 
-        TriggerEffect();
+        _onItemReceivedExternal?.Invoke();
+        OnItemReceivedInternal();
         return true;
     }
 
-    private void TriggerEffect()
+    // Internal events
+    private void OnItemReceivedInternal()
     {
-        switch (_action)
-        {
-            case "UnlockDoor":
-                if (_targetObject)
-                {
-                    _targetObject.SetActive(false);
-                }
-
-                break;
-        }
+        _meshRenderer.material = _defaultMaterial;
     }
 }
