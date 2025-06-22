@@ -1,8 +1,5 @@
 using System.Collections;
-using NUnit.Framework.Internal;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class GunController : MonoBehaviour
 {

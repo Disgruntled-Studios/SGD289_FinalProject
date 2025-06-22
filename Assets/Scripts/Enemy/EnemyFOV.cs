@@ -42,12 +42,9 @@ public class EnemyFOV : MonoBehaviour
             {
                 visibleTargetLastPos = visibleTarget.position;
             }
-            else
-            {
-                return;
-            }
             visibleTarget = null;
             isPlayerInSight = false;
+            Debug.Log("Setting isPlayerInSight to " + isPlayerInSight + ", and visible Target to null");
         }
 
         //Create a list of objects that are within the viewRadius of the enemy. 
