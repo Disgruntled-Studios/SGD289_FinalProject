@@ -7,4 +7,10 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("BJ_Hub");
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    
 }

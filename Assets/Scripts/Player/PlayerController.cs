@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SphereCollider _crouchCollider;
     [SerializeField] private LineRenderer _laser;
     [SerializeField] private PlayerInventory _inventory;
+    private PlayerHealth _health;
 
     [Header("Movement Settings")] 
     [SerializeField] private float _normalSpeed;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     
     private void Awake()
     {
+        _health = GetComponent<PlayerHealth>();
         _currentSpeed = _normalSpeed;
         _currentRotationSpeed = _rotationSpeed;
         _crouchCollider.enabled = false;
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle) return;
+        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead) return;
 
         CheckGrounded();
         ApplyRotation();

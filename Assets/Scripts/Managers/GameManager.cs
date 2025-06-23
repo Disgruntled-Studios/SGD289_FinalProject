@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,8 +18,9 @@ public class GameManager : MonoBehaviour
     public bool IsGamePaused { get; private set; }
     
     [Header("UI")] 
-    [SerializeField] private GameObject _inventoryUI;
-    [SerializeField] private GameObject _settingsMenuUI;
+    [SerializeField] private GameObject _mainGameUI;
+    [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private GameObject firstSelection;
 
     private void Awake()
     {
@@ -47,14 +50,17 @@ public class GameManager : MonoBehaviour
 
         if (IsGamePaused)
         {
-            _inventoryUI.SetActive(false);
-            _settingsMenuUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            _mainGameUI.SetActive(false);
             InputManager.Instance.SwitchToDefaultInput();
         }
         else
         {
-            _inventoryUI.SetActive(true);
-            _settingsMenuUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            _mainGameUI.SetActive(true);
+            eventSystem.firstSelectedGameObject = firstSelection;
             InputManager.Instance.SwitchToUIInput();
         }
 

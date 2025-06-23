@@ -38,7 +38,7 @@ public class EnemyFOV : MonoBehaviour
 
         if (visibleTarget != null)
         {
-            if (Vector3.Distance(transform.position, visibleTarget.position) > viewRadius)
+            if (Vector3.Distance(transform.position, visibleTarget.position) > viewRadius || isPlayerInSight == false)
             {
                 visibleTargetLastPos = visibleTarget.position;
             }
@@ -46,6 +46,8 @@ public class EnemyFOV : MonoBehaviour
             isPlayerInSight = false;
             Debug.Log("Setting isPlayerInSight to " + isPlayerInSight + ", and visible Target to null");
         }
+
+        RaycastHit hit;
 
         //Create a list of objects that are within the viewRadius of the enemy. 
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
@@ -59,12 +61,16 @@ public class EnemyFOV : MonoBehaviour
                 float distToTarget = Vector3.Distance(transform.position, target.position);
 
                 //Final check to see if there is any obstacle obstructing the enemy's line of sight.
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask) && target.gameObject == GameManager.Instance.Player)
+                if (!Physics.Raycast(transform.position, dirToTarget, out hit, distToTarget, obstacleMask) && target.gameObject == GameManager.Instance.Player)
                 {
                     //Whatever needs to happen when the target is in line of sight gets triggered here.
                     visibleTarget = target;
                     isPlayerInSight = true;
                     Debug.Log("Player is found");
+                }
+                else
+                {
+                    Debug.Log(hit.transform.gameObject.name + " hit by FOV raycast");
                 }
             }
         }

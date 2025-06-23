@@ -35,7 +35,7 @@ public class UnitHealth
             {
                 _currentHealth = _maxHealth;
             }
-            else if (value <= 0)
+            else if (_currentHealth - value <= 0)
             {
                 _currentHealth = 0;
             }
