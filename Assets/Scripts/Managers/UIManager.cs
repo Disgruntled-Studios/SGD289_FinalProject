@@ -183,8 +183,16 @@ public class UIManager : MonoBehaviour
     {
         _popUpBox.SetActive(true);
         _popUpText.text = message;
+
+        // var typingSpeed = 0.025f;
+        //
+        // foreach (var c in message)
+        // {
+        //     _popUpText.text += c;
+        //     yield return new WaitForSeconds(typingSpeed);
+        // }
         
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         _popUpBox.SetActive(false);
     }

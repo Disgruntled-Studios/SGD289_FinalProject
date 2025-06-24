@@ -13,7 +13,6 @@ public class UIControls : MonoBehaviour
         _ui = UIManager.Instance;
     }
     
-    
     private void OnEnable()
     {
         _inventory.OnInventoryChanged += RefreshInventoryUI;
@@ -30,11 +29,11 @@ public class UIControls : MonoBehaviour
 
         var input = context.ReadValue<Vector2>();
 
-        if (input.y > 0.1f)
+        if (input.x > 0.1f)
         {
             _ui.NavigateInventory(-1);
         }
-        else if (input.y < -0.1f)
+        else if (input.x < -0.1f)
         {
             _ui.NavigateInventory(1);
         }
