@@ -16,6 +16,12 @@ public class PlayerInventory : MonoBehaviour
     public void AddItem(InventoryItem item)
     {
         _items.Add(item);
+        
+        if (UIManager.Instance)
+        {
+            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}");
+        }
+        
         OnInventoryChanged?.Invoke();
     }
 
@@ -52,7 +58,11 @@ public class PlayerInventory : MonoBehaviour
         if (item.prefab != null)
         {
             Instantiate(item.prefab, dropPos, Quaternion.identity);
-            Debug.Log($"Dropped item: {item.itemName}");
+        }
+        
+        if (UIManager.Instance)
+        {
+            UIManager.Instance.StartPopUpText($"You dropped: {item.itemName}");
         }
 
         RemoveItem(item);

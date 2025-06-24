@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     [Header("HUD Elements")]
-    [SerializeField] public TMP_Text _healthText;
+    [SerializeField] private TMP_Text _healthText;
     [SerializeField] private TMP_Text _cameraText;
     [SerializeField] private TMP_Text _ammoCountText;
 
@@ -48,6 +48,11 @@ public class UIManager : MonoBehaviour
         {
             _healthText.text = $"Player Health: {health}";
         }
+    }
+
+    public void ToggleHealthText(bool isActive)
+    {
+        _healthText.gameObject.SetActive(isActive);
     }
 
     public void UpdateCameraText(string camName)
@@ -167,7 +172,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Dialog
+    #region Pop Ups
 
     public void StartPopUpText(string message)
     {

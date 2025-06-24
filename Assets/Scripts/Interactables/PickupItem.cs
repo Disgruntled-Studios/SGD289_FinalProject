@@ -12,11 +12,6 @@ public class PickupItem : MonoBehaviour, IInteractable
         var item = new InventoryItem(_itemName, _icon, _dropPrefab);
         inventory.AddItem(item);
 
-        if (UIManager.Instance)
-        {
-            UIManager.Instance.StartPopUpText($"You picked up: {_itemName}");
-        }
-
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
         
         Destroy(transform.root.gameObject);

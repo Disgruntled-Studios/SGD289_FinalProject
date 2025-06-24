@@ -10,13 +10,10 @@ public class PlayerHealth : MonoBehaviour
     public float CurrentHealth => Health.CurrentHealth;
 
     public UnityEvent onDeath;
-    private Animator animator;
 
     private void Awake()
     {
         Health = new UnitHealth(_maxHealth);
-        animator = GetComponent<Animator>();
-        
     }
 
     void Start()
@@ -27,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health.Damage(amount);
-        if (UIManager.Instance._healthText != null)
+        if (UIManager.Instance != null)
         {
             UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
         }
@@ -43,7 +40,6 @@ public class PlayerHealth : MonoBehaviour
         if (Health.IsDead)
         {
             onDeath.Invoke();
-            
         }
     }
 }
