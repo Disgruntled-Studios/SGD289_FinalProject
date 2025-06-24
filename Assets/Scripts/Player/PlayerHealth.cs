@@ -16,11 +16,21 @@ public class PlayerHealth : MonoBehaviour
     {
         Health = new UnitHealth(_maxHealth);
         animator = GetComponent<Animator>();
+        
+    }
+
+    void Start()
+    {
+        UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
     }
 
     public void TakeDamage(float amount)
     {
         Health.Damage(amount);
+        if (UIManager.Instance._healthText != null)
+        {
+            UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
+        }
     }
 
     public void Heal(float amount)

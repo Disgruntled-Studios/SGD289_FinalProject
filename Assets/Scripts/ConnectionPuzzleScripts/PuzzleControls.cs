@@ -16,6 +16,12 @@ public class PuzzleControls : MonoBehaviour
             {
                 _activePuzzleManager = other.GetComponentInChildren<PowerPuzzleManager>();
             }
+
+            if (!_activePuzzleManager.hasEnterPopUpTriggered && _activePuzzleManager.puzzleOnEnterDialogue != null)
+            {
+                DialogueManager.Instance.InitiateDialogue(_activePuzzleManager.puzzleOnEnterDialogue);
+                _activePuzzleManager.hasEnterPopUpTriggered = true;
+            }   
         }
     }
 

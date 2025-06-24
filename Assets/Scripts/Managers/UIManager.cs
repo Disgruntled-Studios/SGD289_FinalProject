@@ -6,8 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [Header("HUD Elements")] 
-    [SerializeField] private TMP_Text _healthText;
+    [Header("HUD Elements")]
+    [SerializeField] public TMP_Text _healthText;
     [SerializeField] private TMP_Text _cameraText;
     [SerializeField] private TMP_Text _ammoCountText;
 
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     {
         if (_healthText)
         {
-            _healthText.text = $"Health: {health}";
+            _healthText.text = $"Player Health: {health}";
         }
     }
 

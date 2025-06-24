@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -7,17 +8,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Player")] 
+    [Header("Player")]
     [SerializeField] private GameObject _player;
     public GameObject Player => _player;
     [SerializeField] private Transform _cameraTarget;
     public Transform CameraTarget => _cameraTarget;
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
-    
+
     [Header("Game Settings")]
     public bool IsGamePaused { get; private set; }
-    
-    [Header("UI")] 
+
+    [Header("UI")]
     [SerializeField] private GameObject _mainGameUI;
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private GameObject firstSelection;
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             TransitionManager.Instance.TransitionToScene("L1PowerPlant", "CAM11");
         }
-        
+
         if (Input.GetKeyDown(KeyCode.F2))
         {
             TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel", "CAM21");
@@ -83,5 +84,29 @@ public class GameManager : MonoBehaviour
         }
 
         IsGamePaused = !IsGamePaused;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void StartGameOver()
+    {
+        Invoke("ResetScene", 4f);
+
+    }
+
+    public void ResetScene()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("MainMenu");
+        Destroy(TransitionManager.Instance.gameObject);
+        Destroy(_player);
+        Destroy(UIManager.Instance.gameObject);
+        Destroy(SoundManager.Instance.gameObject);
+        Destroy(CameraManager.Instance.gameObject);
+        Destroy(gameObject);
     }
 }

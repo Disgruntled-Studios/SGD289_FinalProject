@@ -13,6 +13,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [SerializeField] private GameCamera _sceneCamera;
     [SerializeField] private GameCamera _puzzleCamera;
     [SerializeField] private UnityEvent _onPuzzleComplete;
+    [SerializeField, TextArea] private string puzzleCompletionDialogue;
+    [TextArea] public string puzzleOnEnterDialogue;
+    public bool hasEnterPopUpTriggered;
 
     private readonly List<PowerPuzzleTile> _tiles = new();
     
@@ -38,15 +41,18 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
 
         _isPuzzleDone = false;
+        hasEnterPopUpTriggered = false;
     }
 
     private void HandleTileStateChanged()
     {
         if (_receiverNode.IsPowered && _receiverNode.IsConnected && !_isPuzzleDone)
         {
+            //When the puzzle is solved do these functions.
             _isPuzzleDone = true;
             _onPuzzleComplete.Invoke();
             CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
+            DialogueManager.Instance.InitiateDialogue(puzzleCompletionDialogue);
             ExitPuzzle();
         }
 
@@ -139,7 +145,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
         else
         {
-            // Puzzle has already been completed
+            DialogueManager.Instance.InitiateDialogue("I already fixed this circuit.");
         }
     }
 

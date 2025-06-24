@@ -30,4 +30,14 @@ public class DamageTrigger : MonoBehaviour
             Debug.Log(playerRef.CurrentHealth);
         }
     }
+
+    public void CallDeathFunc()
+    {
+        GetComponentInParent<EnemyBehavior>().HandleDeath();
+    }
+
+    public void CallEndStun()
+    {
+        GetComponentInParent<EnemyBehavior>().EndAttackStunPause();
+    }
 }
