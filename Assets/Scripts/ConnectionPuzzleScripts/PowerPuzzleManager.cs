@@ -52,7 +52,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             _isPuzzleDone = true;
             _onPuzzleComplete.Invoke();
             CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
-            DialogueManager.Instance.InitiateDialogue(puzzleCompletionDialogue);
+            UIManager.Instance.StartPopUpText(puzzleCompletionDialogue);
             ExitPuzzle();
         }
 
@@ -145,7 +145,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
         else
         {
-            DialogueManager.Instance.InitiateDialogue("I already fixed this circuit.");
+            UIManager.Instance.StartPopUpText("I already fixed this circuit.");
         }
     }
 

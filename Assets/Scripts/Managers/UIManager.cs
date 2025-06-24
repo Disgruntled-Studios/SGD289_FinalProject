@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,10 @@ public class UIManager : MonoBehaviour
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
 
+    [Header("Popup Window")] 
+    [SerializeField] private GameObject _popUpBox;
+    [SerializeField] private TMP_Text _popUpText;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -158,6 +163,25 @@ public class UIManager : MonoBehaviour
                 controller.SetHighlighted(i == index);
             }
         }
+    }
+
+    #endregion
+
+    #region Dialog
+
+    public void StartPopUpText(string message)
+    {
+        StartCoroutine(TypePopUpText(message));
+    }
+
+    private IEnumerator TypePopUpText(string message)
+    {
+        _popUpBox.SetActive(true);
+        _popUpText.text = message;
+        
+        yield return new WaitForSeconds(4f);
+
+        _popUpBox.SetActive(false);
     }
 
     #endregion

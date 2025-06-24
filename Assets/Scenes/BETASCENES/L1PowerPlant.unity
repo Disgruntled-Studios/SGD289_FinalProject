@@ -966,7 +966,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 1400, y: 300}
+  m_SizeDelta: {x: 1059.6719, y: 116.9883}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &112931364
 MonoBehaviour:
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8772,10 +8772,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2117469154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -757.44, y: 489.36}
-  m_SizeDelta: {x: 405.1119, y: 101.278}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 202.56, y: -58}
+  m_SizeDelta: {x: 405.11194, y: 101.278015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &914399155
 MonoBehaviour:
@@ -8797,7 +8797,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player Health : 100'
+  m_text: 'Health : 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8824,15 +8824,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.65
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -12102,7 +12102,7 @@ PrefabInstance:
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 2117469155}
+      objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: onPuzzleCompletion.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -12576,10 +12576,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 112931363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1400, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1271584819
 MonoBehaviour:
@@ -12628,10 +12628,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 180
-  m_fontSizeBase: 36
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 180
   m_fontStyle: 1
@@ -13526,7 +13526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _requiredItemName: Keycard
-  _popUpDialogue: What is this? I think it's a console but it seems Corrupted somehow?
+  _popUpMessage: What is this? I think it's a console but it seems Corrupted somehow?
     Looks like it requires a keycard.
   _consumeItem: 1
   _onItemReceivedExternal:
@@ -18987,8 +18987,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409810674}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.09788306, y: 0.873663, z: -0.1991947, w: -0.4329589}
-  m_LocalPosition: {x: -2.7506874, y: 3.753389, z: 15.328894}
+  m_LocalRotation: {x: 0.057678323, y: 0.50774586, z: -0.034973443, w: 0.8588622}
+  m_LocalPosition: {x: -3.0939064, y: 2.781537, z: 5.601281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25397,7 +25397,6 @@ GameObject:
   - component: {fileID: 2117469151}
   - component: {fileID: 2117469150}
   - component: {fileID: 2117469149}
-  - component: {fileID: 2117469155}
   m_Layer: 5
   m_Name: MainGameUI
   m_TagString: Untagged
@@ -25426,6 +25425,8 @@ MonoBehaviour:
   _puzzlePanel: {fileID: 612169803}
   _inventorySlotPrefab: {fileID: 786791924479806458, guid: 11900b48ec40a69478bfaafcb030bfec, type: 3}
   _inventorySlotParent: {fileID: 1480488383}
+  _popUpBox: {fileID: 112931362}
+  _popUpText: {fileID: 1271584819}
 --- !u!114 &2117469150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25527,20 +25528,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2117469155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117469148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08525ce98c31e974bbc679e5c960df60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueTxt: {fileID: 1271584819}
-  dialogueBox: {fileID: 112931362}
 --- !u!1 &2118173816
 GameObject:
   m_ObjectHideFlags: 0

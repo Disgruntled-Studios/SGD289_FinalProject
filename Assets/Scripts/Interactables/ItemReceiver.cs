@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 public class ItemReceiver : MonoBehaviour, IItemReceiver
 {
     [SerializeField] private string _requiredItemName;
-    [SerializeField, TextArea] private string _popUpDialogue;
+    [FormerlySerializedAs("_popUpDialogue")] [SerializeField, TextArea] private string _popUpMessage;
     [SerializeField] private bool _consumeItem = true;
 
     [SerializeField] private UnityEvent _onItemReceivedExternal; // External events
@@ -17,7 +17,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private Material _glitchedMaterial;
 
     private PlayerInventory _playerInventory;
-    private bool hasPopUpTriggered;
+    private bool _hasPopUpTriggered;
 
     private void Awake()
     {
@@ -31,7 +31,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     {
         _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
         _meshRenderer.material = _glitchedMaterial;
-        hasPopUpTriggered = false;
     }
 
     private void Update()
@@ -67,11 +66,9 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     void OnTriggerEnter(Collider other)
     {
-        if (!hasPopUpTriggered)
-        {
-            DialogueManager.Instance.InitiateDialogue(_popUpDialogue);
-            hasPopUpTriggered = true;
-        }
+        if (_hasPopUpTriggered) return;
+        UIManager.Instance.StartPopUpText(_popUpMessage);
+        _hasPopUpTriggered = true;
     }
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)

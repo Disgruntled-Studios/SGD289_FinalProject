@@ -19,7 +19,8 @@ public class PuzzleControls : MonoBehaviour
 
             if (!_activePuzzleManager.hasEnterPopUpTriggered && _activePuzzleManager.puzzleOnEnterDialogue != null)
             {
-                DialogueManager.Instance.InitiateDialogue(_activePuzzleManager.puzzleOnEnterDialogue);
+
+                UIManager.Instance.StartPopUpText(_activePuzzleManager.puzzleOnEnterDialogue);
                 _activePuzzleManager.hasEnterPopUpTriggered = true;
             }   
         }
