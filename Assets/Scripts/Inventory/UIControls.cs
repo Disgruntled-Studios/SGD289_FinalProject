@@ -87,4 +87,18 @@ public class UIControls : MonoBehaviour
     {
         _ui.RefreshInventoryUI(_inventory.Items);
     }
+
+    public void OnNextPanel(InputAction.CallbackContext context)
+    {
+        if (!context.performed || !InputManager.Instance.IsInUI) return;
+
+        _ui.NavigatePanel(1);
+    }
+    
+    public void OnPreviousPanel(InputAction.CallbackContext context)
+    {
+        if (!context.performed || !InputManager.Instance.IsInUI) return;
+
+        _ui.NavigatePanel(-1);
+    }
 }

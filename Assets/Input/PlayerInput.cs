@@ -624,6 +624,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NavigateNextPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""96614135-7346-46c2-82a5-5213bf40b11d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NavigatePreviousPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""f07a5112-a36f-4e2a-8470-9b70da10bf9a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1055,6 +1073,50 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8972034b-55c3-4ca2-b96b-cd023530ba72"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""NavigateNextPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c33e2dfc-4afb-4d2d-8df1-f0749799a127"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""NavigateNextPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66fd393c-4357-4783-8356-15be90579175"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""NavigatePreviousPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0873a74-a5ed-4af2-99ba-5d969d7add8d"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""NavigatePreviousPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1440,6 +1502,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_NavigateNextPanel = m_UI.FindAction("NavigateNextPanel", throwIfNotFound: true);
+        m_UI_NavigatePreviousPanel = m_UI.FindAction("NavigatePreviousPanel", throwIfNotFound: true);
         // PuzzleMap
         m_PuzzleMap = asset.FindActionMap("PuzzleMap", throwIfNotFound: true);
         m_PuzzleMap_RotateTileRight = m_PuzzleMap.FindAction("RotateTileRight", throwIfNotFound: true);
@@ -1769,6 +1833,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_ScrollWheel;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_NavigateNextPanel;
+    private readonly InputAction m_UI_NavigatePreviousPanel;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1820,6 +1886,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/TrackedDeviceOrientation".
         /// </summary>
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/NavigateNextPanel".
+        /// </summary>
+        public InputAction @NavigateNextPanel => m_Wrapper.m_UI_NavigateNextPanel;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/NavigatePreviousPanel".
+        /// </summary>
+        public InputAction @NavigatePreviousPanel => m_Wrapper.m_UI_NavigatePreviousPanel;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1876,6 +1950,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @NavigateNextPanel.started += instance.OnNavigateNextPanel;
+            @NavigateNextPanel.performed += instance.OnNavigateNextPanel;
+            @NavigateNextPanel.canceled += instance.OnNavigateNextPanel;
+            @NavigatePreviousPanel.started += instance.OnNavigatePreviousPanel;
+            @NavigatePreviousPanel.performed += instance.OnNavigatePreviousPanel;
+            @NavigatePreviousPanel.canceled += instance.OnNavigatePreviousPanel;
         }
 
         /// <summary>
@@ -1917,6 +1997,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @NavigateNextPanel.started -= instance.OnNavigateNextPanel;
+            @NavigateNextPanel.performed -= instance.OnNavigateNextPanel;
+            @NavigateNextPanel.canceled -= instance.OnNavigateNextPanel;
+            @NavigatePreviousPanel.started -= instance.OnNavigatePreviousPanel;
+            @NavigatePreviousPanel.performed -= instance.OnNavigatePreviousPanel;
+            @NavigatePreviousPanel.canceled -= instance.OnNavigatePreviousPanel;
         }
 
         /// <summary>
@@ -2353,6 +2439,20 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "NavigateNextPanel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNavigateNextPanel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "NavigatePreviousPanel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNavigatePreviousPanel(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PuzzleMap" which allows adding and removing callbacks.

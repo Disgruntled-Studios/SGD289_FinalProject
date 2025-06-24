@@ -27,6 +27,10 @@ public class UIManager : MonoBehaviour
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
+
+    [Header("Panels")] 
+    [SerializeField] private GameObject[] _mainPanels;
+    private int _currentPanelIndex;
     
     private void Awake()
     {
@@ -40,6 +44,17 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    #region General UI
+
+    public void NavigatePanel(int direction)
+    {
+        _mainPanels[_currentPanelIndex].SetActive(false);
+        _currentPanelIndex = (_currentPanelIndex + direction + _mainPanels.Length) % _mainPanels.Length;
+        _mainPanels[_currentPanelIndex].SetActive(true);
+    }
+
+    #endregion
+    
     #region HUD Methods
 
     public void UpdateHealthText(float health)
