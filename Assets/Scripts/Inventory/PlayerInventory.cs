@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
         
         if (UIManager.Instance)
         {
-            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}");
+            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}.");
         }
         
         OnInventoryChanged?.Invoke();
@@ -62,7 +62,7 @@ public class PlayerInventory : MonoBehaviour
         
         if (UIManager.Instance)
         {
-            UIManager.Instance.StartPopUpText($"You dropped: {item.itemName}");
+            UIManager.Instance.StartPopUpText($"You dropped: {item.itemName}.");
         }
 
         RemoveItem(item);

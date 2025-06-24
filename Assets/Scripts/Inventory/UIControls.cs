@@ -52,7 +52,7 @@ public class UIControls : MonoBehaviour
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
-                Debug.Log($"Item: {selectedItem.itemName} used on receiver");
+                UIManager.Instance.StartPopUpText($"{selectedItem.itemName} used on: {GameManager.Instance.PlayerController.CurrentItemReceiver.Name}.");
             }
             else
             {

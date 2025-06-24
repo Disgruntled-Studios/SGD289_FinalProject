@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 public class ItemReceiver : MonoBehaviour, IItemReceiver
 {
     [SerializeField] private string _requiredItemName;
-    [FormerlySerializedAs("_popUpDialogue")] [SerializeField, TextArea] private string _popUpMessage;
+    [SerializeField, TextArea] private string _popUpMessage;
     [SerializeField] private bool _consumeItem = true;
 
     [SerializeField] private UnityEvent _onItemReceivedExternal; // External events
@@ -19,11 +19,19 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     private PlayerInventory _playerInventory;
     private bool _hasPopUpTriggered;
 
+    [SerializeField] private string _name;
+    public string Name => _name;
+
     private void Awake()
     {
         if (!_meshRenderer)
         {
             _meshRenderer = GetComponentInParent<MeshRenderer>(); // Assuming script is attached to trigger box 
+        }
+
+        if (string.IsNullOrEmpty(_name))
+        {
+            _name = gameObject.name;
         }
     }
 
