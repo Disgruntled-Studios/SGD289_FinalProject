@@ -5,7 +5,7 @@ public class MainMenuController : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("BJ_Hub");
+        SceneManager.LoadScene("L1PowerPlant");
     }
 
     public void QuitGame()
