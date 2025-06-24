@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     [Header("Inventory UI Elements")] 
     [SerializeField] private GameObject _inventorySlotPrefab;
     [SerializeField] private Transform _inventorySlotParent;
+    [SerializeField] private GameObject _noteContents;
+    [SerializeField] private TMP_Text _noteContentsText;
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
 
@@ -31,6 +33,9 @@ public class UIManager : MonoBehaviour
     [Header("Panels")] 
     [SerializeField] private GameObject[] _mainPanels;
     private int _currentPanelIndex;
+
+    public bool IsOnInventoryPanel => _currentPanelIndex == 0;
+    public bool IsOnSettingsPanel => _currentPanelIndex == 1;
     
     private void Awake()
     {
@@ -51,6 +56,11 @@ public class UIManager : MonoBehaviour
         _mainPanels[_currentPanelIndex].SetActive(false);
         _currentPanelIndex = (_currentPanelIndex + direction + _mainPanels.Length) % _mainPanels.Length;
         _mainPanels[_currentPanelIndex].SetActive(true);
+
+        if (IsOnSettingsPanel && _noteContents.activeSelf)
+        {
+            ToggleNoteContents(false);
+        }
     }
 
     #endregion
@@ -183,6 +193,12 @@ public class UIManager : MonoBehaviour
                 controller.SetHighlighted(i == index);
             }
         }
+    }
+
+    public void ToggleNoteContents(bool isActive, string contents = "")
+    {
+        _noteContents.SetActive(isActive);
+        _noteContentsText.text = contents;
     }
 
     #endregion

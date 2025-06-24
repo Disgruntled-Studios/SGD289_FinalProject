@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -19,7 +20,7 @@ public class PlayerInventory : MonoBehaviour
         
         if (UIManager.Instance)
         {
-            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}.");
+            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}. {item.additionalText}");
         }
         
         OnInventoryChanged?.Invoke();
@@ -66,5 +67,20 @@ public class PlayerInventory : MonoBehaviour
         }
 
         RemoveItem(item);
+    }
+
+    public bool TryReadItem(InventoryItem item)
+    {
+        if (item == null) return false;
+
+        if (!item.isUsable && !string.IsNullOrWhiteSpace(item.noteContents))
+        {
+            if (!UIManager.Instance.IsOnInventoryPanel) return false;
+            
+            UIManager.Instance.ToggleNoteContents(true, item.noteContents);
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,15 +1,19 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PickupItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private string _itemName;
-    [SerializeField, TextArea] private string _additionalDialogue;
+    [SerializeField, TextArea] private string _additionalText;
+    public string AdditionalText => _additionalText;
+    [SerializeField, TextArea] private string _noteContents;
     [SerializeField] private Sprite _icon;
     [SerializeField] private GameObject _dropPrefab;
+    [SerializeField] private bool _isUsable = true;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _icon, _dropPrefab);
+        var item = new InventoryItem(_itemName, _icon, _dropPrefab, _isUsable, _additionalText, _noteContents);
         inventory.AddItem(item);
 
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);

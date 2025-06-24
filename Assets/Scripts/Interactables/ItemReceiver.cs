@@ -81,8 +81,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)
     {
-        if (item == null) return false;
-
+        if (item is not { isUsable: true }) return false;
+        
         if (item.itemName != _requiredItemName)
         {
             return false;

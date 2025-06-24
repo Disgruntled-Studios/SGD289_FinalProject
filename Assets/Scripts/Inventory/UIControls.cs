@@ -8,6 +8,8 @@ public class UIControls : MonoBehaviour
 
     private UIManager _ui;
 
+    private bool _noteIsActivated;
+
     private void Start()
     {
         _ui = UIManager.Instance;
@@ -44,10 +46,17 @@ public class UIControls : MonoBehaviour
     {
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
+        if (_noteIsActivated && UIManager.Instance.IsOnInventoryPanel)
+        {
+            _noteIsActivated = false;
+            UIManager.Instance.ToggleNoteContents(_noteIsActivated);
+            return;
+        }
+        
         var selectedItem = _ui.GetSelectedInventoryItem(_inventory.Items);
         if (selectedItem == null) return;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && selectedItem.isUsable)
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
@@ -58,14 +67,25 @@ public class UIControls : MonoBehaviour
                 // Don't unpause? 
                 Debug.Log($"Receiver did not accept item {selectedItem.itemName}");
             }
+            
+            _ui.RefreshInventoryUI(_inventory.Items);
+            GameManager.Instance.TogglePauseGame();
+        }
+        else if (!selectedItem.isUsable)
+        {
+            if (UIManager.Instance.IsOnSettingsPanel) return;
+
+            if (_inventory.TryReadItem(selectedItem))
+            {
+                _noteIsActivated = true;
+            }
         }
         else
         {
             _inventory.DropItem(selectedItem);
+            _ui.RefreshInventoryUI(_inventory.Items);
+            GameManager.Instance.TogglePauseGame();
         }
-
-        _ui.RefreshInventoryUI(_inventory.Items);
-        GameManager.Instance.TogglePauseGame();
     }
     
     // public void OnInventoryCancel(InputAction.CallbackContext context)
