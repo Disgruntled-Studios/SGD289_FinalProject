@@ -44,6 +44,24 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            TransitionManager.Instance.TransitionToScene("L1PowerPlant", "CAM11");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel", "CAM21");
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM31");
+        }
+    }
+
     public void TogglePauseGame()
     {
         if (InputManager.Instance.IsInPuzzle) return;

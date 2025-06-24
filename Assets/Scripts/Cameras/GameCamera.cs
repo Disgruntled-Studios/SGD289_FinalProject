@@ -14,6 +14,10 @@ public class GameCamera : MonoBehaviour
     
     private CinemachineCamera _vCam;
 
+    [SerializeField] private GameObject _triggerZone;
+
+    private Quaternion _startingRotation;
+
     private void Start()
     {
         _vCam = GetComponent<CinemachineCamera>();
@@ -26,6 +30,8 @@ public class GameCamera : MonoBehaviour
 
         var volume = GetComponent<Volume>();
         CameraManager.Instance.RegisterCamera(_cameraId, _vCam, _isCCTV, volume);
+
+        _startingRotation = transform.rotation;
     }
 
     private void OnDestroy()
@@ -34,5 +40,10 @@ public class GameCamera : MonoBehaviour
         {
             CameraManager.Instance.UnregisterCamera(_cameraId);
         }
+    }
+
+    public void ResetRotation()
+    {
+        transform.rotation = _startingRotation;
     }
 }
