@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,12 +27,21 @@ public class UIManager : MonoBehaviour
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
 
+    [Header("Keycode UI Elements")] 
+    [SerializeField] private GameObject _keycodePanel;
+    [SerializeField] private TMP_Text _keycodePrompt;
+    [SerializeField] private List<TMP_Text> _digitDisplays;
+    private KeycodeReceiver _activeKeycodeReceiver;
+    private int[] _currentDigits;
+    private int _activeDigitIndex;
+    
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
 
-    [Header("Panels")] 
-    [SerializeField] private GameObject[] _mainPanels;
+    [FormerlySerializedAs("_mainPanels")]
+    [Header("Main UI Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
+    [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
     private int _currentPanelIndex;
 
     public bool IsOnInventoryPanel => _currentPanelIndex == 0;
@@ -53,9 +63,9 @@ public class UIManager : MonoBehaviour
 
     public void NavigatePanel(int direction)
     {
-        _mainPanels[_currentPanelIndex].SetActive(false);
-        _currentPanelIndex = (_currentPanelIndex + direction + _mainPanels.Length) % _mainPanels.Length;
-        _mainPanels[_currentPanelIndex].SetActive(true);
+        _subPanels[_currentPanelIndex].SetActive(false);
+        _currentPanelIndex = (_currentPanelIndex + direction + _subPanels.Length) % _subPanels.Length;
+        _subPanels[_currentPanelIndex].SetActive(true);
 
         if (IsOnSettingsPanel && _noteContents.activeSelf)
         {
@@ -203,7 +213,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Pop Ups
+    #region PopUp Methods
 
     public void StartPopUpText(string message)
     {
@@ -226,6 +236,44 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         _popUpBox.SetActive(false);
+    }
+
+    #endregion
+
+    #region Keycode Methods
+
+    public void OpenKeycodePanel(KeycodeReceiver receiver, string prompt = "Enter Keycode: ")
+    {
+        _activeKeycodeReceiver = receiver;
+        _keycodePrompt.text = prompt;
+
+        _keycodePanel.SetActive(true);
+        _activeDigitIndex = 0;
+
+        _currentDigits = new int[_digitDisplays.Count];
+        for (var i = 0; i < _digitDisplays.Count; i++)
+        {
+            _currentDigits[i] = 0;
+            _digitDisplays[i].text = "0";
+        }
+
+        HighlightActiveDigit();
+        InputManager.Instance.SwitchToKeycodeInput();
+    }
+
+    public void CloseKeycodePanel()
+    {
+        _keycodePanel.SetActive(false);
+        _activeKeycodeReceiver = null;
+        InputManager.Instance.SwitchToDefaultInput();
+    }
+
+    private void HighlightActiveDigit()
+    {
+        for (var i = 0; i < _digitDisplays.Count; i++)
+        {
+            _digitDisplays[i].color = (i == _activeDigitIndex) ? Color.yellow : Color.white;
+        }
     }
 
     #endregion

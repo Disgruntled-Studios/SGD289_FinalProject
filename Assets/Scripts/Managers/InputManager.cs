@@ -17,8 +17,10 @@ public class InputManager : MonoBehaviour
     public bool IsUsingKeyboard => _lastUsedDevice == Keyboard;
     public bool IsUsingController => _lastUsedDevice == Controller;
 
+    // May need to rethink these
     public bool IsInPuzzle => _playerInput.PuzzleMap.enabled;
     public bool IsInUI => _playerInput.UI.enabled;
+    public bool IsInKeycode => _playerInput.Keycode.enabled;
 
     private void Awake()
     {
@@ -51,20 +53,35 @@ public class InputManager : MonoBehaviour
     {
         _playerInput.Player.Disable();
         _playerInput.UI.Disable();
+        _playerInput.Keycode.Disable();
+        
         _playerInput.PuzzleMap.Enable();
     }
 
     public void SwitchToDefaultInput()
     {
-        _playerInput.Player.Enable();
         _playerInput.UI.Disable();
         _playerInput.PuzzleMap.Disable();
+        _playerInput.Keycode.Disable();
+        
+        _playerInput.Player.Enable();
     }
 
     public void SwitchToUIInput()
     {
-        _playerInput.UI.Enable();
         _playerInput.PuzzleMap.Disable();
         _playerInput.Player.Disable();
+        _playerInput.Keycode.Disable();
+        
+        _playerInput.UI.Enable();
+    }
+
+    public void SwitchToKeycodeInput()
+    {
+        _playerInput.PuzzleMap.Disable();
+        _playerInput.Player.Disable();
+        _playerInput.UI.Disable();
+        
+        _playerInput.Keycode.Enable();
     }
 }

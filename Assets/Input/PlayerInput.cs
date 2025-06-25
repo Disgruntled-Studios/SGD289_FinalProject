@@ -1410,6 +1410,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keycode"",
+            ""id"": ""d39a735e-b1da-49bd-bba1-06c1f73d0b61"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""58d76207-c6ce-4a40-a06e-f2cd5b049ffb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""86fd3e9a-63e8-483c-9938-9f6a58c8f7a1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1513,6 +1541,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PuzzleMap_MoveWest = m_PuzzleMap.FindAction("MoveWest", throwIfNotFound: true);
         m_PuzzleMap_MoveEast = m_PuzzleMap.FindAction("MoveEast", throwIfNotFound: true);
         m_PuzzleMap_ExitPuzzle = m_PuzzleMap.FindAction("ExitPuzzle", throwIfNotFound: true);
+        // Keycode
+        m_Keycode = asset.FindActionMap("Keycode", throwIfNotFound: true);
+        m_Keycode_Newaction = m_Keycode.FindAction("New action", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -1520,6 +1551,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PuzzleMap.enabled, "This will cause a leak and performance issues, PlayerInput.PuzzleMap.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Keycode.enabled, "This will cause a leak and performance issues, PlayerInput.Keycode.Disable() has not been called.");
     }
 
     /// <summary>
@@ -2198,6 +2230,102 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PuzzleMapActions" /> instance referencing this action map.
     /// </summary>
     public PuzzleMapActions @PuzzleMap => new PuzzleMapActions(this);
+
+    // Keycode
+    private readonly InputActionMap m_Keycode;
+    private List<IKeycodeActions> m_KeycodeActionsCallbackInterfaces = new List<IKeycodeActions>();
+    private readonly InputAction m_Keycode_Newaction;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Keycode".
+    /// </summary>
+    public struct KeycodeActions
+    {
+        private @PlayerInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public KeycodeActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Keycode/Newaction".
+        /// </summary>
+        public InputAction @Newaction => m_Wrapper.m_Keycode_Newaction;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Keycode; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="KeycodeActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(KeycodeActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="KeycodeActions" />
+        public void AddCallbacks(IKeycodeActions instance)
+        {
+            if (instance == null || m_Wrapper.m_KeycodeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_KeycodeActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="KeycodeActions" />
+        private void UnregisterCallbacks(IKeycodeActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="KeycodeActions.UnregisterCallbacks(IKeycodeActions)" />.
+        /// </summary>
+        /// <seealso cref="KeycodeActions.UnregisterCallbacks(IKeycodeActions)" />
+        public void RemoveCallbacks(IKeycodeActions instance)
+        {
+            if (m_Wrapper.m_KeycodeActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="KeycodeActions.AddCallbacks(IKeycodeActions)" />
+        /// <seealso cref="KeycodeActions.RemoveCallbacks(IKeycodeActions)" />
+        /// <seealso cref="KeycodeActions.UnregisterCallbacks(IKeycodeActions)" />
+        public void SetCallbacks(IKeycodeActions instance)
+        {
+            foreach (var item in m_Wrapper.m_KeycodeActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_KeycodeActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="KeycodeActions" /> instance referencing this action map.
+    /// </summary>
+    public KeycodeActions @Keycode => new KeycodeActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -2510,5 +2638,20 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnExitPuzzle(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Keycode" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="KeycodeActions.AddCallbacks(IKeycodeActions)" />
+    /// <seealso cref="KeycodeActions.RemoveCallbacks(IKeycodeActions)" />
+    public interface IKeycodeActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }
