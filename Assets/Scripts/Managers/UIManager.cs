@@ -268,6 +268,45 @@ public class UIManager : MonoBehaviour
         InputManager.Instance.SwitchToDefaultInput();
     }
 
+    public void SubmitKeycode()
+    {
+        if (_activeKeycodeReceiver == null) return;
+
+        var enteredCode = string.Join("", _currentDigits);
+        _activeKeycodeReceiver.SubmitCode(enteredCode);
+    }
+
+    public void NavigateKeycodeDigits(Vector2 direction)
+    {
+        if (!_keycodePanel.activeSelf) return;
+
+        if (direction.x > 0.1f)
+        {
+            _activeDigitIndex = (_activeDigitIndex + 1) % _digitDisplays.Count;
+            HighlightActiveDigit();
+        }
+        else if (direction.x < -0.1f)
+        {
+            _activeDigitIndex = (_activeDigitIndex - 1 + _digitDisplays.Count) % _digitDisplays.Count;
+            HighlightActiveDigit();
+        }
+        else if (direction.y > 0.1f)
+        {
+            _currentDigits[_activeDigitIndex] = (_currentDigits[_activeDigitIndex] + 1) % 10;
+            _digitDisplays[_activeDigitIndex].text = _currentDigits[_activeDigitIndex].ToString();
+        }
+        else if (direction.y < -0.1f)
+        {
+            _currentDigits[_activeDigitIndex] = (_currentDigits[_activeDigitIndex] - 1 + 10) % 10;
+            _digitDisplays[_activeDigitIndex].text = _currentDigits[_activeDigitIndex].ToString();
+        }
+    }
+
+    public void ShowInvalidKeycodeFeedback()
+    {
+        // TODO
+    }
+
     private void HighlightActiveDigit()
     {
         for (var i = 0; i < _digitDisplays.Count; i++)

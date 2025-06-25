@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class KeycodeControls : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void OnNavigate(InputAction.CallbackContext context)
     {
-        
+        if (!context.performed) return;
+
+        var input = context.ReadValue<Vector2>();
+        UIManager.Instance.NavigateKeycodeDigits(input);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnSubmit(InputAction.CallbackContext context)
     {
-        
+        if (!context.performed) return;
+        UIManager.Instance.SubmitKeycode();
+    }
+
+    public void OnCancel(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        UIManager.Instance.CloseKeycodePanel();
     }
 }
