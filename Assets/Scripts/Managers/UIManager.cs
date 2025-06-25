@@ -262,6 +262,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseKeycodePanel()
     {
+        if (!InputManager.Instance.IsInKeycode) return;
         _keycodePanel.SetActive(false);
         _activeKeycodeReceiver = null;
         InputManager.Instance.SwitchToDefaultInput();

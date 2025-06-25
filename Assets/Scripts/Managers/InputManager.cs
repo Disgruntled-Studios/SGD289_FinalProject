@@ -44,9 +44,10 @@ public class InputManager : MonoBehaviour
 
         _lastUsedDevice = keyboardTime > controllerTime ? Keyboard : Controller;
 
-        // Debug.Log($"Is In Puzzle = {IsInPuzzle}");
-        // Debug.Log($"Is In UI = {IsInUI}");
-        // Debug.Log($"Default = {!IsInUI && !IsInPuzzle}");
+        //  Debug.Log($"Is In Puzzle = {IsInPuzzle}");
+        //  Debug.Log($"Is In UI = {IsInUI}");
+        //  Debug.Log($"Is In KeyCode = {IsInKeycode}");
+        //  Debug.Log($"Default = {!IsInUI && !IsInPuzzle && !IsInKeycode}");
     }
 
     public void SwitchToPuzzleInput()
@@ -56,6 +57,7 @@ public class InputManager : MonoBehaviour
         _playerInput.Keycode.Disable();
         
         _playerInput.PuzzleMap.Enable();
+        Debug.Log("Switching Interaction map to Puzzle");
     }
 
     public void SwitchToDefaultInput()
@@ -65,6 +67,7 @@ public class InputManager : MonoBehaviour
         _playerInput.Keycode.Disable();
         
         _playerInput.Player.Enable();
+        Debug.Log("Switching Interaction map to Default");
     }
 
     public void SwitchToUIInput()
@@ -74,6 +77,7 @@ public class InputManager : MonoBehaviour
         _playerInput.Keycode.Disable();
         
         _playerInput.UI.Enable();
+        Debug.Log("Switching Interaction map to UI");
     }
 
     public void SwitchToKeycodeInput()
@@ -83,5 +87,6 @@ public class InputManager : MonoBehaviour
         _playerInput.UI.Disable();
         
         _playerInput.Keycode.Enable();
+        Debug.Log("Switching Interaction map to KeyCode");
     }
 }

@@ -173,7 +173,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnSpecial(InputAction.CallbackContext context)
     {
-        return;
+        if (context.performed)
+        {
+            _gunController.StartCoroutine(_gunController.ReloadGun());
+        }        
     }
 
     public void OnPause(InputAction.CallbackContext context)

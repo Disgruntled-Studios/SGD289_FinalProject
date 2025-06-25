@@ -153,7 +153,7 @@ public class GunController : MonoBehaviour
         }
     }
 
-    IEnumerator ReloadGun()
+    public IEnumerator ReloadGun()
     {
         //Debug.Log("Is Reloading");
         _isReloading = true;

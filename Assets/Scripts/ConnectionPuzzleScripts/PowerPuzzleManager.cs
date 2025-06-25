@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,6 +15,10 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [SerializeField] private GameCamera _puzzleCamera;
     [SerializeField] private UnityEvent _onPuzzleComplete;
     [SerializeField, TextArea] private string puzzleCompletionDialogue;
+    public bool hasCameraCut;
+    public GameCamera cutCam;
+    public Transform cutCamFocus;
+    public float camCutLength;
     [TextArea] public string puzzleOnEnterDialogue;
     public bool hasEnterPopUpTriggered;
 
@@ -51,9 +56,15 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             //When the puzzle is solved do these functions.
             _isPuzzleDone = true;
             _onPuzzleComplete.Invoke();
-            CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
+            if (hasCameraCut)
+            {
+                StartCoroutine(HandleCamCut());
+            }
+            else
+            {
+                ExitPuzzle();
+            }
             UIManager.Instance.StartPopUpText(puzzleCompletionDialogue);
-            ExitPuzzle();
         }
 
         if (!_powerNode.IsConnected)
@@ -133,6 +144,17 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
         
         CheckTilesConnection();
+    }
+
+    IEnumerator HandleCamCut()
+    {
+        Debug.Log("Starting cam cut");
+        CameraManager.Instance.TrySetCameraTarget(cutCam.CameraID, cutCamFocus);
+        CameraManager.Instance.TrySwitchToCamera(cutCam.CameraID);
+
+        yield return new WaitForSeconds(camCutLength);
+        ExitPuzzle();
+        Debug.Log("Ended cam cut");
     }
 
     public void Interact(Transform player, PlayerInventory inventory)
