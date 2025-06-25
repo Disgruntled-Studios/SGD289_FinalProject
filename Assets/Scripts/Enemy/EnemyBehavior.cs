@@ -56,20 +56,25 @@ public class EnemyBehavior : MonoBehaviour
             currentPatrolPoint = patrolPoints[patrolIndex];
             fov = GetComponent<EnemyFOV>();
         }
+        else
+        {
+            currentTargetPoint = transform;
+            currentPatrolPoint = transform;
+        }
         
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //GetComponentInChildren<MeshRenderer>().material = normalMat;
+        //onDamage.AddListener(ToggleEnemyMaterial);
         playerRef = GameManager.Instance.Player;
         meshAgent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        //onDamage.AddListener(ToggleEnemyMaterial);
         onDamage.AddListener(StartAttackStunPause);
         health = new UnitHealth(maxHealth, onDamage);
         GetComponentInChildren<DamageTrigger>().damageAmount = attackStrength;
-        //GetComponentInChildren<MeshRenderer>().material = normalMat;
         meshAgent.speed = patrolSpeed;
         meshAgent.stoppingDistance = attackDistance - .25f;
         if (patrolPattern != null)
@@ -77,6 +82,8 @@ public class EnemyBehavior : MonoBehaviour
             meshAgent.SetDestination(patrolPoints[patrolIndex].position);
             meshAgent.isStopped = false;
         }
+        else { meshAgent.isStopped = true; }
+
         currentState = BehaviorState.patrolling;
         StartCoroutine("EnemyDetectionWithDelay", .1f);
     }
@@ -104,34 +111,37 @@ public class EnemyBehavior : MonoBehaviour
         switch (currentState)
         {
             case BehaviorState.patrolling:
-                anim.SetBool("IsMoving", true);
-                anim.SetBool("IsChasing", false);
-                if (patrolPattern == null)
+                if (!meshAgent.isStopped)
                 {
-                    return;
+                    anim.SetBool("IsMoving", true);
+                    anim.SetBool("IsChasing", false);
                 }
-                else if (fov.isPlayerInSight && playerDist < fov.viewRadius)
+                else
                 {
-                    StopCoroutine(SetAgentDestToCurrentTarget(6));
-                    currentTargetPoint = fov.visibleTarget;
-                    Debug.Log("Staring at player");
-                    transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                    meshAgent.speed = investigationMovSpeed;
-                    meshAgent.SetDestination(currentTargetPoint.position);
+                    anim.SetBool("IsMoving", false);
                 }
-                else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && detectionLvl > 0 && Vector3.Distance(transform.position, fov.visibleTargetLastPos) > attackDistance)
-                {
-                    Debug.Log("Staring at player, and wandering towards them with a detection level of : " + detectionLvl);
-                    transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                    meshAgent.SetDestination(fov.visibleTargetLastPos);
-                }
-                else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && Vector3.Distance(transform.position, fov.visibleTargetLastPos) <= attackDistance + .3f)
-                {
-                    currentTargetPoint = currentPatrolPoint;
-                    Debug.Log("Invoking set destination in 6 seconds");
-                    StartCoroutine(SetAgentDestToCurrentTarget(6));
-                }
-                else if (currentTargetPoint == currentPatrolPoint && Vector3.Distance(transform.position, currentTargetPoint.position) <= attackDistance)
+                // else if (fov.isPlayerInSight && playerDist < fov.viewRadius)
+                // {
+                //     StopCoroutine(SetAgentDestToCurrentTarget(6));
+                //     currentTargetPoint = fov.visibleTarget;
+                //     Debug.Log("Staring at player");
+                //     transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+                //     meshAgent.speed = investigationMovSpeed;
+                //     meshAgent.SetDestination(currentTargetPoint.position);
+                // }
+                // else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && detectionLvl > 0 && Vector3.Distance(transform.position, fov.visibleTargetLastPos) > attackDistance)
+                // {
+                //     Debug.Log("Staring at player, and wandering towards them with a detection level of : " + detectionLvl);
+                //     transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+                //     meshAgent.SetDestination(fov.visibleTargetLastPos);
+                // }
+                // else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && Vector3.Distance(transform.position, fov.visibleTargetLastPos) <= attackDistance + .3f)
+                // {
+                //     currentTargetPoint = currentPatrolPoint;
+                //     Debug.Log("Invoking set destination in 6 seconds");
+                //     StartCoroutine(SetAgentDestToCurrentTarget(6));
+                // }
+                if (currentTargetPoint == currentPatrolPoint && Vector3.Distance(transform.position, currentTargetPoint.position) <= attackDistance && patrolPattern != null)
                 {
                     Debug.Log("Made it to the patrol point goint to the next");
                     StartCoroutine("SetNextPatrolPoint");
@@ -156,8 +166,16 @@ public class EnemyBehavior : MonoBehaviour
                     meshAgent.SetDestination(playerRef.transform.position);
                     meshAgent.speed = chaseSpeed;
                 }
-                anim.SetBool("IsMoving", false);
-                anim.SetBool("IsChasing", true);
+
+                if (!meshAgent.isStopped)
+                {
+                    anim.SetBool("IsMoving", false);
+                    anim.SetBool("IsChasing", true);
+                }
+                else
+                {
+                    anim.SetBool("IsChasing", false);
+                }
                 break;
         }
 
@@ -169,36 +187,34 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
-    IEnumerator SetAgentDestToCurrentTarget(float delay)
-    {
-        //Debug.Log("Starting delay");
-        yield return new WaitForSeconds(delay);
-        meshAgent.SetDestination(currentTargetPoint.position);
-        //Debug.Log("Stopping delay");
-    }
+    // IEnumerator SetAgentDestToCurrentTarget(float delay)
+    // {
+    //     //Debug.Log("Starting delay");
+    //     yield return new WaitForSeconds(delay);
+    //     meshAgent.SetDestination(currentTargetPoint.position);
+    //     //Debug.Log("Stopping delay");
+    // }
 
-    void ToggleEnemyMaterial()
-    {
-        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
-        //Debug.Log("ToggleMatIsCalled " + meshRenderer.gameObject.name);
-        if (meshRenderer.sharedMaterial == normalMat)
-        {
-            //Debug.Log("Switching material to damaged");
-            meshRenderer.material = damagedMat;
-            Invoke("ToggleEnemyMaterial", 0.5f);
-        }
-        else if (meshRenderer.sharedMaterial == damagedMat)
-        {
-            //Debug.Log("Switching material to normal");
-            meshRenderer.material = normalMat;
-        }
-    }
+    // void ToggleEnemyMaterial()
+    // {
+    //     MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+    //     //Debug.Log("ToggleMatIsCalled " + meshRenderer.gameObject.name);
+    //     if (meshRenderer.sharedMaterial == normalMat)
+    //     {
+    //         //Debug.Log("Switching material to damaged");
+    //         meshRenderer.material = damagedMat;
+    //         Invoke("ToggleEnemyMaterial", 0.5f);
+    //     }
+    //     else if (meshRenderer.sharedMaterial == damagedMat)
+    //     {
+    //         //Debug.Log("Switching material to normal");
+    //         meshRenderer.material = normalMat;
+    //     }
+    // }
 
     IEnumerator SetNextPatrolPoint()
     {
         meshAgent.isStopped = true;
-        anim.SetBool("IsMoving", false);
-        anim.SetBool("IsChasing", false);
 
         patrolIndex++;
         if (patrolIndex >= patrolPoints.Length)
@@ -212,55 +228,56 @@ public class EnemyBehavior : MonoBehaviour
 
         yield return new WaitForSeconds(Random.Range(minPatrolPauseTime + 0.5f, maxPatrolPauseTime));
         meshAgent.isStopped = false;
-        anim.SetBool("IsMoving", true);
     }
 
     IEnumerator EnemyDetectionWithDelay(float delay = .1f)
     {
         while (gameObject.activeInHierarchy)
         {
-            
-            switch (fov.isPlayerInSight)
+            if (fov.isPlayerInSight && currentState != BehaviorState.chasing)
             {
-                case true:
-                    /*
-                        if (playerRef.GetComponent<PlayerController>().IsCrouching)
-                        {
-                            // Debug.Log("Enemy sees player crouched");
-                            detectionLvl += (detectionRate / 2) * Time.deltaTime;
-                        }
-                        else if (Vector3.Distance(transform.position, playerRef.transform.position) <= fov.viewRadius / 2)
-                        {
-                            // Debug.Log("Player in close proximity");
-                            detectionLvl = (detectionRate * 2) * Time.deltaTime;
-                        }
-                        else
-                        {
-                            // Debug.Log("Player within sight range");
-                            detectionLvl += detectionRate * Time.deltaTime;
-                        }
-                    */
-                        if (currentState != BehaviorState.chasing)
-                        {
-                            currentState = BehaviorState.chasing;
-                        }
-                        break;
-                case false:
-                    /*
-                    yield return new WaitForSeconds(Random.Range(2, 7));
-                    if (detectionLvl - detectionRate <= 0)
-                    {
-                        // Debug.Log("Detection dropped to 0");
-                        detectionLvl = 0;
-                    }
-                    else
-                    {
-                        // Debug.Log("Detection dropping");
-                        detectionLvl -= detectionRate * Time.deltaTime;
-                    }
-                    */
-                    break;
+                currentState = BehaviorState.chasing;
+                if (meshAgent.isStopped == true) meshAgent.isStopped = false;
             }
+            
+            // switch (fov.isPlayerInSight)
+            // {
+            //     case true:
+            //         /*
+            //             if (playerRef.GetComponent<PlayerController>().IsCrouching)
+            //             {
+            //                 // Debug.Log("Enemy sees player crouched");
+            //                 detectionLvl += (detectionRate / 2) * Time.deltaTime;
+            //             }
+            //             else if (Vector3.Distance(transform.position, playerRef.transform.position) <= fov.viewRadius / 2)
+            //             {
+            //                 // Debug.Log("Player in close proximity");
+            //                 detectionLvl = (detectionRate * 2) * Time.deltaTime;
+            //             }
+            //             else
+            //             {
+            //                 // Debug.Log("Player within sight range");
+            //                 detectionLvl += detectionRate * Time.deltaTime;
+            //             }
+            //         */
+
+            //             break;
+            //     case false:
+            //         /*
+            //         yield return new WaitForSeconds(Random.Range(2, 7));
+            //         if (detectionLvl - detectionRate <= 0)
+            //         {
+            //             // Debug.Log("Detection dropped to 0");
+            //             detectionLvl = 0;
+            //         }
+            //         else
+            //         {
+            //             // Debug.Log("Detection dropping");
+            //             detectionLvl -= detectionRate * Time.deltaTime;
+            //         }
+            //         */
+            //         break;
+            // }
 
             /*
             if (awarenessImage.fillAmount <= detectionLvl / 1 && detectionLvl / 1 != 1)
@@ -286,7 +303,7 @@ public class EnemyBehavior : MonoBehaviour
                 Debug.Log("Player has escaped returning to patrol");
             }
             */
-            
+
 
 
             yield return new WaitForSeconds(delay);
@@ -301,21 +318,14 @@ public class EnemyBehavior : MonoBehaviour
             //play animation for getting hit
             anim.SetTrigger("IsHit");
 
+            //Instead of invoking here we call the function in animation events.
             //Invoke("EndAttackStunPause", 1.5f);
         }
     }
 
     public void EndAttackStunPause()
     {
-        if (currentState != BehaviorState.chasing)
-        {
-            currentTargetPoint = playerRef.transform;
-            meshAgent.SetDestination(currentTargetPoint.position);
-
-
-            detectionLvl = 1;
-        }
-
+        if (currentState != BehaviorState.chasing) { meshAgent.SetDestination(playerRef.transform.position); }
         meshAgent.isStopped = false;
     }
 

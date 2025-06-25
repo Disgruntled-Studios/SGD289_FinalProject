@@ -6,11 +6,12 @@ public class GunController : MonoBehaviour
     [Header("Gun")]
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform laserStart;
-    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private LayerMask _shootableLayers;
     [SerializeField] private float _damageAmount = 50f;
     [SerializeField, Range(1,10)] float reloadSpeed = 5f;
     [SerializeField] int maxMagLimit = 12;
     [SerializeField] int currentAmmoMagAmt = 0;
+    [SerializeField] string _gunItemName;
 
     [Header("Laser")]
     [SerializeField] private LineRenderer _lr;
@@ -19,7 +20,10 @@ public class GunController : MonoBehaviour
     public bool IsAiming => _isAiming;
     
     private bool _isReloading;
+    private PlayerInventory _playerInventory;
+
     public bool IsReloading => _isReloading;
+    [HideInInspector]public bool hasItem;
     
     private void Start()
     {
@@ -28,21 +32,44 @@ public class GunController : MonoBehaviour
             _lr.enabled = false;
             _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
-        
+        _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
+        hasItem = false;
         StartCoroutine(ReloadGun());
     }
 
     private void Update()
     {
-        _gunModel.SetActive(_isAiming);
-
-        if (_isAiming && _lr != null)
+        foreach (var item in _playerInventory.Items)
         {
-            HandleLaser();
+            if (item.itemName == _gunItemName)
+            {
+                hasItem = true;
+                break;
+            }
+            else
+            {
+                hasItem = false;
+            }
         }
-        else if (_lr != null)
+        if (hasItem)
         {
-            _lr.enabled = false;
+            _gunModel.SetActive(_isAiming);
+
+            if (_isAiming && _lr != null)
+            {
+                HandleLaser();
+            }
+            else if (_lr != null)
+            {
+                _lr.enabled = false;
+            }
+        }
+        else
+        {
+            if (_isAiming)
+            {
+                Debug.Log("No gun in inventory");
+            }
         }
     }
 
@@ -98,7 +125,7 @@ public class GunController : MonoBehaviour
             //Shoot a ray to see if a monster is going to get hit.
             RaycastHit hit;
 
-            if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _enemyLayer))
+            if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _shootableLayers))
             {
                 Debug.Log("hit " + hit.collider.transform.gameObject.name);
                 //hit.transform.gameObject.SetActive(false);
@@ -110,8 +137,12 @@ public class GunController : MonoBehaviour
                 }
                 else if (hit.transform.gameObject.GetComponentInParent<EnemyBehavior>())
                 {
-                   hit.transform.gameObject.GetComponentInParent<EnemyBehavior>().health.Damage(_damageAmount);
+                    hit.transform.gameObject.GetComponentInParent<EnemyBehavior>().health.Damage(_damageAmount);
                     //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth); 
+                }
+                else if (hit.transform.gameObject.GetComponent<ShootableObject>())
+                {
+                    hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
                 }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
