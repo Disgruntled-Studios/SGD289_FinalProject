@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.IsInPuzzle) return;
 
-        if (context.started)
+        if (context.started && _gunController.hasItem)
         {
             _gunController.StartGunAim();
             _animationController.Aim(true);
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
             UpdateSpeed();
         }
 
-        if (context.canceled)
+        if (context.canceled && _gunController.hasItem)
         {
             _gunController.EndGunAim();
             _animationController.Aim(false);
