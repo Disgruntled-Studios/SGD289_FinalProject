@@ -1102,6 +1102,7 @@ GameObject:
   - component: {fileID: 4500418541447036845}
   - component: {fileID: 6691330314164070428}
   - component: {fileID: 5489007689301645667}
+  - component: {fileID: 4867057161169410574}
   m_Layer: 3
   m_Name: PLAYER
   m_TagString: Player
@@ -1636,6 +1637,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f07a5112-a36f-4e2a-8470-9b70da10bf9a
     m_ActionName: 'UI/NavigatePreviousPanel[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5489007689301645667}
+        m_TargetAssemblyTypeName: KeycodeControls, Assembly-CSharp
+        m_MethodName: OnNavigate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 58d76207-c6ce-4a40-a06e-f2cd5b049ffb
+    m_ActionName: Keycode/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5489007689301645667}
+        m_TargetAssemblyTypeName: KeycodeControls, Assembly-CSharp
+        m_MethodName: OnSubmit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d131c229-a2fb-416a-af95-8c3493221223
+    m_ActionName: 'Keycode/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5489007689301645667}
+        m_TargetAssemblyTypeName: KeycodeControls, Assembly-CSharp
+        m_MethodName: OnCancel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dcc19053-e6ed-4672-91c2-ce7cffb61605
+    m_ActionName: 'Keycode/Cancel[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1774,6 +1823,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753c3b186e284b34f9ecc2445197e13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &4867057161169410574
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028521454305457700}
+  m_Enabled: 1
 --- !u!1 &6255612458664486106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,14 +1879,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunModel: {fileID: 3158713732036019679}
   laserStart: {fileID: 3773317614083526187}
-  _enemyLayer:
+  _shootableLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   _damageAmount: 50
   reloadSpeed: 5
   maxMagLimit: 12
   currentAmmoMagAmt: 0
+  _gunItemName: 
   _lr: {fileID: 1826581546318819583}
+  hasItem: 0
 --- !u!114 &2429004968712001688
 MonoBehaviour:
   m_ObjectHideFlags: 0
