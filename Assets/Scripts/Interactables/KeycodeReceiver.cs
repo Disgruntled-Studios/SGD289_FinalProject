@@ -34,10 +34,12 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     public void OnEnter()
     {
         _playerIsNearby = true;
+        Debug.Log("Player is near");
     }
 
     public void OnExit()
     {
         _playerIsNearby = false;
+        Debug.Log("player is far");
     }
 }

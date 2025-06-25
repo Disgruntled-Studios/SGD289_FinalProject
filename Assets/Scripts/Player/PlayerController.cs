@@ -243,11 +243,13 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<IInteractable>(out var interactable))
         {
             _currentInteractable = interactable;
+            _currentInteractable?.OnEnter();
         }
         else if (other.transform.parent != null &&
                  other.transform.parent.TryGetComponent(out interactable))
         {
             _currentInteractable = interactable;
+            _currentInteractable?.OnEnter();
         }
 
         if (other.TryGetComponent<IItemReceiver>(out var receiver))

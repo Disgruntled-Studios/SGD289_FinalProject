@@ -38,8 +38,7 @@ public class UIManager : MonoBehaviour
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
-
-    [FormerlySerializedAs("_mainPanels")]
+    
     [Header("Main UI Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
     [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
     private int _currentPanelIndex;
