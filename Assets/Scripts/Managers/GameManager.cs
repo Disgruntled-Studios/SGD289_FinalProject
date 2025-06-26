@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -14,14 +15,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _cameraTarget;
     public Transform CameraTarget => _cameraTarget;
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
+    public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
 
     [Header("Game Settings")]
     public bool IsGamePaused { get; private set; }
-
+    
     [Header("UI")]
-    [SerializeField] private GameObject _mainGameUI;
-    [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private GameObject firstSelection;
+    [SerializeField] private GameObject _pausePanel;
+    [FormerlySerializedAs("_eventSystem")] [SerializeField] private EventSystem _gameEventSystem;
+    public EventSystem GameEventSystem => _gameEventSystem;
+    [SerializeField] private GameObject _firstSelection;
 
     private void Awake()
     {
@@ -63,27 +66,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void TogglePauseGame()
+    public void OpenPauseMenu()
     {
-        if (InputManager.Instance.IsInPuzzle) return;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-        if (IsGamePaused)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            _mainGameUI.SetActive(false);
-            InputManager.Instance.SwitchToDefaultInput();
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            _mainGameUI.SetActive(true);
-            eventSystem.firstSelectedGameObject = firstSelection;
-            InputManager.Instance.SwitchToUIInput();
-        }
+        _pausePanel.SetActive(true);
+        IsGamePaused = true;
 
-        IsGamePaused = !IsGamePaused;
+        StartCoroutine(EnablePauseMenuNextFrame());
+    }
+
+    public void ClosePauseMenu()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _pausePanel.SetActive(false);
+        IsGamePaused = false;
+        
+        InputManager.Instance.SwitchToDefaultInput();
+    }
+
+    private IEnumerator EnablePauseMenuNextFrame()
+    {
+        yield return null;
+
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(_firstSelection);
+        
+        InputManager.Instance.SwitchToUIInput();
     }
 
     public void QuitGame()
@@ -94,7 +106,6 @@ public class GameManager : MonoBehaviour
     public void StartGameOver()
     {
         Invoke("ResetScene", 4f);
-
     }
 
     public void ResetScene()

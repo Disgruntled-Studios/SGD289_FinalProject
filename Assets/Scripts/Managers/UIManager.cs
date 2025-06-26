@@ -23,9 +23,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _inventorySlotPrefab;
     [SerializeField] private Transform _inventorySlotParent;
     [SerializeField] private GameObject _noteContents;
+    public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
+    private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
 
     [Header("Keycode UI Elements")] 
     [SerializeField] private GameObject _keycodePanel;
@@ -43,6 +45,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
     private int _currentPanelIndex;
 
+    [Header("Pause Panel")] 
+    [SerializeField] private GameObject _pausePanel;
+    public GameObject PausePanel => _pausePanel;
+
     public bool IsOnInventoryPanel => _currentPanelIndex == 0;
     public bool IsOnSettingsPanel => _currentPanelIndex == 1;
     
@@ -58,6 +64,14 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        if (PlayerInventory)
+        {
+            PlayerInventory.OnInventoryChanged += HandleInventoryChanged;
+        }
+    }
+
     #region General UI
 
     public void NavigatePanel(int direction)
@@ -69,6 +83,19 @@ public class UIManager : MonoBehaviour
         if (IsOnSettingsPanel && _noteContents.activeSelf)
         {
             ToggleNoteContents(false);
+        }
+
+        if (IsOnInventoryPanel)
+        {
+            if (_inventorySlots.Count > 0)
+            {
+                GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
+                GameManager.Instance.GameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+            }
+            else
+            {
+                GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
+            }
         }
     }
 
@@ -150,6 +177,11 @@ public class UIManager : MonoBehaviour
 
     #region Inventory Methods
 
+    private void HandleInventoryChanged()
+    {
+        RefreshInventoryUI(PlayerInventory.Items);
+    }
+
     public void RefreshInventoryUI(IReadOnlyList<InventoryItem> items)
     {
         foreach (var obj in _inventorySlots)
@@ -175,6 +207,13 @@ public class UIManager : MonoBehaviour
         {
             _selectedInventoryIndex = 0;
             HighlightInventorySlot(_selectedInventoryIndex);
+
+            GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
+            GameManager.Instance.GameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+        }
+        else
+        {
+            GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
         }
     }
 
@@ -188,8 +227,7 @@ public class UIManager : MonoBehaviour
 
     public InventoryItem GetSelectedInventoryItem(IReadOnlyList<InventoryItem> items)
     {
-        if (items.Count == 0) return null;
-        return items[_selectedInventoryIndex];
+        return items.Count == 0 ? null : items[_selectedInventoryIndex];
     }
 
     private void HighlightInventorySlot(int index)

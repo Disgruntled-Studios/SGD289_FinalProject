@@ -7,8 +7,10 @@ public class UIControls : MonoBehaviour
     [SerializeField] private PlayerInventory _inventory;
 
     private UIManager _ui;
-
+    
     private bool _noteIsActivated;
+
+    private PlayerInput Input => InputManager.Instance.PlayerInput;
 
     private void Start()
     {
@@ -17,16 +19,32 @@ public class UIControls : MonoBehaviour
     
     private void OnEnable()
     {
-        _inventory.OnInventoryChanged += RefreshInventoryUI;
+        var uiMap = Input.UIMap;
+        
+        uiMap.InventoryNavigate.performed += OnInventoryNavigate;
+        uiMap.InventorySubmit.performed += OnInventorySubmit;
+        uiMap.NextPanel.performed += OnNextPanel;
+        uiMap.PreviousPanel.performed += OnPreviousPanel;
+        uiMap.InventoryCancel.performed += OnInventoryCancel;
     }
 
     private void OnDisable()
-    {
-        _inventory.OnInventoryChanged -= RefreshInventoryUI;
+    { 
+        var uiMap = Input.UIMap;
+        
+        uiMap.InventoryNavigate.performed -= OnInventoryNavigate;
+        uiMap.InventorySubmit.performed -= OnInventorySubmit;
+        uiMap.NextPanel.performed -= OnNextPanel;
+        uiMap.PreviousPanel.performed -= OnPreviousPanel;
+        uiMap.InventoryCancel.performed -= OnInventoryCancel;
     }
 
     public void OnInventoryNavigate(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+
+        if (UIManager.Instance.NoteContents.activeInHierarchy) return;
+        
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         var input = context.ReadValue<Vector2>();
@@ -44,6 +62,8 @@ public class UIControls : MonoBehaviour
     // AKA USE ITEM
     public void OnInventorySubmit(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         if (_noteIsActivated && UIManager.Instance.IsOnInventoryPanel)
@@ -69,7 +89,7 @@ public class UIControls : MonoBehaviour
             }
             
             _ui.RefreshInventoryUI(_inventory.Items);
-            GameManager.Instance.TogglePauseGame();
+            GameManager.Instance.ClosePauseMenu();
         }
         else if (!selectedItem.isUsable)
         {
@@ -84,32 +104,32 @@ public class UIControls : MonoBehaviour
         {
             _inventory.DropItem(selectedItem);
             _ui.RefreshInventoryUI(_inventory.Items);
-            GameManager.Instance.TogglePauseGame();
+            GameManager.Instance.ClosePauseMenu();
         }
     }
     
-    // public void OnInventoryCancel(InputAction.CallbackContext context)
-    // {
-    //     if (!context.performed || !InputManager.Instance.IsInUI) return;
-    //
-    //     _ui.gameObject.SetActive(false);
-    //     InputManager.Instance.SwitchToDefaultInput();
-    // }
-
-    public void OpenInventoryUI()
+    public void OnInventoryCancel(InputAction.CallbackContext context)
     {
-        _ui.RefreshInventoryUI(_inventory.Items);
-        _ui.gameObject.SetActive(true);
-        InputManager.Instance.SwitchToUIInput();
-    }
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
+        if (!context.performed || !InputManager.Instance.IsInUI) return;
 
-    private void RefreshInventoryUI()
-    {
-        _ui.RefreshInventoryUI(_inventory.Items);
+        Debug.Log("Closing Inventory");
+
+        if (_noteIsActivated)
+        {
+            _noteIsActivated = false;
+            _ui.ToggleNoteContents(_noteIsActivated);
+        }
+        
+        _ui.PausePanel.SetActive(false);
+        InputManager.Instance.SwitchToDefaultInput();
     }
 
     public void OnNextPanel(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         _ui.NavigatePanel(1);
@@ -117,6 +137,8 @@ public class UIControls : MonoBehaviour
     
     public void OnPreviousPanel(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         _ui.NavigatePanel(-1);

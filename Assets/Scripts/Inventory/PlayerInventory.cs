@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
     public IReadOnlyList<InventoryItem> Items => _items;
 
     public event Action OnInventoryChanged;
-
+    
     public void AddItem(InventoryItem item)
     {
         _items.Add(item);

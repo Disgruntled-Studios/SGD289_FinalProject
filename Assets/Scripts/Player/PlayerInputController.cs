@@ -7,7 +7,7 @@ public class PlayerInputController : MonoBehaviour
     private GunController _gunFunc;
 
     private PlayerInput controls;
-    private PlayerInput.PlayerActions in_Game;
+    private PlayerInput.PlayerMapActions in_Game;
 
     Vector2 horizontalInput;
 
@@ -34,7 +34,7 @@ public class PlayerInputController : MonoBehaviour
             return;
         }
 
-        in_Game = controls.Player;
+        in_Game = controls.PlayerMap;
 
         //Set up actions here.
         in_Game.Move.performed += ctx => horizontalInput = ctx.ReadValue<Vector2>();
