@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
-    [Header("HUD Elements")]
+    
+    [Header("HUD Elements")] 
+    [SerializeField] private GameObject _hudPanel;
     [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private TMP_Text _cameraText;
-    [SerializeField] private TMP_Text _ammoCountText;
+    [SerializeField] private TMP_Text _gameOverText;
 
     [Header("Puzzle UI Elements")] 
     [SerializeField] private TMP_Text _tileMoveInstructions;
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _noteContents;
     public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
+    [SerializeField] private TMP_Text _itemDescriptionText;
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
@@ -40,17 +43,37 @@ public class UIManager : MonoBehaviour
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
-    
-    [Header("Main UI Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
-    [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
-    private int _currentPanelIndex;
 
     [Header("Pause Panel")] 
     [SerializeField] private GameObject _pausePanel;
     public GameObject PausePanel => _pausePanel;
+    [SerializeField] private EventSystem _gameEventSystem;
+    [SerializeField] private GameObject _firstSelectionOnPause;
+
+    [Header("Pause Sub-Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
+    [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
+    private int _currentPanelIndex;
+
+    [Header("Settings Sub-Panels")] // ADDITIONAL PANELS ON SETTINGS SCREEN (Graphics, Sounds, etc)
+    [SerializeField] private GameObject _helpPanel;
+    [SerializeField] private GameObject _graphicsPanel;
+    [SerializeField] private GameObject _soundPanel;
+
+    [Header("Settings Sub-Buttons")] 
+    [SerializeField] private GameObject _resumeGameButton;
+    [SerializeField] private GameObject _helpButton;
+    [SerializeField] private GameObject _graphicsButton;
+    [SerializeField] private GameObject _soundButton;
+    [SerializeField] private GameObject _exitMainMenuButton;
+    [SerializeField] private GameObject _exitDesktopButton;
+    
+    [Header("Graphics")] 
+    [SerializeField] private Toggle _fullScreenToggle;
 
     public bool IsOnInventoryPanel => _currentPanelIndex == 0;
     public bool IsOnSettingsPanel => _currentPanelIndex == 1;
+    
+    public bool IsGamePaused { get; private set; }
     
     private void Awake()
     {
@@ -70,10 +93,44 @@ public class UIManager : MonoBehaviour
         {
             PlayerInventory.OnInventoryChanged += HandleInventoryChanged;
         }
+
+        _fullScreenToggle.isOn = Screen.fullScreen;
     }
 
     #region General UI
 
+    public void OpenPauseMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        _pausePanel.SetActive(true);
+        IsGamePaused = true;
+
+        StartCoroutine(EnablePauseMenuNextFrame());
+    }
+
+    public void ClosePauseMenu()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _pausePanel.SetActive(false);
+        IsGamePaused = false;
+        
+        InputManager.Instance.SwitchToDefaultInput();
+    }
+
+    private IEnumerator EnablePauseMenuNextFrame()
+    {
+        yield return null;
+
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(_firstSelectionOnPause);
+        
+        InputManager.Instance.SwitchToUIInput();
+    }
+    
     public void NavigatePanel(int direction)
     {
         _subPanels[_currentPanelIndex].SetActive(false);
@@ -89,14 +146,19 @@ public class UIManager : MonoBehaviour
         {
             if (_inventorySlots.Count > 0)
             {
-                GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
-                GameManager.Instance.GameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+                _gameEventSystem.SetSelectedGameObject(null);
+                _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
             }
             else
             {
-                GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
+                _gameEventSystem.SetSelectedGameObject(null);
             }
         }
+    }
+
+    public void ApplyGraphics()
+    {
+        Screen.fullScreen = _fullScreenToggle.isOn;
     }
 
     #endregion
@@ -114,30 +176,6 @@ public class UIManager : MonoBehaviour
     public void ToggleHealthText(bool isActive)
     {
         _healthText.gameObject.SetActive(isActive);
-    }
-
-    public void UpdateCameraText(string camName)
-    {
-        if (_cameraText)
-        {
-            _cameraText.text = camName;
-        }
-    }
-
-    public void UpdateAmmoText(int current, int max)
-    {
-        if (_ammoCountText)
-        {
-            _ammoCountText.text = $"Ammo: {current}/{max}";
-        }
-    }
-
-    public void ShowReloading()
-    {
-        if (_ammoCountText)
-        {
-            _ammoCountText.text = "Reloading";
-        }
     }
 
     #endregion
@@ -208,12 +246,12 @@ public class UIManager : MonoBehaviour
             _selectedInventoryIndex = 0;
             HighlightInventorySlot(_selectedInventoryIndex);
 
-            GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
-            GameManager.Instance.GameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+            _gameEventSystem.SetSelectedGameObject(null);
+            _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
         }
         else
         {
-            GameManager.Instance.GameEventSystem.SetSelectedGameObject(null);
+            _gameEventSystem.SetSelectedGameObject(null);
         }
     }
 
@@ -239,6 +277,12 @@ public class UIManager : MonoBehaviour
             {
                 controller.SetHighlighted(i == index);
             }
+        }
+
+        var selectedController = _inventorySlots[index].GetComponent<InventorySlotController>();
+        if (selectedController)
+        {
+            _itemDescriptionText.text = selectedController.ItemName;
         }
     }
 

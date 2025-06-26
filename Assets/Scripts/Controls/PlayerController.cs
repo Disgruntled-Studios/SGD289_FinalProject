@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
         if (InputManager.Instance.ShouldBlockInput(context)) return;
 
         Debug.Log("Opening Pause");
-        GameManager.Instance.OpenPauseMenu();
+        UIManager.Instance.OpenPauseMenu();
     }
 
     private void ApplyRotation()

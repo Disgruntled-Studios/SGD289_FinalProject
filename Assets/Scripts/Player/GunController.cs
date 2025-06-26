@@ -118,7 +118,7 @@ public class GunController : MonoBehaviour
         {
             Debug.Log("Shooting");
             currentAmmoMagAmt--;
-            UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
+            //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
             //Play SFX 
             //Play VFX
 
@@ -157,14 +157,14 @@ public class GunController : MonoBehaviour
     {
         //Debug.Log("Is Reloading");
         _isReloading = true;
-        UIManager.Instance.ShowReloading();
+        //UIManager.Instance.ShowReloading();
 
         //call animation to reload
 
         //Call reload SFX
         yield return new WaitForSeconds(reloadSpeed);
         currentAmmoMagAmt = maxMagLimit;
-        UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
+        //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
         Debug.Log("Is Reloaded");
         _isReloading = false;
     }

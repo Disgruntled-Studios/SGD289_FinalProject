@@ -8,9 +8,14 @@ public class InventorySlotController : MonoBehaviour
     [SerializeField] private TMP_Text _itemNameText;
     [SerializeField] private Image _itemIconImage;
     [SerializeField] private Outline _slotOutline;
+
+    private InventoryItem _item;
+    public string ItemName => _item.itemName;
     
     public void SetSlot(InventoryItem item)
     {
+        _item = item;
+        
         if (_itemNameText)
         {
             _itemNameText.text = item.itemName;
