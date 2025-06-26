@@ -184,8 +184,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
-
         if (context.started)
         {
             _isSprinting = true;
