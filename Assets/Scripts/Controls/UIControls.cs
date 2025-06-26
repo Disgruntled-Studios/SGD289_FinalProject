@@ -89,7 +89,7 @@ public class UIControls : MonoBehaviour
             }
             
             _ui.RefreshInventoryUI(_inventory.Items);
-            GameManager.Instance.ClosePauseMenu();
+            UIManager.Instance.ClosePauseMenu();
         }
         else if (!selectedItem.isUsable)
         {
@@ -104,7 +104,7 @@ public class UIControls : MonoBehaviour
         {
             _inventory.DropItem(selectedItem);
             _ui.RefreshInventoryUI(_inventory.Items);
-            GameManager.Instance.ClosePauseMenu();
+            UIManager.Instance.ClosePauseMenu();
         }
     }
     

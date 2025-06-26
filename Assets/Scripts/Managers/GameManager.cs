@@ -16,16 +16,7 @@ public class GameManager : MonoBehaviour
     public Transform CameraTarget => _cameraTarget;
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
-
-    [Header("Game Settings")]
-    public bool IsGamePaused { get; private set; }
     
-    [Header("UI")]
-    [SerializeField] private GameObject _pausePanel;
-    [FormerlySerializedAs("_eventSystem")] [SerializeField] private EventSystem _gameEventSystem;
-    public EventSystem GameEventSystem => _gameEventSystem;
-    [SerializeField] private GameObject _firstSelection;
-
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -64,38 +55,6 @@ public class GameManager : MonoBehaviour
         {
             TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM31");
         }
-    }
-
-    public void OpenPauseMenu()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        _pausePanel.SetActive(true);
-        IsGamePaused = true;
-
-        StartCoroutine(EnablePauseMenuNextFrame());
-    }
-
-    public void ClosePauseMenu()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        _pausePanel.SetActive(false);
-        IsGamePaused = false;
-        
-        InputManager.Instance.SwitchToDefaultInput();
-    }
-
-    private IEnumerator EnablePauseMenuNextFrame()
-    {
-        yield return null;
-
-        _gameEventSystem.SetSelectedGameObject(null);
-        _gameEventSystem.SetSelectedGameObject(_firstSelection);
-        
-        InputManager.Instance.SwitchToUIInput();
     }
 
     public void QuitGame()
