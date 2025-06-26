@@ -7,7 +7,7 @@ public class UIControls : MonoBehaviour
     [SerializeField] private PlayerInventory _inventory;
 
     private UIManager _ui;
-
+    
     private bool _noteIsActivated;
 
     private PlayerInput Input => InputManager.Instance.PlayerInput;
@@ -42,6 +42,8 @@ public class UIControls : MonoBehaviour
     public void OnInventoryNavigate(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
+
+        if (UIManager.Instance.NoteContents.activeInHierarchy) return;
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
