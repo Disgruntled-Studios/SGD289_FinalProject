@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool _isSprinting;
     public bool IsSprinting => _isSprinting;
 
-    private IInteractable _currentInteractable;
+    public IInteractable _currentInteractable { get; private set; }
     private IItemReceiver _currentItemReceiver;
     public IItemReceiver CurrentItemReceiver => _currentItemReceiver;
 
