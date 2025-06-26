@@ -5,6 +5,33 @@ using UnityEngine.InputSystem;
 public class PuzzleControls : MonoBehaviour
 {
     private PowerPuzzleManager _activePuzzleManager;
+    private PlayerInput Input => InputManager.Instance.PlayerInput;
+
+    private void OnEnable()
+    {
+        var puzzleMap = Input.PuzzleMap;
+        
+        puzzleMap.RotateTileRight.performed += OnRotateTileRight;
+        puzzleMap.RotateTileLeft.performed += OnRotateTileLeft;
+        puzzleMap.MoveNorth.performed += OnMoveNorth;
+        puzzleMap.MoveSouth.performed += OnMoveSouth;
+        puzzleMap.MoveWest.performed += OnMoveWest;
+        puzzleMap.MoveEast.performed += OnMoveEast;
+        puzzleMap.ExitPuzzle.performed += OnExitPuzzle;
+    }
+
+    private void OnDisable()
+    {
+        var puzzleMap = Input.PuzzleMap;
+        
+        puzzleMap.RotateTileRight.performed -= OnRotateTileRight;
+        puzzleMap.RotateTileLeft.performed -= OnRotateTileLeft;
+        puzzleMap.MoveNorth.performed -= OnMoveNorth;
+        puzzleMap.MoveSouth.performed -= OnMoveSouth;
+        puzzleMap.MoveWest.performed -= OnMoveWest;
+        puzzleMap.MoveEast.performed -= OnMoveEast;
+        puzzleMap.ExitPuzzle.performed -= OnExitPuzzle;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -42,6 +69,8 @@ public class PuzzleControls : MonoBehaviour
 
     public void OnRotateTileRight(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.RotateTile(true);
@@ -49,6 +78,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnRotateTileLeft(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.RotateTile(false);
@@ -56,6 +87,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnMoveNorth(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.MoveSelection(1);
@@ -63,6 +96,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnMoveSouth(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.MoveSelection(2);
@@ -70,6 +105,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnMoveWest(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.MoveSelection(3);
@@ -77,6 +114,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnMoveEast(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null)
         {
             _activePuzzleManager?.MoveSelection(4);
@@ -84,6 +123,8 @@ public class PuzzleControls : MonoBehaviour
     }
     public void OnExitPuzzle(InputAction.CallbackContext context)
     {
+        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        
         if (context.performed && _activePuzzleManager != null && InputManager.Instance.IsInPuzzle)
         {
             _activePuzzleManager?.ExitPuzzle();
