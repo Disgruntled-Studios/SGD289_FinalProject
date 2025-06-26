@@ -138,7 +138,7 @@ public class InputManager : MonoBehaviour
         script.enabled = true;
     }
 
-    public void LockInputGlobally(int frameCount = 2)
+    private void LockInputGlobally(int frameCount = 2)
     {
         _lockoutFramesRemaining = Mathf.Max(_lockoutFramesRemaining, frameCount);
     }

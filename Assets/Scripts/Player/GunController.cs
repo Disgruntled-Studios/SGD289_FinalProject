@@ -23,7 +23,7 @@ public class GunController : MonoBehaviour
     private PlayerInventory _playerInventory;
 
     public bool IsReloading => _isReloading;
-    [HideInInspector]public bool hasItem;
+    public bool hasItem;
     
     private void Start()
     {
