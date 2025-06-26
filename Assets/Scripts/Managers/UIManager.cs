@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _inventorySlotPrefab;
     [SerializeField] private Transform _inventorySlotParent;
     [SerializeField] private GameObject _noteContents;
+    public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
     private readonly List<GameObject> _inventorySlots = new();
     private int _selectedInventoryIndex;
