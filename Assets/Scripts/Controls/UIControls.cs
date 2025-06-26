@@ -113,6 +113,13 @@ public class UIControls : MonoBehaviour
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         Debug.Log("Closing Inventory");
+
+        if (_noteIsActivated)
+        {
+            _noteIsActivated = false;
+            _ui.ToggleNoteContents(_noteIsActivated);
+        }
+        
         _ui.PausePanel.SetActive(false);
         InputManager.Instance.SwitchToDefaultInput();
     }
