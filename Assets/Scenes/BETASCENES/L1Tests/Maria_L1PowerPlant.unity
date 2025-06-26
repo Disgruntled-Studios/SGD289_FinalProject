@@ -4680,9 +4680,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 566506459009988613}
   _cameraTarget: {fileID: 8016657025682290569}
-  _mainGameUI: {fileID: 1247554772}
-  eventSystem: {fileID: 343519796}
-  firstSelection: {fileID: 762985696}
+  _pausePanel: {fileID: 0}
+  _gameEventSystem: {fileID: 0}
+  _firstSelection: {fileID: 0}
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -9434,8 +9434,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.14500001, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -125.3, y: -108.08}
-  m_SizeDelta: {x: 451.3999, y: -216.1522}
+  m_AnchoredPosition: {x: -175.5, y: -102.25873}
+  m_SizeDelta: {x: 351, y: -204.5135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1002268566
 PrefabInstance:
@@ -18826,7 +18826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.8093704}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0035401, y: 0}
+  m_AnchoredPosition: {x: -0.003540039, y: 0}
   m_SizeDelta: {x: -0.0070801, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1427846562
@@ -24892,6 +24892,7 @@ MonoBehaviour:
   _popUpBox: {fileID: 112931362}
   _popUpText: {fileID: 1271584819}
   _subPanels: []
+  _pausePanel: {fileID: 0}
 --- !u!114 &2117469150
 MonoBehaviour:
   m_ObjectHideFlags: 0
