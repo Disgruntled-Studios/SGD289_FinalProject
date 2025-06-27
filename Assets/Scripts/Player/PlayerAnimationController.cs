@@ -26,6 +26,9 @@ public class PlayerAnimationController : MonoBehaviour
         var forwardInput = Mathf.Clamp(_playerController.CurrentMoveInput, -1f, 1f);
         var turnInput = Mathf.Clamp(_playerController.GetCurrentTurnInput(), -1f, 1f);
 
+        var isMoving = Mathf.Abs(forwardInput) > MovementThreshold;
+        _anim.SetBool("IsMoving", isMoving);
+
         _anim.SetFloat("MoveSpeed", forwardInput);
         _anim.SetFloat("TurnSpeed", turnInput);
     }

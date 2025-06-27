@@ -1219,6 +1219,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  currentInteractableTransform: {fileID: 0}
 --- !u!114 &2083266874682607581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,9 +1292,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2288135
-  m_Height: 1.4825784
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0.0007162392, y: 0.73285633, z: 0}
+  m_Center: {x: 0.0007162392, y: 0.89020455, z: -3.2394792e-18}
 --- !u!135 &4250560411943484575
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1313,8 +1314,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.3712422
-  m_Center: {x: 0, y: 0.3323922, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &891657576446523209
 MonoBehaviour:
   m_ObjectHideFlags: 0
