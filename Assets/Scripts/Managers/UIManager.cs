@@ -48,11 +48,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _pausePanel;
     public GameObject PausePanel => _pausePanel;
     [SerializeField] private EventSystem _gameEventSystem;
-    [SerializeField] private GameObject _firstSelectionOnPause;
+    public EventSystem GameEventSystem => _gameEventSystem;
 
     [Header("Pause Sub-Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
     [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
+    [SerializeField] private GameObject _inventoryPanel;
+    [SerializeField] private GameObject _inventoryButton;
+    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private GameObject _settingsButton;
     private int _currentPanelIndex;
+    private GameObject _currentHighlightedTab;
 
     [Header("Settings Sub-Panels")] // ADDITIONAL PANELS ON SETTINGS SCREEN (Graphics, Sounds, etc)
     [SerializeField] private GameObject _helpPanel;
@@ -66,6 +71,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _soundButton;
     [SerializeField] private GameObject _exitMainMenuButton;
     [SerializeField] private GameObject _exitDesktopButton;
+    [SerializeField] private List<Button> _settingsSubButtons;
+    private int _selectedSettingsButtonIndex = 0;
     
     [Header("Graphics")] 
     [SerializeField] private Toggle _fullScreenToggle;
@@ -104,31 +111,40 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
+        
         IsGamePaused = true;
 
-        StartCoroutine(EnablePauseMenuNextFrame());
+        _inventoryPanel.SetActive(true);
+        _settingsPanel.SetActive(false);
+
+        HighlightTab(_inventoryButton);
+
+        RefreshInventoryUI(PlayerInventory.Items);
+
+        _gameEventSystem.SetSelectedGameObject(null);
+
+        if (_inventorySlots.Count > 0)
+        {
+            _selectedInventoryIndex = 0;
+            HighlightInventorySlot(_selectedInventoryIndex);
+            _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+        }
+
+        InputManager.Instance.SwitchToUIInput();
     }
 
     public void ClosePauseMenu()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        
+        _hudPanel.SetActive(true);
         _pausePanel.SetActive(false);
         IsGamePaused = false;
         
         InputManager.Instance.SwitchToDefaultInput();
-    }
-
-    private IEnumerator EnablePauseMenuNextFrame()
-    {
-        yield return null;
-
-        _gameEventSystem.SetSelectedGameObject(null);
-        _gameEventSystem.SetSelectedGameObject(_firstSelectionOnPause);
-        
-        InputManager.Instance.SwitchToUIInput();
     }
     
     public void NavigatePanel(int direction)
@@ -137,23 +153,64 @@ public class UIManager : MonoBehaviour
         _currentPanelIndex = (_currentPanelIndex + direction + _subPanels.Length) % _subPanels.Length;
         _subPanels[_currentPanelIndex].SetActive(true);
 
-        if (IsOnSettingsPanel && _noteContents.activeSelf)
-        {
-            ToggleNoteContents(false);
-        }
+        _gameEventSystem.SetSelectedGameObject(null);
 
         if (IsOnInventoryPanel)
         {
+            _inventoryPanel.SetActive(true);
+            _settingsPanel.SetActive(false);
+
+            HighlightTab(_inventoryButton);
+
             if (_inventorySlots.Count > 0)
             {
-                _gameEventSystem.SetSelectedGameObject(null);
+                _selectedInventoryIndex = 0;
+                HighlightInventorySlot(_selectedInventoryIndex);
                 _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
             }
-            else
+        }
+        else if (IsOnSettingsPanel)
+        {
+            _settingsPanel.SetActive(true);
+            _inventoryPanel.SetActive(false);
+
+            HighlightTab(_settingsButton);
+            _gameEventSystem.SetSelectedGameObject(_resumeGameButton);
+        }
+    }
+
+    public void NavigateSettings(int direction)
+    {
+        if (_settingsSubButtons.Count == 0) return;
+
+        _selectedSettingsButtonIndex = (_selectedSettingsButtonIndex + direction + _settingsSubButtons.Count) %
+                                       _settingsSubButtons.Count;
+
+        var selected = _settingsSubButtons[_selectedSettingsButtonIndex];
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(selected.gameObject);
+    }
+
+    private void HighlightTab(GameObject newTab)
+    {
+        if (_currentHighlightedTab == newTab) return;
+
+        if (_currentHighlightedTab)
+        {
+            var oldImage = _currentHighlightedTab.GetComponent<Image>();
+            if (oldImage)
             {
-                _gameEventSystem.SetSelectedGameObject(null);
+                oldImage.color = Color.white;
             }
         }
+
+        var newImage = newTab.GetComponent<Image>();
+        if (newImage)
+        {
+            newImage.color = Color.yellow;
+        }
+
+        _currentHighlightedTab = newTab;
     }
 
     public void ApplyGraphics()

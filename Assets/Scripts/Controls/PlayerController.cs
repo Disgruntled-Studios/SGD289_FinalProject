@@ -216,8 +216,7 @@ public class PlayerController : MonoBehaviour
     public void OnPause(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-
-        Debug.Log("Opening Pause");
+        
         UIManager.Instance.OpenPauseMenu();
     }
 
