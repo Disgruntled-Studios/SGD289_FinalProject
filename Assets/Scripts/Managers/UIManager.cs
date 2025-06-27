@@ -131,6 +131,10 @@ public class UIManager : MonoBehaviour
             HighlightInventorySlot(_selectedInventoryIndex);
             _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
         }
+        else
+        {
+            _itemDescriptionText.gameObject.SetActive(false);
+        }
 
         InputManager.Instance.SwitchToUIInput();
     }
@@ -297,7 +301,7 @@ public class UIManager : MonoBehaviour
 
             _inventorySlots.Add(obj);
         }
-
+        
         if (_inventorySlots.Count > 0)
         {
             _selectedInventoryIndex = 0;
@@ -305,6 +309,8 @@ public class UIManager : MonoBehaviour
 
             _gameEventSystem.SetSelectedGameObject(null);
             _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
+            _itemDescriptionText.gameObject.SetActive(true);
+            _itemDescriptionText.text = _inventorySlots[0].GetComponent<InventorySlotController>().ItemName;
         }
         else
         {
@@ -312,12 +318,65 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void NavigateInventory(int direction)
+    public void NavigateInventory(Vector2 input)
     {
         if (_inventorySlots.Count == 0) return;
 
-        _selectedInventoryIndex = (_selectedInventoryIndex + direction + _inventorySlots.Count) % _inventorySlots.Count;
+        const int columns = 3;
+        var total = _inventorySlots.Count;
+        var rows = Mathf.CeilToInt((float)total / columns);
+
+        var row = _selectedInventoryIndex / columns;
+        var col = _selectedInventoryIndex % columns;
+        
+        if (input.x > 0.5f)
+        {
+            col += 1;
+            if (col >= columns)
+            {
+                col = 0;
+                row = (row + 1) % rows;
+            }
+        }
+        else if (input.x < -0.5f)
+        {
+            col -= 1;
+            if (col < 0)
+            {
+                col = columns - 1;
+                row = (row - 1 + rows) % rows;
+            }
+        }
+        
+        if (input.y > 0.5f)
+        {
+            row -= 1;
+            if (row < 0) row = rows - 1;
+        }
+        else if (input.y < -0.5f)
+        {
+            row = (row + 1) % rows;
+        }
+
+        var newIndex = row * columns + col;
+        
+        if (newIndex >= total)
+        {
+            while (col > 0)
+            {
+                col--;
+                newIndex = row * columns + col;
+                if (newIndex < total) break;
+            }
+
+            if (newIndex >= total) return;
+        }
+
+        _selectedInventoryIndex = newIndex;
         HighlightInventorySlot(_selectedInventoryIndex);
+
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(_inventorySlots[_selectedInventoryIndex]);
     }
 
     public InventoryItem GetSelectedInventoryItem(IReadOnlyList<InventoryItem> items)

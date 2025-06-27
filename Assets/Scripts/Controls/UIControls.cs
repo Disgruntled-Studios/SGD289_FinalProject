@@ -68,14 +68,7 @@ public class UIControls : MonoBehaviour
 
         if (_ui.IsOnInventoryPanel)
         {
-            if (input.x > 0.1f)
-            {
-                _ui.NavigateInventory(-1);
-            }
-            else if (input.x < -0.1f)
-            {
-                _ui.NavigateInventory(1);
-            }
+            _ui.NavigateInventory(input);
         }
     }
 
