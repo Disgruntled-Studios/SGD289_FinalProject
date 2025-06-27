@@ -13,18 +13,27 @@ public class SelectionManager : MonoBehaviour
 {
     public static SelectionManager Instance;
     [Tooltip("The Tag that is on the objects we want to Highlight.")]
-    [SerializeField] private string selectableTag = "Interactable";
-    [Tooltip("The Layer where the Objects we want to Highlight is on.")]
-    [SerializeField] private LayerMask selectableLayer;
-    [Tooltip("This is the reference to the player interact system.")]
+    [SerializeField] private PlayerController playerRef;
 
-    private ISelectionResponse _selectionResponse;
+    private HighlightSelectionResponse _selectionResponse;
 
     private Transform _selection;
 
     void Awake()
     {
-        _selectionResponse = GetComponent<ISelectionResponse>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        _selectionResponse = GetComponent<HighlightSelectionResponse>();
+        if (playerRef == null)
+        {
+            playerRef = FindAnyObjectByType<PlayerController>();
+        }
     }
 
     // Update is called once per frame
@@ -33,21 +42,44 @@ public class SelectionManager : MonoBehaviour
         //Deselection Response
         if (_selection != null)
         {
+            //Debug.Log(_selection + " set on Deselection");
             _selectionResponse.OnDeselect(_selection);
         }
 
-        //Selection Response
+        _selection = null;
+        if (playerRef.currentInteractableTransform != null)
+        {
+            _selection = playerRef.currentInteractableTransform;
+        }
+
+         //Selection Response
         if (_selection != null)
         {
+            //Debug.Log(_selection + " set on selection");
             _selectionResponse.OnSelect(_selection);
         }
     }
 
     public void SetSelection(GameObject selected)
     {
-        if (selected.GetComponent<IInteractable>() != null)
+        if (selected.GetComponent<PickupItem>() != null)
         {
+            //Debug.Log(selected.name + " has been selected");
             _selection = selected.transform;
+        }
+        else if (selected.GetComponentInParent<PickupItem>() != null)
+        {
+            _selection = selected.transform.parent.transform;
+        }
+        _selectionResponse.OnSelect(_selection);
+    }
+
+    public void WipeSelection()
+    {
+        if (_selection != null)
+        {
+            _selectionResponse.OnDeselect(_selection);
+            _selection = null;
         }
     }
 }

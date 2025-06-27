@@ -12,26 +12,32 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
 {
     [SerializeField] public Material highlightedMaterial;
     private Material defaultMaterial;
-    private Material[] defaultMaterials;
 
     public void OnSelect(Transform selection)
     {
         //Creates a variable to hold the Renderer for the object being highlighted.
-        var selectionRenderer = selection.GetComponent<Renderer>();
+        var selectionRenderer = selection.GetComponent<MeshRenderer>();
 
         //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
-        if (selectionRenderer == null && selection.GetComponentInChildren<Renderer>() != null)
+        if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
         {
-            selectionRenderer = selection.GetComponentInChildren<Renderer>();
+            Debug.Log("found mesh renderer in child obj");
+            selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
+        }
+        //in the case that the object doesn't have a renderer but a parent object does then set the reference to that parent's renderer.
+        else if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
+        {
+            Debug.Log("found mesh renderer in parent obj");
+            selectionRenderer = selection.GetComponentInParent<MeshRenderer>();
         }
 
         if (selectionRenderer != null)
         {
+            Debug.Log(selectionRenderer);
             //Saves the default material for deselection 
-            defaultMaterials = selectionRenderer.materials;
+            defaultMaterial = selectionRenderer.material;
             //then create a list of materials to add the highlighted material 
-            var highlightedMats = new Material[] {highlightedMaterial};
-            highlightedMats.AddRange(defaultMaterials);
+            var highlightedMats = new Material[] { selectionRenderer.material, highlightedMaterial };
             //then sets the materials to the new list.
             selectionRenderer.materials = highlightedMats;
         }
@@ -40,20 +46,27 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
     public void OnDeselect(Transform selection)
     {
         //Creates a variable to hold the Renderer for the object being unhighlighted.
-        var selectionRenderer = selection.GetComponent<Renderer>();
+        var selectionRenderer = selection.GetComponent<MeshRenderer>();
 
         //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
-        if (selectionRenderer == null && selection.GetComponentInChildren<Renderer>() != null)
+        if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
         {
-            selectionRenderer = selection.GetComponentInChildren<Renderer>();
+            Debug.Log("found mesh renderer in child obj for deselect");
+            selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
+        }
+        //in the case that the object doesn't have a renderer but a parent object does then set the reference to that parent's renderer.
+        else if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
+        {
+            Debug.Log("found mesh renderer in parent obj for deselect");
+            selectionRenderer = selection.GetComponentInParent<MeshRenderer>();
         }
 
         if (selectionRenderer != null)
         {
-            // //Create a new list of materials that holds just the default material.
-            // var unhighlightedMats = new Material[] { defaultMaterial };
+            //Create a new list of materials that holds just the default material.
+            var unhighlightedMats = new Material[] { defaultMaterial };
             //Apply the new list to the materials variable.
-            selectionRenderer.materials = defaultMaterials;
+            selectionRenderer.materials = unhighlightedMats;
             //Debug.Log("Deselecting " + selection.name);
         }
     }

@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public IInteractable _currentInteractable { get; private set; }
     private IItemReceiver _currentItemReceiver;
     public IItemReceiver CurrentItemReceiver => _currentItemReceiver;
+    public Transform currentInteractableTransform;
 
     private PlayerInput Input => InputManager.Instance.PlayerInput;
     
@@ -280,21 +281,25 @@ public class PlayerController : MonoBehaviour
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
+            currentInteractableTransform = other.transform;
         }
         else if (other.transform.parent != null &&
                  other.transform.parent.TryGetComponent(out interactable))
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
+            currentInteractableTransform = other.transform;
         }
 
         if (other.TryGetComponent<IItemReceiver>(out var receiver))
         {
             _currentItemReceiver = receiver;
+            currentInteractableTransform = other.transform;
         }
         else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
         {
             _currentItemReceiver = receiver;
+            currentInteractableTransform = other.transform;
         }
     }
 
