@@ -110,8 +110,8 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: DripAmount
-    path: DripAmount
+  - name: DripDelay
+    path: DripDelay
     tooltip: 
     space: -1
     spaceable: 0
@@ -2566,9 +2566,9 @@ MonoBehaviour:
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615081}
-  m_ExposedName: DripAmount
+  m_ExposedName: DripDelay
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -2649,7 +2649,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615083}
   m_ExposedName: UsingLine
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 2
   m_Category: 
   m_Min:
     m_Type:
@@ -2895,7 +2895,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615090}
   m_ExposedName: DripColor
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 3
   m_Category: 
   m_Min:
     m_Type:

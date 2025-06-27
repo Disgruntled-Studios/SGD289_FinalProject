@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9132965392483241637
+--- !u!1 &5459178264509736216
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6645056480048748014}
-  - component: {fileID: 6160222963608091977}
-  - component: {fileID: 5231266529251284009}
+  - component: {fileID: 5950740987898947519}
+  - component: {fileID: 3612248114353271292}
+  - component: {fileID: 8669210471311152983}
   m_Layer: 0
-  m_Name: StormClouds
+  m_Name: PatternSwirler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6645056480048748014
+--- !u!4 &5950740987898947519
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132965392483241637}
+  m_GameObject: {fileID: 5459178264509736216}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.49033785, y: 6.1, z: -0.9}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!198 &6160222963608091977
+--- !u!198 &3612248114353271292
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132965392483241637}
+  m_GameObject: {fileID: 5459178264509736216}
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
@@ -4756,14 +4756,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &5231266529251284009
+--- !u!199 &8669210471311152983
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132965392483241637}
+  m_GameObject: {fileID: 5459178264509736216}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4780,7 +4780,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b949d8a610ed7a41b0286b4c95c0e77, type: 2}
+  - {fileID: 2100000, guid: c0b5fce26429f6b4896065917f2c1369, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
