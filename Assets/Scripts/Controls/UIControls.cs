@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 
 public class UIControls : MonoBehaviour
 {
@@ -43,19 +46,29 @@ public class UIControls : MonoBehaviour
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
 
-        if (UIManager.Instance.NoteContents.activeInHierarchy) return;
+        if (_ui.NoteContents.activeInHierarchy) return;
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
         var input = context.ReadValue<Vector2>();
 
-        if (input.x > 0.1f)
+        if (_ui.IsOnSettingsPanel)
         {
-            _ui.NavigateInventory(-1);
+            if (input.y > 0.1f)
+            {
+                _ui.NavigateSettings(-1);
+            }
+            else if (input.y < -0.1f)
+            {
+                _ui.NavigateSettings(1);
+            }
+
+            return;
         }
-        else if (input.x < -0.1f)
+
+        if (_ui.IsOnInventoryPanel)
         {
-            _ui.NavigateInventory(1);
+            _ui.NavigateInventory(input);
         }
     }
 
@@ -66,6 +79,18 @@ public class UIControls : MonoBehaviour
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
+        if (_ui.IsOnSettingsPanel)
+        {
+            var selected = UIManager.Instance.GameEventSystem.currentSelectedGameObject;
+            if (selected)
+            {
+                var button = selected.GetComponent<Button>();
+                button.onClick.Invoke();
+            }
+
+            return;
+        }
+        
         if (_noteIsActivated && UIManager.Instance.IsOnInventoryPanel)
         {
             _noteIsActivated = false;
@@ -114,15 +139,13 @@ public class UIControls : MonoBehaviour
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
-        Debug.Log("Closing Inventory");
-
         if (_noteIsActivated)
         {
             _noteIsActivated = false;
             _ui.ToggleNoteContents(_noteIsActivated);
         }
         
-        _ui.PausePanel.SetActive(false);
+        _ui.ClosePauseMenu();
         InputManager.Instance.SwitchToDefaultInput();
     }
 
