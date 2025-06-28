@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class InventoryItem
@@ -8,14 +9,16 @@ public class InventoryItem
     public string noteContents;
     public Sprite icon;
     public GameObject prefab;
-    public bool isUsable;
+    public bool isReadable;
+    public bool isDroppable;
 
-    public InventoryItem(string name, Sprite icon = null, GameObject prefab = null, bool isUsable = true, string additionalText = "", string noteContents = "")
+    public InventoryItem(string name, bool isReadable, bool isDroppable, Sprite icon = null, GameObject prefab = null, string additionalText = "", string noteContents = "")
     {
         itemName = name;
         this.icon = icon;
         this.prefab = prefab;
-        this.isUsable = isUsable;
+        this.isReadable = isReadable;
+        this.isDroppable = isDroppable;
         this.additionalText = additionalText;
         this.noteContents = noteContents;
     }

@@ -37,7 +37,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void DropItem(InventoryItem item)
     {
-        if (item == null) return;
+        if (item is not { isDroppable: true }) return;
 
         var dropPos = _dropPosition.position;
 
@@ -56,7 +56,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         
-        if (item.prefab != null)
+        if (item.prefab)
         {
             Instantiate(item.prefab, dropPos, Quaternion.identity);
         }
@@ -71,9 +71,9 @@ public class PlayerInventory : MonoBehaviour
 
     public bool TryReadItem(InventoryItem item)
     {
-        if (item == null) return false;
+        if (item is not { isReadable: true }) return false;
 
-        if (!item.isUsable && !string.IsNullOrWhiteSpace(item.noteContents))
+        if (!item.isReadable && !string.IsNullOrWhiteSpace(item.noteContents))
         {
             if (!UIManager.Instance.IsOnInventoryPanel) return false;
             

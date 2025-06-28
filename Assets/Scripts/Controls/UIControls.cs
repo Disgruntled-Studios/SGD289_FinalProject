@@ -101,7 +101,7 @@ public class UIControls : MonoBehaviour
         var selectedItem = _ui.GetSelectedInventoryItem(_inventory.Items);
         if (selectedItem == null) return;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && selectedItem.isUsable)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable)
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
@@ -116,7 +116,7 @@ public class UIControls : MonoBehaviour
             _ui.RefreshInventoryUI(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
         }
-        else if (!selectedItem.isUsable)
+        else if (selectedItem.isReadable)
         {
             if (UIManager.Instance.IsOnSettingsPanel) return;
 
@@ -125,11 +125,15 @@ public class UIControls : MonoBehaviour
                 _noteIsActivated = true;
             }
         }
-        else
+        else if (selectedItem.isDroppable)
         {
             _inventory.DropItem(selectedItem);
             _ui.RefreshInventoryUI(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
+        }
+        else
+        {
+            Debug.Log("What happened here?");
         }
     }
     

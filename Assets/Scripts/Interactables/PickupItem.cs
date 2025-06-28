@@ -9,11 +9,12 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField, TextArea] private string _noteContents;
     [SerializeField] private Sprite _icon;
     [SerializeField] private GameObject _dropPrefab;
-    [SerializeField] private bool _isUsable = true;
+    [SerializeField] private bool _isReadable;
+    [SerializeField] private bool _isDroppable;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _icon, _dropPrefab, _isUsable, _additionalText, _noteContents);
+        var item = new InventoryItem(_itemName, _isReadable, _isDroppable, _icon, _dropPrefab, _additionalText, _noteContents);
         inventory.AddItem(item);
 
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
