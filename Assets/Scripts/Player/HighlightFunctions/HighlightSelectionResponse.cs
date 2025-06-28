@@ -18,18 +18,19 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
         //Creates a variable to hold the Renderer for the object being highlighted.
         var selectionRenderer = selection.GetComponent<MeshRenderer>();
 
-        //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
-        if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
-        {
-            Debug.Log("found mesh renderer in child obj");
-            selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
-        }
+
         //in the case that the object doesn't have a renderer but a parent object does then set the reference to that parent's renderer.
-        else if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
+        if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
         {
             Debug.Log("found mesh renderer in parent obj");
             selectionRenderer = selection.GetComponentInParent<MeshRenderer>();
         }
+        //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
+        else if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
+        {
+            Debug.Log("found mesh renderer in child obj");
+            selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
+        } 
 
         if (selectionRenderer != null)
         {
