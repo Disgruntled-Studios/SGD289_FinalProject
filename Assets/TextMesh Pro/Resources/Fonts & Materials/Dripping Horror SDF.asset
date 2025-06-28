@@ -10,36 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Worlenz DEMO SDF
+  m_Name: Dripping Horror SDF
   m_EditorClassIdentifier: 
   m_Version: 1.1.0
   m_FaceInfo:
     m_FaceIndex: 0
-    m_FamilyName: Worlenz DEMO
+    m_FamilyName: Dripping Horror
     m_StyleName: Regular
     m_PointSize: 90
     m_Scale: 1
     m_UnitsPerEM: 2048
     m_LineHeight: 103.53516
-    m_AscentLine: 84.06738
-    m_CapLine: 63
-    m_MeanLine: 63
+    m_AscentLine: 75.41016
+    m_CapLine: 56
+    m_MeanLine: 39
     m_Baseline: 0
-    m_DescentLine: -18.413086
-    m_SuperscriptOffset: 84.06738
+    m_DescentLine: -18.36914
+    m_SuperscriptOffset: 75.41016
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -18.413086
+    m_SubscriptOffset: -18.36914
     m_SubscriptSize: 0.5
     m_UnderlineOffset: -12.832031
     m_UnderlineThickness: 6.591797
-    m_StrikethroughOffset: 25.2
+    m_StrikethroughOffset: 15.6
     m_StrikethroughThickness: 6.591797
     m_TabWidth: 22
-  m_Material: {fileID: 8557579589457890665}
-  m_SourceFontFileGUID: f4481ed710ae7b74796a6d57238098c3
+  m_Material: {fileID: 7386018602365067194}
+  m_SourceFontFileGUID: d0e4a47a9454e3f4490dc0069ca79f1d
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: f4481ed710ae7b74796a6d57238098c3
+    sourceFontFileGUID: d0e4a47a9454e3f4490dc0069ca79f1d
     faceIndex: 0
     pointSizeSamplingMode: 0
     pointSize: 90
@@ -56,14 +56,14 @@ MonoBehaviour:
     fontStyleModifier: 0
     renderMode: 4165
     includeFontFeatures: 0
-  m_SourceFontFile: {fileID: 12800000, guid: f4481ed710ae7b74796a6d57238098c3, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: d0e4a47a9454e3f4490dc0069ca79f1d, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
   m_GlyphTable: []
   m_CharacterTable: []
   m_AtlasTextures:
-  - {fileID: 6952478239424080747}
+  - {fileID: 457741789716831459}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_GetFontFeatures: 1
@@ -141,13 +141,13 @@ MonoBehaviour:
     kerningPairs: []
   fallbackFontAssets: []
   atlas: {fileID: 0}
---- !u!28 &6952478239424080747
+--- !u!28 &457741789716831459
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Worlenz DEMO Atlas
+  m_Name: Dripping Horror Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -187,14 +187,14 @@ Texture2D:
     offset: 0
     size: 0
     path: 
---- !u!21 &8557579589457890665
+--- !u!21 &7386018602365067194
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Worlenz DEMO Atlas Material
+  m_Name: Dripping Horror Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -219,15 +219,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FaceTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 24bd4bdc971610848933cfd0fba1e499, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 6952478239424080747}
+        m_Texture: {fileID: 457741789716831459}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 24bd4bdc971610848933cfd0fba1e499, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -243,9 +243,9 @@ Material:
     - _ColorMask: 15
     - _CullMode: 0
     - _Diffuse: 0.5
-    - _FaceDilate: 0
-    - _FaceUVSpeedX: 0
-    - _FaceUVSpeedY: 0
+    - _FaceDilate: -0.236
+    - _FaceUVSpeedX: -0.25
+    - _FaceUVSpeedY: -0.25
     - _GlowInner: 0.05
     - _GlowOffset: 0
     - _GlowOuter: 0.05
@@ -255,14 +255,14 @@ Material:
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
-    - _OutlineUVSpeedX: 0
+    - _OutlineUVSpeedX: 0.25
     - _OutlineUVSpeedY: 0
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
-    - _ScaleRatioB: 0.73125
-    - _ScaleRatioC: 0.73125
+    - _ScaleRatioB: 0.94364995
+    - _ScaleRatioC: 0.94364995
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
