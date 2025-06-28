@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+public enum SettingsFocusState
+{
+    MainButtons,
+    SubPanel
+}
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
@@ -72,7 +78,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _exitMainMenuButton;
     [SerializeField] private GameObject _exitDesktopButton;
     [SerializeField] private List<Button> _settingsSubButtons;
-    private int _selectedSettingsButtonIndex = 0;
+    private int _selectedSettingsButtonIndex;
+
+    private SettingsFocusState _settingsFocus = SettingsFocusState.MainButtons;
     
     [Header("Graphics")] 
     [SerializeField] private Toggle _fullScreenToggle;
