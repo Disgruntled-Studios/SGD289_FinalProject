@@ -322,6 +322,7 @@ public class PlayerController : MonoBehaviour
             {
                 _currentInteractable.OnExit();
                 ClearCurrentInteractable(_currentInteractable);
+                currentInteractableTransform = null;
             }
         }
 
@@ -341,6 +342,7 @@ public class PlayerController : MonoBehaviour
             if (isAMatch)
             {
                 ClearCurrentItemReceiver(_currentItemReceiver);
+                currentInteractableTransform = null;
             }
         }
     }
