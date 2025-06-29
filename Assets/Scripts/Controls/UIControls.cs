@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
@@ -183,6 +182,7 @@ public class UIControls : MonoBehaviour
         {
             _noteIsActivated = false;
             _ui.ToggleNoteContents(_noteIsActivated);
+            return;
         }
         
         _ui.ClosePauseMenu();
