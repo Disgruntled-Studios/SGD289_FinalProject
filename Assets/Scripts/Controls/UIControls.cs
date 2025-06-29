@@ -24,7 +24,7 @@ public class UIControls : MonoBehaviour
     {
         var uiMap = Input.UIMap;
         
-        uiMap.InventoryNavigate.performed += OnInventoryNavigate;
+        uiMap.InventoryNavigate.performed += OnNavigate;
         uiMap.InventorySubmit.performed += OnInventorySubmit;
         uiMap.NextPanel.performed += OnNextPanel;
         uiMap.PreviousPanel.performed += OnPreviousPanel;
@@ -35,14 +35,14 @@ public class UIControls : MonoBehaviour
     { 
         var uiMap = Input.UIMap;
         
-        uiMap.InventoryNavigate.performed -= OnInventoryNavigate;
+        uiMap.InventoryNavigate.performed -= OnNavigate;
         uiMap.InventorySubmit.performed -= OnInventorySubmit;
         uiMap.NextPanel.performed -= OnNextPanel;
         uiMap.PreviousPanel.performed -= OnPreviousPanel;
         uiMap.InventoryCancel.performed -= OnInventoryCancel;
     }
 
-    public void OnInventoryNavigate(InputAction.CallbackContext context)
+    public void OnNavigate(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
 
@@ -52,21 +52,76 @@ public class UIControls : MonoBehaviour
 
         var input = context.ReadValue<Vector2>();
 
+        // Settings
         if (_ui.IsOnSettingsPanel)
         {
-            if (input.y > 0.1f)
+            if (_ui.CurrentSettingsFocusState == SettingsFocusState.MainButtons)
             {
-                _ui.NavigateSettingsSubPanels(-1);
+                if (input.y > 0.1f)
+                {
+                    _ui.NavigateSettingsSubPanels(-1);
+                }
+                else if (input.y < -0.1f)
+                {
+                    _ui.NavigateSettingsSubPanels(1);
+                }
+                else if (input.x > 0.5f)
+                {
+                    _ui.EnterActiveSubPanel();
+                }
             }
-            else if (input.y < -0.1f)
+            else if (_ui.CurrentSettingsFocusState == SettingsFocusState.SubPanel)
             {
-                _ui.NavigateSettingsSubPanels(1);
-            }
+                switch (_ui.CurrentSettingsPanelType)
+                {
+                    case SettingsPanelType.Graphics:
+                        if (input.y > 0.1f)
+                        {
+                            _ui.NavigateGraphicsPanel(-1);
+                        }
+                        else if (input.y < -0.1f)
+                        {
+                            _ui.NavigateGraphicsPanel(1);
+                        }
+                        else if (input.x > 0.5f)
+                        {
+                            _ui.AdjustGraphicsElement(1);
+                        }
+                        else if (input.x < -0.1f)
+                        {
+                            _ui.ExitSubPanelToSidebar();
+                        }
 
-            return;
+                        break;
+                    case SettingsPanelType.Sound:
+                        if (input.y > 0.1f)
+                        {
+                            _ui.NavigateSoundPanel(-1);
+                        }
+                        else if (input.y < -0.1f)
+                        {
+                            _ui.NavigateSoundPanel(1);
+                        }
+                        else if (input.x > 0.5f)
+                        {
+                            _ui.AdjustSoundElement(1);
+                        }
+                        else if (input.x < -0.5f)
+                        {
+                            _ui.AdjustSoundElement(-1);
+                        }
+                        else if (input.x < -0.1f)
+                        {
+                            _ui.ExitSubPanelToSidebar();
+                        }
+
+                        break;
+                    case SettingsPanelType.Help:
+                        break;
+                }
+            }
         }
-
-        if (_ui.IsOnInventoryPanel)
+        else if (_ui.IsOnInventoryPanel)
         {
             _ui.NavigateInventory(input);
         }

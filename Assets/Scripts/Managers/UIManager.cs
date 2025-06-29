@@ -100,7 +100,9 @@ public class UIManager : MonoBehaviour
     private int _currentSoundElementIndex;
     
     private SettingsFocusState _currentSettingsFocusState = SettingsFocusState.MainButtons;
+    public SettingsFocusState CurrentSettingsFocusState => _currentSettingsFocusState;
     private SettingsPanelType _currentSettingsPanelType;
+    public SettingsPanelType CurrentSettingsPanelType => _currentSettingsPanelType;
     
     [Header("Graphics")] 
     [SerializeField] private Toggle _fullScreenToggle;
@@ -288,6 +290,61 @@ public class UIManager : MonoBehaviour
                 _gameEventSystem.SetSelectedGameObject(_helpElements[_currentHelpElementIndex].gameObject);
                 break;
         }
+    }
+
+    public void NavigateGraphicsPanel(int direction)
+    {
+        if (_graphicsElements.Count == 0) return;
+
+        _currentGraphicsElementIndex = (_currentGraphicsElementIndex + direction + _graphicsElements.Count) %
+                                       _graphicsElements.Count;
+
+        var selected = _graphicsElements[_currentGraphicsElementIndex];
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(selected.gameObject);
+    }
+
+    public void NavigateSoundPanel(int direction)
+    {
+        if (_soundElements.Count == 0) return;
+
+        _currentSoundElementIndex =
+            (_currentSoundElementIndex + direction + _soundElements.Count) % _graphicsElements.Count;
+
+        var selected = _soundElements[_currentSoundElementIndex];
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(selected.gameObject);
+    }
+
+    private void AdjustSelectable(Selectable selectable, int direction)
+    {
+        if (!selectable) return;
+
+        if (selectable.TryGetComponent<Slider>(out var slider))
+        {
+            var step = slider.wholeNumbers ? 1f : slider.maxValue / 20f;
+            slider.value = Mathf.Clamp(slider.value + (step * direction), slider.minValue, slider.maxValue);
+        }
+        else if (selectable.TryGetComponent<Toggle>(out var toggle))
+        {
+            toggle.isOn = !toggle.isOn;
+        }
+        else if (selectable.TryGetComponent<Button>(out var button))
+        {
+            button.onClick.Invoke();
+        }
+    }
+
+    public void AdjustGraphicsElement(int direction)
+    {
+        var selected = _graphicsElements[_currentGraphicsElementIndex];
+        AdjustSelectable(selected, direction);
+    }
+
+    public void AdjustSoundElement(int direction)
+    {
+        var selected = _soundElements[_currentSoundElementIndex];
+        AdjustSelectable(selected, direction);
     }
 
     public void ExitSubPanelToSidebar()
