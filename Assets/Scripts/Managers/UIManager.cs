@@ -6,6 +6,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+public enum SettingsPanelType
+{
+    Help,
+    Graphics,
+    Sound
+}
+
 public enum SettingsFocusState
 {
     MainButtons,
@@ -80,7 +87,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Button> _settingsSubButtons;
     private int _selectedSettingsButtonIndex;
 
-    private SettingsFocusState _settingsFocus = SettingsFocusState.MainButtons;
+    [Header("Graphics Menu Elements")] 
+    [SerializeField] private List<Selectable> _graphicsElements;
+    private int _currentGraphicsElementIndex;
+
+    [Header("Help Menu Elements")] // None right now
+    [SerializeField] private List<Selectable> _helpElements;
+    private int _currentHelpElementIndex;
+
+    [Header("Sound Menu Elements")] 
+    [SerializeField] private List<Selectable> _soundElements;
+    private int _currentSoundElementIndex;
+    
+    private SettingsFocusState _currentSettingsFocusState = SettingsFocusState.MainButtons;
+    private SettingsPanelType _currentSettingsPanelType;
     
     [Header("Graphics")] 
     [SerializeField] private Toggle _fullScreenToggle;
@@ -112,7 +132,7 @@ public class UIManager : MonoBehaviour
         _fullScreenToggle.isOn = Screen.fullScreen;
     }
 
-    #region General UI
+    #region UI Navigation
 
     public void OpenPauseMenu()
     {
@@ -183,15 +203,22 @@ public class UIManager : MonoBehaviour
         }
         else if (IsOnSettingsPanel)
         {
+            _selectedSettingsButtonIndex = 0;
+
+            _currentSettingsPanelType = SettingsPanelType.Help;
+
+            ShowSettingsSubPanel(0);
+            
             _settingsPanel.SetActive(true);
             _inventoryPanel.SetActive(false);
 
             HighlightTab(_settingsButton);
-            _gameEventSystem.SetSelectedGameObject(_resumeGameButton);
+            _gameEventSystem.SetSelectedGameObject(null);
+            _gameEventSystem.SetSelectedGameObject(_settingsSubButtons[_selectedSettingsButtonIndex].gameObject);
         }
     }
 
-    public void NavigateSettings(int direction)
+    public void NavigateSettingsSubPanels(int direction)
     {
         if (_settingsSubButtons.Count == 0) return;
 
@@ -201,6 +228,74 @@ public class UIManager : MonoBehaviour
         var selected = _settingsSubButtons[_selectedSettingsButtonIndex];
         _gameEventSystem.SetSelectedGameObject(null);
         _gameEventSystem.SetSelectedGameObject(selected.gameObject);
+
+        if (selected.gameObject == _helpButton.gameObject)
+        {
+            _currentSettingsPanelType = SettingsPanelType.Help;
+            ShowSettingsSubPanel(0);
+        }
+        else if (selected.gameObject == _graphicsButton.gameObject)
+        {
+            _currentSettingsPanelType = SettingsPanelType.Graphics;
+            ShowSettingsSubPanel(1);
+        }
+        else if (selected.gameObject == _soundButton.gameObject)
+        {
+            _currentSettingsPanelType = SettingsPanelType.Sound;
+            ShowSettingsSubPanel(2);
+        }
+    }
+
+    private void ShowSettingsSubPanel(int index)
+    {
+        _helpPanel.SetActive(false);
+        _graphicsPanel.SetActive(false);
+        _soundPanel.SetActive(false);
+
+        switch (index)
+        {
+            case 0:
+                _helpPanel.SetActive(true);
+                break;
+            case 1:
+                _graphicsPanel.SetActive(true);
+                break;
+            case 2:
+                _soundPanel.SetActive(true);
+                break;
+        }
+    }
+
+    public void EnterActiveSubPanel()
+    {
+        _currentSettingsFocusState = SettingsFocusState.SubPanel;
+
+        switch (_currentSettingsPanelType)
+        {
+            case SettingsPanelType.Graphics:
+                _currentGraphicsElementIndex = 0;
+                _gameEventSystem.SetSelectedGameObject(null);
+                _gameEventSystem.SetSelectedGameObject(_graphicsElements[_currentGraphicsElementIndex].gameObject);
+                break;
+            case SettingsPanelType.Sound:
+                _currentSoundElementIndex = 0;
+                _gameEventSystem.SetSelectedGameObject(null);
+                _gameEventSystem.SetSelectedGameObject(_soundElements[_currentSoundElementIndex].gameObject);
+                break;
+            case SettingsPanelType.Help:
+                _currentHelpElementIndex = 0;
+                _gameEventSystem.SetSelectedGameObject(null);
+                _gameEventSystem.SetSelectedGameObject(_helpElements[_currentHelpElementIndex].gameObject);
+                break;
+        }
+    }
+
+    public void ExitSubPanelToSidebar()
+    {
+        _currentSettingsFocusState = SettingsFocusState.MainButtons;
+
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(_settingsSubButtons[_selectedSettingsButtonIndex].gameObject);
     }
 
     private void HighlightTab(GameObject newTab)
