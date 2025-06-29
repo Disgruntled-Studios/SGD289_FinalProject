@@ -34,9 +34,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _keycodePanel;
     [SerializeField] private TMP_Text _keycodePrompt;
     [SerializeField] private List<TMP_Text> _digitDisplays;
-    private KeycodeReceiver _activeKeycodeReceiver;
-    private int[] _currentDigits;
-    private int _activeDigitIndex;
     
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
@@ -44,7 +41,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Pause Panel")] 
     [SerializeField] private GameObject _pausePanel;
-    public GameObject PausePanel => _pausePanel;
     [SerializeField] private EventSystem _gameEventSystem;
     public EventSystem GameEventSystem => _gameEventSystem;
 
@@ -79,9 +75,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Sound Menu Elements")] 
     [SerializeField] private List<Selectable> _soundElements;
-    
-    [Header("Graphics")] 
-    [SerializeField] private Toggle _fullScreenToggle;
 
     public bool IsOnInventoryPanel => _currentPanelIndex == 0;
     public bool IsOnSettingsPanel => _currentPanelIndex == 1;
@@ -93,6 +86,9 @@ public class UIManager : MonoBehaviour
 
     private InventoryUIController _inventoryUIController;
     public InventoryUIController InventoryUIController => _inventoryUIController;
+
+    private KeycodeUIController _keycodeUIController;
+    public KeycodeUIController KeycodeUIController => _keycodeUIController;
     
     private void Awake()
     {
@@ -120,6 +116,8 @@ public class UIManager : MonoBehaviour
 
         _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlotPrefab, _inventorySlotParent,
             _itemDescriptionText, 3);
+
+        _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
     }
 
     #region UI Navigation
@@ -203,11 +201,6 @@ public class UIManager : MonoBehaviour
         }
 
         _currentHighlightedTab = newTab;
-    }
-
-    public void ApplyGraphics()
-    {
-        Screen.fullScreen = _fullScreenToggle.isOn;
     }
 
     #endregion
@@ -308,76 +301,27 @@ public class UIManager : MonoBehaviour
 
     public void OpenKeycodePanel(KeycodeReceiver receiver, string prompt = "Enter Keycode: ")
     {
-        _activeKeycodeReceiver = receiver;
-        _keycodePrompt.text = prompt;
-
-        _keycodePanel.SetActive(true);
-        _activeDigitIndex = 0;
-
-        _currentDigits = new int[_digitDisplays.Count];
-        for (var i = 0; i < _digitDisplays.Count; i++)
-        {
-            _currentDigits[i] = 0;
-            _digitDisplays[i].text = "0";
-        }
-
-        HighlightActiveDigit();
-        InputManager.Instance.SwitchToKeycodeInput();
+        _keycodeUIController.Open(receiver, prompt);
     }
 
     public void CloseKeycodePanel()
     {
-        if (!InputManager.Instance.IsInKeycode) return;
-        _keycodePanel.SetActive(false);
-        _activeKeycodeReceiver = null;
-        InputManager.Instance.SwitchToDefaultInput();
+        _keycodeUIController.Close();
     }
 
     public void SubmitKeycode()
     {
-        if (_activeKeycodeReceiver == null) return;
-
-        var enteredCode = string.Join("", _currentDigits);
-        _activeKeycodeReceiver.SubmitCode(enteredCode);
+        _keycodeUIController.Submit();
     }
 
-    public void NavigateKeycodeDigits(Vector2 direction)
+    public void NavigateKeycodeDigits(Vector2 input)
     {
-        if (!_keycodePanel.activeSelf) return;
-
-        if (direction.x > 0.1f)
-        {
-            _activeDigitIndex = (_activeDigitIndex + 1) % _digitDisplays.Count;
-            HighlightActiveDigit();
-        }
-        else if (direction.x < -0.1f)
-        {
-            _activeDigitIndex = (_activeDigitIndex - 1 + _digitDisplays.Count) % _digitDisplays.Count;
-            HighlightActiveDigit();
-        }
-        else if (direction.y > 0.1f)
-        {
-            _currentDigits[_activeDigitIndex] = (_currentDigits[_activeDigitIndex] + 1) % 10;
-            _digitDisplays[_activeDigitIndex].text = _currentDigits[_activeDigitIndex].ToString();
-        }
-        else if (direction.y < -0.1f)
-        {
-            _currentDigits[_activeDigitIndex] = (_currentDigits[_activeDigitIndex] - 1 + 10) % 10;
-            _digitDisplays[_activeDigitIndex].text = _currentDigits[_activeDigitIndex].ToString();
-        }
+        _keycodeUIController.Navigate(input);
     }
 
-    public void ShowInvalidKeycodeFeedback()
+    public void ShowInvalidCodeFeedback()
     {
-        // TODO
-    }
-
-    private void HighlightActiveDigit()
-    {
-        for (var i = 0; i < _digitDisplays.Count; i++)
-        {
-            _digitDisplays[i].color = (i == _activeDigitIndex) ? Color.yellow : Color.white;
-        }
+        _keycodeUIController.ShowInvalidFeedback();
     }
 
     #endregion
