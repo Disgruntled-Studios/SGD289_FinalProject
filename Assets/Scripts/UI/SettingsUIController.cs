@@ -25,6 +25,8 @@ public class SettingsUIController
     public SettingsFocusState FocusState { get; private set; }
     public SettingsPanelType PanelType { get; private set; }
 
+    private Selectable _currentSelected;
+
     public SettingsUIController(EventSystem eventSystem, List<Button> subButtons, Button helpButton, 
         Button graphicsButton, Button soundButton, GameObject helpPanel, GameObject graphicsPanel, GameObject soundPanel, 
         GameObject settingsButton, List<Selectable> graphicsElements, List<Selectable> soundElements)
@@ -49,6 +51,8 @@ public class SettingsUIController
         _selectedButtonIndex = 0;
         _graphicsElementIndex = 0;
         _soundElementIndex = 0;
+
+        _currentSelected = null;
 
         ShowSubPanel(PanelType);
         SelectButton();
@@ -95,6 +99,12 @@ public class SettingsUIController
 
     public void ExitSubPanel()
     {
+        if (_currentSelected)
+        {
+            UpdateKnobHighlight(_currentSelected, false);
+            _currentSelected = null;
+        }
+        
         FocusState = SettingsFocusState.MainButtons;
         SelectButton();
     }
@@ -153,6 +163,12 @@ public class SettingsUIController
 
     private void SelectButton()
     {
+        if (_currentSelected)
+        {
+            UpdateKnobHighlight(_currentSelected, false);
+            _currentSelected = null;
+        }
+        
         var button = (_selectedButtonIndex >= 0 && _selectedButtonIndex < _subButtons.Count)
             ? _subButtons[_selectedButtonIndex]
             : null;
@@ -163,9 +179,31 @@ public class SettingsUIController
 
     private void Select(Selectable selectable)
     {
-        if (selectable == null) return;
+        if (_currentSelected)
+        {
+            UpdateKnobHighlight(_currentSelected, false);
+        }
+
+        UpdateKnobHighlight(selectable, true);
 
         _eventSystem.SetSelectedGameObject(null);
         _eventSystem.SetSelectedGameObject(selectable.gameObject);
+
+        _currentSelected = selectable;
+    }
+
+    private void UpdateKnobHighlight(Selectable selectable, bool isSelected)
+    {
+        if (!selectable) return;
+
+        if (selectable.TryGetComponent<Slider>(out var slider))
+        {
+            if (!slider.handleRect) return;
+
+            var knobImage = slider.handleRect.GetComponent<Image>();
+            if (!knobImage) return;
+
+            knobImage.color = isSelected ? Color.yellow : Color.white;
+        }
     }
 }

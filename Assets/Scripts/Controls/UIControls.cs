@@ -82,13 +82,13 @@ public class UIControls : MonoBehaviour
                 {
                     settings.NavigateSubPanel(1);
                 }
-                else if (input.x < -0.5f)
+                else if (input.x > 0.1f)
                 {
-                    settings.AdjustCurrentElement(-1);
+                    settings.AdjustCurrentElement(1);
                 }
                 else if (input.x < -0.1f)
                 {
-                    settings.ExitSubPanel();
+                    settings.AdjustCurrentElement(-1);
                 }
             }
 
@@ -172,6 +172,14 @@ public class UIControls : MonoBehaviour
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
+        var settings = _ui.SettingsUIController;
+
+        if (_ui.IsOnSettingsPanel && settings.FocusState == SettingsFocusState.SubPanel)
+        {
+            settings.ExitSubPanel();
+            return;
+        }
+        
         if (_noteIsActivated)
         {
             _noteIsActivated = false;
