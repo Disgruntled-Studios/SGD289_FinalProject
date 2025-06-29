@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1311075144850683070}
   - component: {fileID: 5285164693931793489}
   - component: {fileID: 2121113393281793203}
+  - component: {fileID: 2242162176446609919}
   - component: {fileID: 1359164339502604765}
   - component: {fileID: 2290695866752753519}
   m_Layer: 0
@@ -54,7 +55,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2121113393281793203
 MonoBehaviour:
@@ -78,6 +79,18 @@ MonoBehaviour:
   _isReadable: 0
   _isDroppable: 0
   _isGun: 1
+--- !u!114 &2242162176446609919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375194432095171894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed74fb6f55e6f91498ba99ba5993a92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!199 &1359164339502604765
 ParticleSystemRenderer:
   serializedVersion: 6

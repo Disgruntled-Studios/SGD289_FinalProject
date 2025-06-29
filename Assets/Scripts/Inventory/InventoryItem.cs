@@ -11,8 +11,9 @@ public class InventoryItem
     public GameObject prefab;
     public bool isReadable;
     public bool isDroppable;
+    public readonly bool isGun;
 
-    public InventoryItem(string name, bool isReadable, bool isDroppable, Sprite icon = null, GameObject prefab = null, string additionalText = "", string noteContents = "")
+    public InventoryItem(string name, bool isReadable, bool isDroppable, bool isGun, Sprite icon = null, GameObject prefab = null, string additionalText = "", string noteContents = "")
     {
         itemName = name;
         this.icon = icon;
@@ -21,5 +22,6 @@ public class InventoryItem
         this.isDroppable = isDroppable;
         this.additionalText = additionalText;
         this.noteContents = noteContents;
+        this.isGun = isGun;
     }
 }

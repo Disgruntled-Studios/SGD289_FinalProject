@@ -12,11 +12,17 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private bool _isReadable;
     [SerializeField] private bool _isDroppable;
 
-    [SerializeField] private bool _isGun; // ONLY MARK THIS ON GUN OBJECT
+    private bool _isGun; // PlayerGun script sets this automatically
+
+    private void Start()
+    {
+        _isGun = GetComponent<PlayerGun>();
+    }
+    
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _isReadable, _isDroppable, _icon, _dropPrefab, _additionalText, _noteContents);
+        var item = new InventoryItem(_itemName, _isReadable, _isDroppable, _isGun, _icon, _dropPrefab, _additionalText, _noteContents);
         inventory.AddItem(item);
 
         if (_isGun)

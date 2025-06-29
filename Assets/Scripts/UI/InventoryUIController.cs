@@ -156,6 +156,10 @@ public class InventoryUIController
             _promptInstructionsText.gameObject.SetActive(true);
             _promptInstructionsText.text = "Press X to Read";
         }
+        else if (!itemInSlot.isDroppable && !itemInSlot.isReadable)
+        {
+            
+        }
         else
         {
             _promptInstructionsText.gameObject.SetActive(false);
