@@ -4,6 +4,8 @@ using UnityEngine.Serialization;
 
 public class GunController : MonoBehaviour
 {
+    [SerializeField] private PlayerAnimationController _animationController;
+    
     [Header("Gun")]
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform laserStart;
@@ -100,6 +102,7 @@ public class GunController : MonoBehaviour
         if (_isAiming && currentAmmoMagAmt > 0 && !_isReloading)
         {
             Debug.Log("Shooting");
+            _animationController.Shoot();
             currentAmmoMagAmt--;
             //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
             //Play SFX 

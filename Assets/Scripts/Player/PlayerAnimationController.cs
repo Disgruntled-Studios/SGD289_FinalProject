@@ -54,5 +54,10 @@ public class PlayerAnimationController : MonoBehaviour
     {
         _anim.SetBool("IsSprinting", isSprinting);
     }
+
+    public void Shoot()
+    {
+        _anim.SetTrigger("ShootTrigger");
+    }
 }
 
