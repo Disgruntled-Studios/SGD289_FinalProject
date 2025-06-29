@@ -35,7 +35,8 @@ public class GunController : MonoBehaviour
             _lr.enabled = false;
             _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
-        
+
+        _animationController = GetComponentInParent<PlayerAnimationController>();
         StartCoroutine(ReloadGun());
     }
 
@@ -114,21 +115,23 @@ public class GunController : MonoBehaviour
             if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _shootableLayers))
             {
                 Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                EnemyBehavior enemyRef = hit.transform.gameObject.GetComponent<EnemyBehavior>();
                 //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
-                if (hit.transform.gameObject.GetComponent<EnemyBehavior>())
+                if (enemyRef == null)
                 {
-                    hit.transform.gameObject.GetComponent<EnemyBehavior>().health.Damage(_damageAmount);
+                    enemyRef = hit.transform.gameObject.GetComponentInParent<EnemyBehavior>();
                     //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
-                }
-                else if (hit.transform.gameObject.GetComponentInParent<EnemyBehavior>())
-                {
-                    hit.transform.gameObject.GetComponentInParent<EnemyBehavior>().health.Damage(_damageAmount);
-                    //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth); 
                 }
                 else if (hit.transform.gameObject.GetComponent<ShootableObject>())
                 {
                     hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
+                }
+
+                if (enemyRef != null)
+                {
+                    enemyRef.health.Damage(_damageAmount);
+                    Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
                 }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }

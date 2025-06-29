@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    private enum BehaviorState
+    public enum BehaviorState
     {
         patrolling,
         chasing,
-        investigating,
+        Resting,
     }
 
-    private BehaviorState currentState;
+    public BehaviorState currentState;
     //[SerializeField] float chaseDistance = 10f;
     [SerializeField] float attackDistance = 2f;
     [SerializeField] float attackStrength = 15f;
@@ -30,7 +30,7 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] EnemyFOV fov;
     [SerializeField] float detectionRate = 15f;
     [SerializeField, Tooltip("The patrol pattern this enemy will naturally follow.")] private GameObject patrolPattern;
-    [SerializeField] Image awarenessImage;
+    [SerializeField] Light leftEyeLight, rightEyeLight;
 
     private Transform[] patrolPoints;
     private Transform currentTargetPoint;
@@ -39,9 +39,9 @@ public class EnemyBehavior : MonoBehaviour
 
     public UnitHealth health;
     private NavMeshAgent meshAgent;
+    private CapsuleCollider capsuleCollider;
     private GameObject playerRef;
     private Animator anim;
-    float detectionLvl;
 
     void Awake()
     {
@@ -61,7 +61,7 @@ public class EnemyBehavior : MonoBehaviour
             currentTargetPoint = transform;
             currentPatrolPoint = transform;
         }
-        
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +71,7 @@ public class EnemyBehavior : MonoBehaviour
         //onDamage.AddListener(ToggleEnemyMaterial);
         playerRef = GameManager.Instance.Player;
         meshAgent = GetComponent<NavMeshAgent>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         anim = GetComponentInChildren<Animator>();
         onDamage.AddListener(StartAttackStunPause);
         health = new UnitHealth(maxHealth, onDamage);
@@ -84,7 +85,6 @@ public class EnemyBehavior : MonoBehaviour
         }
         else { meshAgent.isStopped = true; }
 
-        currentState = BehaviorState.patrolling;
         StartCoroutine("EnemyDetectionWithDelay", .1f);
     }
 
@@ -103,7 +103,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         //Checks the current scenes context to understand what kind of behavior to switch to.
         float playerDist = Vector3.Distance(transform.position, playerRef.transform.position);
-        
+
         Vector3 direction = playerRef.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = lookRotation.eulerAngles;
@@ -150,22 +150,28 @@ public class EnemyBehavior : MonoBehaviour
                 break;
 
             case BehaviorState.chasing:
+                if (leftEyeLight.color != Color.red)
+                {
+                    leftEyeLight.color = Color.red;
+                    rightEyeLight.color = Color.red;
+                }
+
                 if (playerDist <= attackDistance && !health.IsDead)
-                {
-                    transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                    anim.SetBool("IsMoving", false);
-                    anim.SetBool("IsChasing", false);
-                    anim.SetBool("Attacking", true);
-                    Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
-                    break;
-                }
-                else if (fov.isPlayerInSight && !health.IsDead)
-                {
-                    anim.SetBool("Attacking", false);
-                    // Debug.Log("ChasingPlayer");
-                    meshAgent.SetDestination(playerRef.transform.position);
-                    meshAgent.speed = chaseSpeed;
-                }
+                    {
+                        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+                        anim.SetBool("IsMoving", false);
+                        anim.SetBool("IsChasing", false);
+                        anim.SetBool("Attacking", true);
+                        Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
+                        break;
+                    }
+                    else if (fov.isPlayerInSight && !health.IsDead)
+                    {
+                        anim.SetBool("Attacking", false);
+                        // Debug.Log("ChasingPlayer");
+                        meshAgent.SetDestination(playerRef.transform.position);
+                        meshAgent.speed = chaseSpeed;
+                    }
 
                 if (!meshAgent.isStopped)
                 {
@@ -176,6 +182,14 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     anim.SetBool("IsChasing", false);
                 }
+                break;
+            case BehaviorState.Resting:
+
+                Debug.Log(gameObject.name + " Is Resting");
+                anim.SetBool("IsResting", true);
+                meshAgent.enabled = false;
+                capsuleCollider.enabled = false;
+
                 break;
         }
 
@@ -234,12 +248,12 @@ public class EnemyBehavior : MonoBehaviour
     {
         while (gameObject.activeInHierarchy)
         {
-            if (fov.isPlayerInSight && currentState != BehaviorState.chasing)
+            if (fov.isPlayerInSight && currentState == BehaviorState.patrolling)
             {
                 currentState = BehaviorState.chasing;
                 if (meshAgent.isStopped == true) meshAgent.isStopped = false;
             }
-            
+
             // switch (fov.isPlayerInSight)
             // {
             //     case true:
@@ -334,6 +348,21 @@ public class EnemyBehavior : MonoBehaviour
         //If the enemy hp is 0 handle the death of the enemy.
         Debug.Log(gameObject.name + " is dead");
         Destroy(gameObject);
+    }
+
+    public void WakeEnemy()
+    {
+        anim.SetBool("IsResting", false);
+        meshAgent.enabled = true;
+        capsuleCollider.enabled = true;
+        currentState = BehaviorState.chasing;
+        Invoke("SetEnemyToAttackPlayer", 4f);
+        Debug.Log(name + " is waking up");
+    }
+
+    public void SetEnemyToAttackPlayer()
+    {
+        meshAgent.SetDestination(playerRef.transform.position);
     }
 
     //Deprecated Code
