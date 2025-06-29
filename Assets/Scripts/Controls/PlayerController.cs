@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private PlayerAnimationController _animationController;
     [SerializeField] private GunController _gunController;
+    public GunController GunController => _gunController;
     [SerializeField] private CapsuleCollider _standingCollider;
     [SerializeField] private SphereCollider _crouchCollider;
     [SerializeField] private LineRenderer _laser;
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (context.started && _gunController.hasItem)
+        if (context.started && _gunController.HasGun)
         {
             _gunController.StartGunAim();
             _animationController.Aim(true);
@@ -159,7 +160,7 @@ public class PlayerController : MonoBehaviour
             UpdateSpeed();
         }
 
-        if (context.canceled && _gunController.hasItem)
+        if (context.canceled && _gunController.HasGun)
         {
             _gunController.EndGunAim();
             _animationController.Aim(false);

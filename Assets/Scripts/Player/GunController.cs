@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GunController : MonoBehaviour
 {
@@ -23,64 +24,46 @@ public class GunController : MonoBehaviour
     private PlayerInventory _playerInventory;
 
     public bool IsReloading => _isReloading;
-    public bool hasItem;
+    public bool HasGun { get; set; }
     
     private void Start()
     {
-        if (_lr != null)
+        if (_lr)
         {
             _lr.enabled = false;
             _lr.SetPosition(0, new Vector3(0, 0, 0));
         }
-        _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
-        hasItem = false;
+        
         StartCoroutine(ReloadGun());
     }
 
     private void Update()
     {
-        foreach (var item in _playerInventory.Items)
+        if (!HasGun) return;
+        if (_isAiming && _lr)
         {
-            if (item.itemName == _gunItemName)
-            {
-                hasItem = true;
-                break;
-            }
-            else
-            {
-                hasItem = false;
-            }
+            HandleLaser();
         }
-        if (hasItem)
+        else if (_lr)
         {
-            _gunModel.SetActive(_isAiming);
-
-            if (_isAiming && _lr != null)
-            {
-                HandleLaser();
-            }
-            else if (_lr != null)
-            {
-                _lr.enabled = false;
-            }
-        }
-        else
-        {
-            if (_isAiming)
-            {
-                Debug.Log("No gun in inventory");
-            }
+            _lr.enabled = false;
         }
     }
 
     public void StartGunAim()
     {
+        if (!HasGun) return;
+        
         _isAiming = true;
+        _gunModel.SetActive(true);
     }
 
     public void EndGunAim()
     {
+        if (!HasGun) return;
+        
         _isAiming = false;
+        _gunModel.SetActive(false);
     }
 
     public void HandleLaser()

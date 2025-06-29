@@ -11,12 +11,19 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _dropPrefab;
     [SerializeField] private bool _isReadable;
     [SerializeField] private bool _isDroppable;
+
+    [SerializeField] private bool _isGun; // ONLY MARK THIS ON GUN OBJECT
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
         var item = new InventoryItem(_itemName, _isReadable, _isDroppable, _icon, _dropPrefab, _additionalText, _noteContents);
         inventory.AddItem(item);
 
+        if (_isGun)
+        {
+            player.gameObject.GetComponent<PlayerController>().GunController.HasGun = true;
+        }
+        
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
         
         Destroy(transform.root.gameObject);
