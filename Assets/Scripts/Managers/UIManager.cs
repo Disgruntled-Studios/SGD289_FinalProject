@@ -6,19 +6,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public enum SettingsPanelType
-{
-    Help,
-    Graphics,
-    Sound
-}
-
-public enum SettingsFocusState
-{
-    MainButtons,
-    SubPanel
-}
-
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
