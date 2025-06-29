@@ -9,12 +9,12 @@ public class InventorySlotController : MonoBehaviour
     [SerializeField] private Image _itemIconImage;
     [SerializeField] private Outline _slotOutline;
 
-    private InventoryItem _item;
-    public string ItemName => _item.itemName;
+    private InventoryItem _itemInSlot;
+    public InventoryItem ItemInSlot => _itemInSlot;
     
     public void SetSlot(InventoryItem item)
     {
-        _item = item;
+        _itemInSlot = item;
         
         if (_itemNameText)
         {

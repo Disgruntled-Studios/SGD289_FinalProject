@@ -9,18 +9,20 @@ public class InventoryUIController
     private readonly GameObject _slotPrefab;
     private readonly Transform _slotParent;
     private readonly TMP_Text _descriptionText;
+    private readonly TMP_Text _promptInstructionsText;
     private readonly int _gridColumns;
 
     private readonly List<GameObject> _slots = new();
     private int _selectedIndex;
 
     public InventoryUIController(EventSystem eventSystem, GameObject slotPrefab, Transform slotParent,
-        TMP_Text descriptionText, int gridColumns = 3)
+        TMP_Text descriptionText, TMP_Text promptInstructionsText, int gridColumns = 3)
     {
         _eventSystem = eventSystem;
         _slotPrefab = slotPrefab;
         _slotParent = slotParent;
         _descriptionText = descriptionText;
+        _promptInstructionsText = promptInstructionsText;
         _gridColumns = gridColumns;
     }
 
@@ -47,6 +49,8 @@ public class InventoryUIController
 
         if (_slots.Count > 0)
         {
+            _promptInstructionsText.gameObject.SetActive(true);
+            
             _selectedIndex = 0;
             HighlightSlot(_selectedIndex);
 
@@ -57,6 +61,7 @@ public class InventoryUIController
         {
             _eventSystem.SetSelectedGameObject(null);
             _descriptionText.gameObject.SetActive(false);
+            _promptInstructionsText.gameObject.SetActive(false);
         }
     }
 
@@ -135,8 +140,25 @@ public class InventoryUIController
         var selected = _slots[index].GetComponent<InventorySlotController>();
         if (selected)
         {
-            _descriptionText.text = selected.ItemName;
+            _descriptionText.text = selected.ItemInSlot.itemName;
             _descriptionText.gameObject.SetActive(true);
+        }
+
+        var itemInSlot = selected.ItemInSlot;
+
+        if (itemInSlot.isDroppable)
+        {
+            _promptInstructionsText.gameObject.SetActive(true);
+            _promptInstructionsText.text = "Press X to Drop";
+        }
+        else if (itemInSlot.isReadable)
+        {
+            _promptInstructionsText.gameObject.SetActive(true);
+            _promptInstructionsText.text = "Press X to Read";
+        }
+        else
+        {
+            _promptInstructionsText.gameObject.SetActive(false);
         }
     }
 
