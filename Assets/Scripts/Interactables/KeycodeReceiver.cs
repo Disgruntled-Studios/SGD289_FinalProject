@@ -6,7 +6,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     [SerializeField] private string _correctCode;
     [SerializeField] private UnityEvent _onCorrectCodeEntered;
 
-    private const string PromptText = "Enter Keycode: ";
+    private const string PromptText = "Enter Keycode:";
 
     private bool _playerIsNearby;
     
@@ -27,7 +27,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
         }
         else
         {
-            UIManager.Instance.ShowInvalidKeycodeFeedback();
+            UIManager.Instance.ShowInvalidCodeFeedback();
         }
     }
 
