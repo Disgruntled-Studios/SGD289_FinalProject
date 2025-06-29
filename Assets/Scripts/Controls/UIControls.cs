@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
@@ -52,76 +53,49 @@ public class UIControls : MonoBehaviour
 
         var input = context.ReadValue<Vector2>();
 
-        // Settings
         if (_ui.IsOnSettingsPanel)
         {
-            if (_ui.CurrentSettingsFocusState == SettingsFocusState.MainButtons)
+            var settings = _ui.SettingsUIController;
+
+            if (settings.FocusState == SettingsFocusState.MainButtons)
             {
                 if (input.y > 0.1f)
                 {
-                    _ui.NavigateSettingsSubPanels(-1);
+                    settings.NavigateSidebar(-1);
                 }
                 else if (input.y < -0.1f)
                 {
-                    _ui.NavigateSettingsSubPanels(1);
+                    settings.NavigateSidebar(1);
                 }
                 else if (input.x > 0.5f)
                 {
-                    _ui.EnterActiveSubPanel();
+                    settings.EnterSubPanel();
                 }
             }
-            else if (_ui.CurrentSettingsFocusState == SettingsFocusState.SubPanel)
+            else if (settings.FocusState == SettingsFocusState.SubPanel)
             {
-                switch (_ui.CurrentSettingsPanelType)
+                if (input.y > 0.1f)
                 {
-                    case SettingsPanelType.Graphics:
-                        if (input.y > 0.1f)
-                        {
-                            _ui.NavigateGraphicsPanel(-1);
-                        }
-                        else if (input.y < -0.1f)
-                        {
-                            _ui.NavigateGraphicsPanel(1);
-                        }
-                        else if (input.x > 0.5f)
-                        {
-                            _ui.AdjustGraphicsElement(1);
-                        }
-                        else if (input.x < -0.1f)
-                        {
-                            _ui.ExitSubPanelToSidebar();
-                        }
-
-                        break;
-                    case SettingsPanelType.Sound:
-                        if (input.y > 0.1f)
-                        {
-                            _ui.NavigateSoundPanel(-1);
-                        }
-                        else if (input.y < -0.1f)
-                        {
-                            _ui.NavigateSoundPanel(1);
-                        }
-                        else if (input.x > 0.5f)
-                        {
-                            _ui.AdjustSoundElement(1);
-                        }
-                        else if (input.x < -0.5f)
-                        {
-                            _ui.AdjustSoundElement(-1);
-                        }
-                        else if (input.x < -0.1f)
-                        {
-                            _ui.ExitSubPanelToSidebar();
-                        }
-
-                        break;
-                    case SettingsPanelType.Help:
-                        break;
+                    settings.NavigateSubPanel(-1);
+                }
+                else if (input.y < -0.1f)
+                {
+                    settings.NavigateSubPanel(1);
+                }
+                else if (input.x > 0.1f)
+                {
+                    settings.AdjustCurrentElement(1);
+                }
+                else if (input.x < -0.1f)
+                {
+                    settings.AdjustCurrentElement(-1);
                 }
             }
+
+            return;
         }
-        else if (_ui.IsOnInventoryPanel)
+
+        if (_ui.IsOnInventoryPanel)
         {
             _ui.NavigateInventory(input);
         }
@@ -198,6 +172,14 @@ public class UIControls : MonoBehaviour
         
         if (!context.performed || !InputManager.Instance.IsInUI) return;
 
+        var settings = _ui.SettingsUIController;
+
+        if (_ui.IsOnSettingsPanel && settings.FocusState == SettingsFocusState.SubPanel)
+        {
+            settings.ExitSubPanel();
+            return;
+        }
+        
         if (_noteIsActivated)
         {
             _noteIsActivated = false;
