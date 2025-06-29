@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
@@ -97,7 +96,7 @@ public class UIControls : MonoBehaviour
 
         if (_ui.IsOnInventoryPanel)
         {
-            _ui.NavigateInventory(input);
+            _ui.InventoryUIController.Navigate(input);
         }
     }
 
@@ -126,8 +125,8 @@ public class UIControls : MonoBehaviour
             UIManager.Instance.ToggleNoteContents(_noteIsActivated);
             return;
         }
-        
-        var selectedItem = _ui.GetSelectedInventoryItem(_inventory.Items);
+
+        var selectedItem = _ui.InventoryUIController.GetSelectedItem(_inventory.Items);
         if (selectedItem == null) return;
 
         if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable)
@@ -141,8 +140,8 @@ public class UIControls : MonoBehaviour
                 // Don't unpause? 
                 Debug.Log($"Receiver did not accept item {selectedItem.itemName}");
             }
-            
-            _ui.RefreshInventoryUI(_inventory.Items);
+
+            _ui.InventoryUIController.Refresh(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
         }
         else if (selectedItem.isReadable)
@@ -157,7 +156,7 @@ public class UIControls : MonoBehaviour
         else if (selectedItem.isDroppable)
         {
             _inventory.DropItem(selectedItem);
-            _ui.RefreshInventoryUI(_inventory.Items);
+            _ui.InventoryUIController.Refresh(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
         }
         else

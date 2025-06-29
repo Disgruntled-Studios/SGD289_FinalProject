@@ -28,8 +28,6 @@ public class UIManager : MonoBehaviour
     public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
     [SerializeField] private TMP_Text _itemDescriptionText;
-    private readonly List<GameObject> _inventorySlots = new();
-    private int _selectedInventoryIndex;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
 
     [Header("Keycode UI Elements")] 
@@ -92,6 +90,9 @@ public class UIManager : MonoBehaviour
 
     private SettingsUIController _settingsUIController;
     public SettingsUIController SettingsUIController => _settingsUIController;
+
+    private InventoryUIController _inventoryUIController;
+    public InventoryUIController InventoryUIController => _inventoryUIController;
     
     private void Awake()
     {
@@ -116,6 +117,9 @@ public class UIManager : MonoBehaviour
             _helpButton.GetComponent<Button>(), _graphicsButton.GetComponent<Button>(),
             _soundButton.GetComponent<Button>(), _helpPanel, _graphicsPanel, _soundPanel, _settingsButton,
             _graphicsElements, _soundElements);
+
+        _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlotPrefab, _inventorySlotParent,
+            _itemDescriptionText, 3);
     }
 
     #region UI Navigation
@@ -135,20 +139,7 @@ public class UIManager : MonoBehaviour
 
         HighlightTab(_inventoryButton);
 
-        RefreshInventoryUI(PlayerInventory.Items);
-
-        _gameEventSystem.SetSelectedGameObject(null);
-
-        if (_inventorySlots.Count > 0)
-        {
-            _selectedInventoryIndex = 0;
-            HighlightInventorySlot(_selectedInventoryIndex);
-            _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
-        }
-        else
-        {
-            _itemDescriptionText.gameObject.SetActive(false);
-        }
+        _inventoryUIController.Refresh(PlayerInventory.Items);
 
         InputManager.Instance.SwitchToUIInput();
     }
@@ -180,12 +171,7 @@ public class UIManager : MonoBehaviour
 
             HighlightTab(_inventoryButton);
 
-            if (_inventorySlots.Count > 0)
-            {
-                _selectedInventoryIndex = 0;
-                HighlightInventorySlot(_selectedInventoryIndex);
-                _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
-            }
+            _inventoryUIController.Refresh(PlayerInventory.Items);
         }
         else if (IsOnSettingsPanel)
         {
@@ -194,25 +180,6 @@ public class UIManager : MonoBehaviour
 
             HighlightTab(_settingsButton);
             _settingsUIController.Reset();
-        }
-    }
-
-    private void AdjustSelectable(Selectable selectable, int direction)
-    {
-        if (!selectable) return;
-
-        if (selectable.TryGetComponent<Slider>(out var slider))
-        {
-            var step = slider.wholeNumbers ? 1f : slider.maxValue / 20f;
-            slider.value = Mathf.Clamp(slider.value + (step * direction), slider.minValue, slider.maxValue);
-        }
-        else if (selectable.TryGetComponent<Toggle>(out var toggle))
-        {
-            toggle.isOn = !toggle.isOn;
-        }
-        else if (selectable.TryGetComponent<Button>(out var button))
-        {
-            button.onClick.Invoke();
         }
     }
 
@@ -299,128 +266,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleInventoryChanged()
     {
-        RefreshInventoryUI(PlayerInventory.Items);
-    }
-
-    public void RefreshInventoryUI(IReadOnlyList<InventoryItem> items)
-    {
-        foreach (var obj in _inventorySlots)
-        {
-            Destroy(obj);
-        }
-        
-        _inventorySlots.Clear();
-
-        foreach (var item in items)
-        {
-            var obj = Instantiate(_inventorySlotPrefab, _inventorySlotParent);
-            var controller = obj.GetComponent<InventorySlotController>();
-            if (controller)
-            {
-                controller.SetSlot(item);
-            }
-
-            _inventorySlots.Add(obj);
-        }
-        
-        if (_inventorySlots.Count > 0)
-        {
-            _selectedInventoryIndex = 0;
-            HighlightInventorySlot(_selectedInventoryIndex);
-
-            _gameEventSystem.SetSelectedGameObject(null);
-            _gameEventSystem.SetSelectedGameObject(_inventorySlots[0]);
-            _itemDescriptionText.gameObject.SetActive(true);
-            _itemDescriptionText.text = _inventorySlots[0].GetComponent<InventorySlotController>().ItemName;
-        }
-        else
-        {
-            _gameEventSystem.SetSelectedGameObject(null);
-        }
-    }
-
-    public void NavigateInventory(Vector2 input)
-    {
-        if (_inventorySlots.Count == 0) return;
-
-        const int columns = 3;
-        var total = _inventorySlots.Count;
-        var rows = Mathf.CeilToInt((float)total / columns);
-
-        var row = _selectedInventoryIndex / columns;
-        var col = _selectedInventoryIndex % columns;
-        
-        if (input.x > 0.5f)
-        {
-            col += 1;
-            if (col >= columns)
-            {
-                col = 0;
-                row = (row + 1) % rows;
-            }
-        }
-        else if (input.x < -0.5f)
-        {
-            col -= 1;
-            if (col < 0)
-            {
-                col = columns - 1;
-                row = (row - 1 + rows) % rows;
-            }
-        }
-        
-        if (input.y > 0.5f)
-        {
-            row -= 1;
-            if (row < 0) row = rows - 1;
-        }
-        else if (input.y < -0.5f)
-        {
-            row = (row + 1) % rows;
-        }
-
-        var newIndex = row * columns + col;
-        
-        if (newIndex >= total)
-        {
-            while (col > 0)
-            {
-                col--;
-                newIndex = row * columns + col;
-                if (newIndex < total) break;
-            }
-
-            if (newIndex >= total) return;
-        }
-
-        _selectedInventoryIndex = newIndex;
-        HighlightInventorySlot(_selectedInventoryIndex);
-
-        _gameEventSystem.SetSelectedGameObject(null);
-        _gameEventSystem.SetSelectedGameObject(_inventorySlots[_selectedInventoryIndex]);
-    }
-
-    public InventoryItem GetSelectedInventoryItem(IReadOnlyList<InventoryItem> items)
-    {
-        return items.Count == 0 ? null : items[_selectedInventoryIndex];
-    }
-
-    private void HighlightInventorySlot(int index)
-    {
-        for (var i = 0; i < _inventorySlots.Count; i++)
-        {
-            var controller = _inventorySlots[i].GetComponent<InventorySlotController>();
-            if (controller)
-            {
-                controller.SetHighlighted(i == index);
-            }
-        }
-
-        var selectedController = _inventorySlots[index].GetComponent<InventorySlotController>();
-        if (selectedController)
-        {
-            _itemDescriptionText.text = selectedController.ItemName;
-        }
+        _inventoryUIController.Refresh(PlayerInventory.Items);
     }
 
     public void ToggleNoteContents(bool isActive, string contents = "")
