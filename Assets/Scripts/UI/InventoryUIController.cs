@@ -146,36 +146,4 @@ public class InventoryUIController
 
         return items[_selectedIndex];
     }
-
-    #region Testing Methods
-
-    private readonly List<InventoryItem> _testItems = new();
-
-    public void AddTestItem(InventoryItem item)
-    {
-        _testItems.Add(item);
-        Refresh(_testItems);
-    }
-
-    public void RemoveLastTestItem()
-    {
-        if (_testItems.Count > 0)
-        {
-            _testItems.RemoveAt(_testItems.Count - 1);
-            Refresh(_testItems);
-        }
-    }
-
-    public void ClearTestItems()
-    {
-        _testItems.Clear();
-        Refresh(_testItems);
-    }
-
-    public List<InventoryItem> GetTestItems()
-    {
-        return _testItems;
-    }
-
-    #endregion
 }

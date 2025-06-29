@@ -156,6 +156,11 @@ public class UIManager : MonoBehaviour
     
     public void NavigatePanel(int direction)
     {
+        if (_noteContents.activeSelf)
+        {
+            _noteContents.SetActive(false);
+        }
+        
         _subPanels[_currentPanelIndex].SetActive(false);
         _currentPanelIndex = (_currentPanelIndex + direction + _subPanels.Length) % _subPanels.Length;
         _subPanels[_currentPanelIndex].SetActive(true);

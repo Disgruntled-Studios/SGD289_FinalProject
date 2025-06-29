@@ -72,10 +72,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (item is not { isReadable: true }) return false;
 
-        if (!item.isReadable && !string.IsNullOrWhiteSpace(item.noteContents))
+        if (item.isReadable && !string.IsNullOrWhiteSpace(item.noteContents) && UIManager.Instance.IsOnInventoryPanel)
         {
-            if (!UIManager.Instance.IsOnInventoryPanel) return false;
-            
             UIManager.Instance.ToggleNoteContents(true, item.noteContents);
             return true;
         }
