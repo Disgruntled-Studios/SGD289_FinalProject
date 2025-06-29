@@ -56,11 +56,11 @@ public class UIControls : MonoBehaviour
         {
             if (input.y > 0.1f)
             {
-                _ui.NavigateSettings(-1);
+                _ui.NavigateSettingsSubPanels(-1);
             }
             else if (input.y < -0.1f)
             {
-                _ui.NavigateSettings(1);
+                _ui.NavigateSettingsSubPanels(1);
             }
 
             return;
