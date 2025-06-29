@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
     [SerializeField] private TMP_Text _itemDescriptionText;
+    [SerializeField] private TMP_Text _promptInstructionsText;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
 
     [Header("Keycode UI Elements")] 
@@ -89,6 +90,8 @@ public class UIManager : MonoBehaviour
 
     private KeycodeUIController _keycodeUIController;
     public KeycodeUIController KeycodeUIController => _keycodeUIController;
+
+    private Coroutine _popUpCoroutine;
     
     private void Awake()
     {
@@ -115,7 +118,7 @@ public class UIManager : MonoBehaviour
             _graphicsElements, _soundElements);
 
         _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlotPrefab, _inventorySlotParent,
-            _itemDescriptionText, 3);
+            _itemDescriptionText, _promptInstructionsText, 3);
 
         _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
     }
@@ -279,7 +282,12 @@ public class UIManager : MonoBehaviour
 
     public void StartPopUpText(string message)
     {
-        StartCoroutine(TypePopUpText(message));
+        if (_popUpCoroutine != null)
+        {
+            StopCoroutine(_popUpCoroutine);
+        }
+        
+        _popUpCoroutine = StartCoroutine(TypePopUpText(message));
     }
 
     private IEnumerator TypePopUpText(string message)
@@ -298,6 +306,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         _popUpBox.SetActive(false);
+        _popUpCoroutine = null;
     }
 
     #endregion
