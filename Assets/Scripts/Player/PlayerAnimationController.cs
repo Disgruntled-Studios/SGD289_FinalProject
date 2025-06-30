@@ -10,6 +10,8 @@ public class PlayerAnimationController : MonoBehaviour
 
     private RuntimeAnimatorController _originalController;
 
+    private float _currentAnimSpeed;
+
     private const float MovementThreshold = 0.1f;
 
     private void Awake()
@@ -32,9 +34,10 @@ public class PlayerAnimationController : MonoBehaviour
         if (!_playerController) return;
 
         var forwardInput = Mathf.Clamp(_playerController.CurrentMoveInput, -1f, 1f);
+        _currentAnimSpeed = Mathf.MoveTowards(_currentAnimSpeed, forwardInput, 5f * Time.deltaTime);
+        _anim.SetFloat("MoveSpeed", _currentAnimSpeed);
+        
         var turnInput = Mathf.Clamp(_playerController.GetCurrentTurnInput(), -1f, 1f);
-
-        _anim.SetFloat("MoveSpeed", forwardInput);
         _anim.SetFloat("TurnSpeed", turnInput);
     }
 

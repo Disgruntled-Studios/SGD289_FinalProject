@@ -20,9 +20,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
-    private const float PlayerHeight = 2f;
-    private const float SprintMultiplier = 2.5f;
+    private const float PlayerHeight = 2.22f; // Height of capsule collider
+    
+    private const float SprintMultiplier = 1.75f;
     private const float CrouchMultiplier = 0.5f;
+    private const float InjuredMultiplier = 0.75f;
+    
     private const float AimSpeedMultiplier = 0.75f;
     private const float AimRotationMultiplier = 0.25f;
 
@@ -33,10 +36,11 @@ public class PlayerController : MonoBehaviour
     private float _smoothedRotationInput;
     private float _currentRotationVelocity;
     private float _currentRotationSpeed;
-
-    private const float AccelerationRate = 10f;
-    private const float DecelerationRate = 15f;
+    
     private const float GroundDrag = 2f;
+
+    private Vector3 _movementVelocity;
+    private Vector3 _currentVelocitySmoothDamp;
 
     private bool _isCrouching;
     public bool IsCrouching => _isCrouching;
@@ -229,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
         if (Mathf.Approximately(_smoothedRotationInput, 0f)) return;
 
-        var rotationAmount = _smoothedRotationInput * _currentRotationSpeed * Time.deltaTime;
+        var rotationAmount = _smoothedRotationInput * _currentRotationSpeed * Time.fixedDeltaTime;
         var deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
         _rb.MoveRotation(_rb.rotation * deltaRotation);
     }
@@ -238,17 +242,7 @@ public class PlayerController : MonoBehaviour
     {
         var targetVelocity = transform.forward * (_currentMoveInput * _currentSpeed);
 
-        if (_currentMoveInput != 0f)
-        {
-            var acceleration = _isSprinting ? AccelerationRate * 1.25f : AccelerationRate;
-            _rb.linearVelocity =
-                Vector3.MoveTowards(_rb.linearVelocity, targetVelocity, acceleration * Time.deltaTime);
-        }
-        else
-        {
-            _rb.linearVelocity =
-                Vector3.MoveTowards(_rb.linearVelocity, Vector3.zero, DecelerationRate * Time.deltaTime);
-        }
+        _rb.linearVelocity = new Vector3(targetVelocity.x, _rb.linearVelocity.y, targetVelocity.z);
     }
 
     private void CheckGrounded()
