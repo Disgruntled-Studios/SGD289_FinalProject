@@ -123,10 +123,8 @@ public class GunController : MonoBehaviour
                     enemyRef = hit.transform.gameObject.GetComponentInParent<EnemyBehavior>();
                     //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
                 }
-                
-                if (hit.transform.gameObject.GetComponent<ShootableObject>())
+                else if (hit.transform.gameObject.GetComponent<ShootableObject>())
                 {
-                    Debug.Log("Shootable Obj detected");
                     hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
                 }
 
