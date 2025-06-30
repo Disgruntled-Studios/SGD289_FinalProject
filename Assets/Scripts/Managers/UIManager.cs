@@ -77,6 +77,10 @@ public class UIManager : MonoBehaviour
     [Header("Sound Menu Elements")] 
     [SerializeField] private List<Selectable> _soundElements;
 
+    [Header("Audio")] 
+    [SerializeField] private UIAudioController _uiAudio;
+    public UIAudioController UIAudioController => _uiAudio;
+    
     public bool IsOnInventoryPanel => _currentPanelIndex == 0;
     public bool IsOnSettingsPanel => _currentPanelIndex == 1;
     

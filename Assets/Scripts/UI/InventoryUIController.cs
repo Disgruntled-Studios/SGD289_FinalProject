@@ -146,7 +146,13 @@ public class InventoryUIController
 
         var itemInSlot = selected.ItemInSlot;
 
-        if (itemInSlot.isDroppable)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !itemInSlot.isDroppable &&
+            !itemInSlot.isReadable && !itemInSlot.isGun)
+        {
+            _promptInstructionsText.gameObject.SetActive(true);
+            _promptInstructionsText.text = "Press X to Use";
+        }
+        else if (itemInSlot.isDroppable)
         {
             _promptInstructionsText.gameObject.SetActive(true);
             _promptInstructionsText.text = "Press X to Drop";
@@ -158,7 +164,8 @@ public class InventoryUIController
         }
         else if (!itemInSlot.isDroppable && !itemInSlot.isReadable)
         {
-            
+            // Gun behavior
+            _promptInstructionsText.gameObject.SetActive(false);
         }
         else
         {
