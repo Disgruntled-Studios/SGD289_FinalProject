@@ -38,7 +38,7 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
             //Saves the default material for deselection 
             defaultMaterial = selectionRenderer.material;
             //then create a list of materials to add the highlighted material 
-            var highlightedMats = new Material[] { selectionRenderer.material, highlightedMaterial };
+            var highlightedMats = new Material[] { highlightedMaterial, selectionRenderer.material};
             //then sets the materials to the new list.
             selectionRenderer.materials = highlightedMats;
         }
