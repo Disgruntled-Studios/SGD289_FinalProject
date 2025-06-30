@@ -253,8 +253,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4147793570219217855}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.120976, y: 2.3777852, z: -0.5068774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f85f363c3766fd428ceae34574242d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animController: {fileID: 3157260947959285149}
   _volume: {fileID: 4678225169860610952}
   onDeath:
     m_PersistentCalls:
@@ -563,8 +564,8 @@ MonoBehaviour:
   _crouchCollider: {fileID: 4250560411943484575}
   _laser: {fileID: 4762945982309698640}
   _inventory: {fileID: 891657576446523209}
-  _normalSpeed: 10
-  _rotationSpeed: 150
+  _normalSpeed: 3.5
+  _rotationSpeed: 135
   _rotationSmoothTime: 0.12
   _groundLayer:
     serializedVersion: 2
@@ -622,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerController: {fileID: 7333879070088266696}
   _anim: {fileID: 3913923213347815549}
+  _injuredOverrideController: {fileID: 22100000, guid: 928e5eb353546ca47abb3922ab579f64, type: 2}
 --- !u!136 &8018842224362274406
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -641,10 +643,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2288135
-  m_Height: 1.8
+  m_Radius: 0.40534768
+  m_Height: 2.2255416
   m_Direction: 1
-  m_Center: {x: 0.0007162392, y: 0.89020455, z: -3.2394792e-18}
+  m_Center: {x: 0.010164738, y: 1.1029754, z: -3.3427335e-17}
 --- !u!135 &4250560411943484575
 SphereCollider:
   m_ObjectHideFlags: 0
