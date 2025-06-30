@@ -9,6 +9,7 @@ public class UIControls : MonoBehaviour
     [SerializeField] private PlayerInventory _inventory;
 
     private UIManager _ui;
+    private UIAudioController _uiAudio;
     
     private bool _noteIsActivated;
 
@@ -17,6 +18,7 @@ public class UIControls : MonoBehaviour
     private void Start()
     {
         _ui = UIManager.Instance;
+        _uiAudio = _ui.UIAudioController;
     }
     
     private void OnEnable()
@@ -128,7 +130,7 @@ public class UIControls : MonoBehaviour
         var selectedItem = _ui.InventoryUIController.GetSelectedItem(_inventory.Items);
         if (selectedItem == null) return;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable && !selectedItem.isDroppable && !selectedItem.isGun)
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
@@ -157,6 +159,10 @@ public class UIControls : MonoBehaviour
             _inventory.DropItem(selectedItem);
             _ui.InventoryUIController.Refresh(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
+        }
+        else if (selectedItem.isGun)
+        {
+            // Probably do nothing
         }
         else
         {
