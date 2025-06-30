@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
+        _vignette.intensity.value = 0f;
     }
 
     [ContextMenu("Take Damage")]

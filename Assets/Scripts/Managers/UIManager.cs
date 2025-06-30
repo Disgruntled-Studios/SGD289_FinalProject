@@ -12,8 +12,6 @@ public class UIManager : MonoBehaviour
     
     [Header("HUD Elements")] 
     [SerializeField] private GameObject _hudPanel;
-    [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private TMP_Text _gameOverText;
 
     [Header("Puzzle UI Elements")] 
     [SerializeField] private TMP_Text _tileMoveInstructions;
@@ -213,23 +211,6 @@ public class UIManager : MonoBehaviour
         }
 
         _currentHighlightedTab = newTab;
-    }
-
-    #endregion
-    
-    #region HUD Methods
-
-    public void UpdateHealthText(float health)
-    {
-        if (_healthText)
-        {
-            _healthText.text = $"Player Health: {health}";
-        }
-    }
-
-    public void ToggleHealthText(bool isActive)
-    {
-        _healthText.gameObject.SetActive(isActive);
     }
 
     #endregion
