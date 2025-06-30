@@ -6,9 +6,17 @@ public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private Animator _anim;
+    [SerializeField] private AnimatorOverrideController _injuredOverrideController;
+
+    private RuntimeAnimatorController _originalController;
 
     private const float MovementThreshold = 0.1f;
 
+    private void Awake()
+    {
+        _originalController = _anim.runtimeAnimatorController;
+    }
+    
     private void OnEnable()
     {
         _anim.speed = 1f;
@@ -58,6 +66,11 @@ public class PlayerAnimationController : MonoBehaviour
     public void Shoot()
     {
         _anim.SetTrigger("ShootTrigger");
+    }
+
+    public void SetInjured(bool isInjured)
+    {
+        _anim.runtimeAnimatorController = isInjured ? _injuredOverrideController : _originalController;
     }
 }
 

@@ -1,19 +1,34 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
+using UnityEngine.LightTransport.PostProcessing;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] private PlayerAnimationController _animController;
+    
+    private const float MaxHealth = 3.0f;
 
+    [SerializeField] private Volume _volume;
+    private Vignette _vignette;
+
+    private const float FirstHitIntensity = 0.4f;
+    private const float SecondHitIntensity = 0.55f;
+    private const float ThirdHitIntensity = 1.0f;
+    
     public UnitHealth Health { get; private set; }
 
     public float CurrentHealth => Health.CurrentHealth;
 
     public UnityEvent onDeath;
+    
+    public bool IsInjured { get; private set; }
 
     private void Awake()
     {
-        Health = new UnitHealth(_maxHealth);
+        Health = new UnitHealth(MaxHealth);
+        _volume.profile.TryGet(out _vignette);
     }
 
     void Start()
@@ -21,12 +36,26 @@ public class PlayerHealth : MonoBehaviour
         UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
     }
 
-    public void TakeDamage(float amount)
+    [ContextMenu("Take Damage")]
+    public void TakeDamage()
     {
+        const float amount = 1.0f;
         Health.Damage(amount);
-        if (UIManager.Instance != null)
+
+        if (Mathf.Approximately(Health.CurrentHealth, 2.0f))
         {
-            UIManager.Instance.UpdateHealthText(Health.CurrentHealth);
+            _vignette.intensity.value = FirstHitIntensity;
+        }
+        else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
+        {
+            _vignette.intensity.value = SecondHitIntensity;
+            IsInjured = true;
+            _animController.SetInjured(IsInjured);
+
+        }
+        else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
+        {
+            _vignette.intensity.value = ThirdHitIntensity;
         }
     }
 
