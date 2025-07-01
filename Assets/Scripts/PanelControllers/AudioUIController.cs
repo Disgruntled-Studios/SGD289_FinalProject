@@ -10,11 +10,15 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
 
-    private readonly List<Selectable> _selectables = new();
+    private readonly List<Slider> _sliders = new();
     private int _currentIndex;
     
     private void Awake()
     {
+        _sliders.Add(_masterVolumeSlider);
+        _sliders.Add(_musicVolumeSlider);
+        _sliders.Add(_sfxVolumeSlider);
+        
         _masterVolumeSlider.value = SoundManager.Instance.MasterVolume;
         _musicVolumeSlider.value = SoundManager.Instance.MusicVolume;
         _sfxVolumeSlider.value = SoundManager.Instance.SfxVolume;
@@ -41,47 +45,62 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     
     public void OnPanelActivated()
     {
-        _selectables.Clear();
-        _selectables.Add(_masterVolumeSlider);
-        _selectables.Add(_musicVolumeSlider);
-        _selectables.Add(_sfxVolumeSlider);
-
         _currentIndex = 0;
+        
+        for (var i = 0; i < _sliders.Count; i++)
+        {
+            SetSliderHighlight(_sliders[i], i == _currentIndex);
+        }
 
-        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
+        UIManager.Instance.SetEventSystemObject(_sliders[_currentIndex].gameObject);
     }
 
     public void OnPanelDeactivated()
     {
-        return;
+        foreach (var slider in _sliders)
+        {
+            SetSliderHighlight(slider, false);
+        }
     }
 
     public void HandleNavigation(Vector2 input)
     {
-        if (_selectables.Count == 0) return;
-
         if (input.y > 0.5f)
         {
             _currentIndex--;
             if (_currentIndex < 0)
             {
-                _currentIndex = _selectables.Count - 1;
+                _currentIndex = _sliders.Count - 1;
             }
         }
         else if (input.y < -0.5f)
         {
             _currentIndex++;
-            if (_currentIndex >= _selectables.Count)
+            if (_currentIndex >= _sliders.Count)
             {
                 _currentIndex = 0;
             }
         }
-        else
+
+        for (var i = 0; i < _sliders.Count; i++)
         {
-            return;
+            SetSliderHighlight(_sliders[i], i == _currentIndex);
         }
 
-        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
+        UIManager.Instance.SetEventSystemObject(_sliders[_currentIndex].gameObject);
+
+        var slider = _sliders[_currentIndex];
+        var step = (slider.maxValue - slider.minValue) * 0.1f;
+
+        switch (input.x)
+        {
+            case < -0.5f:
+                slider.value -= step;
+                break;
+            case > 0.5f:
+                slider.value += step;
+                break;
+        }
     }
 
     public void HandleSubmit()
@@ -97,5 +116,14 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     public GameObject GetDefaultSelectable()
     {
         return _masterVolumeSlider ? _masterVolumeSlider.gameObject : null;
+    }
+
+    private void SetSliderHighlight(Slider slider, bool highlighted)
+    {
+        var handle = slider.handleRect.GetComponent<Image>();
+        if (handle)
+        {
+            handle.color = highlighted ? Color.yellow : Color.white;
+        }
     }
 }
