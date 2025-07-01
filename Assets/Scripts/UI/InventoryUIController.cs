@@ -1,61 +1,52 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InventoryUIController
 {
     private readonly EventSystem _eventSystem;
-    private readonly GameObject _slotPrefab;
-    private readonly Transform _slotParent;
+    private readonly List<InventorySlotController> _slots;
     private readonly TMP_Text _descriptionText;
     private readonly TMP_Text _promptInstructionsText;
-    private readonly int _gridColumns;
-
-    private readonly List<GameObject> _slots = new();
+    
     private int _selectedIndex;
 
-    public InventoryUIController(EventSystem eventSystem, GameObject slotPrefab, Transform slotParent,
-        TMP_Text descriptionText, TMP_Text promptInstructionsText, int gridColumns = 3)
+    private const int GridColumns = 4;
+
+    public InventoryUIController(EventSystem eventSystem, List<InventorySlotController> slots,
+        TMP_Text descriptionText, TMP_Text promptInstructionsText)
     {
         _eventSystem = eventSystem;
-        _slotPrefab = slotPrefab;
-        _slotParent = slotParent;
+        _slots = slots;
         _descriptionText = descriptionText;
         _promptInstructionsText = promptInstructionsText;
-        _gridColumns = gridColumns;
     }
 
     public void Refresh(IReadOnlyList<InventoryItem> items)
     {
-        foreach (var obj in _slots)
+        for (var i = 0; i < _slots.Count; i++)
         {
-            Object.Destroy(obj);
-        }
-        
-        _slots.Clear();
-
-        foreach (var item in items)
-        {
-            var obj = Object.Instantiate(_slotPrefab, _slotParent);
-            var controller = obj.GetComponent<InventorySlotController>();
-            if (controller)
+            if (i < items.Count && items[i] != null)
             {
-                controller.SetSlot(item);
+                _slots[i].SetSlot(items[i]);
             }
-
-            _slots.Add(obj);
+            else
+            {
+                _slots[i].ClearSlot();
+            }
         }
 
-        if (_slots.Count > 0)
+        if (items.Count > 0)
         {
             _promptInstructionsText.gameObject.SetActive(true);
-            
+
             _selectedIndex = 0;
             HighlightSlot(_selectedIndex);
 
             _eventSystem.SetSelectedGameObject(null);
-            _eventSystem.SetSelectedGameObject(_slots[0]);
+            _eventSystem.SetSelectedGameObject(_slots[0].gameObject);
         }
         else
         {
@@ -70,14 +61,14 @@ public class InventoryUIController
         if (_slots.Count == 0) return;
 
         var total = _slots.Count;
-        var rows = Mathf.CeilToInt((float)total / _gridColumns);
-        var row = _selectedIndex / _gridColumns;
-        var col = _selectedIndex % _gridColumns;
+        var rows = Mathf.CeilToInt((float)total / GridColumns);
+        var row = _selectedIndex / GridColumns;
+        var col = _selectedIndex % GridColumns;
 
         if (input.x > 0.5f)
         {
             col++;
-            if (col >= _gridColumns)
+            if (col >= GridColumns)
             {
                 col = 0;
                 row = (row + 1) % rows;
@@ -88,7 +79,7 @@ public class InventoryUIController
             col--;
             if (col < 0)
             {
-                col = _gridColumns - 1;
+                col = GridColumns - 1;
                 row = (row - 1 + rows) % rows;
             }
         }
@@ -106,13 +97,13 @@ public class InventoryUIController
             row = (row + 1) % rows;
         }
 
-        var newIndex = row * _gridColumns + col;
+        var newIndex = row * GridColumns + col;
         if (newIndex >= total)
         {
             while (col > 0)
             {
                 col--;
-                newIndex = row * _gridColumns + col;
+                newIndex = row * GridColumns + col;
                 if (newIndex < total) break;
             }
 
@@ -123,22 +114,18 @@ public class InventoryUIController
         HighlightSlot(_selectedIndex);
 
         _eventSystem.SetSelectedGameObject(null);
-        _eventSystem.SetSelectedGameObject(_slots[_selectedIndex]);
+        _eventSystem.SetSelectedGameObject(_slots[_selectedIndex].gameObject);
     }
 
     private void HighlightSlot(int index)
     {
         for (var i = 0; i < _slots.Count; i++)
         {
-            var controller = _slots[i].GetComponent<InventorySlotController>();
-            if (controller)
-            {
-                controller.SetHighlighted(i == index);
-            }
+            _slots[i].SetHighlighted(i == index);
         }
 
-        var selected = _slots[index].GetComponent<InventorySlotController>();
-        if (selected)
+        var selected = _slots[index];
+        if (selected && selected.ItemInSlot != null) 
         {
             _descriptionText.text = selected.ItemInSlot.itemName;
             _descriptionText.gameObject.SetActive(true);
@@ -146,23 +133,18 @@ public class InventoryUIController
 
         var itemInSlot = selected.ItemInSlot;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !itemInSlot.isDroppable &&
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null &&
             !itemInSlot.isReadable && !itemInSlot.isGun)
         {
             _promptInstructionsText.gameObject.SetActive(true);
             _promptInstructionsText.text = "Press X to Use";
-        }
-        else if (itemInSlot.isDroppable)
-        {
-            _promptInstructionsText.gameObject.SetActive(true);
-            _promptInstructionsText.text = "Press X to Drop";
         }
         else if (itemInSlot.isReadable)
         {
             _promptInstructionsText.gameObject.SetActive(true);
             _promptInstructionsText.text = "Press X to Read";
         }
-        else if (!itemInSlot.isDroppable && !itemInSlot.isReadable)
+        else if (!itemInSlot.isReadable)
         {
             // Gun behavior
             _promptInstructionsText.gameObject.SetActive(false);
@@ -173,10 +155,10 @@ public class InventoryUIController
         }
     }
 
-    public InventoryItem GetSelectedItem(IReadOnlyList<InventoryItem> items)
+    public InventoryItem GetSelectedItem()
     {
-        if (_slots.Count == 0 || _selectedIndex >= items.Count) return null;
+        if (_slots.Count == 0 || _selectedIndex >= _slots.Count) return null;
 
-        return items[_selectedIndex];
+        return _slots[_selectedIndex].ItemInSlot;
     }
 }

@@ -34,40 +34,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void DropItem(InventoryItem item)
-    {
-        if (item is not { isDroppable: true }) return;
-
-        var dropPos = _dropPosition.position;
-
-        if (Physics.Raycast(dropPos, Vector3.down, out var hit, 10f, _groundLayer))
-        {
-            dropPos = hit.point;
-
-            if (item.prefab)
-            {
-                var prefabRenderer = item.prefab.GetComponentInChildren<Renderer>();
-                if (prefabRenderer)
-                {
-                    var halfHeight = prefabRenderer.bounds.size.y / 2f;
-                    dropPos += Vector3.up * halfHeight;
-                }
-            }
-        }
-        
-        if (item.prefab)
-        {
-            Instantiate(item.prefab, dropPos, Quaternion.identity);
-        }
-        
-        if (UIManager.Instance)
-        {
-            UIManager.Instance.StartPopUpText($"You dropped: {item.itemName}.");
-        }
-
-        RemoveItem(item);
-    }
-
     public bool TryReadItem(InventoryItem item)
     {
         if (item is not { isReadable: true }) return false;

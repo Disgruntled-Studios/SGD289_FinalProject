@@ -127,10 +127,10 @@ public class UIControls : MonoBehaviour
             return;
         }
 
-        var selectedItem = _ui.InventoryUIController.GetSelectedItem(_inventory.Items);
+        var selectedItem = _ui.InventoryUIController.GetSelectedItem();
         if (selectedItem == null) return;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable && !selectedItem.isDroppable && !selectedItem.isGun)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable && !selectedItem.isGun)
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
@@ -153,12 +153,6 @@ public class UIControls : MonoBehaviour
             {
                 _noteIsActivated = true;
             }
-        }
-        else if (selectedItem.isDroppable)
-        {
-            _inventory.DropItem(selectedItem);
-            _ui.InventoryUIController.Refresh(_inventory.Items);
-            UIManager.Instance.ClosePauseMenu();
         }
         else if (selectedItem.isGun)
         {
