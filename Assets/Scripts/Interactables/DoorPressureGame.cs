@@ -14,6 +14,9 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
     public float escapeStartTime;
 
     public GameObject doorRef;
+    public Transform highlightedObj;
+    public Transform valveRotationStart;
+    public Transform valveRotationEnd;
     public Transform doorStartPos;
     public Transform doorEndPos;
     public Transform doorEndTimerPos;
@@ -26,14 +29,15 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
         hasTimerStarted = false;
     }
 
-    // Update is called once per frame
+    // Update is called once per frame    
     void Update()
     {
         if (!hasTimerStarted)
         {
             float pressurePercentage = doorPressure / maxPressure;
             doorRef.transform.position = Vector3.Lerp(doorStartPos.position, doorEndPos.position, pressurePercentage);
-            Debug.Log("Timer has not started yet moving door");
+            highlightedObj.transform.rotation = Quaternion.Lerp(valveRotationStart.rotation, valveRotationEnd.rotation, pressurePercentage);
+            Debug.Log(pressurePercentage);
         }
     }
 

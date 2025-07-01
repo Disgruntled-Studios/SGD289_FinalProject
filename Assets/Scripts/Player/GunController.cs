@@ -23,7 +23,6 @@ public class GunController : MonoBehaviour
     public bool IsAiming => _isAiming;
     
     private bool _isReloading;
-    private PlayerInventory _playerInventory;
 
     public bool IsReloading => _isReloading;
     public bool HasGun { get; set; }
@@ -37,7 +36,7 @@ public class GunController : MonoBehaviour
         }
 
         _animationController = GetComponentInParent<PlayerAnimationController>();
-        StartCoroutine(ReloadGun());
+        //StartCoroutine(ReloadGun());
     }
 
     private void Update()
@@ -100,7 +99,7 @@ public class GunController : MonoBehaviour
 
     public void ShootForTank()
     {
-        if (_isAiming && currentAmmoMagAmt > 0 && !_isReloading)
+        if (_isAiming)
         {
             Debug.Log("Shooting");
             _animationController.Shoot();
@@ -137,12 +136,10 @@ public class GunController : MonoBehaviour
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
         }
-        else if (_isAiming)
-        {
-            StartCoroutine(ReloadGun());
-        }
     }
 
+
+    /* //Depricated Coroutine
     public IEnumerator ReloadGun()
     {
         //Debug.Log("Is Reloading");
@@ -158,5 +155,6 @@ public class GunController : MonoBehaviour
         Debug.Log("Is Reloaded");
         _isReloading = false;
     }
+    */
 
 }
