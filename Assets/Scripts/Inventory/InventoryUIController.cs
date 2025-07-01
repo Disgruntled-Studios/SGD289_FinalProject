@@ -61,7 +61,7 @@ public class InventoryUIController
         if (_slots.Count == 0) return;
 
         var total = _slots.Count;
-        var rows = Mathf.CeilToInt((float)total / GridColumns);
+        const int totalRows = 5;
         var row = _selectedIndex / GridColumns;
         var col = _selectedIndex % GridColumns;
 
@@ -71,7 +71,7 @@ public class InventoryUIController
             if (col >= GridColumns)
             {
                 col = 0;
-                row = (row + 1) % rows;
+                row = (row + 1) % totalRows;
             }
         }
         else if (input.x < -0.5f)
@@ -80,7 +80,7 @@ public class InventoryUIController
             if (col < 0)
             {
                 col = GridColumns - 1;
-                row = (row - 1 + rows) % rows;
+                row = (row - 1 + totalRows) % totalRows;
             }
         }
 
@@ -89,25 +89,36 @@ public class InventoryUIController
             row--;
             if (row < 0)
             {
-                row = rows - 1;
+                row = totalRows - 1;
             }
         }
         else if (input.y < -0.5f)
         {
-            row = (row + 1) % rows;
+            row = (row + 1) % totalRows;
         }
 
         var newIndex = row * GridColumns + col;
-        if (newIndex >= total)
+
+        var attempts = 0;
+        while (attempts < total)
         {
-            while (col > 0)
+            if (newIndex >= total)
             {
-                col--;
-                newIndex = row * GridColumns + col;
-                if (newIndex < total) break;
+                newIndex = 0;
             }
 
-            if (newIndex >= total) return;
+            if (_slots[newIndex].ItemInSlot != null)
+            {
+                break;
+            }
+
+            newIndex++;
+            attempts++;
+        }
+
+        if (attempts >= total)
+        {
+            return; // everything is empty
         }
 
         _selectedIndex = newIndex;
@@ -125,33 +136,11 @@ public class InventoryUIController
         }
 
         var selected = _slots[index];
-        if (selected && selected.ItemInSlot != null) 
-        {
-            _descriptionText.text = selected.ItemInSlot.itemName;
-            _descriptionText.gameObject.SetActive(true);
-        }
-
         var itemInSlot = selected.ItemInSlot;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null &&
-            !itemInSlot.isReadable && !itemInSlot.isGun)
+        if (itemInSlot != null)
         {
-            _promptInstructionsText.gameObject.SetActive(true);
-            _promptInstructionsText.text = "Press X to Use";
-        }
-        else if (itemInSlot.isReadable)
-        {
-            _promptInstructionsText.gameObject.SetActive(true);
-            _promptInstructionsText.text = "Press X to Read";
-        }
-        else if (!itemInSlot.isReadable)
-        {
-            // Gun behavior
-            _promptInstructionsText.gameObject.SetActive(false);
-        }
-        else
-        {
-            _promptInstructionsText.gameObject.SetActive(false);
+            _descriptionText.text = itemInSlot.itemDescription;
         }
     }
 
