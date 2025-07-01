@@ -25,6 +25,8 @@ public class PlayerHealth : MonoBehaviour
     
     public bool IsInjured { get; private set; }
 
+    public int HitsRemaining { get; private set; } = 3;
+
     private void Awake()
     {
         Health = new UnitHealth(MaxHealth);
@@ -45,17 +47,20 @@ public class PlayerHealth : MonoBehaviour
         if (Mathf.Approximately(Health.CurrentHealth, 2.0f))
         {
             _vignette.intensity.value = FirstHitIntensity;
+            HitsRemaining--;
         }
         else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
         {
             _vignette.intensity.value = SecondHitIntensity;
             IsInjured = true;
             _animController.SetInjured(IsInjured);
+            HitsRemaining--;
 
         }
         else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
         {
             _vignette.intensity.value = ThirdHitIntensity;
+            HitsRemaining--;
         }
     }
 
