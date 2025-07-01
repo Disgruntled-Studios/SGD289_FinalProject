@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AudioUIController : IUIPanelController
+public class AudioUIController : MonoBehaviour, IUIPanelController
 {
     public void OnPanelActivated()
     {

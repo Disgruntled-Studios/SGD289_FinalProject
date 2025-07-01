@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ControlsUiController : IUIPanelController
+public class MoreUIController : MonoBehaviour, IUIPanelController
 {
     public void OnPanelActivated()
     {
