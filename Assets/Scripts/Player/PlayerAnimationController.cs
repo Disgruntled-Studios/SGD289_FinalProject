@@ -38,15 +38,23 @@ public class PlayerAnimationController : MonoBehaviour
 
         var turnInput = Mathf.Clamp(_playerController.GetCurrentTurnInput(), -1f, 1f);
 
-        if (turnInput < -TurnThreshold)
+        if (Mathf.Abs(_currentAnimSpeed) < 0.05f)
         {
-            _anim.SetBool("IsTurningLeft", true);
-            _anim.SetBool("IsTurningRight", false);
-        }
-        else if (turnInput > TurnThreshold)
-        {
-            _anim.SetBool("IsTurningLeft", false);
-            _anim.SetBool("IsTurningRight", true);
+            if (turnInput < -0.1f)
+            {
+                _anim.SetBool("IsTurningLeft", true);
+                _anim.SetBool("IsTurningRight", false);
+            }
+            else if (turnInput > 0.1f)
+            {
+                _anim.SetBool("IsTurningLeft", false);
+                _anim.SetBool("IsTurningRight", true);
+            }
+            else
+            {
+                _anim.SetBool("IsTurningLeft", false);
+                _anim.SetBool("IsTurningRight", false);
+            }
         }
         else
         {
