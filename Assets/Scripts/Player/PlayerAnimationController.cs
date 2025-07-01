@@ -9,10 +9,9 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private AnimatorOverrideController _injuredOverrideController;
 
     private RuntimeAnimatorController _originalController;
-
     private float _currentAnimSpeed;
-
-    private const float MovementThreshold = 0.1f;
+    
+    private const float TurnThreshold = 0.1f;
 
     private void Awake()
     {
@@ -36,9 +35,24 @@ public class PlayerAnimationController : MonoBehaviour
         var forwardInput = Mathf.Clamp(_playerController.CurrentMoveInput, -1f, 1f);
         _currentAnimSpeed = Mathf.MoveTowards(_currentAnimSpeed, forwardInput, 5f * Time.deltaTime);
         _anim.SetFloat("MoveSpeed", _currentAnimSpeed);
-        
+
         var turnInput = Mathf.Clamp(_playerController.GetCurrentTurnInput(), -1f, 1f);
-        _anim.SetFloat("TurnSpeed", turnInput);
+
+        if (turnInput < -TurnThreshold)
+        {
+            _anim.SetBool("IsTurningLeft", true);
+            _anim.SetBool("IsTurningRight", false);
+        }
+        else if (turnInput > TurnThreshold)
+        {
+            _anim.SetBool("IsTurningLeft", false);
+            _anim.SetBool("IsTurningRight", true);
+        }
+        else
+        {
+            _anim.SetBool("IsTurningLeft", false);
+            _anim.SetBool("IsTurningRight", false);
+        }
     }
 
     public void Crouch(bool isCrouching)
