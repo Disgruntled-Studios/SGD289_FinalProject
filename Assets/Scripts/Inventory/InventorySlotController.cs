@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InventorySlotController : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _itemNameText;
     [SerializeField] private Image _itemIconImage;
     [SerializeField] private Outline _slotOutline;
 
@@ -15,11 +14,6 @@ public class InventorySlotController : MonoBehaviour
     public void SetSlot(InventoryItem item)
     {
         _itemInSlot = item;
-        
-        if (_itemNameText)
-        {
-            _itemNameText.text = item.itemName;
-        }
 
         if (_itemIconImage)
         {
