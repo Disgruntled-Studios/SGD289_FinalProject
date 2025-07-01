@@ -16,7 +16,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
     private int _selectedIndex;
 
-    private void Start()
+    private void OnEnable()
     {
         _slots = UIManager.Instance.InventorySlots;
         _inventory = GameManager.Instance.PlayerInventory;
@@ -134,7 +134,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
     public GameObject GetDefaultSelectable()
     {
-        return _slots != null && _slots.Count > 0 ? _slots[0].gameObject : null;
+        return _slots is { Count: > 0 } ? _slots[0].gameObject : null;
     }
 
     private void Refresh(IReadOnlyList<InventoryItem> items)
