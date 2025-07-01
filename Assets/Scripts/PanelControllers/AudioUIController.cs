@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
 
+    private readonly List<Selectable> _selectables = new();
+    private int _currentIndex;
+    
     private void Awake()
     {
         _masterVolumeSlider.value = SoundManager.Instance.MasterVolume;
@@ -37,22 +41,52 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     
     public void OnPanelActivated()
     {
-        UIManager.Instance.SetEventSystemObject(_masterVolumeSlider.gameObject);
+        _selectables.Clear();
+        _selectables.Add(_masterVolumeSlider);
+        _selectables.Add(_musicVolumeSlider);
+        _selectables.Add(_sfxVolumeSlider);
+
+        _currentIndex = 0;
+
+        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
     }
 
     public void OnPanelDeactivated()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void HandleNavigation(Vector2 input)
     {
-        throw new System.NotImplementedException();
+        if (_selectables.Count == 0) return;
+
+        if (input.y > 0.5f)
+        {
+            _currentIndex--;
+            if (_currentIndex < 0)
+            {
+                _currentIndex = _selectables.Count - 1;
+            }
+        }
+        else if (input.y < -0.5f)
+        {
+            _currentIndex++;
+            if (_currentIndex >= _selectables.Count)
+            {
+                _currentIndex = 0;
+            }
+        }
+        else
+        {
+            return;
+        }
+
+        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
     }
 
     public void HandleSubmit()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void HandleCancel()

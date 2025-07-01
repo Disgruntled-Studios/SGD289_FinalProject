@@ -64,6 +64,8 @@ public class UIManager : MonoBehaviour
 
     private Coroutine _popUpCoroutine;
     
+    public bool PopUpTypingEnabled { get; set; }
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -300,6 +302,11 @@ public class UIManager : MonoBehaviour
         
         _gameEventSystem.SetSelectedGameObject(null);
         _gameEventSystem.SetSelectedGameObject(obj);
+    }
+
+    public GameObject GetCurrentSelectedObject()
+    {
+        return _gameEventSystem.currentSelectedGameObject;
     }
 
     #endregion
