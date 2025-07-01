@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -12,6 +13,10 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] private Volume _volume;
     private Vignette _vignette;
+    public Vignette Vignette => _vignette;
+
+    [SerializeField] private GameObject _vignetteObject;
+    public GameObject VignetteObject => _vignetteObject;
 
     private const float FirstHitIntensity = 0.4f;
     private const float SecondHitIntensity = 0.55f;
