@@ -39,8 +39,7 @@ public class UIManager : MonoBehaviour
     
     [Header("Inventory UI Elements")] 
     [SerializeField] private List<InventorySlotController> _inventorySlots;
-    [SerializeField] private TMP_Text _itemDescriptionText;
-    [SerializeField] private TMP_Text _promptInstructionsText;
+    public List<InventorySlotController> InventorySlots => _inventorySlots;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
 
     [Header("Keycode UI Elements")] 
@@ -53,18 +52,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Event System")] 
     [SerializeField] private EventSystem _gameEventSystem;
-
-    [Header("Controls Panel Elements")] 
-    [SerializeField] private List<Selectable> _controlElements;
-
-    [Header("Audio Panel Elements")] 
-    [SerializeField] private List<Selectable> _audioElements;
-
-    [Header("Visual Panel Elements")] 
-    [SerializeField] private List<Selectable> _visualElements;
-
-    [Header("More Panel Elements")] 
-    [SerializeField] private List<Selectable> _moreElements;
     
     [Header("Audio")] 
     [SerializeField] private UIAudioController _uiAudio;
@@ -169,8 +156,7 @@ public class UIManager : MonoBehaviour
         var defaultSelectable = _panelControllers[_currentPanelIndex]?.GetDefaultSelectable();
         if (defaultSelectable)
         {
-            _gameEventSystem.SetSelectedGameObject(null);
-            _gameEventSystem.SetSelectedGameObject(defaultSelectable);
+            SetEventSystemObject(defaultSelectable);
         }
     }
 
@@ -302,6 +288,18 @@ public class UIManager : MonoBehaviour
     public void ShowInvalidCodeFeedback()
     {
         _keycodeUIController.ShowInvalidFeedback();
+    }
+
+    #endregion
+
+    #region Helpers
+
+    public void SetEventSystemObject(GameObject obj)
+    {
+        if (!obj) return; 
+        
+        _gameEventSystem.SetSelectedGameObject(null);
+        _gameEventSystem.SetSelectedGameObject(obj);
     }
 
     #endregion

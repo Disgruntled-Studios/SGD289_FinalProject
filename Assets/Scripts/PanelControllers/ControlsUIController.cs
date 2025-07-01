@@ -1,34 +1,40 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControlsUIController : MonoBehaviour, IUIPanelController
 {
+    [SerializeField] private Selectable _dummyButton;
+    
     public void OnPanelActivated()
     {
-        throw new System.NotImplementedException();
+        if (_dummyButton)
+        {
+            UIManager.Instance.SetEventSystemObject(_dummyButton.gameObject);
+        }
     }
 
     public void OnPanelDeactivated()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void HandleNavigation(Vector2 input)
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void HandleSubmit()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void HandleCancel()
     {
-        throw new System.NotImplementedException();
+        UIManager.Instance.ClosePauseMenu();
     }
 
     public GameObject GetDefaultSelectable()
     {
-        throw new System.NotImplementedException();
+        return _dummyButton ? _dummyButton.gameObject : null;
     }
 }
