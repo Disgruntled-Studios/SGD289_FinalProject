@@ -18,19 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _keycodePanel;
 
     [Header("Pause Panel Buttons")] 
-    [SerializeField] private GameObject _inventoryPanelButton;
-    [SerializeField] private GameObject _controlsPanelButton;
-    [SerializeField] private GameObject _audioPanelButton;
-    [SerializeField] private GameObject _visualPanelButton;
-    [SerializeField] private GameObject _morePanelButton;
     [SerializeField] private List<Button> _topButtons;
 
     [Header("Pause Panels")] // Inventory, Controls, Audio, Visual, More
-    [SerializeField] private GameObject _inventoryPanel;
-    [SerializeField] private GameObject _controlsPanel;
-    [SerializeField] private GameObject _audioPanel;
-    [SerializeField] private GameObject _visualPanel;
-    [SerializeField] private GameObject _morePanel;
     [SerializeField] private List<GameObject> _subPanels;
 
     [Header("Panel Controllers")] 
@@ -61,19 +51,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
 
-    [Header("Pause Panel")] 
+    [Header("Event System")] 
     [SerializeField] private EventSystem _gameEventSystem;
-    public EventSystem GameEventSystem => _gameEventSystem;
 
-    [Header("Graphics Menu Elements")] 
-    [SerializeField] private List<Selectable> _graphicsElements;
+    [Header("Controls Panel Elements")] 
+    [SerializeField] private List<Selectable> _controlElements;
 
-    [Header("Help Menu Elements")] // None right now
-    [SerializeField] private List<Selectable> _helpElements;
+    [Header("Audio Panel Elements")] 
+    [SerializeField] private List<Selectable> _audioElements;
 
-    [Header("Sound Menu Elements")] 
-    [SerializeField] private List<Selectable> _soundElements;
+    [Header("Visual Panel Elements")] 
+    [SerializeField] private List<Selectable> _visualElements;
 
+    [Header("More Panel Elements")] 
+    [SerializeField] private List<Selectable> _moreElements;
+    
     [Header("Audio")] 
     [SerializeField] private UIAudioController _uiAudio;
     public UIAudioController UIAudioController => _uiAudio;
@@ -125,15 +117,26 @@ public class UIManager : MonoBehaviour
 
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
-        
         IsGamePaused = true;
 
-        _inventoryPanel.SetActive(true);
-        // _settingsPanel.SetActive(false);
-        //
-        // HighlightTab(_inventoryButton);
-        //
-        // _inventoryUIController.Refresh(PlayerInventory.Items);
+        _currentPanelIndex = 0;
+
+        for (var i = 0; i < _subPanels.Count; i++)
+        {
+            var isActive = i == _currentPanelIndex;
+            _subPanels[i].SetActive(isActive);
+
+            if (isActive)
+            {
+                _panelControllers[i]?.OnPanelActivated();
+            }
+            else
+            {
+                _panelControllers[i]?.OnPanelDeactivated();
+            }
+        }
+
+        HighlightActiveButton(_currentPanelIndex);
 
         InputManager.Instance.SwitchToUIInput();
     }
@@ -162,6 +165,13 @@ public class UIManager : MonoBehaviour
         _panelControllers[_currentPanelIndex]?.OnPanelActivated();
 
         HighlightActiveButton(index);
+
+        var defaultSelectable = _panelControllers[_currentPanelIndex]?.GetDefaultSelectable();
+        if (defaultSelectable)
+        {
+            _gameEventSystem.SetSelectedGameObject(null);
+            _gameEventSystem.SetSelectedGameObject(defaultSelectable);
+        }
     }
 
     public void NavigatePanel(int direction)
@@ -176,7 +186,7 @@ public class UIManager : MonoBehaviour
         {
             var buttonText = _topButtons[i].gameObject.GetComponentInChildren<TMP_Text>();
             buttonText.rectTransform.localScale = (i == index) ? new Vector3(1.25f, 1.25f, 1.25f) : Vector3.one;
-            buttonText.color = Color.red;
+            buttonText.color = i == index ? Color.red : Color.white;
         }
     }
 

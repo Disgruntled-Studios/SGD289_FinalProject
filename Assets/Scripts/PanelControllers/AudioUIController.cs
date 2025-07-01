@@ -26,4 +26,9 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     {
         throw new System.NotImplementedException();
     }
+
+    public GameObject GetDefaultSelectable()
+    {
+        throw new System.NotImplementedException();
+    }
 }
