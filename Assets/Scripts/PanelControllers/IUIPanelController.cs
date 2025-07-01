@@ -7,4 +7,5 @@ public interface IUIPanelController
     void HandleNavigation(Vector2 input);
     void HandleSubmit();
     void HandleCancel();
+    GameObject GetDefaultSelectable();
 }
