@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<InventorySlotController> _inventorySlots;
     public List<InventorySlotController> InventorySlots => _inventorySlots;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
+    [SerializeField] private GameObject _gunImage;
 
     [Header("Keycode UI Elements")] 
     [SerializeField] private TMP_Text _keycodePrompt;
@@ -95,6 +96,8 @@ public class UIManager : MonoBehaviour
         }
 
         _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
+
+        ToggleGunImage(false);
     }
 
     #region UI Navigation
@@ -227,7 +230,12 @@ public class UIManager : MonoBehaviour
 
     private void HandleInventoryChanged()
     {
-        //_inventoryUIController.Refresh(PlayerInventory.Items);
+        _inventoryController?.Refresh(PlayerInventory.Items);
+    }
+
+    public void ToggleGunImage(bool isActive)
+    {
+        _gunImage.SetActive(isActive);
     }
 
     #endregion

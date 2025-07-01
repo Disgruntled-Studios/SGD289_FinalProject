@@ -15,7 +15,10 @@ public class PlayerInventory : MonoBehaviour
     
     public void AddItem(InventoryItem item)
     {
-        _items.Add(item);
+        if (!item.isGun)
+        {
+            _items.Add(item);
+        }
         
         if (UIManager.Instance)
         {

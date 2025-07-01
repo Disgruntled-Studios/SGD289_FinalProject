@@ -24,6 +24,13 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
     
     public void OnPanelActivated()
     {
+        _slots ??= UIManager.Instance.InventorySlots;
+
+        if (!_inventory)
+        {
+            _inventory = GameManager.Instance.PlayerInventory;
+        }
+        
         Refresh(_inventory.Items);
 
         _selectedIndex = 0;
@@ -137,7 +144,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         return _slots is { Count: > 0 } ? _slots[0].gameObject : null;
     }
 
-    private void Refresh(IReadOnlyList<InventoryItem> items)
+    public void Refresh(IReadOnlyList<InventoryItem> items)
     {
         for (var i = 0; i < _slots.Count; i++)
         {

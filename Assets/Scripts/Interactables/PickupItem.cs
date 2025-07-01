@@ -16,15 +16,17 @@ public class PickupItem : MonoBehaviour, IInteractable
         _isGun = GetComponent<PlayerGun>();
     }
     
-    
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _isGun, _icon, _additionalText, _noteContents);
-        inventory.AddItem(item);
-
         if (_isGun)
         {
             player.gameObject.GetComponent<PlayerController>().GunController.HasGun = true;
+            UIManager.Instance.ToggleGunImage(true);
+        }
+        else
+        {
+            var item = new InventoryItem(_itemName, _isGun, _icon, _additionalText, _noteContents);
+            inventory.AddItem(item);
         }
         
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
