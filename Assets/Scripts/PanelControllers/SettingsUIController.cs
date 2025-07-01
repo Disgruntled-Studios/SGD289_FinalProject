@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SettingsUIController : IUIPanelController
+public class SettingsUIController : MonoBehaviour, IUIPanelController
 {
     private readonly EventSystem _eventSystem;
     private readonly List<Button> _subButtons;

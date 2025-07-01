@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUIController : IUIPanelController
+public class InventoryUIController : MonoBehaviour, IUIPanelController
 {
     private readonly EventSystem _eventSystem;
     private readonly List<InventorySlotController> _slots;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -9,27 +10,50 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    
-    [Header("HUD Elements")] 
+
+    [Header("Main Panels")] // HUD, Pause, Puzzle, Keycode
     [SerializeField] private GameObject _hudPanel;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _puzzlePanel;
+    [SerializeField] private GameObject _keycodePanel;
+
+    [Header("Pause Panel Buttons")] 
+    [SerializeField] private GameObject _inventoryPanelButton;
+    [SerializeField] private GameObject _controlsPanelButton;
+    [SerializeField] private GameObject _audioPanelButton;
+    [SerializeField] private GameObject _visualPanelButton;
+    [SerializeField] private GameObject _morePanelButton;
+    [SerializeField] private List<Button> _topButtons;
+
+    [Header("Pause Panels")] // Inventory, Controls, Audio, Visual, More
+    [SerializeField] private GameObject _inventoryPanel;
+    [SerializeField] private GameObject _controlsPanel;
+    [SerializeField] private GameObject _audioPanel;
+    [SerializeField] private GameObject _visualPanel;
+    [SerializeField] private GameObject _morePanel;
+    [SerializeField] private List<GameObject> _subPanels;
+
+    [Header("Panel Controllers")] 
+    [SerializeField] private InventoryUIController _inventoryController;
+    [SerializeField] private ControlsUIController _controlsController;
+    [SerializeField] private AudioUIController _audioController;
+    [SerializeField] private VisualUIController _visualController;
+    [SerializeField] private MoreUIController _moreController;
+    private List<IUIPanelController> _panelControllers;
+    private int _currentPanelIndex;
 
     [Header("Puzzle UI Elements")] 
     [SerializeField] private TMP_Text _tileMoveInstructions;
     [SerializeField] private TMP_Text _tileRotateInstructions;
     [SerializeField] private TMP_Text _puzzleInstructions;
-    [SerializeField] private GameObject _puzzlePanel;
     
     [Header("Inventory UI Elements")] 
     [SerializeField] private List<InventorySlotController> _inventorySlots;
-    [SerializeField] private GameObject _noteContents;
-    public GameObject NoteContents => _noteContents;
-    [SerializeField] private TMP_Text _noteContentsText;
     [SerializeField] private TMP_Text _itemDescriptionText;
     [SerializeField] private TMP_Text _promptInstructionsText;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
 
     [Header("Keycode UI Elements")] 
-    [SerializeField] private GameObject _keycodePanel;
     [SerializeField] private TMP_Text _keycodePrompt;
     [SerializeField] private List<TMP_Text> _digitDisplays;
     
@@ -38,32 +62,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _popUpText;
 
     [Header("Pause Panel")] 
-    [SerializeField] private GameObject _pausePanel;
     [SerializeField] private EventSystem _gameEventSystem;
     public EventSystem GameEventSystem => _gameEventSystem;
-
-    [Header("Pause Sub-Panels")] // DOES NOT INCLUDE PUZZLE PANEL AND KEYCODE PANEL
-    [SerializeField] private GameObject[] _subPanels; // INCLUDES INVENTORY AND SETTINGS SUB-PANELS
-    [SerializeField] private GameObject _inventoryPanel;
-    [SerializeField] private GameObject _inventoryButton;
-    [SerializeField] private GameObject _settingsPanel;
-    [SerializeField] private GameObject _settingsButton;
-    private int _currentPanelIndex;
-    private GameObject _currentHighlightedTab;
-
-    [Header("Settings Sub-Panels")] // ADDITIONAL PANELS ON SETTINGS SCREEN (Graphics, Sounds, etc)
-    [SerializeField] private GameObject _helpPanel;
-    [SerializeField] private GameObject _graphicsPanel;
-    [SerializeField] private GameObject _soundPanel;
-
-    [Header("Settings Sub-Buttons")] 
-    [SerializeField] private GameObject _resumeGameButton;
-    [SerializeField] private GameObject _helpButton;
-    [SerializeField] private GameObject _graphicsButton;
-    [SerializeField] private GameObject _soundButton;
-    [SerializeField] private GameObject _exitMainMenuButton;
-    [SerializeField] private GameObject _exitDesktopButton;
-    [SerializeField] private List<Button> _settingsSubButtons;
 
     [Header("Graphics Menu Elements")] 
     [SerializeField] private List<Selectable> _graphicsElements;
@@ -78,16 +78,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIAudioController _uiAudio;
     public UIAudioController UIAudioController => _uiAudio;
     
-    public bool IsOnInventoryPanel => _currentPanelIndex == 0;
-    public bool IsOnSettingsPanel => _currentPanelIndex == 1;
-    
     public bool IsGamePaused { get; private set; }
-
-    private SettingsUIController _settingsUIController;
-    public SettingsUIController SettingsUIController => _settingsUIController;
-
-    private InventoryUIController _inventoryUIController;
-    public InventoryUIController InventoryUIController => _inventoryUIController;
 
     private KeycodeUIController _keycodeUIController;
     public KeycodeUIController KeycodeUIController => _keycodeUIController;
@@ -104,6 +95,15 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        _panelControllers = new List<IUIPanelController>
+        {
+            _inventoryController,
+            _controlsController,
+            _audioController,
+            _visualController,
+            _moreController
+        };
     }
 
     private void Start()
@@ -112,14 +112,6 @@ public class UIManager : MonoBehaviour
         {
             PlayerInventory.OnInventoryChanged += HandleInventoryChanged;
         }
-
-        _settingsUIController = new SettingsUIController(_gameEventSystem, _settingsSubButtons,
-            _helpButton.GetComponent<Button>(), _graphicsButton.GetComponent<Button>(),
-            _soundButton.GetComponent<Button>(), _helpPanel, _graphicsPanel, _soundPanel, _settingsButton,
-            _graphicsElements, _soundElements);
-
-        _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlots,
-            _itemDescriptionText, _promptInstructionsText);
 
         _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
     }
@@ -137,11 +129,11 @@ public class UIManager : MonoBehaviour
         IsGamePaused = true;
 
         _inventoryPanel.SetActive(true);
-        _settingsPanel.SetActive(false);
-
-        HighlightTab(_inventoryButton);
-
-        _inventoryUIController.Refresh(PlayerInventory.Items);
+        // _settingsPanel.SetActive(false);
+        //
+        // HighlightTab(_inventoryButton);
+        //
+        // _inventoryUIController.Refresh(PlayerInventory.Items);
 
         InputManager.Instance.SwitchToUIInput();
     }
@@ -157,59 +149,45 @@ public class UIManager : MonoBehaviour
         
         InputManager.Instance.SwitchToDefaultInput();
     }
-    
+
+    private void SetActivePanel(int index)
+    {
+        if (index == _currentPanelIndex) return;
+        
+        _panelControllers[_currentPanelIndex]?.OnPanelDeactivated();
+        _subPanels[_currentPanelIndex].SetActive(false);
+
+        _currentPanelIndex = index;
+        _subPanels[_currentPanelIndex].SetActive(true);
+        _panelControllers[_currentPanelIndex]?.OnPanelActivated();
+
+        HighlightActiveButton(index);
+    }
+
     public void NavigatePanel(int direction)
     {
-        if (_noteContents.activeSelf)
+        var newIndex = (_currentPanelIndex + direction + _subPanels.Count) % _subPanels.Count;
+        SetActivePanel(newIndex);
+    }
+
+    private void HighlightActiveButton(int index)
+    {
+        for (var i = 0; i < _topButtons.Count; i++)
         {
-            _noteContents.SetActive(false);
-        }
-        
-        _subPanels[_currentPanelIndex].SetActive(false);
-        _currentPanelIndex = (_currentPanelIndex + direction + _subPanels.Length) % _subPanels.Length;
-        _subPanels[_currentPanelIndex].SetActive(true);
-
-        _gameEventSystem.SetSelectedGameObject(null);
-
-        if (IsOnInventoryPanel)
-        {
-            _inventoryPanel.SetActive(true);
-            _settingsPanel.SetActive(false);
-
-            HighlightTab(_inventoryButton);
-
-            _inventoryUIController.Refresh(PlayerInventory.Items);
-        }
-        else if (IsOnSettingsPanel)
-        {
-            _settingsPanel.SetActive(true);
-            _inventoryPanel.SetActive(false);
-
-            HighlightTab(_settingsButton);
-            _settingsUIController.Reset();
+            var buttonText = _topButtons[i].gameObject.GetComponentInChildren<TMP_Text>();
+            buttonText.rectTransform.localScale = (i == index) ? new Vector3(1.25f, 1.25f, 1.25f) : Vector3.one;
+            buttonText.color = Color.red;
         }
     }
 
-    private void HighlightTab(GameObject newTab)
+    public IUIPanelController GetActivePanelController()
     {
-        if (_currentHighlightedTab == newTab) return;
-
-        if (_currentHighlightedTab)
+        if (_currentPanelIndex >= 0 && _currentPanelIndex < _panelControllers.Count)
         {
-            var oldImage = _currentHighlightedTab.GetComponent<Image>();
-            if (oldImage)
-            {
-                oldImage.color = Color.white;
-            }
+            return _panelControllers[_currentPanelIndex];
         }
 
-        var newImage = newTab.GetComponent<Image>();
-        if (newImage)
-        {
-            newImage.color = Color.yellow;
-        }
-
-        _currentHighlightedTab = newTab;
+        return null;
     }
 
     #endregion
@@ -251,13 +229,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleInventoryChanged()
     {
-        _inventoryUIController.Refresh(PlayerInventory.Items);
-    }
-
-    public void ToggleNoteContents(bool isActive, string contents = "")
-    {
-        _noteContents.SetActive(isActive);
-        _noteContentsText.text = contents;
+        //_inventoryUIController.Refresh(PlayerInventory.Items);
     }
 
     #endregion
