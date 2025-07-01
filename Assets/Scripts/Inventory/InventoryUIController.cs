@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -6,25 +7,137 @@ using UnityEngine.EventSystems;
 
 public class InventoryUIController : MonoBehaviour, IUIPanelController
 {
-    private readonly EventSystem _eventSystem;
-    private readonly List<InventorySlotController> _slots;
-    private readonly TMP_Text _descriptionText;
-    private readonly TMP_Text _promptInstructionsText;
-    
-    private int _selectedIndex;
+    [Header("Inventory UI Elements")] 
+    private List<InventorySlotController> _slots;
+    [SerializeField] private TMP_Text _descriptionText;
+    private PlayerInventory _inventory;
 
     private const int GridColumns = 4;
 
-    public InventoryUIController(EventSystem eventSystem, List<InventorySlotController> slots,
-        TMP_Text descriptionText, TMP_Text promptInstructionsText)
+    private int _selectedIndex;
+
+    private void Start()
     {
-        _eventSystem = eventSystem;
-        _slots = slots;
-        _descriptionText = descriptionText;
-        _promptInstructionsText = promptInstructionsText;
+        _slots = UIManager.Instance.InventorySlots;
+        _inventory = GameManager.Instance.PlayerInventory;
+    }
+    
+    public void OnPanelActivated()
+    {
+        Refresh(_inventory.Items);
+
+        _selectedIndex = 0;
+        HighlightSlot(_selectedIndex);
+
+        UIManager.Instance.SetEventSystemObject(_slots[_selectedIndex].gameObject);
     }
 
-    public void Refresh(IReadOnlyList<InventoryItem> items)
+    public void OnPanelDeactivated()
+    {
+        foreach (var slot in _slots)
+        {
+            slot.SetHighlighted(false);
+        }
+
+        _descriptionText.gameObject.SetActive(false);
+    }
+
+    public void HandleNavigation(Vector2 input)
+    {
+        if (_slots.Count == 0) return;
+
+        var total = _slots.Count;
+        const int gridRows = 5;
+        var row = _selectedIndex / GridColumns;
+        var col = _selectedIndex & GridColumns;
+
+        if (input.x > 0.5f)
+        {
+            col++;
+            if (col >= GridColumns)
+            {
+                col = 0;
+                row = (row + 1) % gridRows;
+            }
+        }
+        else if (input.x < -0.5f)
+        {
+            col--;
+            if (col < 0)
+            {
+                col = GridColumns - 1;
+                row = (row - 1 + gridRows) % gridRows;
+            }
+        }
+
+        if (input.y > 0.5f)
+        {
+            row--;
+            if (row < 0)
+            {
+                row = gridRows - 1;
+            }
+        }
+        else if (input.y < -0.5f)
+        {
+            row = (row + 1) % gridRows;
+        }
+
+        var newIndex = row * GridColumns + col;
+
+        if (newIndex >= total)
+        {
+            while (col > 0)
+            {
+                col--;
+                newIndex = row * GridColumns + col;
+                if (newIndex < total) break;
+            }
+
+            if (newIndex >= total) return;
+        }
+
+        _selectedIndex = newIndex;
+        HighlightSlot(_selectedIndex);
+
+        UIManager.Instance.SetEventSystemObject(_slots[_selectedIndex].gameObject);
+    }
+
+    public void HandleSubmit()
+    {
+        var selectedItem = GetSelectedItem();
+        if (selectedItem == null) return;
+
+        var playerController = GameManager.Instance.PlayerController;
+        var receiver = playerController.CurrentItemReceiver;
+
+        if (receiver != null && !selectedItem.isGun)
+        {
+            if (receiver.TryReceiveItem(_inventory, selectedItem))
+            {
+                UIManager.Instance.StartPopUpText($"{selectedItem.itemName} used on {receiver.Name}.");
+            }
+            else
+            {
+                // Handle incorrect item? 
+            }
+
+            Refresh(_inventory.Items);
+            UIManager.Instance.ClosePauseMenu();
+        }
+    }
+
+    public void HandleCancel()
+    {
+        UIManager.Instance.ClosePauseMenu();
+    }
+
+    public GameObject GetDefaultSelectable()
+    {
+        return _slots != null && _slots.Count > 0 ? _slots[0].gameObject : null;
+    }
+
+    private void Refresh(IReadOnlyList<InventoryItem> items)
     {
         for (var i = 0; i < _slots.Count; i++)
         {
@@ -37,95 +150,6 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
                 _slots[i].ClearSlot();
             }
         }
-
-        if (items.Count > 0)
-        {
-            _promptInstructionsText.gameObject.SetActive(true);
-
-            _selectedIndex = 0;
-            HighlightSlot(_selectedIndex);
-
-            _eventSystem.SetSelectedGameObject(null);
-            _eventSystem.SetSelectedGameObject(_slots[0].gameObject);
-        }
-        else
-        {
-            _eventSystem.SetSelectedGameObject(null);
-            _descriptionText.gameObject.SetActive(false);
-            _promptInstructionsText.gameObject.SetActive(false);
-        }
-    }
-
-    public void Navigate(Vector2 input)
-    {
-        if (_slots.Count == 0) return;
-
-        var total = _slots.Count;
-        const int totalRows = 5;
-        var row = _selectedIndex / GridColumns;
-        var col = _selectedIndex % GridColumns;
-
-        if (input.x > 0.5f)
-        {
-            col++;
-            if (col >= GridColumns)
-            {
-                col = 0;
-                row = (row + 1) % totalRows;
-            }
-        }
-        else if (input.x < -0.5f)
-        {
-            col--;
-            if (col < 0)
-            {
-                col = GridColumns - 1;
-                row = (row - 1 + totalRows) % totalRows;
-            }
-        }
-
-        if (input.y > 0.5f)
-        {
-            row--;
-            if (row < 0)
-            {
-                row = totalRows - 1;
-            }
-        }
-        else if (input.y < -0.5f)
-        {
-            row = (row + 1) % totalRows;
-        }
-
-        var newIndex = row * GridColumns + col;
-
-        var attempts = 0;
-        while (attempts < total)
-        {
-            if (newIndex >= total)
-            {
-                newIndex = 0;
-            }
-
-            if (_slots[newIndex].ItemInSlot != null)
-            {
-                break;
-            }
-
-            newIndex++;
-            attempts++;
-        }
-
-        if (attempts >= total)
-        {
-            return; // everything is empty
-        }
-
-        _selectedIndex = newIndex;
-        HighlightSlot(_selectedIndex);
-
-        _eventSystem.SetSelectedGameObject(null);
-        _eventSystem.SetSelectedGameObject(_slots[_selectedIndex].gameObject);
     }
 
     private void HighlightSlot(int index)
@@ -135,49 +159,24 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
             _slots[i].SetHighlighted(i == index);
         }
 
-        var selected = _slots[index];
-        var itemInSlot = selected.ItemInSlot;
+        var slot = _slots[index];
+        var item = slot.ItemInSlot;
 
-        if (itemInSlot != null)
+        if (item != null)
         {
-            _descriptionText.text = itemInSlot.inventoryItemDescription;
+            _descriptionText.text = item.inventoryItemDescription;
+            _descriptionText.gameObject.SetActive(true);
+        }
+        else
+        {
+            _descriptionText.gameObject.SetActive(false);
         }
     }
 
-    public InventoryItem GetSelectedItem()
+    private InventoryItem GetSelectedItem()
     {
-        if (_slots.Count == 0 || _selectedIndex >= _slots.Count) return null;
+        if (_selectedIndex < 0 || _selectedIndex >= _slots.Count) return null;
 
         return _slots[_selectedIndex].ItemInSlot;
-    }
-
-    public void OnPanelActivated()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnPanelDeactivated()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void HandleNavigation(Vector2 input)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void HandleSubmit()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void HandleCancel()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public GameObject GetDefaultSelectable()
-    {
-        throw new System.NotImplementedException();
     }
 }
