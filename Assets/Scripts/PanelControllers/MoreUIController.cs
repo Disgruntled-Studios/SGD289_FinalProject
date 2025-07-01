@@ -21,12 +21,23 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
     public void OnPanelActivated()
     {
         _currentIndex = 0;
+
+        foreach (var button in _buttons)
+        {
+            SetButtonHighlight(button, false);
+        }
+
+        SetButtonHighlight(_buttons[_currentIndex], true);
+        
         UIManager.Instance.SetEventSystemObject(_buttons[_currentIndex].gameObject);
     }
 
     public void OnPanelDeactivated()
     {
-        return;
+        foreach (var button in _buttons)
+        {
+            SetButtonHighlight(button, false);
+        }
     }
 
     public void HandleNavigation(Vector2 input)
@@ -49,9 +60,10 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
                 _currentIndex = 0;
             }
         }
-        else
+
+        for (var i = 0; i < _buttons.Count; i++)
         {
-            return;
+            SetButtonHighlight(_buttons[i], i == _currentIndex);
         }
 
         UIManager.Instance.SetEventSystemObject(_buttons[_currentIndex].gameObject);
@@ -59,14 +71,10 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
 
     public void HandleSubmit()
     {
-        var current = UIManager.Instance.GetCurrentSelectedObject();
+        var current = _buttons[_currentIndex];
         if (!current) return;
-
-        var button = current.GetComponent<Button>();
-        if (button)
-        {
-            button.onClick.Invoke();
-        }
+        
+        current.onClick.Invoke();
     }
 
     public void HandleCancel()
@@ -77,5 +85,14 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
     public GameObject GetDefaultSelectable()
     {
         return _buttons.Count > 0 ? _buttons[0].gameObject : null;
+    }
+
+    private void SetButtonHighlight(Button button, bool highlighted)
+    {
+        var image = button.targetGraphic as Image;
+        if (image)
+        {
+            image.color = highlighted ? Color.yellow : Color.white;
+        }
     }
 }

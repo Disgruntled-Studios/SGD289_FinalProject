@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -12,7 +13,7 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
     [SerializeField] private Toggle _typingToggle;
 
     [Header("Selectables")] 
-    private List<Selectable> _selectables;
+    private List<Selectable> _selectables = new();
     private int _currentIndex;
     
     [Header("References")] 
@@ -34,6 +35,14 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         _fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
         _vignetteToggle.onValueChanged.AddListener(OnVignetteChanged);
         _typingToggle.onValueChanged.AddListener(OnTypingChanged);
+    }
+
+    private void OnEnable()
+    {
+        _selectables.Add(_brightnessSlider);
+        _selectables.Add(_fullscreenToggle);
+        _selectables.Add(_vignetteToggle);
+        _selectables.Add(_typingToggle);
     }
 
     private void OnBrightnessChanged(float value)
@@ -73,19 +82,34 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         };
 
         _currentIndex = 0;
-
         UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
+        
+        SetSliderHighlight(_brightnessSlider, false);
+        SetToggleHighlight(_fullscreenToggle, false);
+        SetToggleHighlight(_vignetteToggle, false);
+        SetToggleHighlight(_typingToggle, false);
+        
+        var selected = _selectables[_currentIndex];
+        if (selected is Slider slider)
+        {
+            SetSliderHighlight(slider, true);
+        }
+        else if (selected is Toggle toggle)
+        {
+            SetToggleHighlight(toggle, true);
+        }
     }
 
     public void OnPanelDeactivated()
     {
-        return;
+        SetSliderHighlight(_brightnessSlider, false);
+        SetToggleHighlight(_fullscreenToggle, false);
+        SetToggleHighlight(_vignetteToggle, false);
+        SetToggleHighlight(_typingToggle, false);
     }
 
     public void HandleNavigation(Vector2 input)
     {
-        if (_selectables == null || _selectables.Count == 0) return;
-
         if (input.y > 0.5f)
         {
             _currentIndex--;
@@ -102,21 +126,42 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
                 _currentIndex = 0;
             }
         }
-        else
+
+        SetSliderHighlight(_brightnessSlider, false);
+        SetToggleHighlight(_fullscreenToggle, false);
+        SetToggleHighlight(_vignetteToggle, false);
+        SetToggleHighlight(_typingToggle, false);
+
+        var selected = _selectables[_currentIndex];
+        if (selected is Slider slider)
         {
-            return;
+            SetSliderHighlight(slider, true);
+        }
+        else if (selected is Toggle toggle)
+        {
+            SetToggleHighlight(toggle, true);
         }
 
-        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
+        UIManager.Instance.SetEventSystemObject(selected.gameObject);
+
+        if (selected is Slider s)
+        {
+            var step = (s.maxValue - s.minValue) * 0.1f;
+            if (input.x < -0.5f)
+            {
+                s.value -= step;
+            }
+            else if (input.x > 0.5f)
+            {
+                s.value += step;
+            }
+        }
     }
 
     public void HandleSubmit()
     {
-        var current = UIManager.Instance.GetCurrentSelectedObject();
-        if (!current) return;
-
-        var toggle = current.GetComponent<Toggle>();
-        if (toggle)
+        var selected = _selectables[_currentIndex];
+        if (selected is Toggle toggle)
         {
             toggle.isOn = !toggle.isOn;
         }
@@ -130,5 +175,25 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
     public GameObject GetDefaultSelectable()
     {
         return _selectables is { Count: > 0 } ? _selectables[0].gameObject : null;
+    }
+
+    private void SetSliderHighlight(Slider slider, bool highlighted)
+    {
+        if (!slider || !slider.handleRect) return;
+
+        var handle = slider.handleRect.GetComponent<Image>();
+        if (handle)
+        {
+            handle.color = highlighted ? Color.yellow : Color.white;
+        }
+    }
+
+    private void SetToggleHighlight(Toggle toggle, bool highlighted)
+    {
+        var backgroundImage = toggle.targetGraphic as Image;
+        if (backgroundImage)
+        {
+            backgroundImage.color = highlighted ? Color.yellow : Color.white;
+        }
     }
 }

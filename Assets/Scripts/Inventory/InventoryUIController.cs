@@ -49,7 +49,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         var total = _slots.Count;
         const int gridRows = 5;
         var row = _selectedIndex / GridColumns;
-        var col = _selectedIndex & GridColumns;
+        var col = _selectedIndex % GridColumns;
 
         if (input.x > 0.5f)
         {
