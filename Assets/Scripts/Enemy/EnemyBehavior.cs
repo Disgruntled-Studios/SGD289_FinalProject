@@ -111,15 +111,20 @@ public class EnemyBehavior : MonoBehaviour
         switch (currentState)
         {
             case BehaviorState.patrolling:
+                if (leftEyeLight.enabled == false)
+                {
+                    leftEyeLight.enabled = true;
+                    rightEyeLight.enabled = true;
+                }
                 if (!meshAgent.isStopped)
-                {
-                    anim.SetBool("IsMoving", true);
-                    anim.SetBool("IsChasing", false);
-                }
-                else
-                {
-                    anim.SetBool("IsMoving", false);
-                }
+                    {
+                        anim.SetBool("IsMoving", true);
+                        anim.SetBool("IsChasing", false);
+                    }
+                    else
+                    {
+                        anim.SetBool("IsMoving", false);
+                    }
                 // else if (fov.isPlayerInSight && playerDist < fov.viewRadius)
                 // {
                 //     StopCoroutine(SetAgentDestToCurrentTarget(6));
@@ -150,10 +155,12 @@ public class EnemyBehavior : MonoBehaviour
                 break;
 
             case BehaviorState.chasing:
-                if (leftEyeLight.color != Color.red)
+                if (leftEyeLight.color != Color.red || !leftEyeLight.enabled)
                 {
                     leftEyeLight.color = Color.red;
                     rightEyeLight.color = Color.red;
+                    leftEyeLight.enabled = true;
+                    rightEyeLight.enabled = true;
                 }
 
                 if (playerDist <= attackDistance && !health.IsDead)
@@ -189,6 +196,8 @@ public class EnemyBehavior : MonoBehaviour
                 anim.SetBool("IsResting", true);
                 meshAgent.enabled = false;
                 capsuleCollider.enabled = false;
+                rightEyeLight.enabled = false;
+                leftEyeLight.enabled = false;
 
                 break;
         }
