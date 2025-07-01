@@ -10,7 +10,6 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private Sprite _icon;
     [SerializeField] private GameObject _dropPrefab;
     [SerializeField] private bool _isReadable;
-    [SerializeField] private bool _isDroppable;
 
     private bool _isGun; // PlayerGun script sets this automatically
 
@@ -22,7 +21,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _isReadable, _isDroppable, _isGun, _icon, _dropPrefab, _additionalText, _noteContents);
+        var item = new InventoryItem(_itemName, _isReadable, _isGun, _icon, _dropPrefab, _additionalText, _noteContents);
         inventory.AddItem(item);
 
         if (_isGun)

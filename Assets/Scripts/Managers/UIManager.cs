@@ -18,10 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _tileRotateInstructions;
     [SerializeField] private TMP_Text _puzzleInstructions;
     [SerializeField] private GameObject _puzzlePanel;
-
+    
     [Header("Inventory UI Elements")] 
-    [SerializeField] private GameObject _inventorySlotPrefab;
-    [SerializeField] private Transform _inventorySlotParent;
+    [SerializeField] private List<InventorySlotController> _inventorySlots;
     [SerializeField] private GameObject _noteContents;
     public GameObject NoteContents => _noteContents;
     [SerializeField] private TMP_Text _noteContentsText;
@@ -119,8 +118,8 @@ public class UIManager : MonoBehaviour
             _soundButton.GetComponent<Button>(), _helpPanel, _graphicsPanel, _soundPanel, _settingsButton,
             _graphicsElements, _soundElements);
 
-        _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlotPrefab, _inventorySlotParent,
-            _itemDescriptionText, _promptInstructionsText, 3);
+        _inventoryUIController = new InventoryUIController(_gameEventSystem, _inventorySlots,
+            _itemDescriptionText, _promptInstructionsText);
 
         _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
     }

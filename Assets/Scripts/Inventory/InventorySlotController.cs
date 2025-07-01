@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class InventorySlotController : MonoBehaviour
 {
+    [SerializeField] private GameObject _iconObject;
     [SerializeField] private Image _itemIconImage;
-    [SerializeField] private Outline _slotOutline;
+    [SerializeField] private Image _backgroundImage;
 
     private InventoryItem _itemInSlot;
     public InventoryItem ItemInSlot => _itemInSlot;
@@ -15,19 +16,29 @@ public class InventorySlotController : MonoBehaviour
     {
         _itemInSlot = item;
 
+        if (_iconObject)
+        {
+            _iconObject.SetActive(true);
+        }
+
         if (_itemIconImage)
         {
             _itemIconImage.sprite = item.icon;
-            _itemIconImage.enabled = item.icon != null;
         }
+        
+        _itemIconImage.transform.localScale = Vector3.one;
     }
 
     public void SetHighlighted(bool highlighted)
     {
-        var bgImage = GetComponent<Image>();
-        if (bgImage)
-        {
-            bgImage.color = highlighted ? Color.yellow : Color.white;
-        }
+        _backgroundImage.color = highlighted ? Color.red : Color.white;
+    }
+
+    public void ClearSlot()
+    {
+        _iconObject.SetActive(false);
+        _itemIconImage.sprite = null;
+        
+        _itemIconImage.transform.localScale = Vector3.one;
     }
 }
