@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public IInteractable _currentInteractable { get; private set; }
     private IItemReceiver _currentItemReceiver;
     public IItemReceiver CurrentItemReceiver => _currentItemReceiver;
-    public Transform currentInteractableTransform;
+    public Transform currentHighlightedObj;
 
     private PlayerInput Input => InputManager.Instance.PlayerInput;
     
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
         
-        _gunController.StartCoroutine(_gunController.ReloadGun());
+        // _gunController.StartCoroutine(_gunController.ReloadGun());
     }
 
     public void OnPause(InputAction.CallbackContext context)
@@ -276,25 +276,39 @@ public class PlayerController : MonoBehaviour
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
-            currentInteractableTransform = other.transform;
+            if ( other.GetComponent<DoorPressureGame>() && other.GetComponent<DoorPressureGame>().highlightedObj != null)
+            {
+                currentHighlightedObj = other.GetComponent<DoorPressureGame>().highlightedObj;
+            }
+            else
+            {
+                currentHighlightedObj = other.transform;
+            }
         }
         else if (other.transform.parent != null &&
                  other.transform.parent.TryGetComponent(out interactable))
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
-            currentInteractableTransform = other.transform;
+            if (other.transform.parent.GetComponent<DoorPressureGame>() && other.transform.parent.GetComponent<DoorPressureGame>().highlightedObj != null)
+            {
+                currentHighlightedObj = other.transform.parent.GetComponent<DoorPressureGame>().highlightedObj;
+            }
+            else
+            {
+                currentHighlightedObj = other.transform.parent;
+            }
         }
 
         if (other.TryGetComponent<IItemReceiver>(out var receiver))
         {
             _currentItemReceiver = receiver;
-            currentInteractableTransform = other.transform;
+            currentHighlightedObj = other.transform;
         }
         else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
         {
             _currentItemReceiver = receiver;
-            currentInteractableTransform = other.transform;
+            currentHighlightedObj = other.transform;
         }
     }
 
@@ -317,7 +331,7 @@ public class PlayerController : MonoBehaviour
             {
                 _currentInteractable.OnExit();
                 ClearCurrentInteractable(_currentInteractable);
-                currentInteractableTransform = null;
+                currentHighlightedObj = null;
             }
         }
 
@@ -337,7 +351,7 @@ public class PlayerController : MonoBehaviour
             if (isAMatch)
             {
                 ClearCurrentItemReceiver(_currentItemReceiver);
-                currentInteractableTransform = null;
+                currentHighlightedObj = null;
             }
         }
     }

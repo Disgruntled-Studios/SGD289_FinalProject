@@ -47,9 +47,9 @@ public class SelectionManager : MonoBehaviour
         }
 
         _selection = null;
-        if (playerRef.currentInteractableTransform != null)
+        if (playerRef.currentHighlightedObj != null)
         {
-            _selection = playerRef.currentInteractableTransform;
+            _selection = playerRef.currentHighlightedObj;
         }
 
          //Selection Response
