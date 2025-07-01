@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUIController
+public class InventoryUIController : IUIPanelController
 {
     private readonly EventSystem _eventSystem;
     private readonly List<InventorySlotController> _slots;
@@ -140,7 +140,7 @@ public class InventoryUIController
 
         if (itemInSlot != null)
         {
-            _descriptionText.text = itemInSlot.itemDescription;
+            _descriptionText.text = itemInSlot.inventoryItemDescription;
         }
     }
 
@@ -149,5 +149,30 @@ public class InventoryUIController
         if (_slots.Count == 0 || _selectedIndex >= _slots.Count) return null;
 
         return _slots[_selectedIndex].ItemInSlot;
+    }
+
+    public void OnPanelActivated()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPanelDeactivated()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void HandleNavigation(Vector2 input)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void HandleSubmit()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void HandleCancel()
+    {
+        throw new System.NotImplementedException();
     }
 }

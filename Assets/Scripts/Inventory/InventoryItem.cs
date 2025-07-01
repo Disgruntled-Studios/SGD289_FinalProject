@@ -5,21 +5,17 @@ using UnityEngine.Serialization;
 public class InventoryItem
 {
     public string itemName;
-    public string additionalText;
-    public string noteContents;
-    public string itemDescription;
+    [FormerlySerializedAs("additionalText")] public string additionalInteractText;
+    [FormerlySerializedAs("itemDescription")] public string inventoryItemDescription;
     public Sprite icon;
-    public bool isReadable;
     public readonly bool isGun;
 
-    public InventoryItem(string name, bool isReadable, bool isGun, Sprite icon = null, string additionalText = "", string noteContents = "", string itemDescription = "")
+    public InventoryItem(string name, bool isGun, Sprite icon = null, string additionalInteractText = "", string inventoryItemDescription = "")
     {
         itemName = name;
         this.icon = icon;
-        this.isReadable = isReadable;
-        this.additionalText = additionalText;
-        this.noteContents = noteContents;
+        this.additionalInteractText = additionalInteractText;
         this.isGun = isGun;
-        this.itemDescription = itemDescription;
+        this.inventoryItemDescription = inventoryItemDescription;
     }
 }

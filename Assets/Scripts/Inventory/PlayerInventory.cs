@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
         
         if (UIManager.Instance)
         {
-            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}. {item.additionalText}");
+            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}. {item.additionalInteractText}");
         }
         
         OnInventoryChanged?.Invoke();
@@ -32,18 +32,5 @@ public class PlayerInventory : MonoBehaviour
             _items.Remove(item);
             OnInventoryChanged?.Invoke();
         }
-    }
-
-    public bool TryReadItem(InventoryItem item)
-    {
-        if (item is not { isReadable: true }) return false;
-
-        if (item.isReadable && !string.IsNullOrWhiteSpace(item.noteContents) && UIManager.Instance.IsOnInventoryPanel)
-        {
-            UIManager.Instance.ToggleNoteContents(true, item.noteContents);
-            return true;
-        }
-
-        return false;
     }
 }
