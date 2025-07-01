@@ -8,7 +8,6 @@ public class PickupItem : MonoBehaviour, IInteractable
     public string AdditionalText => _additionalText;
     [SerializeField, TextArea] private string _noteContents;
     [SerializeField] private Sprite _icon;
-    [SerializeField] private bool _isReadable;
 
     private bool _isGun; // PlayerGun script sets this automatically
 
@@ -20,7 +19,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        var item = new InventoryItem(_itemName, _isReadable, _isGun, _icon, _additionalText, _noteContents);
+        var item = new InventoryItem(_itemName, _isGun, _icon, _additionalText, _noteContents);
         inventory.AddItem(item);
 
         if (_isGun)

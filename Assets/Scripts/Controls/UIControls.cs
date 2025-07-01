@@ -130,7 +130,7 @@ public class UIControls : MonoBehaviour
         var selectedItem = _ui.InventoryUIController.GetSelectedItem();
         if (selectedItem == null) return;
 
-        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isReadable && !selectedItem.isGun)
+        if (GameManager.Instance.PlayerController.CurrentItemReceiver != null && !selectedItem.isGun)
         {
             if (GameManager.Instance.PlayerController.CurrentItemReceiver.TryReceiveItem(_inventory, selectedItem))
             {
@@ -144,15 +144,6 @@ public class UIControls : MonoBehaviour
 
             _ui.InventoryUIController.Refresh(_inventory.Items);
             UIManager.Instance.ClosePauseMenu();
-        }
-        else if (selectedItem.isReadable)
-        {
-            if (UIManager.Instance.IsOnSettingsPanel) return;
-
-            if (_inventory.TryReadItem(selectedItem))
-            {
-                _noteIsActivated = true;
-            }
         }
         else if (selectedItem.isGun)
         {
