@@ -255,15 +255,22 @@ public class UIManager : MonoBehaviour
     private IEnumerator TypePopUpText(string message)
     {
         _popUpBox.SetActive(true);
-        _popUpText.text = message;
+        _popUpText.text = "";
 
-        // var typingSpeed = 0.025f;
-        //
-        // foreach (var c in message)
-        // {
-        //     _popUpText.text += c;
-        //     yield return new WaitForSeconds(typingSpeed);
-        // }
+        if (PopUpTypingEnabled)
+        {
+            var typingSpeed = 0.025f;
+        
+            foreach (var c in message)
+            {
+                _popUpText.text += c;
+                yield return new WaitForSeconds(typingSpeed);
+            }
+        }
+        else
+        {
+            _popUpText.text = message;
+        }
         
         yield return new WaitForSeconds(3f);
 
