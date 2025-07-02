@@ -1271,13 +1271,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599317498}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.47358012, y: -0.7695641, z: 0.3858471, w: -0.186051}
+  m_LocalRotation: {x: 0.72351927, y: -0.5877448, z: 0.33145663, w: -0.14564526}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 24.686, y: -225.838, z: -73.787}
+  m_LocalEulerAnglesHint: {x: 10.304, y: -221.415, z: -105.727}
 --- !u!114 &599317501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7660,6 +7660,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maintenance_Tunnels (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4501353617268388312, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 311de8433a298ee41b9b9b1c8b5f989c, type: 2}
     - target: {fileID: 7958247597875507243, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
