@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Transform CameraTarget => _cameraTarget;
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
+    public RumbleController RumbleController => _player.GetComponent<RumbleController>();
     
     private void Awake()
     {
