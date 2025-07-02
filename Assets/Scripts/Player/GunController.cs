@@ -23,9 +23,7 @@ public class GunController : MonoBehaviour
     private bool _isAiming;
     public bool IsAiming => _isAiming;
     
-    private bool _isReloading;
-
-    public bool IsReloading => _isReloading;
+    public bool _canShoot;
     public bool HasGun { get; set; }
 
     private void Start()
@@ -37,6 +35,7 @@ public class GunController : MonoBehaviour
         }
 
         _animationController = GetComponentInParent<PlayerAnimationController>();
+        _canShoot = true;
         //StartCoroutine(ReloadGun());
         transform.position = gunPoint.position;
         transform.rotation = gunPoint.rotation;
@@ -108,7 +107,7 @@ public class GunController : MonoBehaviour
 
     public void ShootForTank()
     {
-        if (_isAiming)
+        if (_isAiming && _canShoot)
         {
             Debug.Log("Shooting");
             _animationController.Shoot();
@@ -122,7 +121,7 @@ public class GunController : MonoBehaviour
 
             if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _shootableLayers))
             {
-                Debug.Log("hit " + hit.collider.transform.gameObject.name);
+                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
                 EnemyBehavior enemyRef = hit.transform.gameObject.GetComponent<EnemyBehavior>();
                 //hit.transform.gameObject.SetActive(false);
                 //Affect enemies health.
@@ -131,39 +130,30 @@ public class GunController : MonoBehaviour
                     enemyRef = hit.transform.gameObject.GetComponentInParent<EnemyBehavior>();
                     //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
                 }
-                
+
                 if (hit.transform.gameObject.GetComponent<ShootableObject>())
                 {
                     hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
                 }
 
-                if (enemyRef != null)
+                if (enemyRef != null && !enemyRef.health.IsDead)
                 {
                     enemyRef.health.Damage(_damageAmount);
                     Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
                 }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
+            StartCoroutine(ShootDelay());
         }
     }
 
 
-    /* //Depricated Coroutine
-    public IEnumerator ReloadGun()
+    
+    public IEnumerator ShootDelay()
     {
-        //Debug.Log("Is Reloading");
-        _isReloading = true;
-        //UIManager.Instance.ShowReloading();
-
-        //call animation to reload
-
-        //Call reload SFX
-        yield return new WaitForSeconds(reloadSpeed);
-        currentAmmoMagAmt = maxMagLimit;
-        //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
-        Debug.Log("Is Reloaded");
-        _isReloading = false;
+        _canShoot = false;
+        yield return new WaitForSeconds(.75f);
+        _canShoot = true;
     }
-    */
 
 }

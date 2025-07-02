@@ -207,6 +207,7 @@ public class EnemyBehavior : MonoBehaviour
 
         if (health.IsDead)
         {
+            Debug.Log("Dying");
             anim.SetTrigger("IsDead");
             meshAgent.isStopped = true;
             meshAgent.enabled = false;
@@ -366,6 +367,7 @@ public class EnemyBehavior : MonoBehaviour
         capsuleCollider.enabled = false;
         rightEyeLight.enabled = false;
         leftEyeLight.enabled = false;
+        this.enabled = false;
         //Destroy(gameObject);
     }
 
