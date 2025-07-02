@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private const float BackwardsMultiplier = 0.75f;
 
     private const float AimSpeedMultiplier = 0.75f;
-    private const float AimRotationMultiplier = 0.25f;
+    private const float AimRotationMultiplier = 0.5f;
 
     private float _currentSpeed;
     private float _currentMoveInput;
