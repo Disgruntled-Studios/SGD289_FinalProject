@@ -55,9 +55,9 @@ public class CameraManager : MonoBehaviour
         }
     }
     
-    public void RegisterCamera(string id, CinemachineCamera cam, bool isCctv, Volume cctvVolume = null)
+    public void RegisterCamera(string id, CinemachineCamera cam, bool isCctv, bool shouldSetTarget, Volume cctvVolume = null)
     {
-        var camInfo = new CameraInfo(cam, isCctv, cctvVolume);
+        var camInfo = new CameraInfo(cam, isCctv, shouldSetTarget, cctvVolume);
         _cameraRegistry.TryAdd(id, camInfo);
     }
 
@@ -99,6 +99,7 @@ public class CameraManager : MonoBehaviour
     {
         if (_cameraRegistry.TryGetValue(cameraId, out var camInfo))
         {
+            if (!camInfo.ShouldSetTarget) return true;
             camInfo.VCam.Follow = target;
             camInfo.VCam.LookAt = target;
             return true;
