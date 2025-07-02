@@ -400,6 +400,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maintenance_Tunnels
       objectReference: {fileID: 0}
+    - target: {fileID: 7845522530276944023, guid: d63fbf7e1a2d42441b709d261bbb3099, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 311de8433a298ee41b9b9b1c8b5f989c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1267,13 +1271,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599317498}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.60236883, y: -0.3676705, z: -0.101527706, w: -0.7011864}
+  m_LocalRotation: {x: 0.47358012, y: -0.7695641, z: 0.3858471, w: -0.186051}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -66.839, y: -270.574, z: -49.835}
+  m_LocalEulerAnglesHint: {x: 24.686, y: -225.838, z: -73.787}
 --- !u!114 &599317501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7604,6 +7608,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 552540b24d9cae84e8a4f1fa13abdb50, type: 3}
+--- !u!1001 &1534469998
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 49.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: m_Name
+      value: Maintenance_Tunnels (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958247597875507243, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 311de8433a298ee41b9b9b1c8b5f989c, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c6812c9eb93be64a9e75f20f99b2ade, type: 3}
 --- !u!1 &1562069111
 GameObject:
   m_ObjectHideFlags: 0
@@ -8660,3 +8725,4 @@ SceneRoots:
   - {fileID: 164950899}
   - {fileID: 696224346}
   - {fileID: 562757182}
+  - {fileID: 1534469998}
