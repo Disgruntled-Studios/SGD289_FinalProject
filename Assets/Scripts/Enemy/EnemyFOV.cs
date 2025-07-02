@@ -44,7 +44,7 @@ public class EnemyFOV : MonoBehaviour
             }
             visibleTarget = null;
             isPlayerInSight = false;
-            Debug.Log("Setting isPlayerInSight to " + isPlayerInSight + ", and visible Target to null");
+            // Debug.Log("Setting isPlayerInSight to " + isPlayerInSight + ", and visible Target to null");
         }
 
         RaycastHit hit;
@@ -66,11 +66,11 @@ public class EnemyFOV : MonoBehaviour
                     //Whatever needs to happen when the target is in line of sight gets triggered here.
                     visibleTarget = target;
                     isPlayerInSight = true;
-                    Debug.Log("Player is found");
+                    // Debug.Log("Player is found");
                 }
                 else
                 {
-                    Debug.Log(hit.transform.gameObject.name + " hit by FOV raycast");
+                    // Debug.Log(hit.transform.gameObject.name + " hit by FOV raycast");
                 }
             }
         }
