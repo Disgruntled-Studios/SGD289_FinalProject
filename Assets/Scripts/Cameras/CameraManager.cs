@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.Serialization;
@@ -13,6 +14,11 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineBrain _brain;
     [SerializeField] private Volume _cctvVolume;
 
+    private readonly List<string> _activeTriggerIds = new();
+    private string _currentTriggerId;
+
+    private const string ThirdPersonId = "TPCAM";
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,14 +31,33 @@ public class CameraManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    private void Update()
     {
-        TrySwitchToCamera("TPCAM");
-    }
+        if (_activeTriggerIds.Count == 0)
+        {
+            if (_currentTriggerId != ThirdPersonId)
+            {
+                _currentTriggerId = ThirdPersonId;
+                TrySwitchToCamera(ThirdPersonId);
+                TrySetCameraTarget(ThirdPersonId, GameManager.Instance.CameraTarget);
+            }
 
-    public void RegisterCamera(string id, CinemachineCamera cam, bool isCctv, Volume cctvVolume = null)
+            return;
+        }
+
+        var latestId = _activeTriggerIds[^1];
+
+        if (_currentTriggerId != latestId)
+        {
+            _currentTriggerId = latestId;
+            TrySwitchToCamera(latestId);
+            TrySetCameraTarget(latestId, GameManager.Instance.CameraTarget);
+        }
+    }
+    
+    public void RegisterCamera(string id, CinemachineCamera cam, bool isCctv, bool shouldSetTarget, Volume cctvVolume = null)
     {
-        var camInfo = new CameraInfo(cam, isCctv, cctvVolume);
+        var camInfo = new CameraInfo(cam, isCctv, shouldSetTarget, cctvVolume);
         _cameraRegistry.TryAdd(id, camInfo);
     }
 
@@ -74,6 +99,7 @@ public class CameraManager : MonoBehaviour
     {
         if (_cameraRegistry.TryGetValue(cameraId, out var camInfo))
         {
+            if (!camInfo.ShouldSetTarget) return true;
             camInfo.VCam.Follow = target;
             camInfo.VCam.LookAt = target;
             return true;
@@ -102,6 +128,22 @@ public class CameraManager : MonoBehaviour
             };
 
             _brain.DefaultBlend.Time = duration;
+        }
+    }
+
+    public void RegisterActiveTrigger(string triggerId)
+    {
+        if (!_activeTriggerIds.Contains(triggerId))
+        {
+            _activeTriggerIds.Add(triggerId);
+        }
+    }
+
+    public void UnregisterActiveTrigger(string triggerId)
+    {
+        if (_activeTriggerIds.Contains(triggerId))
+        {
+            _activeTriggerIds.Remove(triggerId);
         }
     }
 }

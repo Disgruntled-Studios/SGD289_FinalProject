@@ -11,6 +11,8 @@ public class GameCamera : MonoBehaviour
 
     [SerializeField] private bool _isCCTV;
     public bool IsCCTV => _isCCTV;
+
+    [SerializeField] private bool _shouldSetTarget = true;
     
     private CinemachineCamera _vCam;
 
@@ -29,7 +31,7 @@ public class GameCamera : MonoBehaviour
         }
 
         var volume = GetComponent<Volume>();
-        CameraManager.Instance.RegisterCamera(_cameraId, _vCam, _isCCTV, volume);
+        CameraManager.Instance.RegisterCamera(_cameraId, _vCam, _isCCTV, _shouldSetTarget, volume);
 
         _startingRotation = transform.rotation;
     }
