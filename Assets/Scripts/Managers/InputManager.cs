@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting.InputSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,13 +12,6 @@ public class InputManager : MonoBehaviour
     private PlayerInput _playerInput;
     public PlayerInput PlayerInput => _playerInput;
     public event Action<InputActionMap> OnActionMapChange;
-
-    private string _lastUsedDevice;
-    private const string Keyboard = "Keyboard";
-    private const string Controller = "Controller";
-    
-    public bool IsUsingKeyboard => _lastUsedDevice == Keyboard;
-    public bool IsUsingController => _lastUsedDevice == Controller;
 
     // May need to rethink these
     public bool IsInPuzzle => _playerInput.PuzzleMap.enabled;
@@ -31,6 +26,14 @@ public class InputManager : MonoBehaviour
 
     private int _lockoutFramesRemaining;
     private bool IsInputLocked => _lockoutFramesRemaining > 0;
+
+    private InputDeviceType _currentDevice = InputDeviceType.Unknown;
+    public InputDeviceType CurrentDevice => _currentDevice;
+
+    public bool IsUsingPC => _currentDevice == InputDeviceType.PC;
+    public bool IsUsingGamepad => _currentDevice == InputDeviceType.Gamepad;
+
+    public event Action<InputDeviceType> OnActiveDeviceChanged;
     
     private void Awake()
     {
@@ -46,24 +49,73 @@ public class InputManager : MonoBehaviour
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         SwitchToDefaultInput();
+
+        // Reset just in case
+        InputSystem.onEvent -= OnInputEvent;
+        InputSystem.onEvent += OnInputEvent;
+    }
+
+    private void OnDestroy()
+    {
+        InputSystem.onEvent -= OnInputEvent;
+    }
+
+    private void OnInputEvent(InputEventPtr eventPtr, InputDevice device)
+    {
+        if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()) return;
+
+        var hasMeaningfulInput = false;
+        foreach (var control in device.allControls)
+        {
+            var value = control.ReadValueAsObject();
+            if (value is float f && Mathf.Abs(f) > 0.2f)
+            {
+                hasMeaningfulInput = true;
+                break;
+            }
+
+            if (value is bool and true)
+            {
+                hasMeaningfulInput = true;
+                break;
+            }
+        }
+
+        if (!hasMeaningfulInput) return;
+
+        var newDevice = GetDeviceType(device);
+
+        if (newDevice == _currentDevice) return;
+
+        _currentDevice = newDevice;
+        OnActiveDeviceChanged?.Invoke(_currentDevice);
+        
+        #if UNITY_EDITOR
+        Debug.Log($"Changed to {_currentDevice}");
+        #endif
+    }
+
+    private InputDeviceType GetDeviceType(InputDevice device)
+    {
+        if (device is Gamepad)
+        {
+            return InputDeviceType.Gamepad;
+        }
+
+        if (device is Keyboard or Mouse)
+        {
+            return InputDeviceType.PC;
+        }
+
+        return InputDeviceType.Unknown;
     }
 
     private void Update()
     {
-        var keyboardTime = InputSystem.GetDevice<Keyboard>()?.lastUpdateTime ?? 0;
-        var controllerTime = InputSystem.GetDevice<Gamepad>()?.lastUpdateTime ?? 0;
-
-        _lastUsedDevice = keyboardTime > controllerTime ? Keyboard : Controller;
-
         if (_lockoutFramesRemaining > 0)
         {
             _lockoutFramesRemaining--;
         }
-        
-        //  Debug.Log($"Is In Puzzle = {IsInPuzzle}");
-        //  Debug.Log($"Is In UI = {IsInUI}");
-        //  Debug.Log($"Is In KeyCode = {IsInKeycode}");
-        //  Debug.Log($"Default = {!IsInUI && !IsInPuzzle && !IsInKeycode}");
     }
 
     public void SwitchToPuzzleInput()

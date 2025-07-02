@@ -12,3 +12,10 @@ public enum SettingsFocusState
     MainButtons,
     SubPanel
 }
+
+public enum InputDeviceType
+{
+    PC,
+    Gamepad,
+    Unknown
+}
