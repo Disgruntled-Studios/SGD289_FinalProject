@@ -16,7 +16,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
     private int _selectedIndex;
 
-    private void OnEnable()
+    private void Awake()
     {
         _slots = UIManager.Instance.InventorySlots;
         _inventory = GameManager.Instance.PlayerInventory;
@@ -33,6 +33,9 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         
         Refresh(_inventory.Items);
 
+        _inventory.OnInventoryChanged -= RefreshInventory;
+        _inventory.OnInventoryChanged += RefreshInventory;
+        
         _selectedIndex = 0;
         HighlightSlot(_selectedIndex);
 
@@ -47,6 +50,11 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         }
 
         _descriptionText.gameObject.SetActive(false);
+
+        if (_inventory)
+        {
+            _inventory.OnInventoryChanged -= RefreshInventory;
+        }
     }
 
     public void HandleNavigation(Vector2 input)
@@ -144,7 +152,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         return _slots is { Count: > 0 } ? _slots[0].gameObject : null;
     }
 
-    public void Refresh(IReadOnlyList<InventoryItem> items)
+    private void Refresh(IReadOnlyList<InventoryItem> items)
     {
         for (var i = 0; i < _slots.Count; i++)
         {
@@ -159,6 +167,13 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         }
     }
 
+    public void RefreshInventory()
+    {
+        if (!gameObject.activeInHierarchy) return;
+        
+        Refresh(_inventory.Items);
+    }
+
     private void HighlightSlot(int index)
     {
         for (var i = 0; i < _slots.Count; i++)
@@ -171,7 +186,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
         if (item != null)
         {
-            _descriptionText.text = item.inventoryItemDescription;
+            _descriptionText.text = item.additionalText;
             _descriptionText.gameObject.SetActive(true);
         }
         else
