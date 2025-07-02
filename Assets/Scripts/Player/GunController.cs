@@ -5,8 +5,9 @@ using UnityEngine.Serialization;
 public class GunController : MonoBehaviour
 {
     [SerializeField] private PlayerAnimationController _animationController;
-    
+
     [Header("Gun")]
+    [SerializeField] private Transform gunPoint;
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform laserStart;
     [SerializeField] private LayerMask _shootableLayers;
@@ -26,7 +27,7 @@ public class GunController : MonoBehaviour
 
     public bool IsReloading => _isReloading;
     public bool HasGun { get; set; }
-    
+
     private void Start()
     {
         if (_lr)
@@ -37,6 +38,8 @@ public class GunController : MonoBehaviour
 
         _animationController = GetComponentInParent<PlayerAnimationController>();
         //StartCoroutine(ReloadGun());
+        transform.position = gunPoint.position;
+        transform.rotation = gunPoint.rotation;
     }
 
     private void Update()
@@ -50,6 +53,8 @@ public class GunController : MonoBehaviour
         {
             _lr.enabled = false;
         }
+        transform.position = gunPoint.position;
+        transform.rotation = gunPoint.rotation;
     }
 
     public void StartGunAim()
@@ -88,12 +93,16 @@ public class GunController : MonoBehaviour
             if (hit.collider && !hit.collider.isTrigger)
             {
                 //If we hit something and it has a collider set the lasers endpoint to that raycast hitpoint
+                Debug.Log("object hit is " + hit.collider.name);
                 _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
                 return;
             }
         }
-        //if we hit nothing push the endpoint of the laser far out.
-        _lr.SetPosition(1, new Vector3(0, 0, 5000));
+        else
+        {
+            //if we hit nothing push the endpoint of the laser far out.
+            _lr.SetPosition(1, new Vector3(0, 0, 5000));
+        }
 
     }
 

@@ -11,6 +11,7 @@ public class EnemyBehavior : MonoBehaviour
         patrolling,
         chasing,
         Resting,
+        Dead,
     }
 
     public BehaviorState currentState;
@@ -117,14 +118,14 @@ public class EnemyBehavior : MonoBehaviour
                     rightEyeLight.enabled = true;
                 }
                 if (!meshAgent.isStopped)
-                    {
-                        anim.SetBool("IsMoving", true);
-                        anim.SetBool("IsChasing", false);
-                    }
-                    else
-                    {
-                        anim.SetBool("IsMoving", false);
-                    }
+                {
+                    anim.SetBool("IsMoving", true);
+                    anim.SetBool("IsChasing", false);
+                }
+                else
+                {
+                    anim.SetBool("IsMoving", false);
+                }
                 // else if (fov.isPlayerInSight && playerDist < fov.viewRadius)
                 // {
                 //     StopCoroutine(SetAgentDestToCurrentTarget(6));
@@ -164,21 +165,21 @@ public class EnemyBehavior : MonoBehaviour
                 }
 
                 if (playerDist <= attackDistance && !health.IsDead)
-                    {
-                        transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                        anim.SetBool("IsMoving", false);
-                        anim.SetBool("IsChasing", false);
-                        anim.SetBool("Attacking", true);
-                        Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
-                        break;
-                    }
-                    else if (fov.isPlayerInSight && !health.IsDead)
-                    {
-                        anim.SetBool("Attacking", false);
-                        // Debug.Log("ChasingPlayer");
-                        meshAgent.SetDestination(playerRef.transform.position);
-                        meshAgent.speed = chaseSpeed;
-                    }
+                {
+                    transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+                    anim.SetBool("IsMoving", false);
+                    anim.SetBool("IsChasing", false);
+                    anim.SetBool("Attacking", true);
+                    Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
+                    break;
+                }
+                else if (!health.IsDead)
+                {
+                    anim.SetBool("Attacking", false);
+                    // Debug.Log("ChasingPlayer");
+                    meshAgent.SetDestination(playerRef.transform.position);
+                    meshAgent.speed = chaseSpeed;
+                }
 
                 if (!meshAgent.isStopped)
                 {
@@ -192,7 +193,7 @@ public class EnemyBehavior : MonoBehaviour
                 break;
             case BehaviorState.Resting:
 
-                Debug.Log(gameObject.name + " Is Resting");
+                // Debug.Log(gameObject.name + " Is Resting");
                 anim.SetBool("IsResting", true);
                 meshAgent.enabled = false;
                 capsuleCollider.enabled = false;
@@ -200,12 +201,16 @@ public class EnemyBehavior : MonoBehaviour
                 leftEyeLight.enabled = false;
 
                 break;
+            default:
+                break;
         }
 
         if (health.IsDead)
         {
             anim.SetTrigger("IsDead");
             meshAgent.isStopped = true;
+            meshAgent.enabled = false;
+            capsuleCollider.enabled = false;
         }
 
     }
@@ -356,7 +361,12 @@ public class EnemyBehavior : MonoBehaviour
     {
         //If the enemy hp is 0 handle the death of the enemy.
         Debug.Log(gameObject.name + " is dead");
-        Destroy(gameObject);
+        currentState = BehaviorState.Dead;
+        meshAgent.enabled = false;
+        capsuleCollider.enabled = false;
+        rightEyeLight.enabled = false;
+        leftEyeLight.enabled = false;
+        //Destroy(gameObject);
     }
 
     public void WakeEnemy()
