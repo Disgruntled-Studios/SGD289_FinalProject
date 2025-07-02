@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Components")] 
+    [Header("Components")]
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private PlayerAnimationController _animationController;
     [SerializeField] private GunController _gunController;
@@ -15,17 +15,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInventory _inventory;
     private PlayerHealth _health;
 
-    [Header("Movement Settings")] 
+    [Header("Movement Settings")]
     [SerializeField] private float _normalSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
     private const float PlayerHeight = 2.22f; // Height of capsule collider
-    
+
     private const float SprintMultiplier = 1.75f;
     private const float CrouchMultiplier = 0.5f;
     private const float InjuredMultiplier = 0.75f;
-    
+
     private const float AimSpeedMultiplier = 0.75f;
     private const float AimRotationMultiplier = 0.25f;
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     private float _smoothedRotationInput;
     private float _currentRotationVelocity;
     private float _currentRotationSpeed;
-    
+
     private const float GroundDrag = 2f;
 
     private Vector3 _movementVelocity;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     public Transform currentHighlightedObj;
 
     private PlayerInput Input => InputManager.Instance.PlayerInput;
-    
+
     private void Awake()
     {
         _health = GetComponent<PlayerHealth>();
@@ -63,19 +63,19 @@ public class PlayerController : MonoBehaviour
         _currentRotationSpeed = _rotationSpeed;
         _crouchCollider.enabled = false;
         _laser.enabled = false;
-        
+
         _rb.WakeUp();
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
         _rb.linearDamping = GroundDrag;
-        
+
         Physics.SyncTransforms();
     }
 
     private void OnEnable()
     {
         var playerMap = Input.PlayerMap;
-        
+
         playerMap.Move.performed += OnMove;
         playerMap.Move.canceled += OnMove;
         playerMap.Rotate.performed += OnRotate;
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         var playerMap = Input.PlayerMap;
-        
+
         playerMap.Move.performed -= OnMove;
         playerMap.Move.canceled -= OnMove;
         playerMap.Rotate.performed -= OnRotate;
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _currentMoveInput = context.ReadValue<float>();
-    } 
+    }
 
     public void OnRotate(InputAction.CallbackContext context)
     {
@@ -177,14 +177,14 @@ public class PlayerController : MonoBehaviour
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
+
         _gunController.HandleShoot();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
+
         return;
     }
 
@@ -208,21 +208,21 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
+
         _currentInteractable?.Interact(transform, _inventory);
     }
 
     public void OnSpecial(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
+
         // _gunController.StartCoroutine(_gunController.ReloadGun());
     }
 
     public void OnPause(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
+
         UIManager.Instance.OpenPauseMenu();
     }
 
@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        if (_gunController.IsReloading || _isCrouching)
+        if (_isCrouching)
         {
             _currentSpeed = _normalSpeed * CrouchMultiplier;
         }
@@ -269,14 +269,14 @@ public class PlayerController : MonoBehaviour
             _currentSpeed = _normalSpeed;
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IInteractable>(out var interactable))
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
-            if ( other.GetComponent<DoorPressureGame>() && other.GetComponent<DoorPressureGame>().highlightedObj != null)
+            if (other.GetComponent<DoorPressureGame>() && other.GetComponent<DoorPressureGame>().highlightedObj != null)
             {
                 currentHighlightedObj = other.GetComponent<DoorPressureGame>().highlightedObj;
             }
@@ -371,5 +371,6 @@ public class PlayerController : MonoBehaviour
             _currentItemReceiver = null;
         }
     }
+    
 }
 
