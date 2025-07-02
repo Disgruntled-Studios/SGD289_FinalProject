@@ -3,19 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
+    [SerializeField] private string _firstLevelName = "L1PowerPlant";
+
     public void StartGame()
     {
-        SceneManager.LoadScene("L1PowerPlant");
+        SceneManager.LoadScene(_firstLevelName);
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
-    
 }
