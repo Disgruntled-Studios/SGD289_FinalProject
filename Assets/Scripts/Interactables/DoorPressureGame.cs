@@ -37,7 +37,7 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
             float pressurePercentage = doorPressure / maxPressure;
             doorRef.transform.position = Vector3.Lerp(doorStartPos.position, doorEndPos.position, pressurePercentage);
             highlightedObj.transform.rotation = Quaternion.Lerp(valveRotationStart.rotation, valveRotationEnd.rotation, pressurePercentage);
-            Debug.Log(pressurePercentage);
+            //Debug.Log(pressurePercentage);
         }
     }
 
@@ -68,6 +68,7 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
             doorPressure = maxPressure;
             StartCoroutine(EscapeSequence());
             isReleasingPressure = false;
+            GameManager.Instance.Player.GetComponent<PlayerController>().currentHighlightedObj = null;
         }
         else
         {
