@@ -1,16 +1,48 @@
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class MenuButtonEffects : MonoBehaviour
+[RequireComponent(typeof(Selectable))]
+public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private MainMenuController _mainMenuController;
+    
+    [SerializeField] private TMP_Text _buttonText;
+
+    private const float HighlightScale = 1.2f;
+    private const float DefaultScale = 1.0f;
+
+    private readonly Color _highlightColor = Color.white;
+    private readonly Color _defaultColor = Color.black;
+    
+    public bool IsActivated { get; set; }
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        Activate();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        
+        Deactivate();
+    }
+
+    public void Deactivate()
+    {
+        IsActivated = false;
+        ApplyVisual();
+    }
+
+    public void Activate()
+    {
+        _mainMenuController.OnButtonActivated(this);
+    }
+
+    public void ApplyVisual()
+    {
+        _buttonText.color = IsActivated ? _highlightColor : _defaultColor;
+        _buttonText.transform.localScale = Vector3.one * (IsActivated ? HighlightScale : DefaultScale);
     }
 }
