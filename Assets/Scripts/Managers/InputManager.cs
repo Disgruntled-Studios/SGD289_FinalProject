@@ -91,7 +91,7 @@ public class InputManager : MonoBehaviour
         OnActiveDeviceChanged?.Invoke(_currentDevice);
         
         #if UNITY_EDITOR
-        Debug.Log($"Changed to {_currentDevice}");
+        //Debug.Log($"Changed to {_currentDevice}");
         #endif
     }
 
