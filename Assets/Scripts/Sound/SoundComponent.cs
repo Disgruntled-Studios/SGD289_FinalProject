@@ -19,7 +19,7 @@ public class SoundComponent : MonoBehaviour
             s.source.pitch = s.pitch;
 
             s.source.loop = s.isLooping;
-            s.source.spatialBlend = 1;
+            s.source.spatialBlend = s.spatialBlend;
         }
     }
 

@@ -33,6 +33,12 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField, Tooltip("The patrol pattern this enemy will naturally follow.")] private GameObject patrolPattern;
     [SerializeField] Light leftEyeLight, rightEyeLight;
 
+    [Header("SFX Names")]
+    [SerializeField] private string hurtSFX;
+    [SerializeField] private string deathSFX;
+    [SerializeField] private string breathingSFX;
+    
+
     private Transform[] patrolPoints;
     private Transform currentTargetPoint;
     private Transform currentPatrolPoint;
@@ -43,6 +49,7 @@ public class EnemyBehavior : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private GameObject playerRef;
     private Animator anim;
+    private SoundComponent soundComponent;
 
     void Awake()
     {
@@ -74,6 +81,7 @@ public class EnemyBehavior : MonoBehaviour
         meshAgent = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         anim = GetComponentInChildren<Animator>();
+        soundComponent = GetComponent<SoundComponent>();
         onDamage.AddListener(StartAttackStunPause);
         health = new UnitHealth(maxHealth, onDamage);
         GetComponentInChildren<DamageTrigger>().damageAmount = attackStrength;
@@ -367,6 +375,7 @@ public class EnemyBehavior : MonoBehaviour
         capsuleCollider.enabled = false;
         rightEyeLight.enabled = false;
         leftEyeLight.enabled = false;
+        soundComponent.PlaySFX(deathSFX);
         this.enabled = false;
         //Destroy(gameObject);
     }
