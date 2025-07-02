@@ -365,7 +365,9 @@ MonoBehaviour:
   maxMagLimit: 12
   currentAmmoMagAmt: 0
   _gunItemName: Pistol and ammo
+  gunShotSFX: 
   _lr: {fileID: 4762945982309698640}
+  _canShoot: 0
 --- !u!1 &5188328403837828351
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4460883003049910443
 Transform:
   m_ObjectHideFlags: 0
@@ -646,10 +648,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.40534768
+  m_Radius: 0.5
   m_Height: 2.2255416
   m_Direction: 1
-  m_Center: {x: 0.010164738, y: 1.1029754, z: -3.3427335e-17}
+  m_Center: {x: 0.010164738, y: 1.1029754, z: 0.011888027}
 --- !u!135 &4250560411943484575
 SphereCollider:
   m_ObjectHideFlags: 0

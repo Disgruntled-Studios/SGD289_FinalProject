@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleInventoryChanged()
     {
-        _inventoryController?.Refresh(PlayerInventory.Items);
+        _inventoryController?.RefreshInventory();
     }
 
     public void ToggleGunImage(bool isActive)

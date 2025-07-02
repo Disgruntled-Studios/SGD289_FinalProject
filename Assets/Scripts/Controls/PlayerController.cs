@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private const float SprintMultiplier = 1.75f;
     private const float CrouchMultiplier = 0.5f;
     private const float InjuredMultiplier = 0.75f;
+    private const float BackwardsMultiplier = 0.75f;
 
     private const float AimSpeedMultiplier = 0.75f;
     private const float AimRotationMultiplier = 0.25f;
@@ -240,7 +241,9 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
-        var targetVelocity = transform.forward * (_currentMoveInput * _currentSpeed);
+        var forwardBackwardMultiplier = _currentMoveInput < -0.01f ? BackwardsMultiplier : 1f;
+        
+        var targetVelocity = transform.forward * (_currentMoveInput * _currentSpeed * forwardBackwardMultiplier);
 
         _rb.linearVelocity = new Vector3(targetVelocity.x, _rb.linearVelocity.y, targetVelocity.z);
     }
