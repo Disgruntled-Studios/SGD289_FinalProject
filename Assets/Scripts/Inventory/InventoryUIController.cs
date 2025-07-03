@@ -10,6 +10,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
     [Header("Inventory UI Elements")] 
     private List<InventorySlotController> _slots;
     [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private TMP_Text _nameText;
     private PlayerInventory _inventory;
 
     private const int GridColumns = 4;
@@ -130,7 +131,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         {
             if (receiver.TryReceiveItem(_inventory, selectedItem))
             {
-                UIManager.Instance.StartPopUpText($"{selectedItem.itemName} used on {receiver.Name}.");
+                //UIManager.Instance.StartPopUpText($"{selectedItem.itemName} used on {receiver.Name}.");
             }
             else
             {
@@ -154,11 +155,16 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
     private void Refresh(IReadOnlyList<InventoryItem> items)
     {
+        var itemCount = items.Count;
+        
         for (var i = 0; i < _slots.Count; i++)
         {
-            if (i < items.Count && items[i] != null)
+            // Recent items go first in inventory
+            var reversedIndex = itemCount - 1 - i;
+
+            if (reversedIndex >= 0 && reversedIndex < itemCount && items[reversedIndex] != null)
             {
-                _slots[i].SetSlot(items[i]);
+                _slots[i].SetSlot(items[reversedIndex]);
             }
             else
             {
@@ -186,11 +192,23 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
         if (item != null)
         {
-            _descriptionText.text = item.additionalText;
-            _descriptionText.gameObject.SetActive(true);
+            _nameText.text = item.itemName;
+            _nameText.transform.parent.gameObject.SetActive(true);
+            
+            if (!item.isNote && !item.isGun && GameManager.Instance.PlayerController.CurrentItemReceiver != null)
+            {
+                _descriptionText.text = $"Use {item.itemName}?";
+                _descriptionText.gameObject.SetActive(true);
+            }
+            else
+            {
+                _descriptionText.text = string.IsNullOrEmpty(item.additionalText) ? "" : item.additionalText;
+                _descriptionText.gameObject.SetActive(true);
+            }
         }
         else
         {
+            _nameText.transform.parent.gameObject.SetActive(false);
             _descriptionText.gameObject.SetActive(false);
         }
     }

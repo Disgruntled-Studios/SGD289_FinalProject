@@ -38,7 +38,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     private void Start()
     {
         _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
-        _meshRenderer.material = _glitchedMaterial;
+        //_meshRenderer.material = _glitchedMaterial;
     }
 
     private void Update()
@@ -75,13 +75,15 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     void OnTriggerEnter(Collider other)
     {
         if (_hasPopUpTriggered) return;
+
+        if (string.IsNullOrEmpty(_popUpMessage)) return;
         UIManager.Instance.StartPopUpText(_popUpMessage);
         _hasPopUpTriggered = true;
     }
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)
     {
-        if (item == null || item.isGun) return false;
+        if (item == null || item.isGun || item.isNote) return false;
         
         if (item.itemName != _requiredItemName)
         {
@@ -101,6 +103,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     // Internal events
     private void OnItemReceivedInternal()
     {
-        _meshRenderer.material = _defaultMaterial;
+        //_meshRenderer.material = _defaultMaterial;
     }
 }

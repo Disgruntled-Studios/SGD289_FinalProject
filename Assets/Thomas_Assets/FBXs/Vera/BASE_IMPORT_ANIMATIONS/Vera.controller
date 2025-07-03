@@ -763,6 +763,14 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
+    m_Motion: {fileID: 4018170099546104364, guid: aa00d579d634d7844ba659b9e3ec0bb1, type: 3}
+    m_Threshold: -0.1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: MoveSpeed
+    m_Mirror: 0
+  - serializedVersion: 2
     m_Motion: {fileID: 1926373919655838005, guid: aa00d579d634d7844ba659b9e3ec0bb1, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
@@ -772,7 +780,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 4018170099546104364, guid: aa00d579d634d7844ba659b9e3ec0bb1, type: 3}
-    m_Threshold: 1
+    m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -780,9 +788,9 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: MoveSpeed
   m_BlendParameterY: MoveSpeed
-  m_MinThreshold: 0
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -0.1
+  m_MaxThreshold: 0.1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1102 &2112604764489549198
@@ -1036,6 +1044,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: IsSprinting
+    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: MoveSpeed
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2079031479730189160}
