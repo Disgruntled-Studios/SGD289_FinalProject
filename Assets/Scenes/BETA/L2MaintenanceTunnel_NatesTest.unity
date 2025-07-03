@@ -381,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM25
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &51632797
 MonoBehaviour:
@@ -968,6 +969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAMVent
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &191206450
 MonoBehaviour:
@@ -2909,6 +2911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM26
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &427834084
 MonoBehaviour:
@@ -3611,6 +3614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM22
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &477554580
 MonoBehaviour:
@@ -3834,6 +3838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM24
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &536833336
 MonoBehaviour:
@@ -3935,18 +3940,6 @@ PrefabInstance:
       value: DetectionEnemy (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.56299
       objectReference: {fileID: 0}
@@ -3984,26 +3977,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3751961095135443582, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: viewAngle
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790093378180530453, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9195897138035139972, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 9195897138035139972, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
-      propertyPath: currentState
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10022,6 +9995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM33
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &775380725
 MonoBehaviour:
@@ -10795,6 +10769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM34
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &877203907
 MonoBehaviour:
@@ -10916,6 +10891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM27
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &902692329
 MonoBehaviour:
@@ -14459,6 +14435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM30
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1312090136
 MonoBehaviour:
@@ -14997,6 +14974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM29
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1335454005
 MonoBehaviour:
@@ -17015,6 +16993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM32
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1522468459
 MonoBehaviour:
@@ -17436,6 +17415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM31
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1576985814
 MonoBehaviour:
@@ -18344,6 +18324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM35
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1712404553
 MonoBehaviour:
@@ -18852,6 +18833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM28
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1807569643
 MonoBehaviour:
@@ -24423,6 +24405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM21
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &1943859236
 MonoBehaviour:
@@ -25105,6 +25088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM20
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &2029605271
 MonoBehaviour:
@@ -25304,6 +25288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraId: CAM23
   _isCCTV: 1
+  _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
 --- !u!114 &2038722522
 MonoBehaviour:
