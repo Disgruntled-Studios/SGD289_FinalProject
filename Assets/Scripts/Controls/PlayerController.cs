@@ -283,6 +283,10 @@ public class PlayerController : MonoBehaviour
             {
                 currentHighlightedObj = other.GetComponent<DoorPressureGame>().highlightedObj;
             }
+            else if (other.GetComponent<PowerPuzzleManager>() && other.GetComponent<PowerPuzzleManager>().HighlightableObj != null)
+            {
+                currentHighlightedObj = other.GetComponent<PowerPuzzleManager>().HighlightableObj;
+            }
             else
             {
                 currentHighlightedObj = other.transform;
