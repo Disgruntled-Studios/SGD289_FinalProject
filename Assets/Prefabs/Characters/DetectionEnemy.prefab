@@ -127,8 +127,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.35, y: 0.77, z: 17.41}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4028644926577146070}
   m_Father: {fileID: 0}
@@ -153,10 +153,22 @@ MonoBehaviour:
   patrolSpeed: 0.75
   minPatrolPauseTime: 0
   maxPatrolPauseTime: 5
-  maxHealth: 500
+  maxHealth: 100
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4704595390207830386}
+        m_TargetAssemblyTypeName: SoundComponent, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hurt
+          m_BoolArgument: 0
+        m_CallState: 2
   damagedMat: {fileID: 2100000, guid: 24984a7b8182dd84a808f645fd8b6f1e, type: 2}
   normalMat: {fileID: 2100000, guid: 724d0a7dbad233a44ac1b98dd2745f34, type: 2}
   fov: {fileID: 3751961095135443582}
@@ -164,6 +176,9 @@ MonoBehaviour:
   patrolPattern: {fileID: 0}
   leftEyeLight: {fileID: 2300768159798859949}
   rightEyeLight: {fileID: 4738550501382484359}
+  hurtSFX: Hurt
+  deathSFX: DeathSFX
+  breathingSFX: 
 --- !u!195 &6656391528014849267
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -222,12 +237,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Growl
-    clip: {fileID: 0}
-    mixerOutput: {fileID: 0}
+  - name: Hurt
+    clip: {fileID: 8300000, guid: 3d54a3a40a180564982e2ee39e2e089c, type: 3}
+    mixerOutput: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     isLooping: 0
-    volume: 0
-    pitch: 0
+    volume: 0.55
+    pitch: 1
+    spatialBlend: 1
+    source: {fileID: 0}
+  - name: DeathSFX
+    clip: {fileID: 8300000, guid: b3c94a821063085498968b2ebff4091f, type: 3}
+    mixerOutput: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
+    isLooping: 0
+    volume: 0.55
+    pitch: 1
+    spatialBlend: 1
     source: {fileID: 0}
 --- !u!114 &3751961095135443582
 MonoBehaviour:
@@ -242,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 10
-  viewAngle: 45
+  viewAngle: 180
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1286,7 +1310,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.59038186
   m_Height: 1.6733518

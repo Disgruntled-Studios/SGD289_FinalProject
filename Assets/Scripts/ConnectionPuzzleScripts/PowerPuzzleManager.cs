@@ -15,6 +15,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [SerializeField] private GameCamera _puzzleCamera;
     [SerializeField] private UnityEvent _onPuzzleComplete;
     [SerializeField, TextArea] private string puzzleCompletionDialogue;
+    public Transform HighlightableObj;
     public bool hasCameraCut;
     public GameCamera cutCam;
     public Transform cutCamFocus;

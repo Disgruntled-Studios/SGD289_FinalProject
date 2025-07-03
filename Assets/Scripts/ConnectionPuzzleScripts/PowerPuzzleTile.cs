@@ -29,16 +29,20 @@ public class PowerPuzzleTile : MonoBehaviour
     public bool IsReceiverNode => _isReceiverNode;
 
     [Header("Materials")]
-    [SerializeField] private Material _offMaterial;
-    [SerializeField] private Material _onMaterial;
+    [SerializeField] private Material _offMaterialConnector;
+    [SerializeField] private Material _onMaterialConnector;
+    [SerializeField] private Material _nodeOnMat;
+    [SerializeField] private Material _nodeOffMat;
 
     [HideInInspector] 
     [SerializeField] private List<GameObject> _connectors = new();
+    private MeshRenderer meshRenderer;
 
     public event Action OnTileStateChanged;
 
     private void Start()
     {
+        meshRenderer = GetComponent<MeshRenderer>();
         for (var i = 0; i < transform.childCount; i++)
         {
             _connectors.Add(transform.GetChild(i).gameObject);
@@ -62,12 +66,13 @@ public class PowerPuzzleTile : MonoBehaviour
 
     public void ToggleConnectionMaterial(bool powered)
     {
+        meshRenderer.material = powered ? _nodeOnMat : _nodeOffMat;
         foreach (var connector in _connectors)
         {
             var rend = connector.GetComponent<MeshRenderer>();
             if (rend)
             {
-                rend.material = powered ? _onMaterial : _offMaterial;
+                rend.material = powered ? _onMaterialConnector : _offMaterialConnector;
             }
         }
     }
