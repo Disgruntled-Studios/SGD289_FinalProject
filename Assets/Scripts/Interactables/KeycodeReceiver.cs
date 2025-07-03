@@ -10,6 +10,8 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 
     private bool _playerIsNearby;
     
+    public bool CodeHasBeenAccepted { get; set; }
+    
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_playerIsNearby)
@@ -23,6 +25,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
         if (string.Equals(input, _correctCode))
         {
             _onCorrectCodeEntered?.Invoke();
+            CodeHasBeenAccepted = true;
             UIManager.Instance.CloseKeycodePanel();
         }
         else

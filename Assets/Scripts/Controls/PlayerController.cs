@@ -281,47 +281,55 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IInteractable>(out var interactable))
+        var targetTransform = other.transform;
+        if (!targetTransform.TryGetComponent<IInteractable>(out var interactable) && targetTransform.parent)
         {
-            _currentInteractable = interactable;
-            _currentInteractable?.OnEnter();
-            if (other.GetComponent<DoorPressureGame>() && other.GetComponent<DoorPressureGame>().highlightedObj != null)
-            {
-                currentHighlightedObj = other.GetComponent<DoorPressureGame>().highlightedObj;
-            }
-            else if (other.GetComponent<PowerPuzzleManager>() && other.GetComponent<PowerPuzzleManager>().HighlightableObj != null)
-            {
-                currentHighlightedObj = other.GetComponent<PowerPuzzleManager>().HighlightableObj;
-            }
-            else
-            {
-                currentHighlightedObj = other.transform;
-            }
+            targetTransform = targetTransform.parent;
+            targetTransform.TryGetComponent(out interactable);
         }
-        else if (other.transform.parent != null &&
-                 other.transform.parent.TryGetComponent(out interactable))
+
+        if (interactable != null)
         {
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
-            if (other.transform.parent.GetComponent<DoorPressureGame>() && other.transform.parent.GetComponent<DoorPressureGame>().highlightedObj != null)
+
+            if (targetTransform.TryGetComponent<DoorPressureGame>(out var doorPressureGame) &&
+                doorPressureGame.highlightedObj)
             {
-                currentHighlightedObj = other.transform.parent.GetComponent<DoorPressureGame>().highlightedObj;
+                currentHighlightedObj = doorPressureGame.highlightedObj;
+            }
+            else if (targetTransform.TryGetComponent<PowerPuzzleManager>(out var powerPuzzleManager) &&
+                     powerPuzzleManager.HighlightableObj)
+            {
+                currentHighlightedObj = powerPuzzleManager.HighlightableObj;
+            }
+            else if (targetTransform.TryGetComponent<KeycodeReceiver>(out var keycodeReceiver))
+            {
+                if (!keycodeReceiver.CodeHasBeenAccepted)
+                {
+                    currentHighlightedObj = targetTransform;
+                }
             }
             else
             {
-                currentHighlightedObj = other.transform.parent;
+                currentHighlightedObj = targetTransform;
             }
         }
 
-        if (other.TryGetComponent<IItemReceiver>(out var receiver))
+        targetTransform = other.transform;
+        if (!targetTransform.TryGetComponent<IItemReceiver>(out var itemReceiver) && targetTransform.parent)
         {
-            _currentItemReceiver = receiver;
-            //currentHighlightedObj = other.transform;
+            targetTransform = targetTransform.parent;
+            targetTransform.TryGetComponent(out itemReceiver);
         }
-        else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
+
+        if (itemReceiver != null)
         {
-            _currentItemReceiver = receiver;
-            //currentHighlightedObj = other.transform;
+            _currentItemReceiver = itemReceiver;
+            if (!_currentItemReceiver.ItemHasBeenReceived)
+            {
+                //currentHighlightedObj = targetTransform;
+            }
         }
     }
 

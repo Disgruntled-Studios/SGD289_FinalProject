@@ -21,6 +21,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     [SerializeField] private string _name;
     public string Name => _name;
+    
+    public bool ItemHasBeenReceived { get; set; }
 
     private void Awake()
     {
@@ -95,6 +97,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
             inventory.RemoveItem(item);
         }
 
+        ItemHasBeenReceived = true;
         _onItemReceivedExternal?.Invoke();
         OnItemReceivedInternal();
         return true;
