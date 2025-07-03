@@ -115,6 +115,12 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead) return;
 
+        if (_isSprinting && _currentMoveInput < 0.01f)
+        {
+            _isSprinting = false;
+            _animationController.Sprint(false);
+        }
+
         CheckGrounded();
         ApplyRotation();
         ApplyMovement();
@@ -263,7 +269,7 @@ public class PlayerController : MonoBehaviour
         {
             _currentSpeed = _normalSpeed * AimSpeedMultiplier;
         }
-        else if (_isSprinting)
+        else if (_isSprinting && _currentMoveInput > 0.01f)
         {
             _currentSpeed = _normalSpeed * SprintMultiplier;
         }
@@ -306,12 +312,12 @@ public class PlayerController : MonoBehaviour
         if (other.TryGetComponent<IItemReceiver>(out var receiver))
         {
             _currentItemReceiver = receiver;
-            currentHighlightedObj = other.transform;
+            //currentHighlightedObj = other.transform;
         }
         else if (other.transform.parent != null && other.transform.parent.TryGetComponent(out receiver))
         {
             _currentItemReceiver = receiver;
-            currentHighlightedObj = other.transform;
+            //currentHighlightedObj = other.transform;
         }
     }
 

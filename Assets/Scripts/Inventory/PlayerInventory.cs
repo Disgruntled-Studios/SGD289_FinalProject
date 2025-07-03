@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
         
         if (UIManager.Instance)
         {
-            UIManager.Instance.StartPopUpText($"You picked up: {item.itemName}. {item.additionalText}");
+            UIManager.Instance.StartPopUpText($"{item.itemName}");
         }
         
         OnInventoryChanged?.Invoke();
