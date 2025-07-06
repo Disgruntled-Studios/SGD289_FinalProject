@@ -13,12 +13,6 @@ public class VeraScript : MonoBehaviour
 
     [SerializeField] private Transform[] patrolPoints;
 
-
-    private bool playerInRange = false;
-
-    [SerializeField]
-    private bool inSight = false;
-
     [SerializeField]
     private int state;
 
