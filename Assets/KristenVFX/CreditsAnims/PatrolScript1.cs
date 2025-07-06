@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem.XR.Haptics;
 
-public class PatrolScript : MonoBehaviour
+public class PatrolScript1 : MonoBehaviour
 {
     //I want enemies with this script to patrol between points in the air or on the ground.
 
