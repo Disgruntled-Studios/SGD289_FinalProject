@@ -246,10 +246,18 @@ public class UIManager : MonoBehaviour
     {
         if (_popUpCoroutine != null)
         {
+            Debug.Log("StoppingCoroutine");
             StopCoroutine(_popUpCoroutine);
+            ClearPopUpText();
         }
         
         _popUpCoroutine = StartCoroutine(TypePopUpText(message));
+    }
+
+    public void ClearPopUpText()
+    {
+        _popUpBox.SetActive(false);
+        _popUpText.text = "";
     }
 
     private IEnumerator TypePopUpText(string message)
@@ -260,7 +268,7 @@ public class UIManager : MonoBehaviour
         if (PopUpTypingEnabled)
         {
             var typingSpeed = 0.025f;
-        
+
             foreach (var c in message)
             {
                 _popUpText.text += c;
@@ -271,7 +279,7 @@ public class UIManager : MonoBehaviour
         {
             _popUpText.text = message;
         }
-        
+
         yield return new WaitForSeconds(3f);
 
         _popUpBox.SetActive(false);

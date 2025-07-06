@@ -27,6 +27,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
             _onCorrectCodeEntered?.Invoke();
             CodeHasBeenAccepted = true;
             UIManager.Instance.CloseKeycodePanel();
+            GameManager.Instance.PlayerController.currentHighlightedObj = null;
         }
         else
         {

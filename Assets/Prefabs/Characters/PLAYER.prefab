@@ -40,7 +40,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700740437116187474}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 270880758502685204}
   - component: {fileID: 8426559049792175150}
+  - component: {fileID: 4701443532688124884}
   m_Layer: 3
   m_Name: GunSocket
   m_TagString: Untagged
@@ -333,7 +334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5011744671581568768}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6955517, y: 0.038952634, z: -0.71732455, w: -0.011665951}
+  m_LocalRotation: {x: 0.00089561165, y: -0.01407727, z: -0.040956177, w: 0.9990614}
   m_LocalPosition: {x: 0.34392276, y: 0.7815956, z: -0.108766496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -365,9 +366,30 @@ MonoBehaviour:
   maxMagLimit: 12
   currentAmmoMagAmt: 0
   _gunItemName: Pistol and ammo
-  gunShotSFX: 
+  gunShotSFX: Bang
   _lr: {fileID: 4762945982309698640}
   _canShoot: 0
+--- !u!114 &4701443532688124884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011744671581568768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee2a92c9b3857346b97c925ae8d2ba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Bang
+    clip: {fileID: 8300000, guid: 9fa2cddcb0e7b1e4e80e08f9df36e3ca, type: 3}
+    mixerOutput: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
+    isLooping: 0
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 1
+    source: {fileID: 0}
 --- !u!1 &5188328403837828351
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,15 +414,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5188328403837828351}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.00211346, y: -0.021138653, z: -0.04936986, w: 0.99855465}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4153966895882763781}
   - {fileID: 3703358634409380177}
+  - {fileID: 4153966895882763781}
   m_Father: {fileID: 270880758502685204}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.361, y: -2.408, z: -5.653}
 --- !u!1 &5981381563232048218
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +477,7 @@ GameObject:
   - component: {fileID: 5489007689301645667}
   - component: {fileID: 795104493047362127}
   - component: {fileID: 4867057161169410574}
+  - component: {fileID: 4880189041500887332}
   m_Layer: 3
   m_Name: PLAYER
   m_TagString: Player
@@ -747,6 +770,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6028521454305457700}
   m_Enabled: 1
+--- !u!114 &4880189041500887332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028521454305457700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee2a92c9b3857346b97c925ae8d2ba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds: []
 --- !u!1 &6327582249808093061
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +887,7 @@ GameObject:
   m_Layer: 3
   m_Name: GunHoldPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -863,13 +899,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7245297349722366093}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000055879333, y: 0.0000000097788835, z: 0.000000007130436, w: 1}
+  m_LocalRotation: {x: 0.000000078231075, y: 0.000000054948018, z: -0.077809274, w: 0.9969683}
   m_LocalPosition: {x: -0.018998971, y: 0.26800072, z: 0.010999738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5348735075353450614}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8.925}
 --- !u!1001 &3155262099032795200
 PrefabInstance:
   m_ObjectHideFlags: 0
