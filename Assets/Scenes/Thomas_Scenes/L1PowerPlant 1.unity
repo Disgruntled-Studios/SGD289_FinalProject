@@ -15,13 +15,13 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.23420745, g: 0.38993704, b: 0.33022454, a: 1}
+  m_FogColor: {r: 0.1502709, g: 0.36477977, b: 0.31526813, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.12683429, g: 0.7610062, b: 0.50236356, a: 1}
-  m_AmbientEquatorColor: {r: 0.08276963, g: 0.108884655, b: 0.2830189, a: 1}
+  m_AmbientSkyColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+  m_AmbientEquatorColor: {r: 0.10062885, g: 0.10062885, b: 0.10062885, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.95
   m_AmbientMode: 1
@@ -32,11 +32,11 @@ RenderSettings:
   m_FlareFadeSpeed: -0.07
   m_HaloTexture: {fileID: 2800000, guid: bf69fe7bc0f403c4a87f786040e07ecb, type: 3}
   m_SpotCookie: {fileID: 2800000, guid: aa3b5a01ab0d78b48a92db269dda4397, type: 3}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
-  m_CustomReflection: {fileID: 0}
+  m_ReflectionIntensity: 0.258
+  m_CustomReflection: {fileID: 8900000, guid: ff56549161231c64fae865566385ee99, type: 3}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -30826,6 +30826,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470096956}
   m_CullTransparentMesh: 1
+--- !u!1001 &475494770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.5139885
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6516956
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.575571
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9506554
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.31024873
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 323.852
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827566859527281520, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7981827859162361973, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_Name
+      value: Depleted_Uranium_Barrel (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7981827859162361973, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ee2c6bc5c0fe33b4ea127ddadca30c51, type: 3}
 --- !u!1 &486452322
 GameObject:
   m_ObjectHideFlags: 0
@@ -42372,6 +42433,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8657163455227005072, guid: e713cf308cd5bbc43bbd975fb102d5db, type: 3}
   m_PrefabInstance: {fileID: 612465568}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &613261280
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6.6680007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6.6680007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6.6680007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.212
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.419
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 23.984
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.21518567
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071021
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.67356974
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0023395831
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -17.528
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -162.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293531947102000530, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189317990179919607, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_Name
+      value: Barrel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189317990179919607, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a63cf82ff59b9594d963a40b9fceeac3, type: 3}
 --- !u!1 &626718803
 GameObject:
   m_ObjectHideFlags: 0
@@ -75005,11 +75139,11 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 0
-  m_Color: {r: 0.61006284, g: 0.2077751, b: 0.18992516, a: 1}
-  m_Intensity: 17.3
-  m_Range: 6
+  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
+  m_Intensity: 10
+  m_Range: 5
   m_SpotAngle: 62.167793
-  m_InnerSpotAngle: 19.541473
+  m_InnerSpotAngle: 15.43372
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -75049,7 +75183,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
-  m_ColorTemperature: 3851
+  m_ColorTemperature: 8016.52
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -191796,3 +191930,5 @@ SceneRoots:
   - {fileID: 588751174}
   - {fileID: 1628081386}
   - {fileID: 1888395177}
+  - {fileID: 475494770}
+  - {fileID: 613261280}
