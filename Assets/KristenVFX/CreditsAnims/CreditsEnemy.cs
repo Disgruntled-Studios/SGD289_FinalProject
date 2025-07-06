@@ -29,7 +29,7 @@ public class CreditsEnemy : MonoBehaviour
     [SerializeField] Material damagedMat;
     [SerializeField] Material normalMat;
     [SerializeField] EnemyFOV fov;
-    [SerializeField] float detectionRate = 15f;
+    //[SerializeField] float detectionRate = 15f;
     [SerializeField, Tooltip("The patrol pattern this enemy will naturally follow.")] private GameObject patrolPattern;
     [SerializeField] Light leftEyeLight, rightEyeLight;
 

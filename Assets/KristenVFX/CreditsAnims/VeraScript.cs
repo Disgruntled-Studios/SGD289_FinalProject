@@ -17,9 +17,6 @@ public class VeraScript : MonoBehaviour
     private bool playerInRange = false;
 
     [SerializeField]
-    private bool inSight = false;
-
-    [SerializeField]
     private int state;
 
     //[SerializeField]
@@ -52,7 +49,6 @@ public class VeraScript : MonoBehaviour
         if (other.gameObject.CompareTag("InSight"))
         {
             print("not in sight");
-            inSight = false;
             this.enabled = false;
         }
     }

@@ -25,11 +25,6 @@ public class PatrolScript : MonoBehaviour
     //private float pathingDelay = 0.2f;
     //private float pathingTime;
 
-    private bool playerInRange = false;
-
-    [SerializeField]
-    private bool inSight = false;
-
     //[SerializeField]
    // private float sightRangeFloat =20f; //perhaps replace with box around player.
 
@@ -73,27 +68,6 @@ public class PatrolScript : MonoBehaviour
         DecideStates();
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("InSight"))
-        {
-            print("in sight");
-            inSight = true;
-            this.enabled = true;
-            //activated patrol script
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("InSight"))
-        {
-            print("not in sight");
-            inSight = false;
-            this.enabled = false;
-        }
-    }
 
     public void DecideStates()
     {
