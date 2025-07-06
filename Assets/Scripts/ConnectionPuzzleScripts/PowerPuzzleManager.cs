@@ -15,6 +15,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [SerializeField] private GameCamera _puzzleCamera;
     [SerializeField] private UnityEvent _onPuzzleComplete;
     [SerializeField, TextArea] private string puzzleCompletionDialogue;
+    [SerializeField] Light selectionLight;
     public Transform HighlightableObj;
     public bool hasCameraCut;
     public GameCamera cutCam;
@@ -79,6 +80,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
         InputManager.Instance.SwitchToDefaultInput();
         UIManager.Instance.SetPuzzlePanelActive(false);
+        if (selectionLight != null) selectionLight.enabled = false;
     }
 
     private void CheckTilesConnection()
@@ -165,6 +167,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             InputManager.Instance.SwitchToPuzzleInput();
             CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID);
             UIManager.Instance.SetPuzzlePanelActive(true);
+            selectionLight.enabled = true;
         }
         else
         {

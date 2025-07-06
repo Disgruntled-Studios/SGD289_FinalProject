@@ -17,7 +17,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private Material _glitchedMaterial;
 
     private PlayerInventory _playerInventory;
-    private bool _hasPopUpTriggered;
 
     [SerializeField] private string _name;
     public string Name => _name;
@@ -76,11 +75,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     void OnTriggerEnter(Collider other)
     {
-        if (_hasPopUpTriggered) return;
-
         if (string.IsNullOrEmpty(_popUpMessage)) return;
         UIManager.Instance.StartPopUpText(_popUpMessage);
-        _hasPopUpTriggered = true;
     }
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)

@@ -98,7 +98,7 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
         {
             while (UIManager.Instance.IsGamePaused) yield return null;
 
-            escapeTimer -= 10 * Time.deltaTime;
+            escapeTimer -= 1;
 
             escapeLerp = escapeTimer / escapeStartTime;
 
@@ -106,7 +106,7 @@ public class DoorPressureGame : MonoBehaviour, IInteractable
 
             doorRef.transform.position = Vector3.Lerp(doorEndTimerPos.position, doorEndPos.position, escapeLerp);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
 
             if (escapeTimer < 0)
             {

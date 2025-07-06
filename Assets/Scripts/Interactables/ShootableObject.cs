@@ -6,6 +6,7 @@ public class ShootableObject : MonoBehaviour, IInteractable
     [SerializeField] private UnityEvent onShotEvent;
     [SerializeField, TextArea] private string dialoguePopUpTxt;
     private bool isOpen = false;
+    [SerializeField] MeshRenderer highlightableObj;
 
     public void Interact(Transform player, PlayerInventory inventory)
     {
