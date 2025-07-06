@@ -9,14 +9,17 @@ public class NameScript : MonoBehaviour
     [SerializeField]
     private Animator anim;
 
-    private bool OnScreen = false;
+    [SerializeField]
+    private GameObject name;
+
+    private bool onScreen = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (anim == null)
         {
-            anim = this.gameObject.GetComponent<Animator>();
+            anim = name.gameObject.GetComponent<Animator>();
         }
     }
 
@@ -24,32 +27,41 @@ public class NameScript : MonoBehaviour
     void Update()
     {
         waitTimer += Time.deltaTime;
-        if(waitTimer > waitDuration)
+
+        if (onScreen == true)
         {
-            print("waitTimer is larger than waitDuration");
-            if (OnScreen == false)
-            {
-                FadeInText();
-                waitDuration = Time.deltaTime + timeOnScreen;
-                print("fading in");
-                OnScreen = true;
-            }
-            else
+            if (waitTimer > waitDuration)
             {
                 FadeOutText();
                 print("fading out");
             }
         }
+        
+    }
+
+    public void Visible()
+    {
+        //anim.SetTrigger("Invisible");
     }
 
     public void FadeInText()
     {
+        name.SetActive(true);
         anim.SetTrigger("FadeInTrigger");
+        waitDuration = Time.deltaTime + timeOnScreen;
+        onScreen = true;
     }
+
 
     public void FadeOutText()
     {
         anim.SetTrigger("FadeOutTrigger");
+    }
+
+    public void EnemyStop()
+    {
+        CreditsEnemy ce = GameObject.Find("Enemy1").GetComponent<CreditsEnemy>();
+        ce.StopMovement();
     }
 
 
