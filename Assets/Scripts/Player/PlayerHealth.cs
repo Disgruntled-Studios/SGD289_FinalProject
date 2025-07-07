@@ -1,14 +1,14 @@
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
-using UnityEngine.LightTransport.PostProcessing;
+//using UnityEngine.LightTransport.PostProcessing;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private PlayerAnimationController _animController;
-    
+
     private const float MaxHealth = 3.0f;
 
     [SerializeField] private Volume _volume;
@@ -21,13 +21,13 @@ public class PlayerHealth : MonoBehaviour
     private const float FirstHitIntensity = 0.4f;
     private const float SecondHitIntensity = 0.55f;
     private const float ThirdHitIntensity = 1.0f;
-    
+
     public UnitHealth Health { get; private set; }
 
     public float CurrentHealth => Health.CurrentHealth;
 
     public UnityEvent onDeath;
-    
+
     public bool IsInjured { get; private set; }
 
     public int HitsRemaining { get; private set; } = 3;
@@ -76,9 +76,18 @@ public class PlayerHealth : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Health.IsDead)
+        if (HitsRemaining == 0)
         {
+            Debug.Log("Dead");
             onDeath.Invoke();
+            Invoke("ResetVignette", 4f);
         }
+    }
+
+    private void ResetVignette()
+    {
+        _vignette.intensity.value = 0f;
+        HitsRemaining = 3;
+        Health.CurrentHealth = Health.MaxHealth;
     }
 }

@@ -6861,6 +6861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5751539342602098619, guid: e967a0bf2d5422f41878c10073e746b5, type: 3}
+      propertyPath: _cameraSwitchId
+      value: CAM45
+      objectReference: {fileID: 0}
     - target: {fileID: 8108813841251445444, guid: e967a0bf2d5422f41878c10073e746b5, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -6917,6 +6921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8706229589806803777, guid: e967a0bf2d5422f41878c10073e746b5, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8706229589806803777, guid: e967a0bf2d5422f41878c10073e746b5, type: 3}
       propertyPath: m_Name
       value: L3Transitioner
@@ -8053,11 +8061,21 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3639267519212876087, guid: 80425cc5fa367d543b1a02a54fd99776, type: 3}
+      propertyPath: _itemName
+      value: Note - Console KeyCode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639267519212876087, guid: 80425cc5fa367d543b1a02a54fd99776, type: 3}
       propertyPath: _noteContents
       value: "Attention all maintenance service members* Security servers are down
         temporarily the keycode has been changed I\u2019ve set it to something simple
         as long as you know colors and can count you just need to go into the pipe
         room and the code will be right there.\r\nFrom Supervisor Bobby L.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639267519212876087, guid: 80425cc5fa367d543b1a02a54fd99776, type: 3}
+      propertyPath: _additionalText
+      value: Servers are down so all keycodes are being reset for those who need
+        the code just go to the pipe room to the right of the console and count the
+        shapes and colors. It'll be easy for those who couldn't pass kindergarden.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13763,7 +13781,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5737317570799490732, guid: e4e800fd576414844818c874a0feb998, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.63971
+      value: 27.8
       objectReference: {fileID: 0}
     - target: {fileID: 5737317570799490732, guid: e4e800fd576414844818c874a0feb998, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13771,7 +13789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5737317570799490732, guid: e4e800fd576414844818c874a0feb998, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.47821
+      value: 17.11
       objectReference: {fileID: 0}
     - target: {fileID: 5737317570799490732, guid: e4e800fd576414844818c874a0feb998, type: 3}
       propertyPath: m_LocalRotation.w
