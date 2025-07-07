@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
     public RumbleController RumbleController => _player.GetComponent<RumbleController>();
-    
+
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -49,12 +49,12 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel", "CAM21");
+            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel_NatesTest", "CAM21");
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM31");
+            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM45");
         }
     }
 
@@ -70,14 +70,36 @@ public class GameManager : MonoBehaviour
 
     public void ResetScene()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        SceneManager.LoadScene("MainMenu");
-        Destroy(TransitionManager.Instance.gameObject);
-        Destroy(_player);
-        Destroy(UIManager.Instance.gameObject);
-        Destroy(SoundManager.Instance.gameObject);
-        Destroy(CameraManager.Instance.gameObject);
-        Destroy(gameObject);
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            TransitionManager.Instance.TransitionToScene("L1PowerPlant", "CAM11");
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel_NatesTest", "CAM21");
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM41");
+        }
+
+        ResetEnemies();
+
+    }
+
+    public void ResetEnemies()
+    {
+        EnemyBehavior[] enemies = FindObjectsByType<EnemyBehavior>(FindObjectsSortMode.None);
+
+        foreach (EnemyBehavior enemy in enemies)
+        {
+
+                Debug.Log(enemy + " is in the list");
+            if (enemy.currentState == EnemyBehavior.BehaviorState.chasing)
+            {
+                enemy.currentState = EnemyBehavior.BehaviorState.patrolling;
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 using System;
-using UnityEditor.Rendering.LookDev;
+//using UnityEditor.Rendering.LookDev;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public class GridResizer : MonoBehaviour
 {
