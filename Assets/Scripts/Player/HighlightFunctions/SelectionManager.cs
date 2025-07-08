@@ -1,10 +1,3 @@
-//////////////////////////////////////////////
-//Assignment/Lab/Project: Portal
-//Name: Nathaniel Lester
-//Section: SGD.235.4173
-//Instructor: Ven Lewis
-//Date: 3/11/25
-/////////////////////////////////////////////
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,8 +5,8 @@ using UnityEngine;
 public class SelectionManager : MonoBehaviour
 {
     public static SelectionManager Instance;
-    [Tooltip("The Tag that is on the objects we want to Highlight.")]
-    [SerializeField] private PlayerController playerRef;
+    // [Tooltip("The Tag that is on the objects we want to Highlight.")]
+    private PlayerController playerRef;
 
     private HighlightSelectionResponse _selectionResponse;
 
@@ -24,6 +17,7 @@ public class SelectionManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {

@@ -310,6 +310,11 @@ public class PlayerController : MonoBehaviour
                     currentHighlightedObj = targetTransform;
                 }
             }
+            else if (targetTransform.TryGetComponent<ShootableObject>(out var shootableObj))
+            {
+                _gunController.closeObj = shootableObj;
+                currentHighlightedObj = targetTransform;
+            }
             else
             {
                 currentHighlightedObj = targetTransform;
@@ -353,6 +358,7 @@ public class PlayerController : MonoBehaviour
                 _currentInteractable.OnExit();
                 ClearCurrentInteractable(_currentInteractable);
                 currentHighlightedObj = null;
+                _gunController.closeObj = null;
             }
         }
 
@@ -375,6 +381,7 @@ public class PlayerController : MonoBehaviour
                 currentHighlightedObj = null;
             }
         }
+        
     }
 
     public void ClearCurrentInteractable(IInteractable interactable)
