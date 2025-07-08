@@ -120,15 +120,18 @@ public class EnemyBehavior : MonoBehaviour
         switch (currentState)
         {
             case BehaviorState.patrolling:
-                if (leftEyeLight.enabled == false)
+                if (leftEyeLight.enabled == false || leftEyeLight.color == Color.red)
                 {
                     leftEyeLight.enabled = true;
                     rightEyeLight.enabled = true;
+                    leftEyeLight.color = Color.yellow;
+                    rightEyeLight.color = Color.yellow;
                 }
                 if (!meshAgent.isStopped)
                 {
                     anim.SetBool("IsMoving", true);
                     anim.SetBool("IsChasing", false);
+                    anim.SetBool("Attacking", false);
                 }
                 else
                 {
@@ -159,6 +162,12 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     anim.SetBool("IsMoving", false);
                     Debug.Log("Made it to the patrol point goint to the next");
+                    StartCoroutine("SetNextPatrolPoint");
+                    meshAgent.speed = patrolSpeed;
+                }
+                else if (meshAgent.destination == playerRef.transform.position)
+                {
+                    anim.SetBool("IsMoving", false);
                     StartCoroutine("SetNextPatrolPoint");
                     meshAgent.speed = patrolSpeed;
                 }

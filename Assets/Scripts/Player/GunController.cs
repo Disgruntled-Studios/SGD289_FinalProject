@@ -27,6 +27,8 @@ public class GunController : MonoBehaviour
     public bool _canShoot;
     public bool HasGun { get; set; }
     private SoundComponent soundComponent;
+    [HideInInspector]public ShootableObject closeObj;
+
 
     private void Start()
     {
@@ -139,12 +141,16 @@ public class GunController : MonoBehaviour
                 {
                     hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
                 }
+                else if (closeObj != null)
+                {
+                    closeObj.OnShot();
+                }
 
                 if (enemyRef != null && !enemyRef.health.IsDead)
-                {
-                    enemyRef.health.Damage(_damageAmount);
-                    Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
-                }
+                    {
+                        enemyRef.health.Damage(_damageAmount);
+                        Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
+                    }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
             StartCoroutine(ShootDelay());

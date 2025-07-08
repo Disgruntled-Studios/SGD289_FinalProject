@@ -32,6 +32,8 @@ public class PlayerHealth : MonoBehaviour
 
     public int HitsRemaining { get; private set; } = 3;
 
+    private float damagedTimer;
+
     private void Awake()
     {
         Health = new UnitHealth(MaxHealth);
@@ -53,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
         {
             _vignette.intensity.value = FirstHitIntensity;
             HitsRemaining--;
+            damagedTimer = 8f;
         }
         else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
         {
@@ -60,13 +63,16 @@ public class PlayerHealth : MonoBehaviour
             IsInjured = true;
             _animController.SetInjured(IsInjured);
             HitsRemaining--;
+            damagedTimer = 8f;
 
         }
         else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
         {
             _vignette.intensity.value = ThirdHitIntensity;
             HitsRemaining--;
+            damagedTimer = -1f;
         }
+        
     }
 
     public void Heal(float amount)
@@ -74,15 +80,41 @@ public class PlayerHealth : MonoBehaviour
         Health.Heal(amount);
     }
 
+    void Update()
+    {
+        if (damagedTimer > 0)
+        {
+            damagedTimer -= 1 * Time.deltaTime;
+            //_vignette.intensity.value = Mathf.Lerp(0, 1, damagedTimer / 8);
+            switch (damagedTimer)
+            {
+                case <= 0:
+                    if (HitsRemaining < 3)
+                    {
+                        HitsRemaining = 3;
+                    }
+                    break;
+                case <= 3.2f:
+                    if (HitsRemaining < 2)
+                    {
+                        HitsRemaining = 2;
+                    }
+                    break;
+            }
+        }
+    }
+
     void FixedUpdate()
     {
-        if (HitsRemaining == 0)
+        if (HitsRemaining <= 0)
         {
             Debug.Log("Dead");
             onDeath.Invoke();
             Invoke("ResetVignette", 4f);
         }
     }
+
+
 
     private void ResetVignette()
     {

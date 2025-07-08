@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGameOver()
     {
+        Debug.Log("StartingGameOver");
         Invoke("ResetScene", 4f);
     }
 
