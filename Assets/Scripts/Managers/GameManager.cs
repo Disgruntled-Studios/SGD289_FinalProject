@@ -18,6 +18,14 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
     public RumbleController RumbleController => _player.GetComponent<RumbleController>();
 
+    [Header("Dev Level Cheat Vars")]
+    [SerializeField] private string levelOneFileName;
+    [SerializeField] private string levelOneStartingCam;
+    [SerializeField] private string levelTwoFileName;
+    [SerializeField] private string levelTwoStartingCam;
+    [SerializeField] private string levelThreeFileName;
+    [SerializeField] private string levelThreeStartingCam;
+
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -42,19 +50,24 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            TransitionManager.Instance.TransitionToScene("L1PowerPlant", "CAM11");
+            TransitionManager.Instance.TransitionToScene(levelOneFileName, levelOneStartingCam);
         }
 
-        if (Input.GetKeyDown(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F2) && Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel_NatesTest", "CAM21");
+            TransitionManager.Instance.TransitionToScene(levelTwoFileName, levelTwoStartingCam);
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Input.GetKeyDown(KeyCode.F3) && Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM45");
+            TransitionManager.Instance.TransitionToScene(levelThreeFileName, levelThreeStartingCam);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            Player.GetComponent<PlayerController>().GunController.HasGun = true;
         }
     }
 
@@ -74,15 +87,15 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            TransitionManager.Instance.TransitionToScene("L1PowerPlant", "CAM11");
+            TransitionManager.Instance.TransitionToScene(levelOneFileName, levelOneStartingCam);
         }
         else if (SceneManager.GetActiveScene().buildIndex == 2)
         {
-            TransitionManager.Instance.TransitionToScene("L2MaintenanceTunnel_NatesTest", "CAM21");
+            TransitionManager.Instance.TransitionToScene(levelTwoFileName, levelTwoStartingCam);
         }
         else if (SceneManager.GetActiveScene().buildIndex == 3)
         {
-            TransitionManager.Instance.TransitionToScene("L3Reactor", "CAM41");
+            TransitionManager.Instance.TransitionToScene(levelThreeFileName, levelThreeStartingCam);
         }
 
         ResetEnemies();
