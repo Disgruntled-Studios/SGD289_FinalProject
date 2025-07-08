@@ -1,14 +1,18 @@
 using UnityEngine;
 using System;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     public Sound[] sounds;
     public static SoundManager Instance { get; private set; }
 
-    public float MasterVolume { get; private set; } = 1f;
-    public float MusicVolume { get; private set; } = 1f;
-    public float SfxVolume { get; private set; } = 1f;
+    public AudioMixer mainMixer;
+
+    // public float MasterVolume { get; private set; } = 1f;
+    // public float MusicVolume { get; private set; } = 1f;
+    // public float SfxVolume { get; private set; } = 1f;
+    // public float AmbianceVolume { get; private set; } = 1f;
 
     void Awake()
     {
@@ -49,21 +53,29 @@ public class SoundManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void SetMasterVolume(float value)
-    {
-        MasterVolume = value;
-        // TODO: Apply to audio mixer
-    }
+    // public void SetMasterVolume(float value)
+    // {
+    //     MasterVolume = value;
+    //     // TODO: Apply to audio mixer
+    // }
 
-    public void SetMusicVolume(float value)
-    {
-        MusicVolume = value;
-        // TODO: Apply to audio mixer
-    }
+    // public void SetMusicVolume(float value)
+    // {
+    //     MusicVolume = value;
+    //     // TODO: Apply to audio mixer
+    // }
 
-    public void SetSfxVolume(float value)
-    {
-        SfxVolume = value;
-        // TODO: Apply to audio mixer
-    }
+    // public void SetSfxVolume(float value)
+    // {
+    //     SfxVolume = value;
+    //     // TODO: Apply to audio mixer
+    // }
+
+    // public void SetAmbianceVolume(float value)
+    // {
+    //     AmbianceVolume = value;
+    //     // TODO: Apply to audio mixer
+    // }
+
+    
 }

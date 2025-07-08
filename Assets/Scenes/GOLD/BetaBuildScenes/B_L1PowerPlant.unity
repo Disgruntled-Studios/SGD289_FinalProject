@@ -23150,6 +23150,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 566506459009988613}
   _cameraTarget: {fileID: 8016657025682290569}
+  levelOneFileName: 
+  levelOneStartingCam: 
+  levelTwoFileName: 
+  levelTwoStartingCam: 
+  levelThreeFileName: 
+  levelThreeStartingCam: 
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -94375,6 +94381,7 @@ MonoBehaviour:
     pitch: 0
     spatialBlend: 0
     source: {fileID: 0}
+  mainMixer: {fileID: 0}
 --- !u!4 &1626827065
 Transform:
   m_ObjectHideFlags: 0
@@ -94621,7 +94628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fd197aa314df043bef579bad3abc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRef: {fileID: 0}
 --- !u!4 &1654127222
 Transform:
   m_ObjectHideFlags: 0
