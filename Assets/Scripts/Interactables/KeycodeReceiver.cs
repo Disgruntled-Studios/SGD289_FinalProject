@@ -5,6 +5,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 {
     [SerializeField] private string _correctCode;
     [SerializeField] private UnityEvent _onCorrectCodeEntered;
+    [SerializeField, TextArea] private string _onCompletionText;
 
     private const string PromptText = "Enter Keycode:";
 
@@ -27,11 +28,13 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
             _onCorrectCodeEntered?.Invoke();
             CodeHasBeenAccepted = true;
             UIManager.Instance.CloseKeycodePanel();
+            UIManager.Instance.StartPopUpText(_onCompletionText);
             GameManager.Instance.PlayerController.currentHighlightedObj = null;
         }
         else
         {
             UIManager.Instance.ShowInvalidCodeFeedback();
+            UIManager.Instance.StartPopUpText("Access <color=red>DENIED</color>");
         }
     }
 
