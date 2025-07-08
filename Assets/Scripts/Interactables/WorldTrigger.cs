@@ -11,16 +11,19 @@ public class WorldTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        
         if (useGameManagerExit)
         {
             GameManager.Instance.ResetScene();
             return;
         }
+        
         if (nextScene)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             return;
         }
+        
         TransitionManager.Instance.TransitionToScene(_sceneSwitchName, _cameraSwitchId);
     }
 }
