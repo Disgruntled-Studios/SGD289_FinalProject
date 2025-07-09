@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
     public RumbleController RumbleController => _player.GetComponent<RumbleController>();
 
+    public bool IsGameOver { get; private set; }
+
     [Header("Dev Level Cheat Vars")]
     [SerializeField] private string levelOneFileName;
     [SerializeField] private string levelOneStartingCam;
@@ -83,6 +85,9 @@ public class GameManager : MonoBehaviour
     public void StartGameOver()
     {
         Debug.Log("StartingGameOver");
+        CallAnimationPause();
+        IsGameOver = true;
+        Debug.Log("Invoking Reset scene");
         Invoke("ResetScene", 4f);
     }
 
@@ -103,6 +108,8 @@ public class GameManager : MonoBehaviour
         }
 
         ResetEnemies();
+        CallAnimationUnpause();
+        IsGameOver = false;
 
     }
 
@@ -113,11 +120,33 @@ public class GameManager : MonoBehaviour
         foreach (EnemyBehavior enemy in enemies)
         {
 
-                Debug.Log(enemy + " is in the list");
+            Debug.Log(enemy + " is in the list");
             if (enemy.currentState == EnemyBehavior.BehaviorState.chasing)
             {
                 enemy.currentState = EnemyBehavior.BehaviorState.patrolling;
             }
+        }
+    }
+
+    public void CallAnimationPause()
+    {
+        AnimationPause[] animPauses = FindObjectsByType<AnimationPause>(FindObjectsSortMode.None);
+
+        foreach (AnimationPause animPause in animPauses)
+        {
+            Debug.Log(animPause.name + "'s animator is set to zero speed.");
+            animPause.Pause();
+        }
+    }
+
+    public void CallAnimationUnpause()
+    {
+        AnimationPause[] animPauses = FindObjectsByType<AnimationPause>(FindObjectsSortMode.None);
+
+        foreach (AnimationPause animPause in animPauses)
+        {
+            Debug.Log(animPause.name + "'s animator is set to zero speed.");
+            animPause.Unpause();
         }
     }
 }
