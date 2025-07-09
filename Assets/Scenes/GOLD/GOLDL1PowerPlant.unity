@@ -5036,7 +5036,7 @@ GameObject:
   - component: {fileID: 43772923}
   - component: {fileID: 43772921}
   m_Layer: 0
-  m_Name: CAM18Trigger
+  m_Name: CAM17Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5069,7 +5069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM18
+  _camId: CAM17
 --- !u!65 &43772922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5699,7 +5699,7 @@ GameObject:
   - component: {fileID: 108374005}
   - component: {fileID: 108374004}
   m_Layer: 0
-  m_Name: CAM19Trigger
+  m_Name: CAM18Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5732,7 +5732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM19
+  _camId: CAM18
 --- !u!65 &108374005
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10659,7 +10659,7 @@ GameObject:
   - component: {fileID: 128860536}
   - component: {fileID: 128860535}
   m_Layer: 0
-  m_Name: CAM111Trigger
+  m_Name: CAM110Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10677,7 +10677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM19
+  _camId: CAM110
 --- !u!65 &128860536
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10916,7 +10916,7 @@ GameObject:
   - component: {fileID: 164219624}
   - component: {fileID: 164219623}
   m_Layer: 0
-  m_Name: CAM15
+  m_Name: CAM14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10949,7 +10949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM15
+  _cameraId: CAM14
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -22107,37 +22107,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5696214931674350414, guid: e61643b6e57466b4c95ece1e6fbf6a04, type: 3}
   m_PrefabInstance: {fileID: 4854146690557933768}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &292073238
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 292073239}
-  m_Layer: 0
-  m_Name: ===UI===
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &292073239
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292073238}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &298157990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22983,7 +22952,7 @@ GameObject:
   - component: {fileID: 428452282}
   - component: {fileID: 428452281}
   m_Layer: 0
-  m_Name: CAM14
+  m_Name: CAM13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23016,7 +22985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM14
+  _cameraId: CAM13
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -23150,12 +23119,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 566506459009988613}
   _cameraTarget: {fileID: 8016657025682290569}
-  levelOneFileName: 
-  levelOneStartingCam: 
-  levelTwoFileName: 
-  levelTwoStartingCam: 
-  levelThreeFileName: 
-  levelThreeStartingCam: 
+  levelOneFileName: GOLDL1PowerPlant
+  levelOneStartingCam: CAM10
+  levelTwoFileName: GOLDL2MaintenanceTunnel
+  levelTwoStartingCam: CAM20
+  levelThreeFileName: GOLDL3Reactor
+  levelThreeStartingCam: CAM30
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -33439,7 +33408,7 @@ GameObject:
   - component: {fileID: 550125628}
   - component: {fileID: 550125627}
   m_Layer: 0
-  m_Name: CAM15Trigger
+  m_Name: CAM14Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33472,7 +33441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM15
+  _camId: CAM14
 --- !u!65 &550125628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33507,7 +33476,7 @@ GameObject:
   - component: {fileID: 550882073}
   - component: {fileID: 550882072}
   m_Layer: 0
-  m_Name: CAM111
+  m_Name: CAM110
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33525,7 +33494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM111
+  _cameraId: CAM110
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -33656,7 +33625,7 @@ GameObject:
   - component: {fileID: 568205523}
   - component: {fileID: 568205521}
   m_Layer: 0
-  m_Name: CAM12Trigger
+  m_Name: CAM11Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33689,7 +33658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM12
+  _camId: CAM11
 --- !u!65 &568205522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39692,7 +39661,7 @@ GameObject:
   - component: {fileID: 661721395}
   - component: {fileID: 661721394}
   m_Layer: 0
-  m_Name: CAM17
+  m_Name: CAM16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39725,7 +39694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM17
+  _cameraId: CAM16
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -61321,7 +61290,7 @@ GameObject:
   - component: {fileID: 1079813493}
   - component: {fileID: 1079813492}
   m_Layer: 0
-  m_Name: CAM16
+  m_Name: CAM15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61354,7 +61323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM16
+  _cameraId: CAM15
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -61738,7 +61707,7 @@ GameObject:
   - component: {fileID: 1127266405}
   - component: {fileID: 1127266404}
   m_Layer: 0
-  m_Name: CAM110
+  m_Name: CAM19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61771,7 +61740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM110
+  _cameraId: CAM19
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -62352,7 +62321,7 @@ GameObject:
   - component: {fileID: 1191453786}
   - component: {fileID: 1191453784}
   m_Layer: 0
-  m_Name: CAM110Trigger
+  m_Name: CAM19Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62385,7 +62354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM110
+  _camId: CAM19
 --- !u!65 &1191453785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -89003,7 +88972,7 @@ GameObject:
   - component: {fileID: 1595829808}
   - component: {fileID: 1595829807}
   m_Layer: 0
-  m_Name: CAM16Trigger
+  m_Name: CAM15Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89036,7 +89005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM16
+  _camId: CAM15
 --- !u!65 &1595829808
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94226,7 +94195,7 @@ GameObject:
   - component: {fileID: 1615245545}
   - component: {fileID: 1615245544}
   m_Layer: 0
-  m_Name: CAM13
+  m_Name: CAM12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94259,7 +94228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM13
+  _cameraId: CAM12
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -99944,7 +99913,7 @@ GameObject:
   - component: {fileID: 1717017369}
   - component: {fileID: 1717017368}
   m_Layer: 0
-  m_Name: CAM18
+  m_Name: CAM17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99977,7 +99946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM18
+  _cameraId: CAM17
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -105347,7 +105316,7 @@ GameObject:
   - component: {fileID: 1759810736}
   - component: {fileID: 1759810735}
   m_Layer: 0
-  m_Name: CAM12
+  m_Name: CAM11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105380,7 +105349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM12
+  _cameraId: CAM11
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -115341,7 +115310,7 @@ GameObject:
   - component: {fileID: 1817648761}
   - component: {fileID: 1817648760}
   m_Layer: 0
-  m_Name: CAM11
+  m_Name: CAM10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115374,7 +115343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM11
+  _cameraId: CAM10
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -115578,7 +115547,7 @@ GameObject:
   - component: {fileID: 1834192952}
   - component: {fileID: 1834192950}
   m_Layer: 0
-  m_Name: CAM13Trigger
+  m_Name: CAM12Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115611,7 +115580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM13
+  _camId: CAM12
 --- !u!65 &1834192951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115883,7 +115852,7 @@ GameObject:
   - component: {fileID: 1863819186}
   - component: {fileID: 1863819184}
   m_Layer: 0
-  m_Name: CAM14Trigger
+  m_Name: CAM13Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115916,7 +115885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM14
+  _camId: CAM13
 --- !u!65 &1863819185
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -131935,7 +131904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM11
+  _camId: CAM10
 --- !u!65 &1974353455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -141783,7 +141752,7 @@ GameObject:
   - component: {fileID: 1985686808}
   - component: {fileID: 1985686807}
   m_Layer: 0
-  m_Name: CAM19
+  m_Name: CAM18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141816,7 +141785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraId: CAM19
+  _cameraId: CAM18
   _isCCTV: 1
   _shouldSetTarget: 1
   _triggerZone: {fileID: 0}
@@ -142277,7 +142246,7 @@ GameObject:
   - component: {fileID: 2002744410}
   - component: {fileID: 2002744409}
   m_Layer: 0
-  m_Name: CAM17Trigger
+  m_Name: CAM16Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142310,7 +142279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camId: CAM17
+  _camId: CAM16
 --- !u!65 &2002744410
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -170481,7 +170450,6 @@ SceneRoots:
   - {fileID: 1409810680}
   - {fileID: 432907883}
   - {fileID: 1754508884}
-  - {fileID: 292073239}
   - {fileID: 697427206}
   - {fileID: 90583885}
   - {fileID: 66760776}
