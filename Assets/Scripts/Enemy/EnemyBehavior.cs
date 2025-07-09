@@ -100,7 +100,7 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy && !GameManager.Instance.IsGameOver)
         {
             StateHandler();
             //anim.SetBool("IsMoving", !meshAgent.isStopped);
@@ -188,7 +188,7 @@ public class EnemyBehavior : MonoBehaviour
                     anim.SetBool("IsMoving", false);
                     anim.SetBool("IsChasing", false);
                     anim.SetBool("Attacking", true);
-                    Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
+                    // Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
                     break;
                 }
                 else if (!health.IsDead)
