@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -20,8 +21,11 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     [SerializeField] private string _name;
     public string Name => _name;
-    
+    public string RequiredItemName => _requiredItemName;
+
     public bool ItemHasBeenReceived { get; set; }
+    
+    public bool PlayerHasItemInInventory { get; set; }
 
     private void Awake()
     {
@@ -46,18 +50,16 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     {
         if (!_playerInventory || !_particles) return;
 
-        var hasItem = false;
-
         foreach (var item in _playerInventory.Items)
         {
             if (item.itemName == _requiredItemName)
             {
-                hasItem = true;
+                PlayerHasItemInInventory = true;
                 break;
             }
         }
 
-        if (hasItem)
+        if (PlayerHasItemInInventory)
         {
             if (!_particles.isPlaying)
             {
@@ -73,10 +75,25 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (string.IsNullOrEmpty(_popUpMessage)) return;
-        UIManager.Instance.StartPopUpText(_popUpMessage);
+
+        if (!other.CompareTag("Player")) return;
+
+        if (!_playerInventory) return;
+
+        if (PlayerHasItemInInventory)
+        {
+            UIManager.Instance.StartPopUpText(_popUpMessage, 0f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+        
+        UIManager.Instance.ClearPopUpText();
     }
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)
@@ -96,6 +113,9 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         ItemHasBeenReceived = true;
         _onItemReceivedExternal?.Invoke();
         OnItemReceivedInternal();
+        
+        UIManager.Instance.ClearPopUpText();
+        
         return true;
     }
 

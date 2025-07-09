@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -216,7 +217,23 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
 
-        _currentInteractable?.Interact(transform, _inventory);
+        if (_currentInteractable != null)
+        {
+            _currentInteractable?.Interact(transform, _inventory);
+            return;
+        }
+
+        if (_currentItemReceiver != null && !_currentItemReceiver.ItemHasBeenReceived)
+        {
+            var correctItem = _inventory.Items.FirstOrDefault(item =>
+                item?.itemName == _currentItemReceiver.RequiredItemName && !item.isGun && !item.isNote);
+
+            if (correctItem == null) return;
+            if (_currentItemReceiver.TryReceiveItem(_inventory, correctItem))
+            {
+                UIManager.Instance.StartPopUpText($"{correctItem.itemName} used on {_currentItemReceiver.Name}");
+            }
+        }
     }
 
     public void OnSpecial(InputAction.CallbackContext context)

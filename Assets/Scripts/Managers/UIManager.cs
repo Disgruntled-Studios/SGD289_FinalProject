@@ -242,25 +242,39 @@ public class UIManager : MonoBehaviour
 
     #region PopUp Methods
 
-    public void StartPopUpText(string message)
+    // CALL WITH DURATION OF 0 TO HAVE PERMANENT POPUP TEXT IN AREA
+    // CLEAR WITH ClearPopUpText()
+    public void StartPopUpText(string message, float duration = 3f)
     {
         if (_popUpCoroutine != null)
         {
-            Debug.Log("StoppingCoroutine");
             StopCoroutine(_popUpCoroutine);
-            ClearPopUpText();
+            _popUpCoroutine = null;
         }
-        
-        _popUpCoroutine = StartCoroutine(TypePopUpText(message));
+
+        if (duration > 0f)
+        {
+            _popUpCoroutine = StartCoroutine(TypePopUpText(message, duration));
+        }
+        else
+        {
+            ShowPermanentPopUpText(message);
+        }
     }
 
     public void ClearPopUpText()
     {
+        if (_popUpCoroutine != null)
+        {
+            StopCoroutine(_popUpCoroutine);
+            _popUpCoroutine = null;
+        }
+
         _popUpBox.SetActive(false);
         _popUpText.text = "";
     }
 
-    private IEnumerator TypePopUpText(string message)
+    private IEnumerator TypePopUpText(string message, float duration)
     {
         _popUpBox.SetActive(true);
         _popUpText.text = "";
@@ -280,10 +294,30 @@ public class UIManager : MonoBehaviour
             _popUpText.text = message;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(duration);
 
         _popUpBox.SetActive(false);
         _popUpCoroutine = null;
+    }
+
+    private void ShowPermanentPopUpText(string message)
+    {
+        _popUpBox.SetActive(true);
+        _popUpText.text = PopUpTypingEnabled ? "" : message;
+
+        if (PopUpTypingEnabled)
+        {
+            StartCoroutine(TypeTextWithoutAutoClear(message));
+        }
+    }
+
+    private IEnumerator TypeTextWithoutAutoClear(string message)
+    {
+        foreach (var c in message)
+        {
+            _popUpText.text += c;
+            yield return new WaitForSeconds(0.025f);
+        }
     }
 
     #endregion

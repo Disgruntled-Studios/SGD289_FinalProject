@@ -162,15 +162,21 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
             // Recent items go first in inventory
             var reversedIndex = itemCount - 1 - i;
 
-            if (reversedIndex >= 0 && reversedIndex < itemCount && items[reversedIndex] != null)
+            if (reversedIndex >= 0 && reversedIndex < itemCount)
             {
-                _slots[i].SetSlot(items[reversedIndex]);
+                var item = items[reversedIndex];
+                if (item != null)
+                {
+                    _slots[i].SetSlot(item);
+                    continue;
+                }
             }
-            else
-            {
-                _slots[i].ClearSlot();
-            }
+            
+            _slots[i].ClearSlot();
         }
+
+        _selectedIndex = Mathf.Clamp(_selectedIndex, 0, _slots.Count - 1);
+        HighlightSlot(_selectedIndex);
     }
 
     public void RefreshInventory()
@@ -187,6 +193,13 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
             _slots[i].SetHighlighted(i == index);
         }
 
+        if (index < 0 || index >= _slots.Count)
+        {
+            _nameText.transform.parent.gameObject.SetActive(false);
+            _descriptionText.gameObject.SetActive(false);
+            return;
+        }
+        
         var slot = _slots[index];
         var item = slot.ItemInSlot;
 
@@ -198,16 +211,18 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
             if (!item.isNote && !item.isGun && GameManager.Instance.PlayerController.CurrentItemReceiver != null)
             {
                 _descriptionText.text = $"Use {item.itemName}?";
-                _descriptionText.gameObject.SetActive(true);
             }
             else
             {
                 _descriptionText.text = string.IsNullOrEmpty(item.additionalText) ? "" : item.additionalText;
-                _descriptionText.gameObject.SetActive(true);
             }
+
+            _descriptionText.gameObject.SetActive(true);
         }
         else
         {
+            _nameText.text = "";
+            _descriptionText.text = "";
             _nameText.transform.parent.gameObject.SetActive(false);
             _descriptionText.gameObject.SetActive(false);
         }
