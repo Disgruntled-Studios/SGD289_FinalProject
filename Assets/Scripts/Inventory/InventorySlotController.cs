@@ -36,9 +36,17 @@ public class InventorySlotController : MonoBehaviour
 
     public void ClearSlot()
     {
-        _iconObject.SetActive(false);
-        _itemIconImage.sprite = null;
-        
-        _itemIconImage.transform.localScale = Vector3.one;
+        _itemInSlot = null;
+
+        if (_iconObject)
+        {
+            _iconObject.SetActive(false);
+        }
+
+        if (_itemIconImage)
+        {
+            _itemIconImage.sprite = null;
+            _itemIconImage.transform.localScale = Vector3.one;
+        }
     }
 }

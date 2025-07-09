@@ -20,7 +20,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     [SerializeField] private string _name;
     public string Name => _name;
-    
+    public string RequiredItemName => _requiredItemName;
+
     public bool ItemHasBeenReceived { get; set; }
 
     private void Awake()
