@@ -324,7 +324,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!keycodeReceiver.CodeHasBeenAccepted)
                 {
-                    currentHighlightedObj = targetTransform;
+                    //currentHighlightedObj = targetTransform;
                 }
             }
             else if (targetTransform.TryGetComponent<ShootableObject>(out var shootableObj))
