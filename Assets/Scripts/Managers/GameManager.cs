@@ -50,23 +50,27 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1) && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
+            Debug.Log("Loading Level 1");
             TransitionManager.Instance.TransitionToScene(levelOneFileName, levelOneStartingCam);
         }
 
-        if (Input.GetKeyDown(KeyCode.F2) && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
+            Debug.Log("Loading Level 2");
             TransitionManager.Instance.TransitionToScene(levelTwoFileName, levelTwoStartingCam);
         }
 
-        if (Input.GetKeyDown(KeyCode.F3) && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
+            Debug.Log("Loading Level 3");
             TransitionManager.Instance.TransitionToScene(levelThreeFileName, levelThreeStartingCam);
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
+            Debug.Log("Player Gun unlocked.");
             Player.GetComponent<PlayerController>().GunController.HasGun = true;
         }
     }

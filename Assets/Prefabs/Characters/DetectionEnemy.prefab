@@ -244,6 +244,8 @@ MonoBehaviour:
     volume: 0.55
     pitch: 1
     spatialBlend: 1
+    minDistance: 0
+    maxDistance: 25
     source: {fileID: 0}
   - name: DeathSFX
     clip: {fileID: 8300000, guid: b3c94a821063085498968b2ebff4091f, type: 3}
@@ -252,6 +254,8 @@ MonoBehaviour:
     volume: 0.55
     pitch: 1
     spatialBlend: 1
+    minDistance: 0
+    maxDistance: 25
     source: {fileID: 0}
 --- !u!114 &3751961095135443582
 MonoBehaviour:
@@ -266,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 10
-  viewAngle: 180
+  viewAngle: 100
   targetMask:
     serializedVersion: 2
     m_Bits: 8
