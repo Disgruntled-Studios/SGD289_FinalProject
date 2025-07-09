@@ -8787,8 +8787,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726179158}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12300462, y: 0.27515668, z: -0.035570852, w: 0.95283437}
-  m_LocalPosition: {x: -12.48, y: 4.45, z: -5.79}
+  m_LocalRotation: {x: -0.06026958, y: 0.8790461, z: 0.11507493, w: 0.45869747}
+  m_LocalPosition: {x: -19.737, y: 0.422, z: 18.201}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33454,6 +33454,7 @@ MonoBehaviour:
   maxPressure: 100
   hasTimerStarted: 0
   isReleasingPressure: 0
+  isSinglePress: 0
   escapeTimer: 0
   escapeStartTime: 45
   doorRef: {fileID: 484557627}
@@ -33468,6 +33469,8 @@ MonoBehaviour:
   - {fileID: 171785842}
   - {fileID: 214196181}
   - {fileID: 460337401}
+  soundComponent: {fileID: 0}
+  pressureSFX: 
 --- !u!1 &1921328357
 GameObject:
   m_ObjectHideFlags: 0
