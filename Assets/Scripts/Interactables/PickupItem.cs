@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class PickupItem : MonoBehaviour, IInteractable
@@ -10,11 +11,20 @@ public class PickupItem : MonoBehaviour, IInteractable
 
     private bool _isGun; // PlayerGun script sets this automatically
     private bool _isNote; // ReadableNote script sets this automatically
+
+    private bool _isDevNote;
+
+    public UnityEvent onGunPickup; // DONT USE FOR ANYTHING EXCEPT THE GUN
     
     private void Start()
     {
         _isGun = GetComponent<PlayerGun>();
         _isNote = GetComponent<ReadableNote>();
+
+        if (TryGetComponent<ReadableNote>(out var devNote))
+        {
+            _isDevNote = devNote.IsDevNote;
+        }
     }
     
     public void Interact(Transform player, PlayerInventory inventory)
@@ -23,6 +33,7 @@ public class PickupItem : MonoBehaviour, IInteractable
         {
             player.gameObject.GetComponent<PlayerController>().GunController.HasGun = true;
             UIManager.Instance.ToggleGunImage(true);
+            onGunPickup?.Invoke();
         }
         else
         {
@@ -37,11 +48,17 @@ public class PickupItem : MonoBehaviour, IInteractable
 
     public void OnEnter()
     {
-        return;
+        if (_isDevNote)
+        {
+            UIManager.Instance.StartPopUpText("Press Triangle to Collect", 0f);
+        }
     }
 
     public void OnExit()
     {
-        return;
+        if (_isDevNote)
+        {
+            UIManager.Instance.ClearPopUpText();
+        }
     }
 }
