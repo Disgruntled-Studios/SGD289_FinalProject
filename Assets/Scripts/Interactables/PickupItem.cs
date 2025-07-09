@@ -23,7 +23,6 @@ public class PickupItem : MonoBehaviour, IInteractable
         {
             player.gameObject.GetComponent<PlayerController>().GunController.HasGun = true;
             UIManager.Instance.ToggleGunImage(true);
-            UIManager.Instance.StartPopUpText("A pistol with a full mag, this could come in handy.");
         }
         else
         {

@@ -48,7 +48,11 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     private void Update()
     {
-        if (!_playerInventory || !_particles) return;
+        if (!_playerInventory || !_particles || ItemHasBeenReceived)
+        {
+            _particles?.Stop();
+            return;
+        }
 
         foreach (var item in _playerInventory.Items)
         {
@@ -81,7 +85,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
         if (!other.CompareTag("Player")) return;
 
-        if (!_playerInventory) return;
+        if (!_playerInventory || ItemHasBeenReceived) return;
 
         if (PlayerHasItemInInventory)
         {
@@ -100,7 +104,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     {
         if (item == null || item.isGun || item.isNote) return false;
         
-        if (item.itemName != _requiredItemName)
+        if (item.itemName != _requiredItemName || ItemHasBeenReceived)
         {
             return false;
         }
@@ -111,10 +115,11 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         }
 
         ItemHasBeenReceived = true;
+        _particles?.Stop();
+        UIManager.Instance.ClearPopUpText();
+        
         _onItemReceivedExternal?.Invoke();
         OnItemReceivedInternal();
-        
-        UIManager.Instance.ClearPopUpText();
         
         return true;
     }
