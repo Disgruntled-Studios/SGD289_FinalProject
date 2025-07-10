@@ -10,8 +10,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private Transform gunPoint;
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform laserStart;
-    [SerializeField] private LayerMask _shootableLayers;
-    [SerializeField] private LayerMask _wallLayer;
+    [SerializeField] private LayerMask _shootableLayers; // Enemy and Shootable
     [SerializeField] private float _damageAmount = 50f;
     [SerializeField, Range(1,10)] float reloadSpeed = 5f;
     [SerializeField] int maxMagLimit = 12;
@@ -41,7 +40,7 @@ public class GunController : MonoBehaviour
         if (_lr)
         {
             _lr.enabled = false;
-            _lr.SetPosition(0, new Vector3(0, 0, 0));
+            _lr.SetPosition(0, Vector3.zero);
         }
 
         _animationController = GetComponentInParent<PlayerAnimationController>();
@@ -49,7 +48,7 @@ public class GunController : MonoBehaviour
         //StartCoroutine(ReloadGun());
         transform.position = gunPoint.position;
         transform.rotation = gunPoint.rotation;
-        _lr.colorGradient = redLaserGradient;
+        _lr.colorGradient = greenLaserGradient;
     }
 
     private void Update()
@@ -96,18 +95,21 @@ public class GunController : MonoBehaviour
     private void UpdateTankLaser()
     {
         _lr.enabled = true;
-        
-        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 5000f, _shootableLayers))
-        {
-            _lr.material = redLaser;
-            _lr.colorGradient = redLaserGradient;
-            _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
-            return;
-        }
 
-        _lr.material = greenLaser;
-        _lr.colorGradient = greenLaserGradient;
-        _lr.SetPosition(1, new Vector3(0, 0, 5000f));
+        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 1000f))
+        {
+            var isShootable = (_shootableLayers.value & (1 << hit.collider.gameObject.layer)) != 0;
+
+            _lr.material = isShootable ? redLaser : greenLaser;
+            _lr.colorGradient = isShootable ? redLaserGradient : greenLaserGradient;
+            _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
+        }
+        else
+        {
+            _lr.material = greenLaser;
+            _lr.colorGradient = greenLaserGradient;
+            _lr.SetPosition(1, new Vector3(0, 0, 1000f));
+        }
     }
 
     public void ShootForTank()
@@ -147,10 +149,10 @@ public class GunController : MonoBehaviour
                 }
 
                 if (enemyRef != null && !enemyRef.health.IsDead)
-                    {
-                        enemyRef.health.Damage(_damageAmount);
-                        Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
-                    }
+                {
+                    enemyRef.health.Damage(_damageAmount);
+                    Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
+                }
                 // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
             StartCoroutine(ShootDelay());

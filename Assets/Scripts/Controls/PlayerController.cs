@@ -329,8 +329,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (targetTransform.TryGetComponent<ShootableObject>(out var shootableObj))
             {
-                _gunController.closeObj = shootableObj;
-                currentHighlightedObj = targetTransform;
+                //_gunController.closeObj = shootableObj;
+                //currentHighlightedObj = targetTransform;
             }
             else
             {
