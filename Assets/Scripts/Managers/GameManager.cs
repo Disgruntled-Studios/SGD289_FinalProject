@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         CallAnimationPause();
         IsGameOver = true;
         Debug.Log("Invoking Reset scene");
-        Invoke("ResetScene", 4f);
+        //Invoke("ResetScene", 4f);
     }
 
     public void ResetScene()
