@@ -31,6 +31,7 @@ public class PowerPuzzleTile : MonoBehaviour
     [Header("Materials")]
     [SerializeField] private Material _offMaterialConnector;
     [SerializeField] private Material _onMaterialConnector;
+    [SerializeField] private Material _completedMaterialConnector;
     [SerializeField] private Material _nodeOnMat;
     [SerializeField] private Material _nodeOffMat;
 
@@ -75,5 +76,11 @@ public class PowerPuzzleTile : MonoBehaviour
                 rend.material = powered ? _onMaterialConnector : _offMaterialConnector;
             }
         }
+    }
+
+    public void SetCompletedMaterial()
+    {
+        var component = GetComponent<MeshRenderer>();
+        component.material = _completedMaterialConnector;
     }
 }

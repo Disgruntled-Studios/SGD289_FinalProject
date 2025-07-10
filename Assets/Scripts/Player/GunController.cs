@@ -33,6 +33,9 @@ public class GunController : MonoBehaviour
     private SoundComponent soundComponent;
     [HideInInspector]public ShootableObject closeObj;
 
+    private const float MinVisualDistance = 5f;
+    private const float MaxLaserDistance = 100f;
+
 
     private void Start()
     {
@@ -96,19 +99,21 @@ public class GunController : MonoBehaviour
     {
         _lr.enabled = true;
 
-        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 1000f))
+        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, MaxLaserDistance))
         {
             var isShootable = (_shootableLayers.value & (1 << hit.collider.gameObject.layer)) != 0;
 
             _lr.material = isShootable ? redLaser : greenLaser;
             _lr.colorGradient = isShootable ? redLaserGradient : greenLaserGradient;
-            _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
+
+            var visualDistance = Mathf.Max(hit.distance, MinVisualDistance);
+            _lr.SetPosition(1, new Vector3(0, 0, visualDistance));
         }
         else
         {
             _lr.material = greenLaser;
             _lr.colorGradient = greenLaserGradient;
-            _lr.SetPosition(1, new Vector3(0, 0, 1000f));
+            _lr.SetPosition(1, new Vector3(0, 0, MaxLaserDistance));
         }
     }
 
