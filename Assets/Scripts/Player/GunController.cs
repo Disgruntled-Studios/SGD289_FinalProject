@@ -20,6 +20,10 @@ public class GunController : MonoBehaviour
 
     [Header("Laser")]
     [SerializeField] private LineRenderer _lr;
+    [SerializeField] private Material redLaser;
+    [SerializeField] private Gradient redLaserGradient;
+    [SerializeField] private Gradient greenLaserGradient;
+    [SerializeField] private Material greenLaser;
 
     private bool _isAiming;
     public bool IsAiming => _isAiming;
@@ -44,6 +48,7 @@ public class GunController : MonoBehaviour
         //StartCoroutine(ReloadGun());
         transform.position = gunPoint.position;
         transform.rotation = gunPoint.rotation;
+        _lr.colorGradient = redLaserGradient;
     }
 
     private void Update()
@@ -96,6 +101,17 @@ public class GunController : MonoBehaviour
         {
             if (hit.collider && !hit.collider.isTrigger)
             {
+                if (Physics.Raycast(laserStart.position, laserStart.forward, 100f, _shootableLayers) && hit.transform.gameObject.layer != 8)
+                {
+                    Debug.Log("Player Can hit something");
+                    _lr.material = greenLaser;
+                    _lr.colorGradient = greenLaserGradient;
+                }
+                else
+                {
+                    _lr.material = redLaser;
+                    _lr.colorGradient = redLaserGradient;
+                }
                 //If we hit something and it has a collider set the lasers endpoint to that raycast hitpoint
                 Debug.Log("object hit is " + hit.collider.name);
                 _lr.SetPosition(1, new Vector3(0, 0, hit.distance));

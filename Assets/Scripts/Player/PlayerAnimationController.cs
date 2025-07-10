@@ -30,7 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Update()
     {
-        if (!_playerController) return;
+        if (!_playerController || GameManager.Instance.IsGameOver) return;
 
         var forwardInput = Mathf.Clamp(_playerController.CurrentMoveInput, -1f, 1f);
         _currentAnimSpeed = Mathf.MoveTowards(_currentAnimSpeed, forwardInput, 5f * Time.deltaTime);

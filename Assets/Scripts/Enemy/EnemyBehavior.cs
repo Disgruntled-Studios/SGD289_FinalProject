@@ -168,6 +168,7 @@ public class EnemyBehavior : MonoBehaviour
                 else if (meshAgent.destination == playerRef.transform.position)
                 {
                     anim.SetBool("IsMoving", false);
+                    anim.SetBool("Attacking", false);
                     StartCoroutine("SetNextPatrolPoint");
                     meshAgent.speed = patrolSpeed;
                 }
