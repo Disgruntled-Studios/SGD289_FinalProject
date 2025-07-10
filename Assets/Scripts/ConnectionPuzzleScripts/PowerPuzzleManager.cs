@@ -66,7 +66,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             {
                 ExitPuzzle();
             }
-            UIManager.Instance.StartPopUpText(puzzleCompletionDialogue);
+            //UIManager.Instance.StartPopUpText(puzzleCompletionDialogue);
         }
 
         if (!_powerNode.IsConnected)
@@ -171,7 +171,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
         else
         {
-            UIManager.Instance.StartPopUpText("I already fixed this circuit.");
+            //UIManager.Instance.StartPopUpText("I already fixed this circuit.");
         }
     }
 
