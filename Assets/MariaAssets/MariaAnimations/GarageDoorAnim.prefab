@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5394819, y: 0.80785, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5659572531609151581}
@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8355032304424933583}
   - component: {fileID: 4427891733160760168}
   - component: {fileID: 2126096472207447685}
+  - component: {fileID: 2348645709122929339}
   m_Layer: 0
   m_Name: Garage_Door_Shutters
   m_TagString: Untagged
@@ -61,13 +62,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8868144345680254061}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.08284903, z: -0, w: 0.9965622}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.517, z: 0}
   m_LocalScale: {x: 0.55885017, y: 0.41811734, z: 0.4078}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4438921153982890589}
-  m_LocalEulerAnglesHint: {x: 0, y: -9.505, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4835117611200948139
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -164,6 +165,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 11.824732, y: 11.825529, z: 0.2523999}
   m_Center: {x: 0, y: 5.9127645, z: 0}
+--- !u!114 &2348645709122929339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8868144345680254061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dissolveMaterial: {fileID: 2100000, guid: 33f909262de0a974991c42183dae16ed, type: 2}
+  _dissolveSpeed: 1
 --- !u!1 &9084277941000924201
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,13 +205,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9084277941000924201}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99775904, z: -0, w: 0.06690969}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.59823275, y: 0.42749944, z: 0.56072855}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4438921153982890589}
-  m_LocalEulerAnglesHint: {x: 0, y: 172.327, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2831374935668656100
 MeshFilter:
   m_ObjectHideFlags: 0

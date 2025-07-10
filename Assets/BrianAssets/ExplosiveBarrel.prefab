@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1865444525114870358}
   - component: {fileID: 3538708435517183644}
   - component: {fileID: 7323598462316570951}
+  - component: {fileID: 7562095121452840944}
   m_Layer: 10
   m_Name: ExplosiveBarrel
   m_TagString: Untagged
@@ -148,3 +149,17 @@ MonoBehaviour:
       m_Calls: []
   dialoguePopUpTxt: 
   highlightableObj: {fileID: 0}
+--- !u!114 &7562095121452840944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906688303664150200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dissolveMaterial: {fileID: 2100000, guid: ed8f4014f73cfe942877608a722dfa0a, type: 2}
+  _dissolveSpeed: 1
