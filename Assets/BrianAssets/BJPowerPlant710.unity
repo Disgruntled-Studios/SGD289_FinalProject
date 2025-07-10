@@ -197629,6 +197629,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157656386082167895, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
+    - target: {fileID: 214864133984211273, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 300129808771376799, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_Size.x
       value: 26.2555
@@ -197657,10 +197665,18 @@ PrefabInstance:
       propertyPath: _isReceiverNode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 610720473165128453, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 1717566389964207883, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4f339f6c12497154b9422d28ead40eb3, type: 2}
+    - target: {fileID: 1748069912499581032, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: cutCam
       value: 
@@ -197719,11 +197735,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -197732,7 +197748,7 @@ PrefabInstance:
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1939028441}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -197759,7 +197775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTrigger
+      value: SetAllCompleted
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -197767,7 +197783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Animator, UnityEngine
+      value: PowerPuzzleManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -197775,7 +197791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: OpenDoor
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _onPuzzleComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
@@ -197797,18 +197813,38 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1952096807164429613, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 2475051524439337409, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: _cameraId
       value: PowerPuzzleCamA
       objectReference: {fileID: 0}
+    - target: {fileID: 2612804420618387234, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
+    - target: {fileID: 3021282873880666230, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 642b9736303d8214c920114573dd3ebc, type: 2}
     - target: {fileID: 3096114842232028711, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: selectedOBJ
       value: 
       objectReference: {fileID: 897471484}
+    - target: {fileID: 3358916749537498661, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 3502425913868949723, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_Name
       value: PowerPuzzleCamA
       objectReference: {fileID: 0}
+    - target: {fileID: 3508176983986616967, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 4617490543995488627, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -197817,6 +197853,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4f339f6c12497154b9422d28ead40eb3, type: 2}
+    - target: {fileID: 4880888448702166325, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 4950888373484550313, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2
@@ -197825,10 +197865,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerPuzzlePrefab_Easy2
       objectReference: {fileID: 0}
+    - target: {fileID: 5352277226488232099, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 5704412272434019338, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5771145930072308938, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 6048023876890262982, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -197859,7 +197907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.05
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.y
@@ -197867,7 +197915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 37.64
+      value: 44.9
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalRotation.w
@@ -197901,6 +197949,18 @@ PrefabInstance:
       propertyPath: _isPowerNode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7593213000461769889, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
+    - target: {fileID: 8054866130602404140, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
+    - target: {fileID: 8144166870629058628, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 8192136701726245870, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -197909,6 +197969,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4f339f6c12497154b9422d28ead40eb3, type: 2}
+    - target: {fileID: 8470014754551784927, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+      propertyPath: _completedMaterialConnector
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a153314a84bc0b44aee2f8cea145a95, type: 2}
     - target: {fileID: 9074859318995287890, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -197962,6 +198026,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4726d787fe1dc8c43b5adcf2db94e172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1939028441 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1854124382060091805, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
+  m_PrefabInstance: {fileID: 1939028438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a248edfc894d1a47b68614ddeea3d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1955110926

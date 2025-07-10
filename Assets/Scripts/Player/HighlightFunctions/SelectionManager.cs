@@ -36,6 +36,7 @@ public class SelectionManager : MonoBehaviour
         //Deselection Response
         if (_selection != null)
         {
+            if (_selection.GetComponentInParent<PowerPuzzleTile>() || _selection.GetComponent<PowerPuzzleTile>()) return;
             //Debug.Log(_selection + " set on Deselection");
             _selectionResponse.OnDeselect(_selection);
         }
@@ -49,6 +50,7 @@ public class SelectionManager : MonoBehaviour
          //Selection Response
         if (_selection != null)
         {
+            if (_selection.GetComponentInParent<PowerPuzzleTile>() || _selection.GetComponent<PowerPuzzleTile>()) return;
             //Debug.Log(_selection + " set on selection");
             _selectionResponse.OnSelect(_selection);
         }

@@ -318,7 +318,7 @@ public class PlayerController : MonoBehaviour
             else if (targetTransform.TryGetComponent<PowerPuzzleManager>(out var powerPuzzleManager) &&
                      powerPuzzleManager.HighlightableObj)
             {
-                currentHighlightedObj = powerPuzzleManager.HighlightableObj;
+                //currentHighlightedObj = powerPuzzleManager.HighlightableObj;
             }
             else if (targetTransform.TryGetComponent<KeycodeReceiver>(out var keycodeReceiver))
             {
@@ -332,8 +332,9 @@ public class PlayerController : MonoBehaviour
                 //_gunController.closeObj = shootableObj;
                 //currentHighlightedObj = targetTransform;
             }
-            else
+            else if (!targetTransform.GetComponentInParent<PowerPuzzleTile>() && !targetTransform.GetComponent<PowerPuzzleTile>() && !targetTransform.GetComponentInChildren<PowerPuzzleTile>())
             {
+                Debug.Log("Fallback highlight on: " + targetTransform.name);
                 currentHighlightedObj = targetTransform;
             }
         }

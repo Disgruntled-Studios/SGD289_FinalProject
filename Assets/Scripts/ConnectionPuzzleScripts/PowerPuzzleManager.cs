@@ -167,7 +167,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             InputManager.Instance.SwitchToPuzzleInput();
             CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID);
             UIManager.Instance.SetPuzzlePanelActive(true);
-            selectionLight.enabled = true;
+            if (selectionLight != null) selectionLight.enabled = true;
         }
         else
         {
@@ -183,5 +183,13 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     public void OnExit()
     {
         return;
+    }
+
+    public void SetAllCompleted()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.SetCompletedMaterial();
+        }
     }
 }
