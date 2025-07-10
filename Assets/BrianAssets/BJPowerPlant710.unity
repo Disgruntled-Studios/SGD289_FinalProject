@@ -98674,8 +98674,8 @@ Light:
   m_Color: {r: 0.454902, g: 0.9803922, b: 0.9803922, a: 1}
   m_Intensity: 1
   m_Range: 1.04
-  m_SpotAngle: 94.96247
-  m_InnerSpotAngle: 83.40301
+  m_SpotAngle: 113.66397
+  m_InnerSpotAngle: 102.1045
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -197907,7 +197907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.2
+      value: 4.02
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.y
@@ -197915,7 +197915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 44.9
+      value: 37.615
       objectReference: {fileID: 0}
     - target: {fileID: 7245530310964826827, guid: 40ea82bbb164d4d4eafb9657eb70df46, type: 3}
       propertyPath: m_LocalRotation.w
@@ -198039,104 +198039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a248edfc894d1a47b68614ddeea3d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1955110926
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1955110930}
-  - component: {fileID: 1955110929}
-  - component: {fileID: 1955110928}
-  - component: {fileID: 1955110927}
-  m_Layer: 0
-  m_Name: CAMTPTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!54 &1955110927
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955110926}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!114 &1955110928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955110926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11901d23ae4b56844bd587f79f23e45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camId: CAMTP
-  onEnterEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!65 &1955110929
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955110926}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.0476236, y: 0.9240363, z: 11.865582}
-  m_Center: {x: 1.0238131, y: -0.037981775, z: -5.432791}
---- !u!4 &1955110930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1955110926}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710707, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: -7.72, y: 2.4383001, z: 41.46}
-  m_LocalScale: {x: 7.09753, y: 4.8767, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1956749462
 GameObject:
   m_ObjectHideFlags: 0
@@ -236567,7 +236469,6 @@ SceneRoots:
   - {fileID: 4300574406307424762}
   - {fileID: 1419459524}
   - {fileID: 2073581799}
-  - {fileID: 1955110930}
   - {fileID: 1344976418}
   - {fileID: 1817648759}
   - {fileID: 1974353453}
