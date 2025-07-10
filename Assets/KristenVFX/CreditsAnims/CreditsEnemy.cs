@@ -158,7 +158,7 @@ public class CreditsEnemy : MonoBehaviour
                 if (currentTargetPoint == currentPatrolPoint && Vector3.Distance(transform.position, currentTargetPoint.position) <= attackDistance && patrolPattern != null)
                 {
                     anim.SetBool("IsMoving", false);
-                    Debug.Log("Made it to the patrol point goint to the next");
+                    //Debug.Log("Made it to the patrol point goint to the next");
                     StartCoroutine("SetNextPatrolPoint");
                     meshAgent.speed = patrolSpeed;
                 }
