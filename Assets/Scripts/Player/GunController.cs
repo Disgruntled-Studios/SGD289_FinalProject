@@ -11,6 +11,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private GameObject _gunModel;
     [SerializeField] private Transform laserStart;
     [SerializeField] private LayerMask _shootableLayers;
+    [SerializeField] private LayerMask _wallLayer;
     [SerializeField] private float _damageAmount = 50f;
     [SerializeField, Range(1,10)] float reloadSpeed = 5f;
     [SerializeField] int maxMagLimit = 12;
@@ -95,35 +96,18 @@ public class GunController : MonoBehaviour
     private void UpdateTankLaser()
     {
         _lr.enabled = true;
-        RaycastHit hit;
-        //Shoot a ray forward to see if there is an object to hit.
-        if (Physics.Raycast(laserStart.position, laserStart.forward, out hit))
+        
+        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 5000f, _shootableLayers))
         {
-            if (hit.collider && !hit.collider.isTrigger)
-            {
-                if (Physics.Raycast(laserStart.position, laserStart.forward, 100f, _shootableLayers) && hit.transform.gameObject.layer != 8)
-                {
-                    Debug.Log("Player Can hit something");
-                    _lr.material = redLaser;
-                    _lr.colorGradient = redLaserGradient;
-                }
-                else
-                {
-                    _lr.material = greenLaser;
-                    _lr.colorGradient = greenLaserGradient;
-                }
-                //If we hit something and it has a collider set the lasers endpoint to that raycast hitpoint
-                Debug.Log("object hit is " + hit.collider.name);
-                _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
-                return;
-            }
-        }
-        else
-        {
-            //if we hit nothing push the endpoint of the laser far out.
-            _lr.SetPosition(1, new Vector3(0, 0, 5000));
+            _lr.material = redLaser;
+            _lr.colorGradient = redLaserGradient;
+            _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
+            return;
         }
 
+        _lr.material = greenLaser;
+        _lr.colorGradient = greenLaserGradient;
+        _lr.SetPosition(1, new Vector3(0, 0, 5000f));
     }
 
     public void ShootForTank()
