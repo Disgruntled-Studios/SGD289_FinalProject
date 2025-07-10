@@ -3,7 +3,7 @@ using UnityEngine;
 public class LonelyShip : MonoBehaviour
 {
     //Timer for ship to disappear when by itself after a few seconds.
-    private float baseTime; //holds current time
+    private float baseTime = 0f; //holds current time
     [SerializeField]
     private float existTime = 100f;
     private float detachedTime = 3f;
