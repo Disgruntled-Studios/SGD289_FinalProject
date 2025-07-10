@@ -2219,6 +2219,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM30
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &231545334
 Transform:
   m_ObjectHideFlags: 0
@@ -2508,6 +2511,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM27
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &249105095
 Transform:
   m_ObjectHideFlags: 0
@@ -2669,6 +2675,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM26
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &287847442
 Transform:
   m_ObjectHideFlags: 0
@@ -4149,6 +4158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM25
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &367270330
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4616,6 +4628,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM20
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &402713910
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,6 +4815,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM28
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &402910655
 Transform:
   m_ObjectHideFlags: 0
@@ -6138,6 +6156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM22
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &498325724
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14745,6 +14766,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM31
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &853016936
 Transform:
   m_ObjectHideFlags: 0
@@ -16579,6 +16603,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM32
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &958980311
 Transform:
   m_ObjectHideFlags: 0
@@ -20488,6 +20515,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM33
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1203219782
 Transform:
   m_ObjectHideFlags: 0
@@ -20657,6 +20687,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM21
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1218106634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22129,6 +22162,114 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0196129, y: 1.8902463, z: 1.0720843}
   m_Center: {x: 0, y: 0.9442138, z: 0}
+--- !u!1 &1331835179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331835180}
+  - component: {fileID: 1331835183}
+  - component: {fileID: 1331835182}
+  - component: {fileID: 1331835181}
+  m_Layer: 8
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1331835180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331835179}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.18, y: 2.33, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1363641124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1331835181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331835179}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1331835182
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331835179}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -876546973899608171, guid: bdfd2264623d7e545a70a581aa77ea0a, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1331835183
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331835179}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1333957364
 GameObject:
   m_ObjectHideFlags: 0
@@ -22596,6 +22737,7 @@ Transform:
   - {fileID: 957641242}
   - {fileID: 1366451436}
   - {fileID: 324603868}
+  - {fileID: 1331835180}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1364888672
@@ -25885,6 +26027,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM23
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1562069114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29653,6 +29798,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM34
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1889759879
 Transform:
   m_ObjectHideFlags: 0
@@ -35519,6 +35667,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAMVent
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1951299863
 Transform:
   m_ObjectHideFlags: 0
@@ -36628,6 +36779,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM24
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &2041979331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37064,6 +37218,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM35
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2070278304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37249,6 +37406,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camId: CAM29
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2091228069
 Transform:
   m_ObjectHideFlags: 0
