@@ -1113,6 +1113,7 @@ GameObject:
   - component: {fileID: 8717931721312481640}
   - component: {fileID: 1854124382060091805}
   - component: {fileID: 300129808771376799}
+  - component: {fileID: 8966352859780867473}
   m_Layer: 0
   m_Name: TilePuzzleManager
   m_TagString: PuzzleManager
@@ -1171,6 +1172,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   puzzleCompletionDialogue: 
+  selectionLight: {fileID: 0}
   HighlightableObj: {fileID: 795599063336665814}
   hasCameraCut: 0
   cutCam: {fileID: 0}
@@ -1199,6 +1201,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 62.3, y: 46.18, z: 28.3}
   m_Center: {x: 0, y: 0, z: -13.42}
+--- !u!65 &8966352859780867473
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227355190028970796}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 25.838133, y: 21.772327, z: 6.7738075}
+  m_Center: {x: 0.27533337, y: -2.3664389, z: -4.006891}
 --- !u!1001 &1338808238435365334
 PrefabInstance:
   m_ObjectHideFlags: 0
