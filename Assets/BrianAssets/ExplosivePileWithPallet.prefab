@@ -74,7 +74,79 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onShotEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753702667351163421}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3433892941460397397}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1699402818781950978}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9025251204935445364}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7112866644260820908}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7236937657020454733}
+        m_TargetAssemblyTypeName: DissolveController, Assembly-CSharp
+        m_MethodName: StartDissolve
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   dialoguePopUpTxt: 
   highlightableObj: {fileID: 0}
 --- !u!1001 &739733785851797596
@@ -87,7 +159,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Name
-      value: ExplosiveBarrel (1)
+      value: ExplosiveBarrel5
       objectReference: {fileID: 0}
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Layer
@@ -155,6 +227,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6871967988030827704, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
   m_PrefabInstance: {fileID: 739733785851797596}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7112866644260820908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562095121452840944, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+  m_PrefabInstance: {fileID: 739733785851797596}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1563267307109538948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,7 +248,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Name
-      value: ExplosiveBarrel (5)
+      value: ExplosiveBarrel4
       objectReference: {fileID: 0}
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Layer
@@ -233,6 +316,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6871967988030827704, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
   m_PrefabInstance: {fileID: 1563267307109538948}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9025251204935445364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562095121452840944, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+  m_PrefabInstance: {fileID: 1563267307109538948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5140390710257576613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,7 +337,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Name
-      value: ExplosiveBarrel (2)
+      value: ExplosiveBarrel2
       objectReference: {fileID: 0}
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Layer
@@ -311,6 +405,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6871967988030827704, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
   m_PrefabInstance: {fileID: 5140390710257576613}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3433892941460397397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562095121452840944, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+  m_PrefabInstance: {fileID: 5140390710257576613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7322109411833438588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -373,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5114174426607867325, guid: d9d27fab1b9132b44b6aeb137ba0937e, type: 3}
       propertyPath: m_Name
-      value: Pallet_Jack (3)
+      value: Pallet
       objectReference: {fileID: 0}
     - target: {fileID: 5114174426607867325, guid: d9d27fab1b9132b44b6aeb137ba0937e, type: 3}
       propertyPath: m_Layer
@@ -389,6 +494,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2370061158888171389, guid: d9d27fab1b9132b44b6aeb137ba0937e, type: 3}
   m_PrefabInstance: {fileID: 7322109411833438588}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7236937657020454733 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 140631675506423345, guid: d9d27fab1b9132b44b6aeb137ba0937e, type: 3}
+  m_PrefabInstance: {fileID: 7322109411833438588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8117617634099738093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -399,7 +515,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Name
-      value: ExplosiveBarrel
+      value: ExplosiveBarrel1
       objectReference: {fileID: 0}
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Layer
@@ -462,6 +578,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+--- !u!114 &1753702667351163421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562095121452840944, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+  m_PrefabInstance: {fileID: 8117617634099738093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3456987992883255637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6871967988030827704, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
@@ -477,7 +604,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Name
-      value: ExplosiveBarrel (3)
+      value: ExplosiveBarrel3
       objectReference: {fileID: 0}
     - target: {fileID: 2906688303664150200, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
       propertyPath: m_Layer
@@ -540,6 +667,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+--- !u!114 &1699402818781950978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562095121452840944, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}
+  m_PrefabInstance: {fileID: 9179612223006475250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2322356401248956234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6871967988030827704, guid: 1c29f77071feafb4fa3da21a1e3d6423, type: 3}

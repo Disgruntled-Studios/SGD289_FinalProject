@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2370061158888171389}
   - component: {fileID: 1195955787804424288}
   - component: {fileID: 6517511010406603911}
+  - component: {fileID: 140631675506423345}
   m_Layer: 0
   m_Name: Pallet_Jack
   m_TagString: Untagged
@@ -86,3 +87,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &140631675506423345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5114174426607867325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f0765f1d403ec43a155f2e8ed60306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dissolveMaterial: {fileID: 2100000, guid: 757bd48f851efea4087f679de0497109, type: 2}
+  _dissolveSpeed: 1
