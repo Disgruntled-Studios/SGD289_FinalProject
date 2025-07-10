@@ -191,6 +191,11 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
+    public void DestroyUI()
+    {
+        Destroy(gameObject);
+    }
+
     #endregion
 
     #region Puzzle Methods

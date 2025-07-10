@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 31e7b962d2052514e8bed00313580a3d, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: d8c6f1d94d9341c46ae9ee6449095c98, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 2294661e5afa92245b6c8377500efe48, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -11477,7 +11477,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: NaN, w: 0}
+  m_BoundingSphereOverride: {x: 1.9784038e+30, y: 0, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -24921,7 +24921,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.2170437e+21, y: 0.0000000026081153, z: 6.228792e+22, w: 7.2064726e+31}
+  m_BoundingSphereOverride: {x: -Infinity, y: -Infinity, z: -Infinity, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -25500,6 +25500,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 566506459009988613}
   _cameraTarget: {fileID: 8016657025682290569}
+  levelOneFileName: 
+  levelOneStartingCam: 
+  levelTwoFileName: 
+  levelTwoStartingCam: 
+  levelThreeFileName: 
+  levelThreeStartingCam: 
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -31858,7 +31864,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.2170437e+21, y: 0.0000000026081153, z: 6.228792e+22, w: 7.2064726e+31}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -1.5221292e+13}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -37455,7 +37461,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.6383773e+29, y: 7.2128373e+22, z: 4.4627835e+30, w: -2.4120655e+33}
+  m_BoundingSphereOverride: {x: 0, y: 1e-45, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -37692,7 +37698,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.2170437e+21, y: 0.0000000026081153, z: 6.228792e+22, w: 7.2064726e+31}
+  m_BoundingSphereOverride: {x: 2.7167742e-20, y: 1.83776e-40, z: 2.7266e-41, w: 2.7439532e+20}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -43688,6 +43694,7 @@ MonoBehaviour:
   _masterVolumeSlider: {fileID: 306399719}
   _musicVolumeSlider: {fileID: 420775796}
   _sfxVolumeSlider: {fileID: 342653431}
+  _ambianceVolumeSlider: {fileID: 0}
 --- !u!114 &662891754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70747,7 +70754,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 6.26e-43, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -93174,7 +93181,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.56e-43, y: 1e-45, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 7.17e-43, y: 7.17e-43, z: 1.42e-43, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -103260,7 +103267,8 @@ PrefabInstance:
         keys for the lockbox?
 
         I swear if I have to come to you each Time
-        I need to <color=green>Unlock</color> the lockbox I will just bring'
+        I need to <color=green>Unlock</color> the lockbox I will just bring my <color=yellow>Gun<color>
+        and <color=yellow>Shoot</color> the lock off!'
       objectReference: {fileID: 0}
     - target: {fileID: 8872741453040617530, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -103820,6 +103828,7 @@ MonoBehaviour:
     pitch: 0
     spatialBlend: 0
     source: {fileID: 0}
+  mainMixer: {fileID: 0}
 --- !u!4 &1626827065
 Transform:
   m_ObjectHideFlags: 0
@@ -103932,7 +103941,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.692985e-20, y: 1.08e-43, z: NaN, w: 7.272283e+22}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 1, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -104020,7 +104029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fd197aa314df043bef579bad3abc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRef: {fileID: 0}
 --- !u!4 &1654127222
 Transform:
   m_ObjectHideFlags: 0
@@ -163461,7 +163469,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.2170437e+21, y: 0.0000000026081153, z: 6.228792e+22, w: 7.2064726e+31}
+  m_BoundingSphereOverride: {x: 5.4851417e+11, y: -6.1928206e+22, z: 0, w: 0.021197537}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -163597,7 +163605,7 @@ Light:
   m_BounceIntensity: 5
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: -0, z: -0, w: -0.7071068}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -168878,7 +168886,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 8.7e-44, z: NaN, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0

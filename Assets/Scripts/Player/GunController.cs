@@ -104,13 +104,13 @@ public class GunController : MonoBehaviour
                 if (Physics.Raycast(laserStart.position, laserStart.forward, 100f, _shootableLayers) && hit.transform.gameObject.layer != 8)
                 {
                     Debug.Log("Player Can hit something");
-                    _lr.material = greenLaser;
-                    _lr.colorGradient = greenLaserGradient;
+                    _lr.material = redLaser;
+                    _lr.colorGradient = redLaserGradient;
                 }
                 else
                 {
-                    _lr.material = redLaser;
-                    _lr.colorGradient = redLaserGradient;
+                    _lr.material = greenLaser;
+                    _lr.colorGradient = greenLaserGradient;
                 }
                 //If we hit something and it has a collider set the lasers endpoint to that raycast hitpoint
                 Debug.Log("object hit is " + hit.collider.name);
