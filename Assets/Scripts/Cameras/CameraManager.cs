@@ -69,10 +69,12 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public bool TrySwitchToCamera(string id)
+    public bool TrySwitchToCamera(string id, string blendStyle = "Cut", float blendDuration = 0f)
     {
         if (_cameraRegistry.TryGetValue(id, out var targetInfo))
         {
+            SetBlend(blendStyle, blendDuration);
+            
             foreach (var camInfo in _cameraRegistry.Values)
             {
                 camInfo.VCam.Priority = 0;
