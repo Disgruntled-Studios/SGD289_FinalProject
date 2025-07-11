@@ -37,7 +37,10 @@ public class CreditsSceneTransition : MonoBehaviour
     }
     public void EndCredits()
     {
-        UIManager.Instance.DestroyUI();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.DestroyUI();
+        }
         SceneManager.LoadScene(0);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

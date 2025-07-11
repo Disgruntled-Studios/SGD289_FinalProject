@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3101078101899372327}
   - component: {fileID: 2957782774339153736}
   - component: {fileID: 4709143242116445831}
+  - component: {fileID: 5223802906584245332}
   m_Layer: 0
   m_Name: CameraManager
   m_TagString: MainCamera
@@ -176,3 +177,30 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!320 &5223802906584245332
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5377159349941120649}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 543fd3805e240174fa9e0c0e392a2337, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -720490187146001622, guid: 543fd3805e240174fa9e0c0e392a2337, type: 2}
+    value: {fileID: 4709143242116445831}
+  m_ExposedReferences:
+    m_References:
+    - 2697c97a4301a754c82b827e6bda585c: {fileID: 0}
+    - 40bc6d11f9f3cbd4abd3aad35a2d74fa: {fileID: 0}
+    - 47a5ca247efe03f4d878ca539ac06518: {fileID: 0}
+    - 5130cbcd7b808e24fb9dbeb946b29be7: {fileID: 0}
+    - 06ee48d28d36cf248982a2d4ea840d9f: {fileID: 0}
+    - 16f0bef5a042af44f94f7e11837a534a: {fileID: 0}
+    - 7e9aed2ca35143f4f87cba53593c5ce7: {fileID: 0}
+    - 1b0a676cf91d37047855c0d3a2adcf72: {fileID: 0}
