@@ -50,8 +50,10 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     {
         if (!_playerInventory || !_particles || ItemHasBeenReceived)
         {
-            _particles?.Stop();
-            return;
+            if (_particles)
+            {
+                _particles?.Stop();
+            }
         }
 
         foreach (var item in _playerInventory.Items)
@@ -65,14 +67,14 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
         if (PlayerHasItemInInventory)
         {
-            if (!_particles.isPlaying)
+            if (!_particles.isPlaying && _particles)
             {
                 _particles.Play();
             }
         }
         else
         {
-            if (_particles.isPlaying)
+            if (_particles.isPlaying && _particles)
             {
                 _particles.Stop();
             }
@@ -115,7 +117,9 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         }
 
         ItemHasBeenReceived = true;
-        _particles?.Stop();
+        
+        if (_particles) _particles?.Stop();
+        
         UIManager.Instance.ClearPopUpText();
         
         _onItemReceivedExternal?.Invoke();
