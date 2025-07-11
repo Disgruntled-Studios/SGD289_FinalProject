@@ -53,6 +53,8 @@ public class EnemyBehavior : MonoBehaviour
     private Animator anim;
     private SoundComponent soundComponent;
 
+    public UnityEvent onDeathExternal;
+
     void Awake()
     {
         if (patrolPattern != null)
@@ -397,6 +399,7 @@ public class EnemyBehavior : MonoBehaviour
         leftEyeLight.enabled = false;
         soundComponent.PlaySFX(deathSFX);
         this.enabled = false;
+        onDeathExternal?.Invoke();
         //Destroy(gameObject);
     }
 

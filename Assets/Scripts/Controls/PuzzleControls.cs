@@ -127,7 +127,7 @@ public class PuzzleControls : MonoBehaviour
         
         if (context.performed && _activePuzzleManager != null && InputManager.Instance.IsInPuzzle)
         {
-            _activePuzzleManager?.ExitPuzzle();
+            _activePuzzleManager?.ExitPuzzleManually();
         }
     }
     

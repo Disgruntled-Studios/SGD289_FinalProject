@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,25 +9,38 @@ using UnityEngine.Serialization;
 
 public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
+    [Header("Puzzle Nodes")]
     [SerializeField] private PowerPuzzleTile _powerNode;
     [SerializeField] private PowerPuzzleTile _receiverNode;
+    
+    [Header("Puzzle Components")]
     [SerializeField] private TileSelection _tileSelection;
+    [SerializeField] Light selectionLight;
+    
+    [Header("Cameras")]
     [SerializeField] private GameCamera _sceneCamera;
     [SerializeField] private GameCamera _puzzleCamera;
-    [SerializeField] private UnityEvent _onPuzzleComplete;
-    [SerializeField, TextArea] private string puzzleCompletionDialogue;
-    [SerializeField] Light selectionLight;
-    public Transform HighlightableObj;
     public bool hasCameraCut;
     public GameCamera cutCam;
-    public Transform cutCamFocus;
     public float camCutLength;
+    
+    [Header("Puzzle Events")]
+    [SerializeField] private UnityEvent _onPuzzleComplete;
+    
+    [Header("Dialog")]
+    [SerializeField, TextArea] private string puzzleCompletionDialogue;
     [TextArea] public string puzzleOnEnterDialogue;
     public bool hasEnterPopUpTriggered;
 
-    private readonly List<PowerPuzzleTile> _tiles = new();
+    public Transform HighlightableObj;
     
+    private readonly List<PowerPuzzleTile> _tiles = new();
     private bool _isPuzzleDone;
+
+    [SerializeField] private Animator _doorAnimator;
+    private const string DoorTrigger = "OpenDoor";
+
+    private const float PuzzleCompletionViewDuration = 0.5f;
 
     private void Awake()
     {
@@ -43,7 +57,6 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             }
 
             _tiles.Add(tile);
-
             tile.OnTileStateChanged += HandleTileStateChanged;
         }
 
@@ -55,18 +68,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     {
         if (_receiverNode.IsPowered && _receiverNode.IsConnected && !_isPuzzleDone)
         {
-            //When the puzzle is solved do these functions.
-            _isPuzzleDone = true;
-            _onPuzzleComplete.Invoke();
-            if (hasCameraCut)
-            {
-                StartCoroutine(HandleCamCut());
-            }
-            else
-            {
-                ExitPuzzle();
-            }
-            //UIManager.Instance.StartPopUpText(puzzleCompletionDialogue);
+            _onPuzzleComplete?.Invoke();
+            CompletePuzzleAndExit();
         }
 
         if (!_powerNode.IsConnected)
@@ -75,12 +78,48 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         }
     }
 
-    public void ExitPuzzle()
+    private void CompletePuzzleAndExit()
     {
-        CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID);
+        if (_isPuzzleDone) return;
+
+        _isPuzzleDone = true;
+
+        if (hasCameraCut)
+        {
+            StartCoroutine(HandleCamCut());
+        }
+        else
+        {
+            StartCoroutine(ExitPuzzleByCompletion());
+        }
+    }
+
+    public void ExitPuzzleManually()
+    {
+        ReturnToGameplay();
+    }
+
+    private IEnumerator ExitPuzzleByCompletion()
+    {
+        SetAllCompleted();
+        yield return new WaitForSeconds(PuzzleCompletionViewDuration);
+        ReturnToGameplay();
+    }
+    
+    public void SetAllCompleted()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.SetCompletedMaterial();
+        }
+    }
+
+    private void ReturnToGameplay()
+    {
+        CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID, "EaseInOut", 1.25f);
         InputManager.Instance.SwitchToDefaultInput();
         UIManager.Instance.SetPuzzlePanelActive(false);
-        if (selectionLight != null) selectionLight.enabled = false;
+        if (selectionLight) selectionLight.enabled = false;
     }
 
     private void CheckTilesConnection()
@@ -96,7 +135,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     public void MoveSelection(int direction)
     {
-        if (!InputManager.Instance.IsInPuzzle) return;
+        if (!InputManager.Instance.IsInPuzzle || _isPuzzleDone) return;
 
         var pos = _tileSelection.transform.localPosition;
 
@@ -137,6 +176,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     public void RotateTile(bool rotateRight)
     {
+        if (_isPuzzleDone) return;
+        
         if (rotateRight)
         {
             _tileSelection.selectedOBJ.transform.Rotate(0, 0, 90f);
@@ -149,15 +190,23 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         CheckTilesConnection();
     }
 
-    IEnumerator HandleCamCut()
+    private IEnumerator HandleCamCut()
     {
-        Debug.Log("Starting cam cut");
-        CameraManager.Instance.TrySetCameraTarget(cutCam.CameraID, cutCamFocus);
-        CameraManager.Instance.TrySwitchToCamera(cutCam.CameraID);
+        SetAllCompleted();
+        UIManager.Instance.SetPuzzlePanelActive(false);
+        yield return new WaitForSeconds(PuzzleCompletionViewDuration);
 
-        yield return new WaitForSeconds(camCutLength);
-        ExitPuzzle();
-        Debug.Log("Ended cam cut");
+        CameraManager.Instance.TrySwitchToCamera(cutCam.CameraID, "EaseInOut", 1.25f);
+
+        _doorAnimator?.SetTrigger(DoorTrigger);
+
+        var clipLength =
+            _doorAnimator?.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name == DoorTrigger)
+                ?.length ?? camCutLength;
+
+        yield return new WaitForSeconds(clipLength);
+        
+        ReturnToGameplay();
     }
 
     public void Interact(Transform player, PlayerInventory inventory)
@@ -165,13 +214,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         if (!_isPuzzleDone)
         {
             InputManager.Instance.SwitchToPuzzleInput();
-            CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID);
+            CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
             UIManager.Instance.SetPuzzlePanelActive(true);
             if (selectionLight != null) selectionLight.enabled = true;
-        }
-        else
-        {
-            //UIManager.Instance.StartPopUpText("I already fixed this circuit.");
         }
     }
 
@@ -183,13 +228,5 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     public void OnExit()
     {
         return;
-    }
-
-    public void SetAllCompleted()
-    {
-        foreach (var tile in _tiles)
-        {
-            tile.SetCompletedMaterial();
-        }
     }
 }

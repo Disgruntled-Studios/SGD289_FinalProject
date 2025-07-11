@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private const float AimSpeedMultiplier = 1f;
 
     private const float CrouchRotationMultiplier = 0.75f;
-    private const float DefaultRotationMultiplier = 1f;
+    private const float DefaultRotationMultiplier = 1.125f;
     private const float AimRotationMultiplier = 1.25f;
     private const float SprintRotationMultiplier = 1.25f;
 
@@ -270,14 +271,24 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyRotation()
     {
+        if (_currentMoveInput > 0.01f || _gunController.IsAiming)
+        {
+            if (Mathf.Approximately(_currentRotationInput, 0f)) return;
+            
+            var rotationAmount = _currentRotationInput * _currentRotationSpeed * Time.fixedDeltaTime;
+            var deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
+            _rb.MoveRotation(_rb.rotation * deltaRotation);
+            return;
+        }
+        
         _smoothedRotationInput = Mathf.SmoothDamp(_smoothedRotationInput, _currentRotationInput,
             ref _currentRotationVelocity, _rotationSmoothTime);
 
         if (Mathf.Approximately(_smoothedRotationInput, 0f)) return;
 
-        var rotationAmount = _smoothedRotationInput * _currentRotationSpeed * Time.fixedDeltaTime;
-        var deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
-        _rb.MoveRotation(_rb.rotation * deltaRotation);
+        var idleRotationAmount = _smoothedRotationInput * _currentRotationSpeed * Time.fixedDeltaTime;
+        var idleDeltaRotation = Quaternion.Euler(0f, idleRotationAmount, 0f);
+        _rb.MoveRotation(_rb.rotation * idleDeltaRotation);
     }
 
     private void ApplyMovement()
