@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class GunController : MonoBehaviour
 {
     [SerializeField] private PlayerAnimationController _animationController;
+    [SerializeField] private PlayerController _playerController;
 
     [Header("Gun")]
     [SerializeField] private Transform gunPoint;
@@ -56,7 +57,7 @@ public class GunController : MonoBehaviour
 
     private void Update()
     {
-        if (!HasGun) return;
+        if (!HasGun || _playerController.IsCrouching) return;
         if (_isAiming && _lr)
         {
             HandleLaser();
@@ -71,7 +72,7 @@ public class GunController : MonoBehaviour
 
     public void StartGunAim()
     {
-        if (!HasGun) return;
+        if (!HasGun || _playerController.IsCrouching) return;
         
         _isAiming = true;
         _gunModel.SetActive(true);
@@ -79,7 +80,7 @@ public class GunController : MonoBehaviour
 
     public void EndGunAim()
     {
-        if (!HasGun) return;
+        if (!HasGun || _playerController.IsCrouching) return;
         
         _isAiming = false;
         _gunModel.SetActive(false);
@@ -119,7 +120,7 @@ public class GunController : MonoBehaviour
 
     public void ShootForTank()
     {
-        if (_isAiming && _canShoot)
+        if (_isAiming && _canShoot && !_playerController.IsCrouching)
         {
             Debug.Log("Shooting");
             _animationController.Shoot();
