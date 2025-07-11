@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationSmoothTime;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private Transform _headCheck;
+    [SerializeField] private LayerMask _overheadLayer;
     private const float PlayerHeight = 2.22f; // Height of capsule collider
 
     private const float SprintMultiplier = 1.75f;
@@ -145,12 +147,24 @@ public class PlayerController : MonoBehaviour
         {
             SetCrouchState(true);
         }
-        else if (!Physics.Raycast(transform.TransformPoint(_crouchCollider.center), Vector3.up, 1f))
+        else if (CanUncrouch())
         {
             SetCrouchState(false);
         }
+        else
+        {
+            Debug.Log("Uncrouch blocked");
+        }
 
         UpdateSpeed();
+    }
+
+    private bool CanUncrouch()
+    {
+        var origin = _headCheck.position;
+        const float clearance = 0.9f;
+        
+        return !Physics.Raycast(origin, Vector3.up, clearance, _overheadLayer);
     }
 
     private void SetCrouchState(bool isCrouching)
