@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.Audio;
+using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
@@ -53,6 +54,78 @@ public class SoundManager : MonoBehaviour
         s.source.Play();
     }
 
+    public void FadeInSFX(string sfxName, float fadeTime = 1f)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == sfxName);
+        s.source.volume = 0;
+        s.source.Play();
+        if (s == null)
+        {
+            Debug.LogError("Sound: " + sfxName + " not found cannot play sfx!");
+            return;
+        }
+        StartCoroutine(FadeSound(fadeTime, s, true));
+    }
+
+    public void FadeInSFX(string sfxName, float startTime, float fadeTime = 1f)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == sfxName);
+        s.source.volume = 0;
+        s.source.time = startTime;
+        s.source.Play();
+        if (s == null)
+        {
+            Debug.LogError("Sound: " + sfxName + " not found cannot play sfx!");
+            return;
+        }
+        StartCoroutine(FadeSound(fadeTime, s, true));
+    }
+
+    public void FadeOutSFX(string sfxName, float fadeTime = 1f)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == sfxName);
+        s.source.volume = s.volume;
+        if (s == null)
+        {
+            Debug.LogError("Sound: " + sfxName + " not found cannot play sfx!");
+            return;
+        }
+        StartCoroutine(FadeSound(fadeTime, s, false));
+    }
+
+    private IEnumerator FadeSound(float fadeTime, Sound s, bool isFadeIn)
+    {
+        float currentTime = fadeTime;
+
+        if (isFadeIn)
+        {
+            Debug.Log("Starting FadeIn");
+            while (s.source.volume < s.volume)
+            {
+                currentTime -= 1 * Time.deltaTime;
+                float percentage = currentTime / fadeTime;
+
+                s.source.volume = Mathf.Lerp(s.volume, 0, percentage);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else
+        {
+            Debug.Log("Starting FadeOut");
+            while (s.source.volume > 0)
+            {
+                currentTime -= 1 * Time.deltaTime;
+                float percentage = currentTime / fadeTime;
+
+                s.source.volume = Mathf.Lerp(0, s.volume, percentage);
+                yield return new WaitForEndOfFrame();
+            }
+            s.source.Stop();
+            s.source.time = 0;
+        }
+
+    }
+
     // public void SetMasterVolume(float value)
     // {
     //     MasterVolume = value;
@@ -77,5 +150,5 @@ public class SoundManager : MonoBehaviour
     //     // TODO: Apply to audio mixer
     // }
 
-    
+
 }
