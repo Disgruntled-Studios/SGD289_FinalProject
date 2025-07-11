@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || _gunController.IsAiming) return;
 
         if (_standingCollider.enabled)
         {
@@ -177,6 +177,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
+        if (IsCrouching) return;
+        
         if (context.started && _gunController.HasGun)
         {
             _gunController.StartGunAim();

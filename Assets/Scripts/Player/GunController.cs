@@ -58,6 +58,7 @@ public class GunController : MonoBehaviour
     private void Update()
     {
         if (!HasGun || _playerController.IsCrouching) return;
+        
         if (_isAiming && _lr)
         {
             HandleLaser();
