@@ -12,6 +12,7 @@ public class EnemyBehavior : MonoBehaviour
         chasing,
         Resting,
         Dead,
+        Confused
     }
 
     public BehaviorState currentState;
@@ -37,7 +38,8 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private string hurtSFX;
     [SerializeField] private string deathSFX;
     [SerializeField] private string breathingSFX;
-    
+
+    private const string CryingSFX = "Crying";
 
     private Transform[] patrolPoints;
     private Transform currentTargetPoint;
@@ -219,6 +221,13 @@ public class EnemyBehavior : MonoBehaviour
                 rightEyeLight.enabled = false;
                 leftEyeLight.enabled = false;
 
+                break;
+            case BehaviorState.Confused:
+                soundComponent.PlaySFX(CryingSFX);
+                anim.SetBool("IsConfused", true);
+                meshAgent.enabled = false;
+                rightEyeLight.enabled = false;
+                leftEyeLight.enabled = false;
                 break;
             default:
                 break;
