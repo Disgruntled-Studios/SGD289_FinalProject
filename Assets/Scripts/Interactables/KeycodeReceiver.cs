@@ -41,12 +41,12 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     public void OnEnter()
     {
         _playerIsNearby = true;
-        Debug.Log("Player is near");
+        UIManager.Instance.StartPopUpText("Enter code?", 0f);
     }
 
     public void OnExit()
     {
         _playerIsNearby = false;
-        Debug.Log("player is far");
+        UIManager.Instance.ClearPopUpText();
     }
 }
