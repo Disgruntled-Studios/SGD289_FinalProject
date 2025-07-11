@@ -25,13 +25,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _overheadLayer;
     private const float PlayerHeight = 2.22f; // Height of capsule collider
 
-    private const float SprintMultiplier = 1.75f;
-    private const float CrouchMultiplier = 0.5f;
-    private const float InjuredMultiplier = 0.75f;
-    private const float BackwardsMultiplier = 0.75f;
+    private const float DefaultSpeedMultiplier = 1f;
+    private const float SprintSpeedMultiplier = 1.75f;
+    private const float CrouchSpeedMultiplier = 0.5f;
+    private const float InjuredSpeedMultiplier = 0.75f;
+    private const float BackwardsSpeedMultiplier = 0.75f;
+    private const float AimSpeedMultiplier = 1f;
 
-    private const float AimSpeedMultiplier = 0.75f;
-    private const float AimRotationMultiplier = 0.5f;
+    private const float CrouchRotationMultiplier = 0.75f;
+    private const float DefaultRotationMultiplier = 1f;
+    private const float AimRotationMultiplier = 1.25f;
+    private const float SprintRotationMultiplier = 1.25f;
 
     private float _currentSpeed;
     private float _currentMoveInput;
@@ -184,7 +188,6 @@ public class PlayerController : MonoBehaviour
             _gunController.StartGunAim();
             _animationController.Aim(true);
             _laser.enabled = true;
-            _currentRotationSpeed = _rotationSpeed * AimRotationMultiplier;
             UpdateSpeed();
         }
 
@@ -193,7 +196,6 @@ public class PlayerController : MonoBehaviour
             _gunController.EndGunAim();
             _animationController.Aim(false);
             _laser.enabled = false;
-            _currentRotationSpeed = _rotationSpeed;
             UpdateSpeed();
         }
     }
@@ -280,11 +282,10 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
-        var forwardBackwardMultiplier = _currentMoveInput < -0.01f ? BackwardsMultiplier : 1f;
-        
-        var targetVelocity = transform.forward * (_currentMoveInput * _currentSpeed * forwardBackwardMultiplier);
+        var forwardBackwardMultiplier = _currentMoveInput < -0.01f ? BackwardsSpeedMultiplier : 1f;
+        var forward = transform.forward * (_currentMoveInput * _currentSpeed * forwardBackwardMultiplier);
 
-        _rb.linearVelocity = new Vector3(targetVelocity.x, _rb.linearVelocity.y, targetVelocity.z);
+        _rb.linearVelocity = new Vector3(forward.x, _rb.linearVelocity.y, forward.z);
     }
 
     private void CheckGrounded()
@@ -296,19 +297,23 @@ public class PlayerController : MonoBehaviour
     {
         if (_isCrouching)
         {
-            _currentSpeed = _normalSpeed * CrouchMultiplier;
+            _currentSpeed = _normalSpeed * CrouchSpeedMultiplier;
+            _currentRotationSpeed = _rotationSpeed * CrouchRotationMultiplier;
         }
         else if (_gunController.IsAiming)
         {
             _currentSpeed = _normalSpeed * AimSpeedMultiplier;
+            _currentRotationSpeed = _rotationSpeed * AimRotationMultiplier;
         }
         else if (_isSprinting && _currentMoveInput > 0.01f)
         {
-            _currentSpeed = _normalSpeed * SprintMultiplier;
+            _currentSpeed = _normalSpeed * SprintSpeedMultiplier;
+            _currentRotationSpeed = _rotationSpeed * SprintRotationMultiplier;
         }
         else
         {
-            _currentSpeed = _normalSpeed;
+            _currentSpeed = _normalSpeed * DefaultSpeedMultiplier;
+            _currentRotationSpeed = _rotationSpeed * DefaultRotationMultiplier;
         }
     }
 

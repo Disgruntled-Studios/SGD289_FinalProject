@@ -25,8 +25,15 @@ public class SoundComponent : MonoBehaviour
 
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Play();
+        if (string.IsNullOrWhiteSpace((name))) return;
+        
+        var sound = Array.Find(sounds, s => s.name == name);
+        if (!sound?.source)
+        {
+            Debug.Log("Sound does not exist");
+            return;
+        }
+        
+        sound.source.Play();
     }
-
 }
