@@ -12,6 +12,9 @@ public class NameScript : MonoBehaviour
     [SerializeField]
     private GameObject name;
 
+    [SerializeField]
+    private GameObject job;
+
     private bool onScreen = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
