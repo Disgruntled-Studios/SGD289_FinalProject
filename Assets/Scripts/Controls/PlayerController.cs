@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
                 //_gunController.closeObj = shootableObj;
                 //currentHighlightedObj = targetTransform;
             }
-            else if (!targetTransform.GetComponentInParent<PowerPuzzleTile>() && !targetTransform.GetComponent<PowerPuzzleTile>() && !targetTransform.GetComponentInChildren<ExitDoor>() && !targetTransform.GetComponentInParent<ExitDoor>() && !targetTransform.GetComponent<ExitDoor>() && !targetTransform.GetComponentInChildren<ExitDoor>())
+            else if (!ShouldSkipHighlighting(targetTransform))
             {
                 Debug.Log("Fallback highlight on: " + targetTransform.name);
                 currentHighlightedObj = targetTransform;
@@ -386,6 +386,16 @@ public class PlayerController : MonoBehaviour
                 //currentHighlightedObj = targetTransform;
             }
         }
+    }
+
+    private bool ShouldSkipHighlighting(Transform target)
+    {
+        return target.GetComponentInParent<PowerPuzzleTile>() != null ||
+               target.GetComponentInChildren<PowerPuzzleTile>() != null ||
+               target.GetComponent<PowerPuzzleTile>() != null ||
+               target.GetComponentInParent<ExitDoor>() != null ||
+               target.GetComponentInChildren<ExitDoor>() != null ||
+               target.GetComponent<ExitDoor>() != null;
     }
 
     private void OnTriggerExit(Collider other)
