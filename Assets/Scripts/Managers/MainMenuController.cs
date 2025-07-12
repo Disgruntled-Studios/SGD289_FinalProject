@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private string _firstLevelName = "L1PowerPlant";
+    [SerializeField] private string _firstLevelName = "PowerPlant";
 
     [SerializeField] private MenuButtonEffects _startButtonEffects;
     [SerializeField] private MenuButtonEffects _quitButtonEffects;
@@ -17,26 +18,36 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button _quitButton;
 
     private float _lastHorizontal;
+    private bool _prevDpadLeft;
+    private bool _prevDpadRight;
     
     private void Update()
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
+        var dpadLeft = Gamepad.current?.dpad.left.isPressed == true;
+        var dpadRight = Gamepad.current?.dpad.right.isPressed == true;
 
-        if (_lastHorizontal <= 0.5f && horizontal > 0.5f)
-        {
-            OnButtonActivated(_quitButtonEffects);
-        }
-        else if (_lastHorizontal >= -0.5f && horizontal < -0.5f)
+        // Left movement
+        if ((_lastHorizontal >= -0.5f && horizontal < -0.5f) || (!_prevDpadLeft && dpadLeft))
         {
             OnButtonActivated(_startButtonEffects);
         }
+        
+        // RIGHT movement
+        if ((_lastHorizontal <= 0.5f && horizontal > 0.5f) ||
+            (!_prevDpadRight && dpadRight))
+        {
+            OnButtonActivated(_quitButtonEffects);
+        }
 
         _lastHorizontal = horizontal;
+        _prevDpadLeft = dpadLeft;
+        _prevDpadRight = dpadRight;
 
-        var submit = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) ||
-                     Input.GetKeyDown(KeyCode.Joystick1Button1); // Need more robust solution for getting gamepad south button 
+        var submitKeyboard = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space);
+        var submitGamepad = Gamepad.current?.buttonSouth.wasPressedThisFrame == true;
 
-        if (submit)
+        if (submitKeyboard || submitGamepad)
         {
             if (_startButtonEffects.IsActivated)
             {
