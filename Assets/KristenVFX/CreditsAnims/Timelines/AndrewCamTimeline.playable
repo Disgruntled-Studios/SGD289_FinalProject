@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5257184821001678271
+--- !u!114 &-5382187739234873846
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400000, guid: f626724b0588d9844bf94dec6785b78f, type: 2}
+  m_Clip: {fileID: 7400000, guid: 57fdbbd1478c9d248a3d064fc4cd983e, type: 2}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_UseTrackMatchFields: 1
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
@@ -316,7 +316,7 @@ MonoBehaviour:
   - m_Version: 1
     m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: -5257184821001678271}
+    m_Asset: {fileID: -5382187739234873846}
     m_Duration: 7
     m_TimeScale: 1
     m_ParentTrack: {fileID: 3182682122214465284}
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: NNAndrewCam
+    m_DisplayName: AndrewCamAnim
   m_Markers:
     m_Objects: []
   m_InfiniteClipPreExtrapolation: 0
