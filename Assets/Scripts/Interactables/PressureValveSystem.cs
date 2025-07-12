@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Vector3 = UnityEngine.Vector3;
 
@@ -34,6 +35,8 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     private bool _isBuilding = false;
     private bool _isDoorOpened = false;
 
+    public UnityEvent onDoorOpen;
+    
     private void Update()
     {
         // if (_isDoorOpened)
@@ -96,7 +99,7 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         _isDoorOpened = true;
         _soundComponent?.PlaySFX(_pressureSfx);
 
-        _door.SetActive(false);
+        onDoorOpen?.Invoke();
         //_pressure = _maxPressure;
     }
 

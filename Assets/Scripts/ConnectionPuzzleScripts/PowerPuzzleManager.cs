@@ -42,6 +42,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     private const float PuzzleCompletionViewDuration = 0.5f;
 
+    [SerializeField] private GameObject _interactionPrompt;
+
     private void Awake()
     {
         for (var i = 0; i < transform.childCount; i++)
@@ -68,6 +70,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     {
         if (_receiverNode.IsPowered && _receiverNode.IsConnected && !_isPuzzleDone)
         {
+            _interactionPrompt.SetActive(false);
             _onPuzzleComplete?.Invoke();
             CompletePuzzleAndExit();
         }
@@ -222,11 +225,14 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     public void OnEnter()
     {
-        return;
+        if (!_isPuzzleDone)
+        {
+            _interactionPrompt.SetActive(true);
+        }
     }
 
     public void OnExit()
     {
-        return;
+        _interactionPrompt.SetActive(false);
     }
 }

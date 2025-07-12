@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GarageDoorController : MonoBehaviour
 {
-    private const float OpenYPos = 5f;
-    private const float OpenYScale = 0.5803f;
+    [FormerlySerializedAs("OpenYPos")] [SerializeField] private float _openYPos = 5f;
+    [FormerlySerializedAs("OpenYScale")] [SerializeField] private float _openYScale = 0.5803f;
 
-    private const float AnimationDuration = 2f;
+    [SerializeField] private float _animationDuration = 2f;
 
     [SerializeField] private AnimationCurve _easing = AnimationCurve.Linear(0, 0, 1, 1);
 
@@ -27,14 +28,14 @@ public class GarageDoorController : MonoBehaviour
         var startPos = transform.localPosition;
         var startScale = transform.localScale;
         
-        var openPosition = new Vector3(startPos.x, OpenYPos, startPos.z);
-        var openScale = new Vector3(startScale.x, OpenYScale, startScale.z);
+        var openPosition = new Vector3(startPos.x, _openYPos, startPos.z);
+        var openScale = new Vector3(startScale.x, _openYScale, startScale.z);
         
         var time = 0f;
 
-        while (time < AnimationDuration)
+        while (time < _animationDuration)
         {
-            var t = time / AnimationDuration;
+            var t = time / _animationDuration;
             var easedT = _easing.Evaluate(t);
 
             
