@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,11 +12,14 @@ public class KeycodeUIController
     private int _activeDigitIndex;
     private KeycodeReceiver _activeReceiver;
 
+    private readonly RectTransform _panelTransform;
+
     public bool IsOpen => _keycodePanel.activeSelf;
 
     public KeycodeUIController(GameObject keycodePanel, TMP_Text promptText, List<TMP_Text> digitDisplays)
     {
         _keycodePanel = keycodePanel;
+        _panelTransform = keycodePanel.GetComponent<RectTransform>();
         _promptText = promptText;
         _digitDisplays = digitDisplays;
         _currentDigits = new int[digitDisplays.Count];
@@ -84,7 +88,8 @@ public class KeycodeUIController
 
     public void ShowInvalidFeedback()
     {
-        Debug.Log("Invalid keycode");
+        ResetDigits();
+        UIManager.Instance.ShakeKeycodePanel();
     }
 
     private void HighlightActiveDigit()
@@ -98,5 +103,16 @@ public class KeycodeUIController
     private void UpdateDigitDisplay()
     {
         _digitDisplays[_activeDigitIndex].text = _currentDigits[_activeDigitIndex].ToString();
+    }
+
+    public void ResetDigits()
+    {
+        for (var i = 0; i < _currentDigits.Length; i++)
+        {
+            _currentDigits[i] = 0;
+            _digitDisplays[i].text = "0";
+        }
+        
+        HighlightActiveDigit();
     }
 }

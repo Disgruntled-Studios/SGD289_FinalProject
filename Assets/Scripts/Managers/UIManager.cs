@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
     [Header("Keycode UI Elements")] 
     [SerializeField] private TMP_Text _keycodePrompt;
     [SerializeField] private List<TMP_Text> _digitDisplays;
+    [SerializeField] private List<GameObject> _digitIcons;
     
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
@@ -331,12 +332,24 @@ public class UIManager : MonoBehaviour
 
     public void OpenKeycodePanel(KeycodeReceiver receiver, string prompt = "Enter Keycode: ")
     {
+        ClearPopUpText();
+        
         _keycodeUIController.Open(receiver, prompt);
+
+        foreach (var icon in _digitIcons)
+        {
+            icon.SetActive(receiver.ShouldShowPipeIcons);
+        }
     }
 
     public void CloseKeycodePanel()
     {
         _keycodeUIController.Close();
+
+        foreach (var icon in _digitIcons)
+        {
+            icon.SetActive(false);
+        }
     }
 
     public void SubmitKeycode()
@@ -352,6 +365,32 @@ public class UIManager : MonoBehaviour
     public void ShowInvalidCodeFeedback()
     {
         _keycodeUIController.ShowInvalidFeedback();
+    }
+
+    public void ShakeKeycodePanel(float duration = 0.25f, float magnitude = 10f)
+    {
+        if (!_keycodePanel) return;
+
+        var rectTransform = _keycodePanel.GetComponent<RectTransform>();
+        if (!rectTransform) return;
+
+        StartCoroutine(ShakeRectTransform(rectTransform, duration, magnitude));
+    }
+
+    private IEnumerator ShakeRectTransform(RectTransform rectTransform, float duration, float magnitude)
+    {
+        var elapsed = 0f;
+        var originalPosition = rectTransform.anchoredPosition;
+
+        while (elapsed < duration)
+        {
+            var offset = Random.insideUnitCircle * magnitude;
+            rectTransform.anchoredPosition = originalPosition + offset;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        rectTransform.anchoredPosition = originalPosition;
     }
 
     #endregion

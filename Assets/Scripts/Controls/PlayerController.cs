@@ -342,10 +342,10 @@ public class PlayerController : MonoBehaviour
             _currentInteractable = interactable;
             _currentInteractable?.OnEnter();
 
-            if (targetTransform.TryGetComponent<DoorPressureGame>(out var doorPressureGame) &&
-                doorPressureGame.highlightedObj)
+            if (targetTransform.TryGetComponent<PressureValveSystem>(out var doorPressureGame) &&
+                doorPressureGame.HighlightableObj)
             {
-                currentHighlightedObj = doorPressureGame.highlightedObj;
+                currentHighlightedObj = doorPressureGame.HighlightableObj;
             }
             else if (targetTransform.TryGetComponent<PowerPuzzleManager>(out var powerPuzzleManager) &&
                      powerPuzzleManager.HighlightableObj)
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (targetTransform.TryGetComponent<KeycodeReceiver>(out var keycodeReceiver))
             {
-                if (!keycodeReceiver.CodeHasBeenAccepted)
+                if (!keycodeReceiver.CodeHasBeenAccepted && keycodeReceiver.ShouldHighlight)
                 {
                     currentHighlightedObj = targetTransform;
                 }
