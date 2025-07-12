@@ -30,7 +30,6 @@ public class SoundComponent : MonoBehaviour
         var sound = Array.Find(sounds, s => s.name == name);
         if (!sound?.source)
         {
-            Debug.Log("Sound does not exist");
             return;
         }
         
