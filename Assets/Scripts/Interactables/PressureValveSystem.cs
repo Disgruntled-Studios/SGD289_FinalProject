@@ -14,12 +14,12 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     [SerializeField] private float _pressure = 0f;
     [SerializeField] private float _maxPressure = 100f;
     [SerializeField] private float _pressurePerTurn = 20f;
-    [SerializeField] private float _leakRate = 10f;
+    [SerializeField] private float _leakRate = 5f;
 
     [Header("Door Movement")] 
     [SerializeField] private GameObject _door;
-    [SerializeField] private Transform _doorClosedPos;
-    [SerializeField] private Transform _doorOpenPos;
+    [SerializeField] private float _doorClosedY = 0.5f;
+    [SerializeField] private float _doorOpenY = 2f;
     [SerializeField] private float _doorOpenSpeed = 2f;
 
     [Header("Audio")] 
@@ -29,13 +29,17 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     [SerializeField] private Transform _highlightableObj;
     public Transform HighlightableObj => _highlightableObj;
 
+    [SerializeField] private GameObject _spriteObject;
+
     private bool _isBuilding = false;
     private bool _isDoorOpened = false;
 
     private void Update()
     {
-        HandlePressureLeak();
-        UpdateDoorPosition();
+        // if (_isDoorOpened)
+        // {
+        //     MoveDoorToOpenPosition();
+        // }
     }
 
     public void Unlock()
@@ -47,15 +51,13 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     {
         if (!_isUnlocked) return;
 
-        if (_isDoorOpened || _isBuilding) return;
-
-        StartCoroutine(BuildPressure());
+        if (_isDoorOpened) return;
+        
+        OpenDoor();
     }
 
-    private IEnumerator BuildPressure()
+    private void BuildPressure()
     {
-        _isBuilding = true;
-
         _pressure += _pressurePerTurn;
         _pressure = Mathf.Min(_pressure, _maxPressure);
 
@@ -63,12 +65,8 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
 
         if (_pressure >= _maxPressure)
         {
-            _pressure = _maxPressure;
-            _isDoorOpened = true;
+            OpenDoor();
         }
-
-        yield return new WaitForSeconds(0.3f);
-        _isBuilding = false;
     }
 
     private void HandlePressureLeak()
@@ -81,12 +79,34 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
 
     private void UpdateDoorPosition()
     {
-        if (!_door || !_doorClosedPos || !_doorOpenPos) return;
+        if (!_door) return;
 
         var t = _pressure / _maxPressure;
-        var targetPos = Vector3.Lerp(_doorClosedPos.position, _doorOpenPos.position, t);
-        _door.transform.position =
-            Vector3.MoveTowards(_door.transform.position, targetPos, _doorOpenSpeed * Time.deltaTime);
+        var currentPos = _door.transform.localPosition;
+        var targetY = Mathf.Lerp(_doorClosedY, _doorOpenY, t);
+        var targetPos = new Vector3(currentPos.x, targetY, currentPos.z);
+
+        _door.transform.localPosition = Vector3.MoveTowards(currentPos, targetPos, _doorOpenSpeed * Time.deltaTime);
+    }
+
+    private void OpenDoor()
+    {
+        Debug.Log("Opening door");
+        
+        _isDoorOpened = true;
+        _soundComponent?.PlaySFX(_pressureSfx);
+
+        _door.SetActive(false);
+        //_pressure = _maxPressure;
+    }
+
+    private void MoveDoorToOpenPosition()
+    {
+        if (!_door) return;
+        
+        var current = _door.transform.localPosition;
+        var target = new Vector3(current.x, _doorOpenY, current.z);
+        _door.transform.localPosition = Vector3.MoveTowards(current, target, _doorOpenSpeed * Time.deltaTime);
     }
 
     public void OnEnter()
@@ -95,6 +115,10 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         {
             UIManager.Instance.StartPopUpText("It's locked by a code.", 0f);
         }
+        else
+        {
+            _spriteObject.SetActive(true);
+        }
     }
 
     public void OnExit()
@@ -102,6 +126,10 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         if (!_isUnlocked)
         {
             UIManager.Instance.ClearPopUpText();
+        }
+        else
+        {
+            _spriteObject.SetActive(false);
         }
     }
 

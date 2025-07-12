@@ -17,19 +17,16 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
         //in the case that the object doesn't have a renderer but a parent object does then set the reference to that parent's renderer.
         if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
         {
-            Debug.Log("found mesh renderer in parent obj");
             selectionRenderer = selection.GetComponentInParent<MeshRenderer>();
         }
         //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
         else if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
         {
-            Debug.Log("found mesh renderer in child obj");
             selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
         } 
 
         if (selectionRenderer != null)
         {
-            Debug.Log(selectionRenderer);
             //Saves the default material for deselection 
             defaultMaterial = selectionRenderer.material;
             //then create a list of materials to add the highlighted material 
@@ -47,13 +44,11 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
         //in the case that the object doesn't have a renderer but a child object does then set the reference to that child's renderer.
         if (selectionRenderer == null && selection.GetComponentInChildren<MeshRenderer>() != null)
         {
-            Debug.Log("found mesh renderer in child obj for deselect");
             selectionRenderer = selection.GetComponentInChildren<MeshRenderer>();
         }
         //in the case that the object doesn't have a renderer but a parent object does then set the reference to that parent's renderer.
         else if (selectionRenderer == null && selection.GetComponentInParent<MeshRenderer>() != null)
         {
-            Debug.Log("found mesh renderer in parent obj for deselect");
             selectionRenderer = selection.GetComponentInParent<MeshRenderer>();
         }
 
