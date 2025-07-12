@@ -9,6 +9,8 @@ internal class HighlightSelectionResponse : MonoBehaviour, ISelectionResponse
     public void OnSelect(Transform selection)
     {
         if (selection.GetComponent<PowerPuzzleTile>()) return;
+
+        if (selection.GetComponent<ExitDoor>()) return;
         
         //Creates a variable to hold the Renderer for the object being highlighted.
         var selectionRenderer = selection.GetComponent<MeshRenderer>();

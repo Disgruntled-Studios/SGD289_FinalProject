@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
                 //_gunController.closeObj = shootableObj;
                 //currentHighlightedObj = targetTransform;
             }
-            else if (!targetTransform.GetComponentInParent<PowerPuzzleTile>() && !targetTransform.GetComponent<PowerPuzzleTile>() && !targetTransform.GetComponentInChildren<PowerPuzzleTile>())
+            else if (!targetTransform.GetComponentInParent<PowerPuzzleTile>() && !targetTransform.GetComponent<PowerPuzzleTile>() && !targetTransform.GetComponentInChildren<ExitDoor>() && !targetTransform.GetComponentInParent<ExitDoor>() && !targetTransform.GetComponent<ExitDoor>() && !targetTransform.GetComponentInChildren<ExitDoor>())
             {
                 Debug.Log("Fallback highlight on: " + targetTransform.name);
                 currentHighlightedObj = targetTransform;
