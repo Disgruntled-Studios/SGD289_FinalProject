@@ -7,6 +7,12 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     [SerializeField] private UnityEvent _onCorrectCodeEntered;
     [SerializeField, TextArea] private string _onCompletionText;
 
+    [SerializeField] private bool _shouldHighlight;
+    public bool ShouldHighlight => _shouldHighlight;
+
+    [SerializeField] private bool _shouldShowPipeIcons;
+    public bool ShouldShowPipeIcons => _shouldShowPipeIcons;
+
     private const string PromptText = "Enter Keycode:";
 
     private bool _playerIsNearby;
@@ -34,7 +40,6 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
         else
         {
             UIManager.Instance.ShowInvalidCodeFeedback();
-            UIManager.Instance.StartPopUpText("Access <color=red>DENIED</color>");
         }
     }
 
