@@ -51,27 +51,48 @@ public class PlayerHealth : MonoBehaviour
         const float amount = 1.0f;
         Health.Damage(amount);
 
-        if (Mathf.Approximately(Health.CurrentHealth, 2.0f))
+        switch (HitsRemaining)
         {
-            _vignette.intensity.value = FirstHitIntensity;
-            HitsRemaining--;
-            damagedTimer = 8f;
+            case 3:
+                _vignette.intensity.value = FirstHitIntensity;
+                HitsRemaining--;
+                damagedTimer = 8f;
+                break;
+            case 2:
+                _vignette.intensity.value = SecondHitIntensity;
+                IsInjured = true;
+                _animController.SetInjured(IsInjured);
+                HitsRemaining--;
+                damagedTimer = 8f;
+                break;
+            case 1:
+                _vignette.intensity.value = ThirdHitIntensity;
+                HitsRemaining--;
+                damagedTimer = -1f;
+                break;
         }
-        else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
-        {
-            _vignette.intensity.value = SecondHitIntensity;
-            IsInjured = true;
-            _animController.SetInjured(IsInjured);
-            HitsRemaining--;
-            damagedTimer = 8f;
 
-        }
-        else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
-        {
-            _vignette.intensity.value = ThirdHitIntensity;
-            HitsRemaining--;
-            damagedTimer = -1f;
-        }
+        // if (Mathf.Approximately(Health.CurrentHealth, 2.0f))
+        // {
+        //     _vignette.intensity.value = FirstHitIntensity;
+        //     HitsRemaining--;
+        //     damagedTimer = 8f;
+        // }
+        // else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
+        // {
+        //     _vignette.intensity.value = SecondHitIntensity;
+        //     IsInjured = true;
+        //     _animController.SetInjured(IsInjured);
+        //     HitsRemaining--;
+        //     damagedTimer = 8f;
+
+        // }
+        // else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
+        // {
+        //     _vignette.intensity.value = ThirdHitIntensity;
+        //     HitsRemaining--;
+        //     damagedTimer = -1f;
+        // }
         
     }
 
@@ -92,12 +113,15 @@ public class PlayerHealth : MonoBehaviour
                     if (HitsRemaining < 3)
                     {
                         HitsRemaining = 3;
+                        _vignette.intensity.value = 0f;
                     }
                     break;
                 case <= 3.2f:
                     if (HitsRemaining < 2)
                     {
                         HitsRemaining = 2;
+                        _vignette.intensity.value = FirstHitIntensity;
+                        _animController.SetInjured(false);
                     }
                     break;
             }
@@ -106,17 +130,16 @@ public class PlayerHealth : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (HitsRemaining <= 0)
+        if (HitsRemaining <= 0 && !GameManager.Instance.IsGameOver)
         {
             Debug.Log("Dead");
             onDeath.Invoke();
-            Invoke("ResetVignette", 4f);
         }
     }
 
 
 
-    private void ResetVignette()
+    public void ResetVignette()
     {
         _vignette.intensity.value = 0f;
         HitsRemaining = 3;

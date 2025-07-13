@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public PlayerController PlayerController => _player.GetComponent<PlayerController>();
     public PlayerInventory PlayerInventory => _player.GetComponent<PlayerInventory>();
     public RumbleController RumbleController => _player.GetComponent<RumbleController>();
+    public GameObject gameOverScreen;
 
     public bool IsGameOver { get; private set; }
 
@@ -25,8 +26,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string levelOneStartingCam;
     [SerializeField] private string levelTwoFileName;
     [SerializeField] private string levelTwoStartingCam;
-    [SerializeField] private string levelThreeFileName;
-    [SerializeField] private string levelThreeStartingCam;
 
     private void Awake()
     {
@@ -66,12 +65,6 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            Debug.Log("Loading Level 3");
-            TransitionManager.Instance.TransitionToScene(levelThreeFileName, levelThreeStartingCam);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
             Debug.Log("Player Gun unlocked.");
             Player.GetComponent<PlayerController>().GunController.HasGun = true;
         }
@@ -84,10 +77,14 @@ public class GameManager : MonoBehaviour
 
     public void StartGameOver()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Debug.Log("StartingGameOver");
+        Player.GetComponent<PlayerController>().enabled = false;
         CallAnimationPause();
         IsGameOver = true;
         Debug.Log("Invoking Reset scene");
+        gameOverScreen.SetActive(true);
         //Invoke("ResetScene", 4f);
     }
 
@@ -96,17 +93,26 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
+            Debug.Log("Resetting scene PowerPlant");
             TransitionManager.Instance.TransitionToScene(levelOneFileName, levelOneStartingCam);
         }
         else if (SceneManager.GetActiveScene().buildIndex == 2)
         {
+            Debug.Log("Resetting scene Reactor");
             TransitionManager.Instance.TransitionToScene(levelTwoFileName, levelTwoStartingCam);
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 3)
+        else
         {
-            TransitionManager.Instance.TransitionToScene(levelThreeFileName, levelThreeStartingCam);
+            Debug.Log("Active build index does not equal one or two.");
+            Debug.Log("Active build index is " + SceneManager.GetActiveScene().buildIndex);
         }
 
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
+        gameOverScreen.SetActive(false);
+        Player.GetComponent<PlayerController>().enabled = true;
+        Player.GetComponent<PlayerHealth>().ResetVignette();
         ResetEnemies();
         CallAnimationUnpause();
         IsGameOver = false;

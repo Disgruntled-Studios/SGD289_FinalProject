@@ -27,7 +27,7 @@ public class DamageTrigger : MonoBehaviour
         {
             //Debug.Log(playerRef.CurrentHealth + " Should now be " + (playerRef.CurrentHealth - damageAmount));
             playerRef.TakeDamage();
-            Debug.Log(playerRef.CurrentHealth);
+            Debug.Log(playerRef.HitsRemaining);
         }
     }
 
