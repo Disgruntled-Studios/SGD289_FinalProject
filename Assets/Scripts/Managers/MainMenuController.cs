@@ -20,7 +20,12 @@ public class MainMenuController : MonoBehaviour, IMenuController
     private float _lastHorizontal;
     private bool _prevDpadLeft;
     private bool _prevDpadRight;
-    
+
+    void Start()
+    {
+        SoundManager.Instance.PlaySfx("MainMenuTheme");
+    }
+
     private void Update()
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
@@ -32,7 +37,7 @@ public class MainMenuController : MonoBehaviour, IMenuController
         {
             OnButtonActivated(_startButtonEffects);
         }
-        
+
         // RIGHT movement
         if ((_lastHorizontal <= 0.5f && horizontal > 0.5f) ||
             (!_prevDpadRight && dpadRight))
@@ -68,10 +73,11 @@ public class MainMenuController : MonoBehaviour, IMenuController
         activatedButton.IsActivated = true;
         activatedButton.ApplyVisual();
     }
-    
+
     public void StartGame()
     {
         SceneManager.LoadScene(_firstLevelName);
+        SoundManager.Instance.FadeOutSFX("MainMenuTheme", 2f);
     }
 
     public void QuitGame()
