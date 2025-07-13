@@ -51,6 +51,11 @@ public class PickupItem : MonoBehaviour, IInteractable
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
         
         Destroy(transform.root.gameObject);
+
+        if (_interactionPrompt)
+        {
+            Destroy(_interactionPrompt);
+        }
     }
 
     public void OnEnter()

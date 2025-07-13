@@ -70,6 +70,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ReturnToMainMenu()
+    {
+        IsGameOver = false;
+        CallAnimationUnpause();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        UIManager.Instance.CloseGameOverScreen();
+        UIManager.Instance.DestroyUI();
+
+        SceneManager.LoadScene("Scenes/GOLD_FINAL/MainMenu");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -77,46 +91,36 @@ public class GameManager : MonoBehaviour
 
     public void StartGameOver()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        Debug.Log("StartingGameOver");
-        Player.GetComponent<PlayerController>().enabled = false;
+        PlayerController.enabled = false;
         CallAnimationPause();
         IsGameOver = true;
-        Debug.Log("Invoking Reset scene");
-        gameOverScreen.SetActive(true);
-        //Invoke("ResetScene", 4f);
+        
+        UIManager.Instance.OpenGameOverScreen();
     }
 
     public void ResetScene()
     {
+        var activeIndex = SceneManager.GetActiveScene().buildIndex;
 
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (activeIndex == 1)
         {
-            Debug.Log("Resetting scene PowerPlant");
             TransitionManager.Instance.TransitionToScene(levelOneFileName, levelOneStartingCam);
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 2)
+        else if (activeIndex == 2)
         {
-            Debug.Log("Resetting scene Reactor");
             TransitionManager.Instance.TransitionToScene(levelTwoFileName, levelTwoStartingCam);
-        }
-        else
-        {
-            Debug.Log("Active build index does not equal one or two.");
-            Debug.Log("Active build index is " + SceneManager.GetActiveScene().buildIndex);
         }
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+        
+        UIManager.Instance.CloseGameOverScreen();
 
-        gameOverScreen.SetActive(false);
-        Player.GetComponent<PlayerController>().enabled = true;
+        PlayerController.enabled = true;
         Player.GetComponent<PlayerHealth>().ResetVignette();
         ResetEnemies();
         CallAnimationUnpause();
         IsGameOver = false;
-
     }
 
     public void ResetEnemies()
@@ -125,7 +129,6 @@ public class GameManager : MonoBehaviour
 
         foreach (EnemyBehavior enemy in enemies)
         {
-
             Debug.Log(enemy + " is in the list");
             if (enemy.currentState == EnemyBehavior.BehaviorState.chasing)
             {
