@@ -10,9 +10,15 @@ public class PlayerAnimationController : MonoBehaviour
 
     private RuntimeAnimatorController _originalController;
     private float _currentAnimSpeed;
+
+    [SerializeField] private AudioSource _footsteps;
     
     private const float TurnThreshold = 0.1f;
 
+    private int _lastStateHash = -1;
+    private float _lastNormalizedTime = -1f;
+    [SerializeField] private float _defaultMinStepGap = 0.3f;
+    
     private void Awake()
     {
         _originalController = _anim.runtimeAnimatorController;
@@ -96,6 +102,30 @@ public class PlayerAnimationController : MonoBehaviour
     public void SetInjured(bool isInjured)
     {
         _anim.runtimeAnimatorController = isInjured ? _injuredOverrideController : _originalController;
+    }
+
+    public void PlayFootstepSound()
+    {
+        var stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
+        var currentStateHash = stateInfo.shortNameHash;
+        var normalizedTime = stateInfo.normalizedTime % 1;
+
+        var minGap = GetMinStepGapForState(currentStateHash);
+
+        if (_lastStateHash == currentStateHash && Mathf.Abs(normalizedTime - _lastNormalizedTime) < minGap) return;
+
+        _lastStateHash = currentStateHash;
+        _lastNormalizedTime = normalizedTime;
+
+        if (_footsteps?.clip != null)
+        {
+            _footsteps.PlayOneShot(_footsteps.clip);
+        }
+    }
+
+    private float GetMinStepGapForState(int stateHash)
+    {
+        return _defaultMinStepGap;
     }
 }
 
