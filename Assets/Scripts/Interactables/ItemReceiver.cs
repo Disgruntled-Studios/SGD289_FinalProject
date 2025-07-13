@@ -105,7 +105,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         if (!other.CompareTag("Player")) return;
         
         UIManager.Instance.ClearPopUpText();
-        if (_interactionPrompt.activeSelf)
+        
+        if (_interactionPrompt && _interactionPrompt.activeSelf)
         {
             _interactionPrompt.SetActive(false);
         }
@@ -129,9 +130,12 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         
         if (_particles) _particles?.Stop();
 
-        if (_itemReceivedAudio?.clip != null)
+        if (_itemReceivedAudio)
         {
-            _itemReceivedAudio.PlayOneShot(_itemReceivedAudio.clip);
+            if (_itemReceivedAudio.clip)
+            {
+                _itemReceivedAudio.PlayOneShot(_itemReceivedAudio.clip);
+            }
         }
 
         Destroy(_interactionPrompt);
