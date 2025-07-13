@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
@@ -11,13 +12,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     [SerializeField] private UnityEvent _onItemReceivedExternal; // External events
     [SerializeField] private ParticleSystem _particles;
-    
-    [Header("Materials")] 
-    [SerializeField] private MeshRenderer _meshRenderer;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _glitchedMaterial;
-
-    [SerializeField] private AudioSource _itemReceivedAudio;
 
     private PlayerInventory _playerInventory;
 
@@ -30,14 +24,15 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     public bool PlayerHasItemInInventory { get; set; }
 
     [SerializeField] private GameObject _interactionPrompt;
+    
+    [SerializeField] private AudioClip _interactionClip;
+    [SerializeField] private AudioMixerGroup _outputGroup;
+    [SerializeField] private float _volume = 1f;
+    [SerializeField] private float _pitch = 1f;
+    [SerializeField] private float _spatialBlend = 0f;
 
     private void Awake()
     {
-        if (!_meshRenderer)
-        {
-            _meshRenderer = GetComponentInParent<MeshRenderer>(); // Assuming script is attached to trigger box 
-        }
-
         if (string.IsNullOrEmpty(_name))
         {
             _name = gameObject.name;
@@ -47,7 +42,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     private void Start()
     {
         _playerInventory = GameManager.Instance.Player.GetComponent<PlayerInventory>();
-        //_meshRenderer.material = _glitchedMaterial;
     }
 
     private void Update()
@@ -130,12 +124,10 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         
         if (_particles) _particles?.Stop();
 
-        if (_itemReceivedAudio)
+        if (_interactionClip)
         {
-            if (_itemReceivedAudio.clip)
-            {
-                _itemReceivedAudio.PlayOneShot(_itemReceivedAudio.clip);
-            }
+            SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup,
+                _spatialBlend);
         }
 
         Destroy(_interactionPrompt);
@@ -151,6 +143,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     // Internal events
     private void OnItemReceivedInternal()
     {
-        //_meshRenderer.material = _defaultMaterial;
+        
     }
 }

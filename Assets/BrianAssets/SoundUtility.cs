@@ -37,4 +37,9 @@ public static class SoundUtility
 
         Object.Destroy(tempGo, clip.length / pitch);
     }
+
+    public static void Play2DSound(AudioClip clip, AudioMixerGroup mixer = null)
+    {
+        PlayClipAtPoint(clip, Vector3.zero, 1f, 1f, mixer, 0f);
+    }
 }
