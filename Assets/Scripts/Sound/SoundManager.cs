@@ -40,6 +40,14 @@ public class SoundManager : MonoBehaviour
             s.source.loop = s.isLooping;
             s.source.spatialBlend = s.spatialBlend;
         }
+
+        if (PlayerPrefs.HasKey("MasterVolume") || PlayerPrefs.HasKey("MusicVolume") || PlayerPrefs.HasKey("SFXVolume") || PlayerPrefs.HasKey("AmbianceVolume"))
+        {
+            mainMixer.SetFloat("Master", PlayerPrefs.GetFloat("MasterVolume"));
+            mainMixer.SetFloat("Music", PlayerPrefs.GetFloat("MusicVolume"));
+            mainMixer.SetFloat("SFX", PlayerPrefs.GetFloat("SFXVolume"));
+            mainMixer.SetFloat("Ambiance", PlayerPrefs.GetFloat("AmbianceVolume"));
+        }
     }
 
     public void PlaySfx(string sfxName)
