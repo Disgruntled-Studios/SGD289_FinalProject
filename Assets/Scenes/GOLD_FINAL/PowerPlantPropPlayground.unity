@@ -107897,7 +107897,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 100
+  field of view: 69.5
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -107923,8 +107923,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409810674}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1408237, y: 0.6256238, z: -0.11615891, w: 0.75846606}
-  m_LocalPosition: {x: 7.547, y: 2.95, z: 16.879}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  m_LocalPosition: {x: 6.316, y: 1.41, z: 25.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -109029,6 +109029,75 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1482239070
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 335041582871957336, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_Name
+      value: Chair_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.12694736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12694736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.12694736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.452
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.258
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.655
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9462039
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.31580588
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.06984769
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.009281405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -36.793
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -350.924
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871703397471546570, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc707658d4fc9d644bbfb254e1196e08, type: 3}
 --- !u!1 &1484239306
 GameObject:
   m_ObjectHideFlags: 0
@@ -157800,8 +157869,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 1599
+    Enabled: 1
+    m_Value: 3000
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -185577,3 +185646,4 @@ SceneRoots:
   - {fileID: 1489332749}
   - {fileID: 666595035}
   - {fileID: 543317451}
+  - {fileID: 1482239070}
