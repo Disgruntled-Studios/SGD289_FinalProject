@@ -45,6 +45,16 @@ public class PlayerHealth : MonoBehaviour
         _vignette.intensity.value = 0f;
     }
 
+    // TESTING METHOD
+    [ContextMenu("Kill Player")]
+    public void KillPlayer()
+    {
+        for (var i = 0; i < 3; i++)
+        {
+            TakeDamage();
+        }
+    }
+
     [ContextMenu("Take Damage")]
     public void TakeDamage()
     {

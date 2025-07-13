@@ -58,6 +58,10 @@ public class UIManager : MonoBehaviour
     [Header("Audio")] 
     [SerializeField] private UIAudioController _uiAudio;
     public UIAudioController UIAudioController => _uiAudio;
+
+    [Header("Game Over")] 
+    [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private List<Button> _deathPanelButtons;
     
     public bool IsGamePaused { get; private set; }
 
@@ -144,6 +148,27 @@ public class UIManager : MonoBehaviour
         IsGamePaused = false;
         
         InputManager.Instance.SwitchToDefaultInput();
+    }
+
+    public void OpenGameOverScreen()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        _hudPanel.SetActive(false);
+        _gameOverPanel.SetActive(true);
+        
+        InputManager.Instance.SwitchToUIInput();
+
+        if (_deathPanelButtons.Count > 0)
+        {
+            SetEventSystemObject(_deathPanelButtons[0].gameObject);
+        }
+    }
+
+    public void CloseGameOverScreen()
+    {
+        _gameOverPanel.SetActive(false);
     }
 
     private void SetActivePanel(int index)

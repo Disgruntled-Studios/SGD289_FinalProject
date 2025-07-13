@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour
+public class MainMenuController : MonoBehaviour, IMenuController
 {
     [SerializeField] private string _firstLevelName = "PowerPlant";
 

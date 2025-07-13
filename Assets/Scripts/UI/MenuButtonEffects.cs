@@ -7,7 +7,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Selectable))]
 public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private MainMenuController _mainMenuController;
+    [SerializeField] private MonoBehaviour _menuController;
+    private IMenuController _controller;
     
     [SerializeField] private TMP_Text _buttonText;
 
@@ -19,6 +20,11 @@ public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerEx
     
     public bool IsActivated { get; set; }
 
+    private void Awake()
+    {
+        _controller = _menuController as IMenuController;
+    }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         Activate();
@@ -37,7 +43,7 @@ public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void Activate()
     {
-        _mainMenuController.OnButtonActivated(this);
+        _controller?.OnButtonActivated(this);
     }
 
     public void ApplyVisual()
