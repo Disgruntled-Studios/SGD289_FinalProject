@@ -75,7 +75,7 @@ public class TransitionManager : MonoBehaviour
     }
 
 
-    private void SetPlayerToSpawnPoint(Scene scene)
+    public void SetPlayerToSpawnPoint(Scene scene)
     {
         foreach (var rootObject in scene.GetRootGameObjects())
         {

@@ -39,11 +39,11 @@ public class EndAnimationController : MonoBehaviour
         Destroy(SelectionManager.Instance.gameObject);
         Destroy(GameManager.Instance.gameObject);
         Destroy(UIManager.Instance.gameObject);
-        if (endSceneSong != string.Empty)
-        {
-            Debug.Log("Playing endSceneSong");
-            SoundManager.Instance.FadeInSFX(endSceneSong, 43f, 8f);
-        }
+        // if (endSceneSong != string.Empty)
+        // {
+        //     Debug.Log("Playing endSceneSong");
+        //     SoundManager.Instance.FadeInSFX(endSceneSong, 43f, 8f);
+        // }
         cameraDirector.Play();
         playerEndAnim.speed = 1;
         playerModel.SetActive(true);
