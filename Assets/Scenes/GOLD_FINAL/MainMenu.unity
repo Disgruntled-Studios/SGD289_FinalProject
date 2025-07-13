@@ -344,6 +344,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _menuController: {fileID: 1077335546}
   _buttonText: {fileID: 488938239}
+  _highlightScale: 1.2
+  _defaultScale: 1
+  _highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &446819215
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +700,87 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1001 &805211317
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 26cc1d3056d96467a9c6471bcbc53036, type: 3}
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].name
+      value: MainMenuTheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].isLooping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 378300261337524411, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: sounds.Array.data[1].mixerOutput
+      value: 
+      objectReference: {fileID: -5871889475196536729, guid: c14877f646aead94ab819de38256b961, type: 2}
+    - target: {fileID: 7822551959309395607, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.434214
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -50.765484
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 50.35451
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366825438028893894, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b79f442cfe42ec54f92e3bb3bcbd1fd8, type: 3}
 --- !u!1 &832519927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,6 +1581,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _menuController: {fileID: 1077335546}
   _buttonText: {fileID: 832519929}
+  _highlightScale: 1.2
+  _defaultScale: 1
+  _highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1703343127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,3 +1715,4 @@ SceneRoots:
   - {fileID: 446819218}
   - {fileID: 1182304073}
   - {fileID: 1077335547}
+  - {fileID: 805211317}
