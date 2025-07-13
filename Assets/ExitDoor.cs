@@ -3,6 +3,8 @@ using UnityEngine;
 public class ExitDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject _interactionPrompt;
+    [SerializeField] private string _targetSceneName;
+    [SerializeField] private string _targetCameraId;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
