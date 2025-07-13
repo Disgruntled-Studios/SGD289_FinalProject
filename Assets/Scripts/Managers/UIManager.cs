@@ -62,6 +62,7 @@ public class UIManager : MonoBehaviour
     [Header("Game Over")] 
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private List<Button> _deathPanelButtons;
+    [SerializeField] private DeathMenuController _deathMenuController;
     
     public bool IsGamePaused { get; private set; }
 
@@ -209,9 +210,14 @@ public class UIManager : MonoBehaviour
 
     public IUIPanelController GetActivePanelController()
     {
-        if (_currentPanelIndex >= 0 && _currentPanelIndex < _panelControllers.Count)
+        if (_pausePanel.activeSelf)
         {
             return _panelControllers[_currentPanelIndex];
+        }
+
+        if (_gameOverPanel.activeSelf)
+        {
+            return _deathMenuController;
         }
 
         return null;
