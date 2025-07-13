@@ -15,6 +15,8 @@ public class PickupItem : MonoBehaviour, IInteractable
     private bool _isDevNote;
 
     public UnityEvent onGunPickup; // DONT USE FOR ANYTHING EXCEPT THE GUN
+
+    [SerializeField] private GameObject _interactionPrompt;
     
     private void Start()
     {
@@ -41,6 +43,11 @@ public class PickupItem : MonoBehaviour, IInteractable
             inventory.AddItem(item);
         }
         
+        if (_isDevNote)
+        {
+            UIManager.Instance.StartPopUpText("Press Start To Read");
+        }
+        
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
         
         Destroy(transform.root.gameObject);
@@ -48,17 +55,17 @@ public class PickupItem : MonoBehaviour, IInteractable
 
     public void OnEnter()
     {
-        if (_isDevNote)
+        if (_interactionPrompt)
         {
-            UIManager.Instance.StartPopUpText("Press Triangle to Collect", 0f);
+            _interactionPrompt.SetActive(true);
         }
     }
 
     public void OnExit()
     {
-        if (_isDevNote)
+        if (_interactionPrompt)
         {
-            UIManager.Instance.ClearPopUpText();
+            _interactionPrompt.SetActive(false);
         }
     }
 }
