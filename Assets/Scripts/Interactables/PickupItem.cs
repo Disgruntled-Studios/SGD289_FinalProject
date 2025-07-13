@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
@@ -17,7 +18,13 @@ public class PickupItem : MonoBehaviour, IInteractable
     public UnityEvent onGunPickup; // DONT USE FOR ANYTHING EXCEPT THE GUN
 
     [SerializeField] private GameObject _interactionPrompt;
-    
+
+
+    [SerializeField] private AudioClip _interactionClip;
+    [SerializeField] private AudioMixerGroup _outputGroup;
+    [SerializeField] private float _volume = 1f;
+    [SerializeField] private float _pitch = 1f;
+
     private void Start()
     {
         _isGun = GetComponent<PlayerGun>();
@@ -28,7 +35,7 @@ public class PickupItem : MonoBehaviour, IInteractable
             _isDevNote = devNote.IsDevNote;
         }
     }
-    
+
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_isGun)
@@ -42,16 +49,21 @@ public class PickupItem : MonoBehaviour, IInteractable
             var item = new InventoryItem(_itemName, _isGun, _isNote, _icon, _additionalText);
             inventory.AddItem(item);
         }
-        
+
         if (_isDevNote)
         {
             UIManager.Instance.StartPopUpText("Press Start To Read");
         }
-        
-        GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
-        
-        Destroy(transform.root.gameObject);
 
+        if (_interactionClip != null)
+        {
+            // TODO: play audio
+        }
+
+        GameManager.Instance.PlayerController.ClearCurrentInteractable(this);
+
+        Destroy(transform.root.gameObject);
+        
         if (_interactionPrompt)
         {
             Destroy(_interactionPrompt);

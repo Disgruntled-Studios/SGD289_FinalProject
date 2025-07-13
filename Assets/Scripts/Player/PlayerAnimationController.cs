@@ -12,6 +12,7 @@ public class PlayerAnimationController : MonoBehaviour
     private float _currentAnimSpeed;
 
     [SerializeField] private AudioSource _footsteps;
+    [SerializeField] private AudioSource _shuffleStep;
     
     private const float TurnThreshold = 0.1f;
 
@@ -119,7 +120,20 @@ public class PlayerAnimationController : MonoBehaviour
 
         if (_footsteps?.clip != null)
         {
+            if (_shuffleStep.isPlaying)
+            {
+                _shuffleStep.Stop();
+            }
+            
             _footsteps.PlayOneShot(_footsteps.clip);
+        }
+    }
+
+    public void PlayShuffleStep()
+    {
+        if (_shuffleStep?.clip != null)
+        {
+            _shuffleStep.PlayOneShot(_shuffleStep.clip);
         }
     }
 

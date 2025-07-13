@@ -17,6 +17,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _glitchedMaterial;
 
+    [SerializeField] private AudioSource _itemReceivedAudio;
+
     private PlayerInventory _playerInventory;
 
     [SerializeField] private string _name;
@@ -69,14 +71,14 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
         if (PlayerHasItemInInventory)
         {
-            if (!_particles.isPlaying && _particles)
+            if (_particles && !_particles.isPlaying)
             {
                 _particles.Play();
             }
         }
         else
         {
-            if (_particles.isPlaying && _particles)
+            if (_particles && _particles.isPlaying)
             {
                 _particles.Stop();
             }
@@ -94,6 +96,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         if (PlayerHasItemInInventory)
         {
             UIManager.Instance.StartPopUpText(_popUpMessage, 0f);
+            _interactionPrompt.SetActive(true);
         }
     }
 
@@ -102,6 +105,11 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         if (!other.CompareTag("Player")) return;
         
         UIManager.Instance.ClearPopUpText();
+        
+        if (_interactionPrompt && _interactionPrompt.activeSelf)
+        {
+            _interactionPrompt.SetActive(false);
+        }
     }
 
     public bool TryReceiveItem(PlayerInventory inventory, InventoryItem item)
@@ -121,6 +129,16 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         ItemHasBeenReceived = true;
         
         if (_particles) _particles?.Stop();
+
+        if (_itemReceivedAudio)
+        {
+            if (_itemReceivedAudio.clip)
+            {
+                _itemReceivedAudio.PlayOneShot(_itemReceivedAudio.clip);
+            }
+        }
+
+        Destroy(_interactionPrompt);
         
         UIManager.Instance.ClearPopUpText();
         
