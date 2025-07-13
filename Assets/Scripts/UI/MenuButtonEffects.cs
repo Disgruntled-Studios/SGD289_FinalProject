@@ -14,11 +14,10 @@ public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerEx
     
     [Header("Button Text")]
     [SerializeField] private TMP_Text _buttonText;
-
-    [FormerlySerializedAs("HighlightScale")]
+    
     [Header("Visual Settings")]
     [SerializeField] private float _highlightScale = 1.2f;
-    [FormerlySerializedAs("DefaultScale")] [SerializeField] private float _defaultScale = 1.0f;
+    [SerializeField] private float _defaultScale = 1.0f;
 
     [SerializeField] private Color _highlightColor = Color.white;
     [SerializeField] private Color _defaultColor = Color.black;
