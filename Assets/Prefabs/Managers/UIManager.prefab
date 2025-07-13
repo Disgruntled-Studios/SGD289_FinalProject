@@ -3343,6 +3343,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _menuController: {fileID: 8478086728811688279}
   _buttonText: {fileID: 4663351422493970214}
+  _highlightScale: 1.5
+  _defaultScale: 1
+  _highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2561005552790141995
 GameObject:
   m_ObjectHideFlags: 0
@@ -6058,6 +6062,7 @@ MonoBehaviour:
   _deathPanelButtons:
   - {fileID: 293477655540169889}
   - {fileID: 851073297921600372}
+  _deathMenuController: {fileID: 8478086728811688279}
 --- !u!114 &3082249263575324710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7101,6 +7106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8263fc925c7adb544aaec6636ff54de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _retryButtonEffects: {fileID: 1077465955839668674}
+  _mainMenuButtonEffects: {fileID: 4320548179897754627}
+  _retryButton: {fileID: 293477655540169889}
+  _mainMenuButton: {fileID: 851073297921600372}
 --- !u!114 &725028807268711540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11815,6 +11824,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _menuController: {fileID: 8478086728811688279}
   _buttonText: {fileID: 6028885109149121216}
+  _highlightScale: 1.5
+  _defaultScale: 1
+  _highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  _defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &9110632481363651142
 GameObject:
   m_ObjectHideFlags: 0
