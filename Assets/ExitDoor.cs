@@ -8,7 +8,10 @@ public class ExitDoor : MonoBehaviour, IInteractable
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        throw new System.NotImplementedException();
+        if (!string.IsNullOrEmpty(_targetSceneName))
+        {
+            TransitionManager.Instance.TransitionToScene(_targetSceneName, _targetCameraId);
+        }
     }
 
     public void OnEnter()

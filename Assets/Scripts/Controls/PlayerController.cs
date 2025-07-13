@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
@@ -118,7 +119,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public float GetCurrentTurnInput() => _currentRotationInput;
-
+    
     private void FixedUpdate()
     {
         if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead) return;
