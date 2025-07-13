@@ -38886,12 +38886,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 566506459009988613}
   _cameraTarget: {fileID: 8016657025682290569}
+  gameOverScreen: {fileID: 0}
   levelOneFileName: GOLDL1PowerPlant
   levelOneStartingCam: CAM10
   levelTwoFileName: GOLDL2MaintenanceTunnel
   levelTwoStartingCam: CAM20
-  levelThreeFileName: GOLDL3Reactor
-  levelThreeStartingCam: CAM30
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -182131,7 +182130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.36
+      value: 17.9
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -182139,7 +182138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.59
+      value: 11.4
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalRotation.w
