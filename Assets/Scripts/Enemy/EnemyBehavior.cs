@@ -90,7 +90,7 @@ public class EnemyBehavior : MonoBehaviour
         health = new UnitHealth(maxHealth, onDamage);
         GetComponentInChildren<DamageTrigger>().damageAmount = attackStrength;
         meshAgent.speed = patrolSpeed;
-        meshAgent.stoppingDistance = attackDistance - .25f;
+        meshAgent.stoppingDistance = attackDistance - .5f;
         if (patrolPattern != null)
         {
             meshAgent.SetDestination(patrolPoints[patrolIndex].position);
@@ -193,7 +193,7 @@ public class EnemyBehavior : MonoBehaviour
                     anim.SetBool("IsMoving", false);
                     anim.SetBool("IsChasing", false);
                     anim.SetBool("Attacking", true);
-                    // Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
+                    Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
                     break;
                 }
                 else if (!health.IsDead)
