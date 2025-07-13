@@ -17,7 +17,6 @@ public class GunController : MonoBehaviour
     [SerializeField] int maxMagLimit = 12;
     [SerializeField] int currentAmmoMagAmt = 0;
     [SerializeField] string _gunItemName;
-    [SerializeField] string gunShotSFX;
 
     [Header("Laser")]
     [SerializeField] private LineRenderer _lr;
@@ -26,12 +25,13 @@ public class GunController : MonoBehaviour
     [SerializeField] private Gradient greenLaserGradient;
     [SerializeField] private Material greenLaser;
 
+    [SerializeField] private AudioSource _gunShot;
+
     private bool _isAiming;
     public bool IsAiming => _isAiming;
     
     public bool _canShoot;
     public bool HasGun { get; set; }
-    private SoundComponent soundComponent;
     [HideInInspector]public ShootableObject closeObj;
 
     private const float MinVisualDistance = 5f;
@@ -40,7 +40,6 @@ public class GunController : MonoBehaviour
 
     private void Start()
     {
-        soundComponent = GetComponent<SoundComponent>();
         if (_lr)
         {
             _lr.enabled = false;
@@ -125,7 +124,7 @@ public class GunController : MonoBehaviour
         {
             Debug.Log("Shooting");
             _animationController.Shoot();
-            soundComponent.PlaySFX(gunShotSFX);
+            _gunShot.PlayOneShot(_gunShot.clip);
             currentAmmoMagAmt--;
             //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
             //Play SFX 

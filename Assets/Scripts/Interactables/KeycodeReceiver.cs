@@ -20,11 +20,18 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     public bool CodeHasBeenAccepted { get; set; }
 
     [SerializeField] private GameObject _interactionPrompt;
+
+    [SerializeField] private AudioSource _interactionAudio;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_playerIsNearby)
         {
+            if (_interactionAudio && _interactionAudio?.clip != null)
+            {
+                _interactionAudio.PlayOneShot(_interactionAudio.clip);
+            }
+            
             UIManager.Instance.OpenKeycodePanel(this);
         }
     }
@@ -48,12 +55,12 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     public void OnEnter()
     {
         _playerIsNearby = true;
-        UIManager.Instance.StartPopUpText("Enter code?", 0f);
+        // UIManager.Instance.StartPopUpText("Enter code?", 0f);
     }
 
     public void OnExit()
     {
         _playerIsNearby = false;
-        UIManager.Instance.ClearPopUpText();
+        // UIManager.Instance.ClearPopUpText();
     }
 }

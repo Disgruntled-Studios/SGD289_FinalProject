@@ -12967,6 +12967,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 0}
   _defaultMaterial: {fileID: 0}
   _glitchedMaterial: {fileID: 0}
+  _itemReceivedAudio: {fileID: 0}
   _name: <i>Records - Cabinet 4</i>
   _interactionPrompt: {fileID: 0}
 --- !u!65 &222102342
@@ -27996,12 +27997,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262121254}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.287, y: 0.464, z: 5.675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1692886999}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &262121256
 MonoBehaviour:
@@ -28486,6 +28487,7 @@ MonoBehaviour:
   _shouldHighlight: 0
   _shouldShowPipeIcons: 1
   _interactionPrompt: {fileID: 0}
+  _interactionAudio: {fileID: 0}
 --- !u!199 &335391715
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -58509,12 +58511,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 600635307}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.15, y: 7.507, z: 5.121}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1692886999}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &600635309
 MonoBehaviour:
@@ -63028,12 +63030,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863418437}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.291, y: 0.464, z: 5.786}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1692886999}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &863418439
 MonoBehaviour:
@@ -74611,6 +74613,7 @@ MonoBehaviour:
   _meshRenderer: {fileID: 0}
   _defaultMaterial: {fileID: 0}
   _glitchedMaterial: {fileID: 0}
+  _itemReceivedAudio: {fileID: 0}
   _name: Circuit Access Console
   _interactionPrompt: {fileID: 0}
 --- !u!199 &953031556
@@ -110160,12 +110163,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423257917}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.581, y: 6.639, z: 17.769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1692886999}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1423257919
 MonoBehaviour:
@@ -139286,11 +139289,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 262121255}
-  - {fileID: 600635308}
-  - {fileID: 1423257918}
-  - {fileID: 863418438}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692933850
@@ -188285,6 +188284,10 @@ SceneRoots:
   - {fileID: 1606851014}
   - {fileID: 168344456}
   - {fileID: 1692886999}
+  - {fileID: 262121255}
+  - {fileID: 600635308}
+  - {fileID: 1423257918}
+  - {fileID: 863418438}
   - {fileID: 24827742}
   - {fileID: 1841949970}
   - {fileID: 1030850766}
