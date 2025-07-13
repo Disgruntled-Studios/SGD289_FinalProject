@@ -18,6 +18,8 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     private bool _playerIsNearby;
     
     public bool CodeHasBeenAccepted { get; set; }
+
+    [SerializeField] private GameObject _interactionPrompt;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {

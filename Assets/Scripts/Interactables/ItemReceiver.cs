@@ -27,6 +27,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     
     public bool PlayerHasItemInInventory { get; set; }
 
+    [SerializeField] private GameObject _interactionPrompt;
+
     private void Awake()
     {
         if (!_meshRenderer)
