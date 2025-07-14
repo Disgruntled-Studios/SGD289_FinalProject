@@ -9,72 +9,91 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
     [SerializeField] private Button _quitToMenuButton;
     [SerializeField] private Button _quitToDesktopButton;
 
-    private readonly List<Button> _buttons = new();
+    [SerializeField] private Toggle _rumbleToggle;
+
+    private readonly List<Selectable> _selectables = new();
     private int _currentIndex;
 
     private void Awake()
     {
-        _buttons.Add(_quitToMenuButton);
-        _buttons.Add(_quitToDesktopButton);
+        _selectables.Add(_rumbleToggle);
+        _selectables.Add(_quitToMenuButton);
+        _selectables.Add(_quitToDesktopButton);
     }
     
     public void OnPanelActivated()
     {
         _currentIndex = 0;
 
-        foreach (var button in _buttons)
+        foreach (var s in _selectables)
         {
-            SetButtonHighlight(button, false);
+            HighlightSelectable(s, false);
         }
 
-        SetButtonHighlight(_buttons[_currentIndex], true);
-        
-        UIManager.Instance.SetEventSystemObject(_buttons[_currentIndex].gameObject);
+        HighlightSelectable(_selectables[_currentIndex], true);
+        UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
     }
 
     public void OnPanelDeactivated()
     {
-        foreach (var button in _buttons)
+        foreach (var s in _selectables)
         {
-            SetButtonHighlight(button, false);
+            HighlightSelectable(s, false);
         }
     }
 
     public void HandleNavigation(Vector2 input)
     {
-        if (_buttons.Count == 0) return;
+        if (_selectables.Count == 0) return;
 
         if (input.y > 0.5f)
         {
-            _currentIndex--;
-            if (_currentIndex < 0)
-            {
-                _currentIndex = _buttons.Count - 1;
-            }
+            _currentIndex = (_currentIndex - 1 + _selectables.Count) % _selectables.Count;
         }
         else if (input.y < -0.5f)
         {
-            _currentIndex++;
-            if (_currentIndex >= _buttons.Count)
-            {
-                _currentIndex = 0;
-            }
+            _currentIndex = (_currentIndex + 1) & _selectables.Count;
         }
 
-        for (var i = 0; i < _buttons.Count; i++)
+        foreach (var s in _selectables)
         {
-            SetButtonHighlight(_buttons[i], i == _currentIndex);
+            HighlightSelectable(s, false);
         }
 
-        UIManager.Instance.SetEventSystemObject(_buttons[_currentIndex].gameObject);
+        var selected = _selectables[_currentIndex];
+        HighlightSelectable(selected, true);
+        UIManager.Instance.SetEventSystemObject(selected.gameObject);
+
+        if (selected is Slider slider)
+        {
+            var step = (slider.maxValue - slider.minValue) * 0.1f;
+            switch (input.x)
+            {
+                case < -0.5f:
+                    slider.value -= step;
+                    break;
+                case > 0.5f:
+                    slider.value += step;
+                    break;
+            }
+            UIManager.Instance.UIAudioController.PlaySound(UISound.SliderAdjust);
+        }
     }
 
     public void HandleSubmit()
     {
-        var current = _buttons[_currentIndex];
-        if (!current) return;
-        
-        current.onClick.Invoke();
+        var selected = _selectables[_currentIndex];
+
+        if (selected is Button button)
+        {
+            button.onClick.Invoke();
+            UIManager.Instance.UIAudioController.PlaySound(UISound.Button);
+        }
+        else if (selected is Toggle toggle)
+        {
+            toggle.isOn = !toggle.isOn;
+            UIManager.Instance.UIAudioController.PlaySound(UISound.Toggle);
+        }
     }
 
     public void HandleCancel()
@@ -84,15 +103,21 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
 
     public GameObject GetDefaultSelectable()
     {
-        return _buttons.Count > 0 ? _buttons[0].gameObject : null;
+        return _selectables.Count > 0 ? _selectables[0].gameObject : null;
     }
 
-    private void SetButtonHighlight(Button button, bool highlighted)
+    private void HighlightSelectable(Selectable selectable, bool highlighted)
     {
-        var image = button.targetGraphic as Image;
-        if (image)
+        switch (selectable)
         {
-            image.color = highlighted ? Color.yellow : Color.white;
+            case Button button:
+                var buttonImage = button.targetGraphic as Image;
+                if (buttonImage) buttonImage.color = highlighted ? Color.yellow : Color.white;
+                break;
+            case Toggle toggle:
+                var toggleImage = toggle.targetGraphic as Image;
+                if (toggleImage) toggleImage.color = highlighted ? Color.yellow : Color.white;
+                break;
         }
     }
 }
