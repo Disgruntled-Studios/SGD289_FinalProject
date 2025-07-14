@@ -3,10 +3,14 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     [SerializeField] private GameObject _objectToSpawn;
+    [SerializeField] private AudioSource _kickAudio;
     
     public void PlayKickSound()
     {
-        // TODO: Kick Sound
+        if (_kickAudio)
+        {
+            _kickAudio.PlayOneShot(_kickAudio.clip);
+        }
     }
 
     public void SpawnObjectOnDeath()
