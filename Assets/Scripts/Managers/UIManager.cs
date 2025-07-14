@@ -395,11 +395,13 @@ public class UIManager : MonoBehaviour
     public void NavigateKeycodeDigits(Vector2 input)
     {
         _keycodeUIController.Navigate(input);
+        _uiAudio.PlaySound(UISound.DigitNav);
     }
 
     public void ShowInvalidCodeFeedback()
     {
         _keycodeUIController.ShowInvalidFeedback();
+        _uiAudio.PlaySound(UISound.KeycodeError);
     }
 
     public void ShakeKeycodePanel(float duration = 0.25f, float magnitude = 10f)

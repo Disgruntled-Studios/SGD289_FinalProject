@@ -3,20 +3,20 @@ using UnityEngine;
 
 public enum UISound
 {
-    TabNav,
-    InventoryNav,
-    InventorySubmit,
-    SliderAdjust,
-    Toggle,
-    Button,
-    Open,
-    Close,
-    Error,
-    DigitAdjust,
-    TileRotate,
-    TileConnected,
-    TileDisconnected,
-    CircuitComplete
+    TabNav, // Glass 002
+    InventoryNav, // Click 003
+    SliderAdjust, // Glass 001
+    Toggle, // Click 002
+    Button, // Select 004
+    Open, // Open 001
+    Close, // Close 001
+    KeycodeError, // Error 008
+    DigitNav, // Glass 002
+    TileRotate, // Drop 001
+    TileConnected, // Maximize 005
+    TileDisconnected, // Minimize 005
+    CircuitComplete, // Confirmation 004
+    TileNav // Tick 001
 }
 
 [System.Serializable]

@@ -16,6 +16,15 @@ public class PowerPuzzleTile : MonoBehaviour
                 _isPowered = value;
                 ToggleConnectionMaterial(_isPowered);
                 OnTileStateChanged?.Invoke();
+
+                if (_isPowered)
+                {
+                    UIManager.Instance.UIAudioController.PlaySound(UISound.TileConnected);
+                }
+                else
+                {
+                    UIManager.Instance.UIAudioController.PlaySound(UISound.TileDisconnected);
+                }
             }
         }
     }
