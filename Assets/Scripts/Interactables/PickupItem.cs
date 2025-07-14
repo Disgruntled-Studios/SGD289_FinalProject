@@ -57,7 +57,7 @@ public class PickupItem : MonoBehaviour, IInteractable
 
         if (_interactionClip != null)
         {
-            // TODO: play audio
+            SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup, 0f);
         }
 
         GameManager.Instance.PlayerController.ClearCurrentInteractable(this);

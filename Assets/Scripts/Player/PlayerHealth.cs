@@ -1,8 +1,6 @@
-//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
-//using UnityEngine.LightTransport.PostProcessing;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth : MonoBehaviour
@@ -23,8 +21,6 @@ public class PlayerHealth : MonoBehaviour
     private const float ThirdHitIntensity = 1.0f;
 
     public UnitHealth Health { get; private set; }
-
-    public float CurrentHealth => Health.CurrentHealth;
 
     public UnityEvent onDeath;
 
@@ -60,6 +56,8 @@ public class PlayerHealth : MonoBehaviour
     {
         const float amount = 1.0f;
         Health.Damage(amount);
+        
+        _animController.TriggerHit();
 
         switch (HitsRemaining)
         {
@@ -81,29 +79,6 @@ public class PlayerHealth : MonoBehaviour
                 damagedTimer = -1f;
                 break;
         }
-
-        // if (Mathf.Approximately(Health.CurrentHealth, 2.0f))
-        // {
-        //     _vignette.intensity.value = FirstHitIntensity;
-        //     HitsRemaining--;
-        //     damagedTimer = 8f;
-        // }
-        // else if (Mathf.Approximately(Health.CurrentHealth, 1.0f))
-        // {
-        //     _vignette.intensity.value = SecondHitIntensity;
-        //     IsInjured = true;
-        //     _animController.SetInjured(IsInjured);
-        //     HitsRemaining--;
-        //     damagedTimer = 8f;
-
-        // }
-        // else if (Mathf.Approximately(Health.CurrentHealth, 0.0f))
-        // {
-        //     _vignette.intensity.value = ThirdHitIntensity;
-        //     HitsRemaining--;
-        //     damagedTimer = -1f;
-        // }
-        
     }
 
     public void Heal(float amount)
@@ -116,7 +91,6 @@ public class PlayerHealth : MonoBehaviour
         if (damagedTimer > 0)
         {
             damagedTimer -= 1 * Time.deltaTime;
-            //_vignette.intensity.value = Mathf.Lerp(0, 1, damagedTimer / 8);
             switch (damagedTimer)
             {
                 case <= 0:
@@ -138,17 +112,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (HitsRemaining <= 0 && !GameManager.Instance.IsGameOver)
         {
-            Debug.Log("Dead");
+            
             onDeath.Invoke();
         }
     }
-
-
-
+    
     public void ResetVignette()
     {
         _vignette.intensity.value = 0f;

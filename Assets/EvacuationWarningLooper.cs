@@ -12,6 +12,8 @@ public class EvacuationWarningLooper : MonoBehaviour
     private bool _isPlaying;
 
     private float _startingVolume;
+
+    [SerializeField] private bool _shouldPlayOnStart;
     
     private void Start()
     {
@@ -20,7 +22,11 @@ public class EvacuationWarningLooper : MonoBehaviour
         _source.playOnAwake = false;
         _source.loop = false;
         _startingVolume = _source.volume;
-        _source.Play();
+
+        if (_shouldPlayOnStart)
+        {
+            _source.Play();
+        }
 
         StartCoroutine(BeginLoopAfterInitial());
     }

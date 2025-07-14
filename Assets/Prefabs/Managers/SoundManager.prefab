@@ -52,13 +52,17 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     spatialBlend: 0
+    minDistance: 1
+    maxDistance: 15
     source: {fileID: 0}
-  - name: 
-    clip: {fileID: 0}
-    mixerOutput: {fileID: 0}
-    isLooping: 0
-    volume: 0
-    pitch: 0
+  - name: MainMenuTheme
+    clip: {fileID: 8300000, guid: 26cc1d3056d96467a9c6471bcbc53036, type: 3}
+    mixerOutput: {fileID: -5871889475196536729, guid: c14877f646aead94ab819de38256b961, type: 2}
+    isLooping: 1
+    volume: 0.5
+    pitch: 1
     spatialBlend: 0
+    minDistance: 1
+    maxDistance: 15
     source: {fileID: 0}
   mainMixer: {fileID: 24100000, guid: c14877f646aead94ab819de38256b961, type: 2}

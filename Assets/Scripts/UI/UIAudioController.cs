@@ -3,15 +3,20 @@ using UnityEngine;
 
 public enum UISound
 {
-    TabNav,
-    InventoryNav,
-    InventorySubmit,
-    SliderAdjust,
-    Toggle,
-    Button,
-    Open,
-    Close,
-    Error
+    TabNav, // Glass 002
+    InventoryNav, // Click 003
+    SliderAdjust, // Glass 001
+    Toggle, // Click 002
+    Button, // Select 004
+    Open, // Open 001
+    Close, // Close 001
+    KeycodeError, // Error 008
+    DigitNav, // Glass 002
+    TileRotate, // Drop 001
+    TileConnected, // Maximize 005
+    TileDisconnected, // Minimize 005
+    CircuitComplete, // Confirmation 004
+    TileNav // Tick 001
 }
 
 [System.Serializable]
@@ -29,6 +34,8 @@ public class UIAudioController : MonoBehaviour
 
     private readonly Dictionary<UISound, AudioClip> _clipMap = new();
 
+    [SerializeField] [Range(0f, 1f)] private float _uiVolume = 1f;
+
     private void Awake()
     {
         foreach (var soundClip in _soundClips)
@@ -44,8 +51,13 @@ public class UIAudioController : MonoBehaviour
     {
         if (!_clipMap.TryGetValue(sound, out var clip)) return;
 
-        if (!clip) return;
+        if (!clip || !_audioSource) return;
 
-        _audioSource?.PlayOneShot(clip);
+        _audioSource?.PlayOneShot(clip, _uiVolume);
+    }
+
+    public void SetVolume(float volume)
+    {
+        _uiVolume = Mathf.Clamp01(volume);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 public class KeycodeReceiver : MonoBehaviour, IInteractable
@@ -21,15 +22,20 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 
     [SerializeField] private GameObject _interactionPrompt;
 
-    [SerializeField] private AudioSource _interactionAudio;
+    [SerializeField] private AudioClip _interactionClip;
+    [SerializeField] private AudioMixerGroup _outputGroup;
+    [SerializeField] private float _volume = 1f;
+    [SerializeField] private float _pitch = 1f;
+    [SerializeField] private float _spatialBlend = 0f;
     
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_playerIsNearby)
         {
-            if (_interactionAudio && _interactionAudio?.clip != null)
+            if (_interactionClip)
             {
-                _interactionAudio.PlayOneShot(_interactionAudio.clip);
+                SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup,
+                    _spatialBlend);
             }
             
             UIManager.Instance.OpenKeycodePanel(this);

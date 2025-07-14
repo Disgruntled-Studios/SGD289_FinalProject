@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class AudioUIController : MonoBehaviour, IUIPanelController
@@ -9,7 +10,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     [SerializeField] private Slider _masterVolumeSlider;
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
-    [SerializeField] private Slider _ambianceVolumeSlider;
+    [FormerlySerializedAs("_ambianceVolumeSlider")] [SerializeField] private Slider _ambienceVolumeSlider;
 
     private readonly List<Slider> _sliders = new();
     private int _currentIndex;
@@ -19,7 +20,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         _sliders.Add(_masterVolumeSlider);
         _sliders.Add(_musicVolumeSlider);
         _sliders.Add(_sfxVolumeSlider);
-        _sliders.Add(_ambianceVolumeSlider);
+        _sliders.Add(_ambienceVolumeSlider);
 
         foreach (Slider slider in _sliders)
         {
@@ -34,7 +35,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         _masterVolumeSlider.onValueChanged.AddListener(delegate { SetMasterVolume(); });
         _musicVolumeSlider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         _sfxVolumeSlider.onValueChanged.AddListener(delegate { SetSFXVolume(); });
-        _ambianceVolumeSlider.onValueChanged.AddListener(delegate { SetAmbienceVolume(); });
+        _ambienceVolumeSlider.onValueChanged.AddListener(delegate { SetAmbienceVolume(); });
     }
 
     private void Start()
@@ -58,7 +59,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         _musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         _masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
         _sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-        _ambianceVolumeSlider.value = PlayerPrefs.GetFloat("AmbianceVolume");
+        _ambienceVolumeSlider.value = PlayerPrefs.GetFloat("AmbianceVolume");
 
         SetMusicVolume();
         SetMasterVolume();
@@ -89,7 +90,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
 
     public void SetAmbienceVolume()
     {
-        float volume = _ambianceVolumeSlider.value;
+        float volume = _ambienceVolumeSlider.value;
         SoundManager.Instance.mainMixer.SetFloat("Ambiance", Mathf.Log10(volume)*20);
         PlayerPrefs.SetFloat("AmbianceVolume", volume);
     }
@@ -158,14 +159,17 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         var slider = _sliders[_currentIndex];
         var step = (slider.maxValue - slider.minValue) * 0.1f;
 
-        switch (input.x)
+        if (input.x < -0.5f)
         {
-            case < -0.5f:
-                slider.value -= step;
-                break;
-            case > 0.5f:
-                slider.value += step;
-                break;
+            slider.value -= step;
+            Debug.Log("Calling sound");
+            UIManager.Instance.UIAudioController.PlaySound(UISound.SliderAdjust);
+        }
+        else if (input.x > 0.5f)
+        {
+            slider.value += step;
+            Debug.Log("Calling sound");
+            UIManager.Instance.UIAudioController.PlaySound(UISound.SliderAdjust);
         }
     }
 
@@ -191,5 +195,13 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         {
             handle.color = highlighted ? Color.yellow : Color.white;
         }
+    }
+
+    private void ApplyVolumeForSlider(Slider slider)
+    {
+        if (slider == _masterVolumeSlider) SetMasterVolume();
+        else if (slider == _musicVolumeSlider) SetMusicVolume();
+        else if (slider == _sfxVolumeSlider) SetSFXVolume();
+        else if (slider == _ambienceVolumeSlider) SetAmbienceVolume();
     }
 }

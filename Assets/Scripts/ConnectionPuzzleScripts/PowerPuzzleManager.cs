@@ -86,6 +86,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         if (_isPuzzleDone) return;
 
         _isPuzzleDone = true;
+        UIManager.Instance.UIAudioController.PlaySound(UISound.CircuitComplete);
 
         if (hasCameraCut)
         {
@@ -174,6 +175,7 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
                 break;
         }
 
+        UIManager.Instance.UIAudioController.PlaySound(UISound.TileNav);
         _tileSelection.transform.localPosition = new Vector3(pos.x, pos.y, 0);
     }
 
@@ -189,6 +191,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         {
             _tileSelection.selectedOBJ.transform.Rotate(0, 0, -90f);
         }
+
+        UIManager.Instance.UIAudioController.PlaySound(UISound.TileRotate);
         
         CheckTilesConnection();
     }

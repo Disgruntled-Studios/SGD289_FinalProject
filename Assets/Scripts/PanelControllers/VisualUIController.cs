@@ -150,10 +150,12 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
             if (input.x < -0.5f)
             {
                 s.value -= step;
+                UIManager.Instance.UIAudioController.PlaySound(UISound.SliderAdjust);
             }
             else if (input.x > 0.5f)
             {
                 s.value += step;
+                UIManager.Instance.UIAudioController.PlaySound(UISound.SliderAdjust);
             }
         }
     }
@@ -164,6 +166,7 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         if (selected is Toggle toggle)
         {
             toggle.isOn = !toggle.isOn;
+            UIManager.Instance.UIAudioController.PlaySound(UISound.Toggle);
         }
     }
 
