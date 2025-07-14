@@ -64021,6 +64021,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 36894817692239466, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e029b497575c78c43bc5802e5db07ef0, type: 3}
     - target: {fileID: 293477655540169889, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -64148,6 +64152,14 @@ PrefabInstance:
     - target: {fileID: 2782399438340073994, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930063820548651367, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082249263575324710, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: _uiVolume
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3392039254553876623, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_AnchorMax.y
@@ -64475,6 +64487,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8345869699611034023, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913611558699890046, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e1a1df09cdb20c419ce8b28c0f37fe1, type: 3}
+    - target: {fileID: 9110632481363651142, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9156447550842388855, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
@@ -142966,7 +142986,7 @@ MonoBehaviour:
     minDistance: 1
     maxDistance: 15
     source: {fileID: 0}
-  mainMixer: {fileID: 0}
+  mainMixer: {fileID: 24100000, guid: c14877f646aead94ab819de38256b961, type: 2}
 --- !u!4 &1626827065
 Transform:
   m_ObjectHideFlags: 0

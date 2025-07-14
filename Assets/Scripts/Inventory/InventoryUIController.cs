@@ -115,6 +115,8 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
         _selectedIndex = newIndex;
         HighlightSlot(_selectedIndex);
+        
+        UIManager.Instance.UIAudioController.PlaySound(UISound.InventoryNav);
 
         UIManager.Instance.SetEventSystemObject(_slots[_selectedIndex].gameObject);
     }

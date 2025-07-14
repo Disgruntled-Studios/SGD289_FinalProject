@@ -11,7 +11,12 @@ public enum UISound
     Button,
     Open,
     Close,
-    Error
+    Error,
+    DigitAdjust,
+    TileRotate,
+    TileConnected,
+    TileDisconnected,
+    CircuitComplete
 }
 
 [System.Serializable]
@@ -29,6 +34,8 @@ public class UIAudioController : MonoBehaviour
 
     private readonly Dictionary<UISound, AudioClip> _clipMap = new();
 
+    [SerializeField] [Range(0f, 1f)] private float _uiVolume = 1f;
+
     private void Awake()
     {
         foreach (var soundClip in _soundClips)
@@ -44,8 +51,13 @@ public class UIAudioController : MonoBehaviour
     {
         if (!_clipMap.TryGetValue(sound, out var clip)) return;
 
-        if (!clip) return;
+        if (!clip || !_audioSource) return;
 
-        _audioSource?.PlayOneShot(clip);
+        _audioSource?.PlayOneShot(clip, _uiVolume);
+    }
+
+    public void SetVolume(float volume)
+    {
+        _uiVolume = Mathf.Clamp01(volume);
     }
 }

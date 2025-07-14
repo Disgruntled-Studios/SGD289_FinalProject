@@ -115,6 +115,7 @@ public class UIManager : MonoBehaviour
 
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
+        _uiAudio.PlaySound(UISound.Open);
         IsGamePaused = true;
 
         _currentPanelIndex = 0;
@@ -146,6 +147,7 @@ public class UIManager : MonoBehaviour
         
         _hudPanel.SetActive(true);
         _pausePanel.SetActive(false);
+        _uiAudio.PlaySound(UISound.Close);
         IsGamePaused = false;
         
         InputManager.Instance.SwitchToDefaultInput();
@@ -196,6 +198,8 @@ public class UIManager : MonoBehaviour
     {
         var newIndex = (_currentPanelIndex + direction + _subPanels.Count) % _subPanels.Count;
         SetActivePanel(newIndex);
+
+        _uiAudio.PlaySound(UISound.TabNav);
     }
 
     private void HighlightActiveButton(int index)
