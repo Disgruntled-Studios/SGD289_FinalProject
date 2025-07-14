@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput Input => InputManager.Instance.PlayerInput;
 
+    public bool IsMovementLocked { get; set; } = false;
+
     private void Awake()
     {
         _health = GetComponent<PlayerHealth>();
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead) return;
+        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead || IsMovementLocked) return;
 
         if (_isSprinting && _currentMoveInput < 0.01f)
         {
@@ -137,17 +139,21 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (IsMovementLocked) return;
+        
         _currentMoveInput = context.ReadValue<float>();
     }
 
     public void OnRotate(InputAction.CallbackContext context)
     {
+        if (IsMovementLocked) return;
+        
         _currentRotationInput = context.ReadValue<float>();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context) || _gunController.IsAiming) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || _gunController.IsAiming || IsMovementLocked) return;
 
         if (_standingCollider.enabled)
         {
@@ -183,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (IsCrouching) return;
+        if (IsCrouching || IsMovementLocked) return;
         
         if (context.started && _gunController.HasGun)
         {
@@ -204,20 +210,22 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         _gunController.HandleShoot();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         return;
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        if (IsMovementLocked) return;
+        
         if (context.started)
         {
             _isSprinting = true;
@@ -235,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         if (_currentInteractable != null)
         {
@@ -258,14 +266,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnSpecial(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         // _gunController.StartCoroutine(_gunController.ReloadGun());
     }
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context)) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         UIManager.Instance.OpenPauseMenu();
     }
@@ -442,7 +450,6 @@ public class PlayerController : MonoBehaviour
                 currentHighlightedObj = null;
             }
         }
-        
     }
 
     public void ClearCurrentInteractable(IInteractable interactable)

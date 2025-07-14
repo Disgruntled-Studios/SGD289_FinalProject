@@ -56,7 +56,8 @@ public class PlayerHealth : MonoBehaviour
     {
         const float amount = 1.0f;
         Health.Damage(amount);
-        
+
+        GameManager.Instance.PlayerController.IsMovementLocked = true;
         _animController.TriggerHit();
 
         switch (HitsRemaining)

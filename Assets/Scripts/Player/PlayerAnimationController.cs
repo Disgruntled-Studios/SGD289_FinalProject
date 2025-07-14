@@ -146,5 +146,10 @@ public class PlayerAnimationController : MonoBehaviour
     {
         return _defaultMinStepGap;
     }
+
+    public void OnHitAnimationComplete()
+    {
+        _playerController.IsMovementLocked = false;
+    }
 }
 
