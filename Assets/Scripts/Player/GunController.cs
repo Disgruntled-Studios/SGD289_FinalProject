@@ -32,7 +32,7 @@ public class GunController : MonoBehaviour
     [HideInInspector]public ShootableObject closeObj;
     
     private const float MaxLaserDistance = 100f;
-    private const float AimRadius = 0.25f;
+    private const float AimRadius = 0.175f;
     
     private void Start()
     {
