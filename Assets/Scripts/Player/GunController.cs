@@ -32,6 +32,7 @@ public class GunController : MonoBehaviour
     [HideInInspector]public ShootableObject closeObj;
     
     private const float MaxLaserDistance = 100f;
+    private const float AimRadius = 0.25f;
     
     private void Start()
     {
@@ -94,8 +95,7 @@ public class GunController : MonoBehaviour
     {
         _lr.enabled = true;
 
-        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, MaxLaserDistance,
-                Physics.DefaultRaycastLayers))
+        if (Physics.SphereCast(laserStart.position, AimRadius, laserStart.forward, out var hit, MaxLaserDistance, Physics.DefaultRaycastLayers))
         {
             var isShootable = (_shootableLayers.value & (1 << hit.collider.gameObject.layer)) != 0;
 
@@ -112,46 +112,42 @@ public class GunController : MonoBehaviour
         }
     }
 
-    public void ShootForTank()
+    private void ShootForTank()
     {
-        if (_isAiming && _canShoot && !_playerController.IsCrouching)
+        if (!_isAiming || !_canShoot || _playerController.IsCrouching) return;
+
+        Debug.Log("Shooting");
+
+        _animationController.Shoot();
+        _gunShot.PlayOneShot(_gunShot.clip);
+
+        if (Physics.SphereCast(laserStart.position, AimRadius, laserStart.forward, out var hit, MaxLaserDistance, Physics.DefaultRaycastLayers))
         {
-            Debug.Log("Shooting");
-            _animationController.Shoot();
-            _gunShot.PlayOneShot(_gunShot.clip);
+            var hitObj = hit.collider.gameObject;
+            var isShootable = (_shootableLayers.value & (1 << hitObj.layer)) != 0;
 
-            if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 100f,
-                    Physics.DefaultRaycastLayers))
+            if (!isShootable) return;
+
+            var enemyRef = hitObj.GetComponent<EnemyBehavior>() ?? hitObj.GetComponentInParent<EnemyBehavior>();
+            var shootable = hitObj.GetComponent<ShootableObject>();
+
+            shootable?.OnShot();
+
+            if (shootable == null && closeObj != null)
             {
-                var hitObj = hit.collider.gameObject;
-                var isShootable = (_shootableLayers.value & (1 << hitObj.layer)) != 0;
+                closeObj.OnShot();
+            }
 
-                if (isShootable)
-                {
-                    var enemyRef = hitObj.GetComponent<EnemyBehavior>() ?? hitObj.GetComponentInParent<EnemyBehavior>();
-                    var shootable = hitObj.GetComponent<ShootableObject>();
-                    
-                    shootable?.OnShot();
-
-                    if (shootable == null && closeObj != null)
-                    {
-                        closeObj.OnShot();
-                    }
-
-                    if (enemyRef?.health?.IsDead == false)
-                    {
-                        enemyRef.health.Damage(_damageAmount);
-                    }
-                }
+            if (enemyRef?.health?.IsDead == false)
+            {
+                enemyRef.health.Damage(_damageAmount);
             }
         }
 
         StartCoroutine(ShootDelay());
     }
 
-
-    
-    public IEnumerator ShootDelay()
+    private IEnumerator ShootDelay()
     {
         _canShoot = false;
         yield return new WaitForSeconds(.75f);
