@@ -10,10 +10,10 @@ public class ShootableObject : MonoBehaviour, IInteractable
 
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        if (!isOpen)
-        {
-            UIManager.Instance.StartPopUpText(dialoguePopUpTxt);
-        }
+        // if (!isOpen)
+        // {
+        //     UIManager.Instance.StartPopUpText(dialoguePopUpTxt);
+        // }
     }
 
     public void OnEnter()

@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GunController _gunController;
     public GunController GunController => _gunController;
     [SerializeField] private CapsuleCollider _standingCollider;
-    [SerializeField] private SphereCollider _crouchCollider;
     [SerializeField] private LineRenderer _laser;
     [SerializeField] private PlayerInventory _inventory;
     private PlayerHealth _health;
@@ -25,8 +24,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Transform _headCheck;
     [SerializeField] private LayerMask _overheadLayer;
-    private const float PlayerHeight = 2.22f; // Height of capsule collider
-
+    
+    private const float CrouchHeight = 1.75f;
+    private float _originalHeight;
+    private Vector3 _originalCenter;
+    [SerializeField] private SphereCollider _headCollider;
+    
     private const float DefaultSpeedMultiplier = 1f;
     private const float SprintSpeedMultiplier = 1.75f;
     private const float CrouchSpeedMultiplier = 0.5f;
@@ -73,7 +76,6 @@ public class PlayerController : MonoBehaviour
         _health = GetComponent<PlayerHealth>();
         _currentSpeed = _normalSpeed;
         _currentRotationSpeed = _rotationSpeed;
-        _crouchCollider.enabled = false;
         _laser.enabled = false;
 
         _rb.WakeUp();
@@ -81,6 +83,9 @@ public class PlayerController : MonoBehaviour
         _rb.angularVelocity = Vector3.zero;
         _rb.linearDamping = GroundDrag;
 
+        _originalHeight = _standingCollider.height;
+        _originalCenter = _standingCollider.center;
+        
         Physics.SyncTransforms();
     }
 
@@ -153,9 +158,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        if (InputManager.Instance.ShouldBlockInput(context) || _gunController.IsAiming || IsMovementLocked) return;
+        if (InputManager.Instance.ShouldBlockInput(context) || _gunController.IsAiming || IsMovementLocked || _isSprinting) return;
 
-        if (_standingCollider.enabled)
+        if (!_isCrouching)
         {
             SetCrouchState(true);
         }
@@ -163,28 +168,44 @@ public class PlayerController : MonoBehaviour
         {
             SetCrouchState(false);
         }
-        else
-        {
-            Debug.Log("Uncrouch blocked");
-        }
 
         UpdateSpeed();
     }
 
     private bool CanUncrouch()
     {
-        var origin = _headCheck.position;
-        const float clearance = 0.9f;
-        
-        return !Physics.Raycast(origin, Vector3.up, clearance, _overheadLayer);
+        if (!_standingCollider) return false;
+
+        var standingHeight = _originalHeight;
+        var currentHeight = _standingCollider.height;
+        var heightDifference = standingHeight - currentHeight;
+
+        var currentTop = transform.position.y + _standingCollider.center.y + (currentHeight * 0.5f);
+        var rayOrigin = new Vector3(transform.position.x, currentTop, transform.position.z);
+
+        return !Physics.Raycast(rayOrigin, Vector3.up, heightDifference, _overheadLayer);
     }
 
     private void SetCrouchState(bool isCrouching)
     {
         _isCrouching = isCrouching;
         _animationController.Crouch(_isCrouching);
-        _standingCollider.enabled = !_isCrouching;
-        _crouchCollider.enabled = _isCrouching;
+
+        if (_headCollider)
+        {
+            _headCollider.enabled = _isCrouching;
+        }
+        
+        if (!_standingCollider) return;
+
+        var targetHeight = isCrouching ? CrouchHeight : _originalHeight;
+        var heightDiff = _originalHeight - targetHeight;
+
+        _standingCollider.height = targetHeight;
+
+        var newCenter = _originalCenter;
+        newCenter.y -= heightDiff * 0.5f;
+        _standingCollider.center = newCenter;
     }
 
     public void OnAim(InputAction.CallbackContext context)
@@ -224,7 +245,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (IsMovementLocked) return;
+        if (IsMovementLocked || _isCrouching) return;
         
         if (context.started)
         {
@@ -310,7 +331,18 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        _isGrounded = Physics.Raycast(transform.position, Vector3.down, PlayerHeight * 0.5f + 0.2f, _groundLayer);
+        if (!_standingCollider)
+        {
+            _isGrounded = false;
+            return;
+        }
+
+        var height = _standingCollider.height;
+        var radius = _standingCollider.radius;
+
+        var checkDistance = (height * 0.5f) - radius + 0.2f;
+
+        _isGrounded = Physics.Raycast(transform.position, Vector3.down, checkDistance, _groundLayer);
     }
 
     private void UpdateSpeed()
