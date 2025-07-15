@@ -13,9 +13,6 @@ public class GunController : MonoBehaviour
     [SerializeField] private Transform laserStart;
     [SerializeField] private LayerMask _shootableLayers; // Enemy and Shootable
     [SerializeField] private float _damageAmount = 50f;
-    [SerializeField, Range(1,10)] float reloadSpeed = 5f;
-    [SerializeField] int maxMagLimit = 12;
-    [SerializeField] int currentAmmoMagAmt = 0;
     [SerializeField] string _gunItemName;
 
     [Header("Laser")]
@@ -33,11 +30,9 @@ public class GunController : MonoBehaviour
     public bool _canShoot;
     public bool HasGun { get; set; }
     [HideInInspector]public ShootableObject closeObj;
-
-    private const float MinVisualDistance = 5f;
+    
     private const float MaxLaserDistance = 100f;
-
-
+    
     private void Start()
     {
         if (_lr)
@@ -48,7 +43,6 @@ public class GunController : MonoBehaviour
 
         _animationController = GetComponentInParent<PlayerAnimationController>();
         _canShoot = true;
-        //StartCoroutine(ReloadGun());
         transform.position = gunPoint.position;
         transform.rotation = gunPoint.rotation;
         _lr.colorGradient = greenLaserGradient;
@@ -100,15 +94,15 @@ public class GunController : MonoBehaviour
     {
         _lr.enabled = true;
 
-        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, MaxLaserDistance))
+        if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, MaxLaserDistance,
+                Physics.DefaultRaycastLayers))
         {
             var isShootable = (_shootableLayers.value & (1 << hit.collider.gameObject.layer)) != 0;
 
             _lr.material = isShootable ? redLaser : greenLaser;
             _lr.colorGradient = isShootable ? redLaserGradient : greenLaserGradient;
 
-            var visualDistance = Mathf.Max(hit.distance, MinVisualDistance);
-            _lr.SetPosition(1, new Vector3(0, 0, visualDistance));
+            _lr.SetPosition(1, new Vector3(0, 0, hit.distance));
         }
         else
         {
@@ -125,44 +119,34 @@ public class GunController : MonoBehaviour
             Debug.Log("Shooting");
             _animationController.Shoot();
             _gunShot.PlayOneShot(_gunShot.clip);
-            currentAmmoMagAmt--;
-            //UIManager.Instance.UpdateAmmoText(currentAmmoMagAmt, maxMagLimit);
-            //Play SFX 
-            //Play VFX
 
-            //Shoot a ray to see if a monster is going to get hit.
-            RaycastHit hit;
-
-            if (Physics.Raycast(laserStart.position, laserStart.forward, out hit, 100f, _shootableLayers))
+            if (Physics.Raycast(laserStart.position, laserStart.forward, out var hit, 100f,
+                    Physics.DefaultRaycastLayers))
             {
-                //Debug.Log("hit " + hit.collider.transform.gameObject.name);
-                EnemyBehavior enemyRef = hit.transform.gameObject.GetComponent<EnemyBehavior>();
-                //hit.transform.gameObject.SetActive(false);
-                //Affect enemies health.
-                if (enemyRef == null)
-                {
-                    enemyRef = hit.transform.gameObject.GetComponentInParent<EnemyBehavior>();
-                    //Debug.Log(hit.transform.gameObject.GetComponent<EnemyBehavior>().health.CurrentHealth);
-                }
+                var hitObj = hit.collider.gameObject;
+                var isShootable = (_shootableLayers.value & (1 << hitObj.layer)) != 0;
 
-                if (hit.transform.gameObject.GetComponent<ShootableObject>())
+                if (isShootable)
                 {
-                    hit.transform.gameObject.GetComponent<ShootableObject>().OnShot();
-                }
-                else if (closeObj != null)
-                {
-                    closeObj.OnShot();
-                }
+                    var enemyRef = hitObj.GetComponent<EnemyBehavior>() ?? hitObj.GetComponentInParent<EnemyBehavior>();
+                    var shootable = hitObj.GetComponent<ShootableObject>();
+                    
+                    shootable?.OnShot();
 
-                if (enemyRef != null && !enemyRef.health.IsDead)
-                {
-                    enemyRef.health.Damage(_damageAmount);
-                    Debug.Log(enemyRef.health.CurrentHealth + " health remaining " + enemyRef.name);
+                    if (shootable == null && closeObj != null)
+                    {
+                        closeObj.OnShot();
+                    }
+
+                    if (enemyRef?.health?.IsDead == false)
+                    {
+                        enemyRef.health.Damage(_damageAmount);
+                    }
                 }
-                // BJ NOTE: Raycast may hit hands or eyes which do not have enemybehavior component. May need to check against component in parent as well
             }
-            StartCoroutine(ShootDelay());
         }
+
+        StartCoroutine(ShootDelay());
     }
 
 
