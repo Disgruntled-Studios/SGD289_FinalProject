@@ -117,7 +117,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (HitsRemaining <= 0 && !GameManager.Instance.IsGameOver)
         {
-            
             onDeath.Invoke();
         }
     }
