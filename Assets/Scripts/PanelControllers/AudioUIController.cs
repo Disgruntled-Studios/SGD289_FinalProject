@@ -26,6 +26,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         {
             slider.maxValue = 1;
             slider.minValue = 0.0001f;
+            slider.value = 0.5f;
         }
 
         // _masterVolumeSlider.value = SoundManager.Instance.MasterVolume;
@@ -61,6 +62,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         _sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
         _ambienceVolumeSlider.value = PlayerPrefs.GetFloat("AmbianceVolume");
 
+
         SetMusicVolume();
         SetMasterVolume();
         SetSFXVolume();
@@ -70,7 +72,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     public void SetMasterVolume()
     {
         float volume = _masterVolumeSlider.value;
-        SoundManager.Instance.mainMixer.SetFloat("Master", Mathf.Log10(volume)*20);
+        SoundManager.Instance.mainMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("MasterVolume", volume);
     }
 

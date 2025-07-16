@@ -106,7 +106,8 @@ public class PlayerHealth : MonoBehaviour
                     {
                         HitsRemaining = 2;
                         _vignette.intensity.value = FirstHitIntensity;
-                        _animController.SetInjured(false);
+                        IsInjured = false;
+                        _animController.SetInjured(IsInjured);
                     }
                     break;
             }
@@ -125,6 +126,8 @@ public class PlayerHealth : MonoBehaviour
     {
         _vignette.intensity.value = 0f;
         HitsRemaining = 3;
+        IsInjured = false;
+        _animController.SetInjured(IsInjured);
         Health.CurrentHealth = Health.MaxHealth;
     }
 }

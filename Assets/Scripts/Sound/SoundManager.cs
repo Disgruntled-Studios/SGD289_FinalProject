@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Audio;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         foreach (Sound s in sounds)
@@ -40,13 +42,29 @@ public class SoundManager : MonoBehaviour
             s.source.loop = s.isLooping;
             s.source.spatialBlend = s.spatialBlend;
         }
+        
+    }
 
+    void Start()
+    {
         if (PlayerPrefs.HasKey("MasterVolume") || PlayerPrefs.HasKey("MusicVolume") || PlayerPrefs.HasKey("SFXVolume") || PlayerPrefs.HasKey("AmbianceVolume"))
         {
-            mainMixer.SetFloat("Master", PlayerPrefs.GetFloat("MasterVolume"));
-            mainMixer.SetFloat("Music", PlayerPrefs.GetFloat("MusicVolume"));
-            mainMixer.SetFloat("SFX", PlayerPrefs.GetFloat("SFXVolume"));
-            mainMixer.SetFloat("Ambiance", PlayerPrefs.GetFloat("AmbianceVolume"));
+            mainMixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20);
+            mainMixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume")) * 20);
+            mainMixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume")) * 20);
+            mainMixer.SetFloat("Ambiance", Mathf.Log10(PlayerPrefs.GetFloat("AmbianceVolume")) * 20);
+        }
+        else
+        {
+            mainMixer.SetFloat("Master", Mathf.Log10(0.5f) * 20);
+            mainMixer.SetFloat("Music", Mathf.Log10(0.5f) * 20);
+            mainMixer.SetFloat("SFX", Mathf.Log10(0.5f) * 20);
+            mainMixer.SetFloat("Ambiance", Mathf.Log10(0.5f) * 20);
+            
+            PlayerPrefs.SetFloat("MasterVolume", 0.5f);
+            PlayerPrefs.SetFloat("MusicVolume", 0.5f);
+            PlayerPrefs.SetFloat("SFXVolume", 0.5f);
+            PlayerPrefs.SetFloat("AmbianceVolume", 0.5f);
         }
     }
 

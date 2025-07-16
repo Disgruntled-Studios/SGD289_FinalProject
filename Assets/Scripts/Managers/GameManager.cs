@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
         Cursor.lockState = CursorLockMode.Confined;
     }
 
@@ -91,7 +92,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGameOver()
     {
-        PlayerController.enabled = false;
         CallAnimationPause();
         IsGameOver = true;
         
@@ -113,14 +113,13 @@ public class GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-        
-        UIManager.Instance.CloseGameOverScreen();
 
-        PlayerController.enabled = true;
+        UIManager.Instance.CloseGameOverScreen();
         Player.GetComponent<PlayerHealth>().ResetVignette();
         ResetEnemies();
         CallAnimationUnpause();
         IsGameOver = false;
+        PlayerController.IsMovementLocked = false;
     }
 
     public void ResetEnemies()
@@ -154,7 +153,7 @@ public class GameManager : MonoBehaviour
 
         foreach (AnimationPause animPause in animPauses)
         {
-            Debug.Log(animPause.name + "'s animator is set to zero speed.");
+            Debug.Log(animPause.name + "'s animator is set to one speed.");
             animPause.Unpause();
         }
     }
