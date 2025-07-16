@@ -20,10 +20,11 @@ public class PlayerHealth : MonoBehaviour
     private const float SecondHitIntensity = 0.55f;
     private const float ThirdHitIntensity = 1.0f;
 
-    public UnitHealth Health { get; private set; }
+    // public UnitHealth Health { get; private set; }
 
     public UnityEvent onDeath;
 
+    public bool IsDead { get; private set; }
     public bool IsInjured { get; private set; }
 
     public int HitsRemaining { get; private set; } = 3;
@@ -32,7 +33,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        Health = new UnitHealth(MaxHealth);
+        // Health = new UnitHealth(MaxHealth);
+        IsDead = false;
         _volume.profile.TryGet(out _vignette);
     }
 
@@ -54,8 +56,8 @@ public class PlayerHealth : MonoBehaviour
     [ContextMenu("Take Damage")]
     public void TakeDamage()
     {
-        const float amount = 1.0f;
-        Health.Damage(amount);
+        // const float amount = 1.0f;
+        // Health.Damage(amount);
 
         GameManager.Instance.PlayerController.IsMovementLocked = true;
         _animController.TriggerHit();
@@ -84,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float amount)
     {
-        Health.Heal(amount);
+        // Health.Heal(amount);
     }
 
     void Update()
@@ -116,18 +118,25 @@ public class PlayerHealth : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (HitsRemaining <= 0 && !GameManager.Instance.IsGameOver)
+        if (HitsRemaining <= 0 && !GameManager.Instance.IsGameOver && !IsDead)
         {
-            onDeath.Invoke();
+            _animController.SetDeathTrigger();
+            IsDead = true;
         }
+    }
+
+    public void CallOnDeath()
+    {
+        onDeath?.Invoke();
     }
     
     public void ResetVignette()
     {
         _vignette.intensity.value = 0f;
         HitsRemaining = 3;
+        IsDead = false;
         IsInjured = false;
         _animController.SetInjured(IsInjured);
-        Health.CurrentHealth = Health.MaxHealth;
+        // Health.CurrentHealth = Health.MaxHealth;
     }
 }

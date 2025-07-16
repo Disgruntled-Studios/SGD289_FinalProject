@@ -48,7 +48,7 @@ public class EndAnimationController : MonoBehaviour
         Destroy(UIManager.Instance.gameObject);
         if (endSceneSong != string.Empty)
         {
-            SoundManager.Instance.FadeInSFX(endSceneSong, 42f, 8f);
+            SoundManager.Instance.FadeInSFX(endSceneSong, 43f, 8f);
         }
         cameraDirector.Play();
         playerEndAnim.speed = 1;
@@ -59,6 +59,7 @@ public class EndAnimationController : MonoBehaviour
     {
         Debug.Log("Ending Cutscene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Destroy(TransitionManager.Instance.gameObject);
     }
 
 }

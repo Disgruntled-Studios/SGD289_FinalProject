@@ -188,6 +188,19 @@ public class EnemyBehavior : MonoBehaviour
                 break;
 
             case BehaviorState.chasing:
+
+                if (playerRef.GetComponent<PlayerHealth>().IsDead)
+                {
+                    Debug.Log("Player is dead moving on");
+                    anim.SetBool("IsMoving", false);
+                    anim.SetBool("Attacking", false);
+                    meshAgent.SetDestination(patrolPoints[patrolIndex].position);
+                    meshAgent.speed = patrolSpeed;
+                    currentState = BehaviorState.patrolling;
+                    return;
+                }
+
+
                 if (leftEyeLight.color != Color.red || !leftEyeLight.enabled)
                 {
                     leftEyeLight.color = Color.red;
@@ -196,7 +209,7 @@ public class EnemyBehavior : MonoBehaviour
                     rightEyeLight.enabled = true;
                 }
 
-                if (playerDist <= attackDistance && !health.IsDead)
+                if (playerDist <= attackDistance && !health.IsDead && !playerRef.GetComponent<PlayerHealth>().IsDead)
                 {
                     transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
                     anim.SetBool("IsMoving", false);
@@ -214,14 +227,14 @@ public class EnemyBehavior : MonoBehaviour
                 }
 
                 if (!meshAgent.isStopped)
-                {
-                    anim.SetBool("IsMoving", false);
-                    anim.SetBool("IsChasing", true);
-                }
-                else
-                {
-                    anim.SetBool("IsChasing", false);
-                }
+                    {
+                        anim.SetBool("IsMoving", false);
+                        anim.SetBool("IsChasing", true);
+                    }
+                    else
+                    {
+                        anim.SetBool("IsChasing", false);
+                    }
 
                 break;
             case BehaviorState.Resting:
@@ -303,6 +316,15 @@ public class EnemyBehavior : MonoBehaviour
     {
         while (gameObject.activeInHierarchy)
         {
+            if (playerRef.GetComponent<PlayerHealth>().IsDead || GameManager.Instance.IsGameOver)
+            {
+                fov.enabled = false;
+            }
+            else if (!fov.enabled)
+            {
+                fov.enabled = true;
+            }
+            
             if (fov.isPlayerInSight && currentState == BehaviorState.patrolling)
             {
                 currentState = BehaviorState.chasing;
