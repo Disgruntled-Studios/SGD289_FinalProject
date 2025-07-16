@@ -30,12 +30,15 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     [SerializeField] private Transform _highlightableObj;
     public Transform HighlightableObj => _highlightableObj;
 
-    [SerializeField] private GameObject _spriteObject;
+    [FormerlySerializedAs("_spriteObject")] [SerializeField] private GameObject _interactionPrompt;
 
     private bool _isBuilding = false;
     private bool _isDoorOpened = false;
 
     public UnityEvent onDoorOpen;
+
+    private bool _hasBeenInteractedWith;
+    public bool HasBeenInteractedWith => _hasBeenInteractedWith;
 
     public void Unlock()
     {
@@ -49,6 +52,8 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         if (_isDoorOpened) return;
         
         OpenDoor();
+        _hasBeenInteractedWith = true;
+        _interactionPrompt.SetActive(false);
     }
 
     private void BuildPressure()
@@ -86,7 +91,6 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
 
     private void OpenDoor()
     {
-        Debug.Log("Opening door");
         
         _isDoorOpened = true;
         _soundComponent?.PlaySFX(_pressureSfx);
@@ -106,25 +110,29 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
 
     public void OnEnter()
     {
+        if (_hasBeenInteractedWith) return;
+        
         if (!_isUnlocked)
         {
-            UIManager.Instance.StartPopUpText("It's locked by a code.", 0f);
+            UIManager.Instance.StartPopUpText("An electromagnetic field is blocking the valve.", 0f, false);
         }
         else
         {
-            _spriteObject.SetActive(true);
+            _interactionPrompt.SetActive(true);
         }
     }
 
     public void OnExit()
     {
+        if (_hasBeenInteractedWith) return;
+        
         if (!_isUnlocked)
         {
             UIManager.Instance.ClearPopUpText();
         }
         else
         {
-            _spriteObject.SetActive(false);
+            _interactionPrompt.SetActive(false);
         }
     }
 
