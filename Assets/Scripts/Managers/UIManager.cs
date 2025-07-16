@@ -42,9 +42,10 @@ public class UIManager : MonoBehaviour
     public List<InventorySlotController> InventorySlots => _inventorySlots;
     private PlayerInventory PlayerInventory => GameManager.Instance.PlayerInventory;
     [SerializeField] private GameObject _gunImage;
+    [SerializeField] private GameObject _inventoryIcon;
+    [SerializeField] private GameObject _inventoryIndicator;
 
     [Header("Keycode UI Elements")] 
-    [SerializeField] private TMP_Text _keycodePrompt;
     [SerializeField] private List<TMP_Text> _digitDisplays;
     [SerializeField] private List<GameObject> _digitIcons;
     
@@ -70,8 +71,8 @@ public class UIManager : MonoBehaviour
     public KeycodeUIController KeycodeUIController => _keycodeUIController;
 
     private Coroutine _popUpCoroutine;
-    
-    public bool PopUpTypingEnabled { get; set; }
+
+    public bool PopUpTypingEnabled { get; set; } = true;
     
     private void Awake()
     {
@@ -101,7 +102,7 @@ public class UIManager : MonoBehaviour
             PlayerInventory.OnInventoryChanged += HandleInventoryChanged;
         }
 
-        _keycodeUIController = new KeycodeUIController(_keycodePanel, _keycodePrompt, _digitDisplays);
+        _keycodeUIController = new KeycodeUIController(_keycodePanel, _digitDisplays);
 
         ToggleGunImage(false);
     }
@@ -112,6 +113,16 @@ public class UIManager : MonoBehaviour
         {
             _hudPanel.SetActive(true);
         }
+    }
+
+    public void ActivateInventoryIndicator()
+    {
+        _inventoryIndicator.SetActive(true);
+    }
+
+    public void DeactivateInventoryIndicator()
+    {
+        _inventoryIndicator.SetActive(false);
     }
 
     #region UI Navigation
@@ -157,6 +168,11 @@ public class UIManager : MonoBehaviour
         _pausePanel.SetActive(false);
         _uiAudio.PlaySound(UISound.Close);
         IsGamePaused = false;
+
+        if (_inventoryController.HaveAllItemsBeenRead())
+        {
+            DeactivateInventoryIndicator();
+        }
         
         InputManager.Instance.SwitchToDefaultInput();
     }
@@ -374,11 +390,11 @@ public class UIManager : MonoBehaviour
 
     #region Keycode Methods
 
-    public void OpenKeycodePanel(KeycodeReceiver receiver, string prompt = "Enter Keycode: ")
+    public void OpenKeycodePanel(KeycodeReceiver receiver)
     {
         ClearPopUpText();
         
-        _keycodeUIController.Open(receiver, prompt);
+        _keycodeUIController.Open(receiver);
 
         foreach (var icon in _digitIcons)
         {
