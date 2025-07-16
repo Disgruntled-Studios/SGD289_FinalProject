@@ -109,6 +109,14 @@ public class EnemyBehavior : MonoBehaviour
             StateHandler();
             //anim.SetBool("IsMoving", !meshAgent.isStopped);
         }
+        else if (GameManager.Instance.IsGameOver && currentState != BehaviorState.patrolling)
+        {
+            Debug.Log("Game OVer");
+            currentState = BehaviorState.patrolling;
+            StartCoroutine("SetNextPatrolPoint");
+            meshAgent.speed = patrolSpeed;
+            return;
+        }
     }
 
 
@@ -124,10 +132,10 @@ public class EnemyBehavior : MonoBehaviour
         switch (currentState)
         {
             case BehaviorState.patrolling:
-                if (leftEyeLight.enabled == false || leftEyeLight.color == Color.red)
+                if (leftEyeLight.enabled == true || leftEyeLight.color == Color.red)
                 {
-                    leftEyeLight.enabled = true;
-                    rightEyeLight.enabled = true;
+                    leftEyeLight.enabled = false;
+                    rightEyeLight.enabled = false;
                     leftEyeLight.color = Color.yellow;
                     rightEyeLight.color = Color.yellow;
                 }
@@ -176,6 +184,7 @@ public class EnemyBehavior : MonoBehaviour
                     StartCoroutine("SetNextPatrolPoint");
                     meshAgent.speed = patrolSpeed;
                 }
+
                 break;
 
             case BehaviorState.chasing:
@@ -213,6 +222,7 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     anim.SetBool("IsChasing", false);
                 }
+
                 break;
             case BehaviorState.Resting:
 

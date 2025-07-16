@@ -172,6 +172,7 @@ public class UIManager : MonoBehaviour
     public void CloseGameOverScreen()
     {
         _gameOverPanel.SetActive(false);
+        InputManager.Instance.SwitchToDefaultInput();
     }
 
     private void SetActivePanel(int index)
