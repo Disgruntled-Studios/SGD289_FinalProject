@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1077335546}
+      - m_Target: {fileID: 1182304075}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328224c8901200a4d9b288e92532b36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuController: {fileID: 1077335546}
+  _menuController: {fileID: 0}
   _buttonText: {fileID: 488938239}
   _highlightScale: 1.2
   _defaultScale: 1
@@ -893,55 +893,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832519927}
   m_CullTransparentMesh: 1
---- !u!1 &1077335545
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1077335547}
-  - component: {fileID: 1077335546}
-  m_Layer: 0
-  m_Name: MainMenuController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1077335546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1077335545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e1b2ed927031945a4c96ee0a7d91fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firstLevelName: PowerPlant
-  _startButtonEffects: {fileID: 1563489767}
-  _quitButtonEffects: {fileID: 171061974}
-  _startButton: {fileID: 1563489764}
-  _quitButton: {fileID: 171061971}
---- !u!4 &1077335547
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1077335545}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 850.3195, y: 226.39365, z: 1165.5122}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1182304069
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +905,8 @@ GameObject:
   - component: {fileID: 1182304072}
   - component: {fileID: 1182304071}
   - component: {fileID: 1182304070}
+  - component: {fileID: 1182304074}
+  - component: {fileID: 1182304075}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1044,6 +997,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1182304074
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182304069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 265812d1510aebe4190c3f4121d406f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1182304075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182304069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e1b2ed927031945a4c96ee0a7d91fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _firstLevelName: PowerPlant
+  _startButtonEffects: {fileID: 1563489767}
+  _quitButtonEffects: {fileID: 171061974}
+  _startButton: {fileID: 1563489764}
+  _quitButton: {fileID: 171061971}
 --- !u!1 &1206937251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1047,7 @@ GameObject:
   - component: {fileID: 1206937252}
   - component: {fileID: 1206937254}
   - component: {fileID: 1206937253}
+  - component: {fileID: 1206937255}
   m_Layer: 5
   m_Name: TopHalf
   m_TagString: Untagged
@@ -1120,6 +1113,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206937251}
   m_CullTransparentMesh: 1
+--- !u!225 &1206937255
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206937251}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1233066662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1322,7 @@ GameObject:
   - component: {fileID: 1425597881}
   - component: {fileID: 1425597880}
   - component: {fileID: 1425597882}
+  - component: {fileID: 1425597883}
   m_Layer: 5
   m_Name: BottomHalf
   m_TagString: Untagged
@@ -1409,6 +1415,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &1425597883
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425597878}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1563489762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,16 +1511,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1077335546}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
+      - m_Target: {fileID: 1182304074}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: StartGame
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1563489765
@@ -1555,7 +1573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328224c8901200a4d9b288e92532b36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuController: {fileID: 1077335546}
+  _menuController: {fileID: 0}
   _buttonText: {fileID: 832519929}
   _highlightScale: 1.2
   _defaultScale: 1
@@ -1690,5 +1708,4 @@ SceneRoots:
   - {fileID: 1703343129}
   - {fileID: 446819218}
   - {fileID: 1182304073}
-  - {fileID: 1077335547}
   - {fileID: 805211317}
