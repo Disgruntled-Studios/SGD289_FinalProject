@@ -129,7 +129,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         var playerController = GameManager.Instance.PlayerController;
         var receiver = playerController.CurrentItemReceiver;
 
-        if (receiver != null && !selectedItem.isGun)
+        if (receiver != null && !selectedItem.isGun && !selectedItem.isNote)
         {
             if (receiver.TryReceiveItem(_inventory, selectedItem))
             {

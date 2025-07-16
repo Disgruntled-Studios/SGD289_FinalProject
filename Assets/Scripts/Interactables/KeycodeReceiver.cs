@@ -24,33 +24,39 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 
     [SerializeField] private AudioClip _interactionClip;
     [SerializeField] private AudioMixerGroup _outputGroup;
-    [SerializeField] private float _volume = 1f;
+    [SerializeField] private float _volume = .5f;
     [SerializeField] private float _pitch = 1f;
     [SerializeField] private float _spatialBlend = 0f;
 
+    [SerializeField] private GameObject _door;
+    [SerializeField] private Material _nearMaterial;
+    [SerializeField] private Material _farMaterial;
+
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        if (_playerIsNearby)
+        if (!_playerIsNearby || CodeHasBeenAccepted) return;
+        
+        if (_interactionClip)
         {
-            if (_interactionClip)
-            {
-                SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup,
-                    _spatialBlend);
-            }
-            
-            UIManager.Instance.OpenKeycodePanel(this);
+            SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup,
+                _spatialBlend);
         }
+            
+        UIManager.Instance.OpenKeycodePanel(this);
     }
 
     public void SubmitCode(string input)
     {
         if (string.Equals(input, _correctCode))
         {
-            _onCorrectCodeEntered?.Invoke();
-            CodeHasBeenAccepted = true;
-            UIManager.Instance.CloseKeycodePanel(true);
-            //UIManager.Instance.StartPopUpText(_onCompletionText);
-            GameManager.Instance.PlayerController.currentHighlightedObj = null;
+            UIManager.Instance.KeycodeUIController.AnimateCorrectCodeSequence(() =>
+            {
+                _onCorrectCodeEntered?.Invoke();
+                CodeHasBeenAccepted = true;
+
+                UIManager.Instance.CloseKeycodePanel(true);
+                GameManager.Instance.PlayerController.currentHighlightedObj = null;
+            });
         }
         else
         {
@@ -60,13 +66,37 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 
     public void OnEnter()
     {
+        if (CodeHasBeenAccepted) return;
+        
         _playerIsNearby = true;
-        // UIManager.Instance.StartPopUpText("Enter code?", 0f);
+        _interactionPrompt.SetActive(true);
+        UIManager.Instance.StartPopUpText("Enter Keycode?", 0f, withPrompt: false);
+
+        if (!_door) return;
+        
+        const int matSlot = 1;
+        
+        var doorMeshRend = _door.GetComponent<MeshRenderer>();
+        var materials = doorMeshRend.materials;
+        materials[matSlot] = _nearMaterial;
+        doorMeshRend.materials = materials;
     }
 
     public void OnExit()
     {
+        if (CodeHasBeenAccepted) return;
+        
         _playerIsNearby = false;
-        // UIManager.Instance.ClearPopUpText();
+        _interactionPrompt.SetActive(false);
+        UIManager.Instance.ClearPopUpText();
+
+        if (!_door) return;
+        
+        const int matSlot = 1;
+        
+        var doorMeshRend = _door.GetComponent<MeshRenderer>();
+        var materials = doorMeshRend.materials;
+        materials[matSlot] = _farMaterial;
+        doorMeshRend.materials = materials;
     }
 }

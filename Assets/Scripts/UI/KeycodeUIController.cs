@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,8 @@ public class KeycodeUIController
     private readonly RectTransform _panelTransform;
 
     public bool IsOpen => _keycodePanel.activeSelf;
+
+    private bool _isAnimating;
 
     public KeycodeUIController(GameObject keycodePanel, List<TMP_Text> digitDisplays)
     {
@@ -117,5 +120,48 @@ public class KeycodeUIController
     {
         ResetDigits();
         Close();
+    }
+
+    public void AnimateCorrectCodeSequence(Action onComplete = null)
+    {
+        if (_isAnimating || !IsOpen) return;
+        UIManager.Instance.StartCoroutine(CorrectCodeSequenceRoutine(onComplete));
+    }
+
+    private IEnumerator CorrectCodeSequenceRoutine(Action onComplete)
+    {
+        _isAnimating = true;
+
+        const float animDuration = 0.2f;
+        const float startSize = 150f;
+        const float endSize = 200f;
+        const float stepDelay = 0.075f;
+        const float basePitch = 1f;
+        const float pitchStep = 0.07f;
+
+        for (var i = 0; i < _digitDisplays.Count; i++)
+        {
+            var text = _digitDisplays[i];
+            text.color = Color.green;
+            
+            UIManager.Instance.UIAudioController.PlaySoundWithPitch(UISound.DigitSuccess, basePitch + i * pitchStep);
+
+            RumbleController.Instance.TriggerPresetRumble(RumblePreset.KeycodeDigitSuccess);
+
+            var t = 0f;
+            while (t < 1f)
+            {
+                t += Time.deltaTime / animDuration;
+                text.fontSize = Mathf.Lerp(startSize, endSize, t);
+                yield return null;
+            }
+
+            text.fontSize = endSize;
+
+            yield return new WaitForSeconds(stepDelay);
+        }
+
+        _isAnimating = false;
+        onComplete?.Invoke();
     }
 }

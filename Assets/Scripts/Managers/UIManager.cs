@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -52,6 +53,7 @@ public class UIManager : MonoBehaviour
     [Header("Popup Window")] 
     [SerializeField] private GameObject _popUpBox;
     [SerializeField] private TMP_Text _popUpText;
+    [SerializeField] private GameObject _buttonPrompt;
 
     [Header("Event System")] 
     [SerializeField] private EventSystem _gameEventSystem;
@@ -310,8 +312,13 @@ public class UIManager : MonoBehaviour
 
     // CALL WITH DURATION OF 0 TO HAVE PERMANENT POPUP TEXT IN AREA
     // CLEAR WITH ClearPopUpText()
-    public void StartPopUpText(string message, float duration = 3f)
+    public void StartPopUpText(string message, float duration = 3f, bool withPrompt = true)
     {
+        if (!withPrompt)
+        {
+            _buttonPrompt.SetActive(false);
+        }
+        
         if (_popUpCoroutine != null)
         {
             StopCoroutine(_popUpCoroutine);
