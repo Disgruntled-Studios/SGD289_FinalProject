@@ -277,6 +277,10 @@ public class PlayerController : MonoBehaviour
             {
                 UIManager.Instance.StartPopUpText($"{correctItem.itemName} used on {_currentItemReceiver.Name}");
             }
+            else
+            {
+                
+            }
         }
     }
 

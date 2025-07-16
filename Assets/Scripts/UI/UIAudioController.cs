@@ -16,7 +16,8 @@ public enum UISound
     TileConnected, // Maximize 005
     TileDisconnected, // Minimize 005
     CircuitComplete, // Confirmation 004
-    TileNav // Tick 001
+    TileNav, // Tick 001
+    DigitSuccess // Toggle 002
 }
 
 [System.Serializable]
@@ -59,5 +60,15 @@ public class UIAudioController : MonoBehaviour
     public void SetVolume(float volume)
     {
         _uiVolume = Mathf.Clamp01(volume);
+    }
+
+    public void PlaySoundWithPitch(UISound sound, float pitch)
+    {
+        if (!_clipMap.TryGetValue(sound, out var clip)) return;
+        if (!clip || !_audioSource) return;
+
+        _audioSource.pitch = pitch;
+        _audioSource.PlayOneShot(clip, _uiVolume);
+        _audioSource.pitch = 1f; // Reset
     }
 }

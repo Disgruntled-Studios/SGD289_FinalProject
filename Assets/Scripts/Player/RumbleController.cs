@@ -18,7 +18,8 @@ public enum RumblePreset
     DamageImpact,
     KeycodeError,
     DeathShock,
-    ItemPickup
+    ItemPickup,
+    KeycodeDigitSuccess
 }
 
 public class RumbleController : MonoBehaviour
@@ -85,6 +86,9 @@ public class RumbleController : MonoBehaviour
                 break;
             case RumblePreset.ItemPickup:
                 TriggerPatternedRumble(0.4f, 0.2f, RumblePattern.Constant);
+                break;
+            case RumblePreset.KeycodeDigitSuccess:
+                TriggerPatternedRumble(0.25f, 0.1f, RumblePattern.Constant);
                 break;
         }
     }
@@ -164,5 +168,12 @@ public class RumbleController : MonoBehaviour
         gamepad.SetMotorSpeeds(0f, 0f);
 
         _activeRumble = null;
+    }
+
+    public void StopAllVibration()
+    {
+        var gamepad = Gamepad.current;
+
+        gamepad?.SetMotorSpeeds(0f, 0f);
     }
 }

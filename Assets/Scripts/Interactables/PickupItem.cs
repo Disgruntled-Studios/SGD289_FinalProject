@@ -53,7 +53,7 @@ public class PickupItem : MonoBehaviour, IInteractable
 
         if (_isDevNote)
         {
-            UIManager.Instance.StartPopUpText("Press Start To Read");
+            UIManager.Instance.StartPopUpText(_additionalText);
         }
 
         if (_interactionClip != null)
