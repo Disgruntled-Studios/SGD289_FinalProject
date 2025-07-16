@@ -580,9 +580,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   _damageAmount: 50
-  reloadSpeed: 5
-  maxMagLimit: 12
-  currentAmmoMagAmt: 0
   _gunItemName: Pistol and ammo
   _lr: {fileID: 4762945982309698640}
   redLaser: {fileID: 2100000, guid: df650a67db8418e449d3d30acb28d0b7, type: 2}
@@ -834,7 +831,6 @@ GameObject:
   - component: {fileID: 795104493047362127}
   - component: {fileID: 4867057161169410574}
   - component: {fileID: 1042221083835610447}
-  - component: {fileID: 8726456523576067099}
   m_Layer: 3
   m_Name: PLAYER
   m_TagString: Player
@@ -949,7 +945,6 @@ MonoBehaviour:
   _overheadLayer:
     serializedVersion: 2
     m_Bits: 4096
-  _headCollider: {fileID: 8726456523576067099}
   currentHighlightedObj: {fileID: 0}
 --- !u!114 &2083266874682607581
 MonoBehaviour:
@@ -1115,27 +1110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef71e032bf036984094848efa127affa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &8726456523576067099
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6028521454305457700}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.26
-  m_Center: {x: 0.49, y: 1.22, z: 0.74}
 --- !u!1 &6096564755312387749
 GameObject:
   m_ObjectHideFlags: 0

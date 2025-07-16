@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private const float CrouchHeight = 1.75f;
     private float _originalHeight;
     private Vector3 _originalCenter;
-    [SerializeField] private SphereCollider _headCollider;
     
     private const float DefaultSpeedMultiplier = 1f;
     private const float SprintSpeedMultiplier = 1.75f;
@@ -190,11 +189,6 @@ public class PlayerController : MonoBehaviour
     {
         _isCrouching = isCrouching;
         _animationController.Crouch(_isCrouching);
-
-        if (_headCollider)
-        {
-            _headCollider.enabled = _isCrouching;
-        }
         
         if (!_standingCollider) return;
 
@@ -210,7 +204,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (IsCrouching || IsMovementLocked) return;
+        if (IsCrouching || IsMovementLocked || IsSprinting) return;
         
         if (context.started && _gunController.HasGun)
         {
