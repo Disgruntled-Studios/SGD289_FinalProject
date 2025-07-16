@@ -395,7 +395,7 @@ public class PlayerController : MonoBehaviour
             _currentInteractable?.OnEnter();
 
             if (targetTransform.TryGetComponent<PressureValveSystem>(out var doorPressureGame) &&
-                doorPressureGame.HighlightableObj)
+                doorPressureGame.HighlightableObj && !doorPressureGame.HasBeenInteractedWith)
             {
                 currentHighlightedObj = doorPressureGame.HighlightableObj;
             }
@@ -443,6 +443,11 @@ public class PlayerController : MonoBehaviour
     private bool ShouldSkipHighlighting(Transform target)
     {
         if (target.TryGetComponent<PickupItem>(out var item) && item.IsGun)
+        {
+            return true;
+        }
+
+        if (target.TryGetComponent<PressureValveSystem>(out var valve) && valve.HasBeenInteractedWith)
         {
             return true;
         }

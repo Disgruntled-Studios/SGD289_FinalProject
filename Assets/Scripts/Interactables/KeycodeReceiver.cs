@@ -24,7 +24,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
 
     [SerializeField] private AudioClip _interactionClip;
     [SerializeField] private AudioMixerGroup _outputGroup;
-    [SerializeField] private float _volume = .5f;
+    [SerializeField] private float _volume = .25f;
     [SerializeField] private float _pitch = 1f;
     [SerializeField] private float _spatialBlend = 0f;
 
@@ -54,6 +54,11 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
                 _onCorrectCodeEntered?.Invoke();
                 CodeHasBeenAccepted = true;
 
+                if (_interactionPrompt && _interactionPrompt.activeSelf)
+                {
+                    _interactionPrompt.SetActive(false);
+                }
+                
                 UIManager.Instance.CloseKeycodePanel(true);
                 GameManager.Instance.PlayerController.currentHighlightedObj = null;
             });
