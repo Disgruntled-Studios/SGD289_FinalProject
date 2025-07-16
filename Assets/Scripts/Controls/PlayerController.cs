@@ -262,7 +262,8 @@ public class PlayerController : MonoBehaviour
 
         if (_currentInteractable != null)
         {
-            _currentInteractable?.Interact(transform, _inventory);
+            _currentInteractable.Interact(transform, _inventory);
+            
             return;
         }
 

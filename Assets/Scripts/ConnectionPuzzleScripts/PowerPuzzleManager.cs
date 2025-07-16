@@ -43,6 +43,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     private const float PuzzleCompletionViewDuration = 0.5f;
 
     [SerializeField] private GameObject _interactionPrompt;
+    
+    private bool _isItem = false;
+    public bool IsItem => _isItem;
 
     private void Awake()
     {

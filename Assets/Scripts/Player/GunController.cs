@@ -116,17 +116,14 @@ public class GunController : MonoBehaviour
     {
         if (!_isAiming || !_canShoot || _playerController.IsCrouching) return;
 
-        Debug.Log("Shooting");
-
+        _canShoot = false;
         _animationController.Shoot();
         _gunShot.PlayOneShot(_gunShot.clip);
+        RumbleController.Instance.TriggerPresetRumble(RumblePreset.GunRecoil);
 
         if (Physics.SphereCast(laserStart.position, AimRadius, laserStart.forward, out var hit, MaxLaserDistance, Physics.DefaultRaycastLayers))
         {
             var hitObj = hit.collider.gameObject;
-            var isShootable = (_shootableLayers.value & (1 << hitObj.layer)) != 0;
-
-            if (!isShootable) return;
 
             var enemyRef = hitObj.GetComponent<EnemyBehavior>() ?? hitObj.GetComponentInParent<EnemyBehavior>();
             var shootable = hitObj.GetComponent<ShootableObject>();
@@ -149,7 +146,6 @@ public class GunController : MonoBehaviour
 
     private IEnumerator ShootDelay()
     {
-        _canShoot = false;
         yield return new WaitForSeconds(.75f);
         _canShoot = true;
     }

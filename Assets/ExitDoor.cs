@@ -5,7 +5,10 @@ public class ExitDoor : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _interactionPrompt;
     [SerializeField] private string _targetSceneName;
     [SerializeField] private string _targetCameraId;
-    
+
+    private bool _isItem = false;
+    public bool IsItem => _isItem;
+
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (!string.IsNullOrEmpty(_targetSceneName))

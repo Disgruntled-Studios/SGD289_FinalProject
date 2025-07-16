@@ -36,20 +36,12 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     private bool _isDoorOpened = false;
 
     public UnityEvent onDoorOpen;
-    
-    private void Update()
-    {
-        // if (_isDoorOpened)
-        // {
-        //     MoveDoorToOpenPosition();
-        // }
-    }
 
     public void Unlock()
     {
         _isUnlocked = true;
     }
-    
+
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (!_isUnlocked) return;

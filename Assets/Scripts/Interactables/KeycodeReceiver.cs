@@ -27,7 +27,7 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
     [SerializeField] private float _volume = 1f;
     [SerializeField] private float _pitch = 1f;
     [SerializeField] private float _spatialBlend = 0f;
-    
+
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_playerIsNearby)
