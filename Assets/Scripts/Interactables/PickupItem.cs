@@ -51,10 +51,7 @@ public class PickupItem : MonoBehaviour, IInteractable
             UIManager.Instance.ActivateInventoryIndicator();
         }
 
-        if (_isDevNote)
-        {
-            UIManager.Instance.StartPopUpText(_additionalText);
-        }
+        UIManager.Instance.StartPopUpText(_itemName);
 
         if (_interactionClip != null)
         {

@@ -211,6 +211,11 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
             _doorAnimator?.runtimeAnimatorController.animationClips.FirstOrDefault(clip => clip.name == DoorTrigger)
                 ?.length ?? camCutLength;
 
+        if (RumbleController.Instance)
+        {
+            RumbleController.Instance.TriggerPatternedRumble(0.5f, clipLength, RumblePattern.Constant);
+        }
+
         yield return new WaitForSeconds(clipLength);
         
         ReturnToGameplay();

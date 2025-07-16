@@ -42,6 +42,11 @@ public class GarageDoorController : MonoBehaviour
             _openSound.Play();
         }
 
+        if (RumbleController.Instance)
+        {
+            RumbleController.Instance.TriggerPatternedRumble(0.4f, _animationDuration, RumblePattern.Constant);
+        }
+
         while (time < _animationDuration)
         {
             var t = time / _animationDuration;

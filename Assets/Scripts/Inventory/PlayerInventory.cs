@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -34,5 +35,10 @@ public class PlayerInventory : MonoBehaviour
             _items.Remove(item);
             OnInventoryChanged?.Invoke();
         }
+    }
+
+    public bool AllItemsHaveBeenRead()
+    {
+        return Items.All(item => item == null || item.hasBeenRead);
     }
 }
