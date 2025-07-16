@@ -11,7 +11,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private bool _consumeItem = true;
 
     [SerializeField] private UnityEvent _onItemReceivedExternal; // External events
-    [SerializeField] private ParticleSystem _particles;
 
     private PlayerInventory _playerInventory;
 
@@ -46,35 +45,12 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     private void Update()
     {
-        if (!_playerInventory || !_particles || ItemHasBeenReceived)
-        {
-            if (_particles)
-            {
-                _particles?.Stop();
-            }
-        }
-
         foreach (var item in _playerInventory.Items)
         {
             if (item.itemName == _requiredItemName)
             {
                 PlayerHasItemInInventory = true;
                 break;
-            }
-        }
-
-        if (PlayerHasItemInInventory)
-        {
-            if (_particles && !_particles.isPlaying)
-            {
-                _particles.Play();
-            }
-        }
-        else
-        {
-            if (_particles && _particles.isPlaying)
-            {
-                _particles.Stop();
             }
         }
     }
@@ -121,8 +97,6 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
         }
 
         ItemHasBeenReceived = true;
-        
-        if (_particles) _particles?.Stop();
 
         if (_interactionClip)
         {

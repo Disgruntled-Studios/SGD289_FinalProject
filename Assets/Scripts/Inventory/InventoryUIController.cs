@@ -236,4 +236,14 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
 
         return _slots[_selectedIndex].ItemInSlot;
     }
+
+    public bool HaveAllItemsBeenRead()
+    {
+        foreach (var item in _inventory.Items)
+        {
+            if (!item.hasBeenRead) return false;
+        }
+
+        return true;
+    }
 }

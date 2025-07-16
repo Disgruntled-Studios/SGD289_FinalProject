@@ -426,6 +426,11 @@ public class PlayerController : MonoBehaviour
 
     private bool ShouldSkipHighlighting(Transform target)
     {
+        if (target.TryGetComponent<PickupItem>(out var item) && item.IsGun)
+        {
+            return true;
+        }
+        
         return target.GetComponentInParent<PowerPuzzleTile>() != null ||
                target.GetComponentInChildren<PowerPuzzleTile>() != null ||
                target.GetComponent<PowerPuzzleTile>() != null ||

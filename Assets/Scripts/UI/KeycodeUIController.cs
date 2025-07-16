@@ -6,7 +6,6 @@ using UnityEngine;
 public class KeycodeUIController
 {
     private readonly GameObject _keycodePanel;
-    private readonly TMP_Text _promptText;
     private readonly List<TMP_Text> _digitDisplays;
     private readonly int[] _currentDigits;
     private int _activeDigitIndex;
@@ -16,19 +15,17 @@ public class KeycodeUIController
 
     public bool IsOpen => _keycodePanel.activeSelf;
 
-    public KeycodeUIController(GameObject keycodePanel, TMP_Text promptText, List<TMP_Text> digitDisplays)
+    public KeycodeUIController(GameObject keycodePanel, List<TMP_Text> digitDisplays)
     {
         _keycodePanel = keycodePanel;
         _panelTransform = keycodePanel.GetComponent<RectTransform>();
-        _promptText = promptText;
         _digitDisplays = digitDisplays;
         _currentDigits = new int[digitDisplays.Count];
     }
 
-    public void Open(KeycodeReceiver receiver, string prompt = "Enter Keycode:")
+    public void Open(KeycodeReceiver receiver)
     {
         _activeReceiver = receiver;
-        _promptText.text = prompt;
 
         _keycodePanel.SetActive(true);
         _activeDigitIndex = 0;

@@ -10,7 +10,6 @@ public class PlayerInventory : MonoBehaviour
     private readonly List<InventoryItem> _items = new();
 
     public IReadOnlyList<InventoryItem> Items => _items;
-
     public event Action OnInventoryChanged;
     
     public void AddItem(InventoryItem item)

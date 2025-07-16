@@ -5,10 +5,11 @@ using UnityEngine.Serialization;
 public class InventoryItem
 {
     public string itemName;
-    [FormerlySerializedAs("additionalInteractText")] public string additionalText;
+    public string additionalText;
     public Sprite icon;
     public readonly bool isGun;
     public readonly bool isNote;
+    public bool hasBeenRead;
 
     public InventoryItem(string name, bool isGun, bool isNote, Sprite icon = null, string additionalText = "")
     {
@@ -17,5 +18,6 @@ public class InventoryItem
         this.additionalText = additionalText;
         this.isGun = isGun;
         this.isNote = isNote;
+        hasBeenRead = false;
     }
 }

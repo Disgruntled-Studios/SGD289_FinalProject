@@ -11,6 +11,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private Sprite _icon;
 
     private bool _isGun; // PlayerGun script sets this automatically
+    public bool IsGun => _isGun;
     private bool _isNote; // ReadableNote script sets this automatically
 
     private bool _isDevNote;
@@ -18,8 +19,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     public UnityEvent onGunPickup; // DONT USE FOR ANYTHING EXCEPT THE GUN
 
     [SerializeField] private GameObject _interactionPrompt;
-
-
+    
     [SerializeField] private AudioClip _interactionClip;
     [SerializeField] private AudioMixerGroup _outputGroup;
     [SerializeField] private float _volume = 1f;
@@ -48,6 +48,7 @@ public class PickupItem : MonoBehaviour, IInteractable
         {
             var item = new InventoryItem(_itemName, _isGun, _isNote, _icon, _additionalText);
             inventory.AddItem(item);
+            UIManager.Instance.ActivateInventoryIndicator();
         }
 
         if (_isDevNote)
