@@ -112,7 +112,8 @@ public class KeycodeUIController
             _currentDigits[i] = 0;
             _digitDisplays[i].text = "0";
         }
-        
+
+        _activeDigitIndex = 0;
         HighlightActiveDigit();
     }
 }
