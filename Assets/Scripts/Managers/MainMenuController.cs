@@ -30,6 +30,7 @@ public class MainMenuController : MonoBehaviour, IMenuController
 
         if (SoundManager.Instance.IsSFXPlaying("MainMenuTheme"))
         {
+            Debug.Log("Main Menu Theme is playing calling fadeinsfx");
             SoundManager.Instance.FadeInSFX("MainMenuTheme");
         }
         SoundManager.Instance.PlaySfx("MainMenuTheme");

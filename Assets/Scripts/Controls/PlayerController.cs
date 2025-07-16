@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.Health.IsDead || IsMovementLocked) return;
+        if (InputManager.Instance.IsInUI || InputManager.Instance.IsInPuzzle || _health.IsDead || IsMovementLocked) return;
 
         if (_isSprinting && _currentMoveInput < 0.01f)
         {

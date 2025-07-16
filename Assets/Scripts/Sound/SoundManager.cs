@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogWarning("Sound: " + sfxName + " not found!");
             return;
         }
+        if (s.source.volume != s.volume) s.source.volume = s.volume;
         s.source.Play();
     }
 

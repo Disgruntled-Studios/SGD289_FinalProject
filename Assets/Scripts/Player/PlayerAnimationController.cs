@@ -105,6 +105,11 @@ public class PlayerAnimationController : MonoBehaviour
         _anim.SetTrigger("Hit");
     }
 
+    public void SetDeathTrigger()
+    {
+        _anim.SetTrigger("Death");
+    }
+
     public void SetInjured(bool isInjured)
     {
         _anim.runtimeAnimatorController = isInjured ? _injuredOverrideController : _originalController;

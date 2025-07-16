@@ -48,14 +48,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Commenting out for testing - thanks nate
-        //TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
         Cursor.lockState = CursorLockMode.Confined;
 
         if (_isTesting)
         {
             Player.GetComponent<PlayerController>().GunController.HasGun = true;
         }
+        
+        // Commenting out for testing - thanks nate
+        TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
     }
 
     private void Update()
@@ -86,11 +87,16 @@ public class GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        
+
         UIManager.Instance.CloseGameOverScreen();
         UIManager.Instance.DestroyUI();
+        Destroy(Player);
+        Destroy(CameraManager.Instance.gameObject);
+        Destroy(SelectionManager.Instance.gameObject);
+        Destroy(TransitionManager.Instance.gameObject);
 
         SceneManager.LoadScene("Scenes/GOLD_FINAL/MainMenu");
+        Destroy(gameObject);
     }
 
     public void QuitGame()
@@ -101,8 +107,9 @@ public class GameManager : MonoBehaviour
     public void StartGameOver()
     {
         CallAnimationPause();
+        CallFadeOutOnGameOver();
         IsGameOver = true;
-        
+
         UIManager.Instance.OpenGameOverScreen();
     }
 
@@ -126,6 +133,7 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<PlayerHealth>().ResetVignette();
         ResetEnemies();
         CallAnimationUnpause();
+        CallFadeInOnGameOver();
         IsGameOver = false;
         PlayerController.IsMovementLocked = false;
         UIManager.Instance.ActivateHudPanel();
@@ -164,6 +172,26 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(animPause.name + "'s animator is set to one speed.");
             animPause.Unpause();
+        }
+    }
+
+    public void CallFadeInOnGameOver()
+    {
+        FadeOnGameOver[] fadeObjs = FindObjectsByType<FadeOnGameOver>(FindObjectsSortMode.None);
+
+        foreach (FadeOnGameOver fader in fadeObjs)
+        {
+            fader.StartCoroutine(fader.FadeSoundIn());
+        }
+    }
+
+    public void CallFadeOutOnGameOver()
+    {
+        FadeOnGameOver[] fadeObjs = FindObjectsByType<FadeOnGameOver>(FindObjectsSortMode.None);
+
+        foreach (FadeOnGameOver fader in fadeObjs)
+        {
+            fader.StartCoroutine(fader.FadeSoundOut());
         }
     }
 }
