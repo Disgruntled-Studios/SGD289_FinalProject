@@ -69,7 +69,7 @@ public class RumbleController : MonoBehaviour
         switch (preset)
         {
             case RumblePreset.GunRecoil:
-                TriggerPatternedRumble(0.6f, 0.3f, RumblePattern.Pulse);
+                TriggerPatternedRumble(0.6f, 0.35f, RumblePattern.Pulse);
                 break;
             case RumblePreset.UIConfirm:
                 TriggerPatternedRumble(0.3f, 0.15f, RumblePattern.Constant);
