@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _headCheck;
     [SerializeField] private LayerMask _overheadLayer;
     
-    private const float CrouchHeight = 1.75f;
+    private const float CrouchHeight = 1.65f;
     private float _originalHeight;
     private Vector3 _originalCenter;
     
