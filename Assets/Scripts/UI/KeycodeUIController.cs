@@ -35,8 +35,7 @@ public class KeycodeUIController
 
         for (var i = 0; i < _currentDigits.Length; i++)
         {
-            _currentDigits[i] = 0;
-            _digitDisplays[i].text = "0";
+            _digitDisplays[i].text = _currentDigits[i].ToString();
         }
         
         HighlightActiveDigit();
@@ -112,7 +111,14 @@ public class KeycodeUIController
             _currentDigits[i] = 0;
             _digitDisplays[i].text = "0";
         }
-        
+
+        _activeDigitIndex = 0;
         HighlightActiveDigit();
+    }
+
+    public void ResetDigitsAndClose()
+    {
+        ResetDigits();
+        Close();
     }
 }

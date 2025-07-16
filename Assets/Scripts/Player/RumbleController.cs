@@ -13,14 +13,30 @@ public enum RumblePattern
 
 public enum RumblePreset
 {
-    LightTap,
-    StrongPulse,
-    LongBuzz
+    GunRecoil,
+    UIConfirm,
+    DamageImpact,
+    KeycodeError,
+    DeathShock,
+    ItemPickup
 }
 
 public class RumbleController : MonoBehaviour
 {
+    public static RumbleController Instance { get; private set; }
+    
     private Coroutine _activeRumble;
+
+    private void Awake()
+    {
+        if (Instance && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     public void TriggerConstantRumble(float low, float high, float duration)
     {
@@ -52,14 +68,23 @@ public class RumbleController : MonoBehaviour
     {
         switch (preset)
         {
-            case RumblePreset.LightTap:
-                TriggerPatternedRumble(0.3f, 0.2f, RumblePattern.Constant);
+            case RumblePreset.GunRecoil:
+                TriggerPatternedRumble(0.6f, 0.3f, RumblePattern.Pulse);
                 break;
-            case RumblePreset.StrongPulse:
-                TriggerPatternedRumble(1f, 0.5f, RumblePattern.Pulse);
+            case RumblePreset.UIConfirm:
+                TriggerPatternedRumble(0.3f, 0.15f, RumblePattern.Constant);
                 break;
-            case RumblePreset.LongBuzz:
-                TriggerPatternedRumble(0.7f, 1.5f, RumblePattern.Constant);
+            case RumblePreset.DamageImpact:
+                TriggerPatternedRumble(0.8f, 0.4f, RumblePattern.Pulse);
+                break;
+            case RumblePreset.KeycodeError:
+                TriggerPatternedRumble(0.6f, 0.3f, RumblePattern.Heartbeat);
+                break;
+            case RumblePreset.DeathShock:
+                TriggerPatternedRumble(1f, 1.2f, RumblePattern.RampDown);
+                break;
+            case RumblePreset.ItemPickup:
+                TriggerPatternedRumble(0.4f, 0.2f, RumblePattern.Constant);
                 break;
         }
     }

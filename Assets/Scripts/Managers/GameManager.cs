@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string levelTwoFileName;
     [SerializeField] private string levelTwoStartingCam;
 
+    [SerializeField] private bool _isTesting = true;
+
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -46,8 +48,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+        // Commenting out for testing - thanks nate
+        //TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
         Cursor.lockState = CursorLockMode.Confined;
+
+        if (_isTesting)
+        {
+            Player.GetComponent<PlayerController>().GunController.HasGun = true;
+        }
     }
 
     private void Update()
