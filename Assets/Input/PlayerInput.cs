@@ -510,7 +510,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d1145490-dfb6-4eda-93ff-81516ee63650"",
-                    ""path"": ""<DualShockGamepad>/touchpadButton"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",

@@ -106,6 +106,14 @@ public class UIManager : MonoBehaviour
         ToggleGunImage(false);
     }
 
+    public void ActivateHudPanel()
+    {
+        if (!_hudPanel.activeSelf)
+        {
+            _hudPanel.SetActive(true);
+        }
+    }
+
     #region UI Navigation
 
     public void OpenPauseMenu()
