@@ -28,6 +28,12 @@ public class TransitionManager : MonoBehaviour
         StartCoroutine(TransitionRoutine(sceneName, cameraId));
     }
 
+    public void TransitionToReactorScene()
+    {
+        TransitionToScene("Reactor", "30");
+        GetComponent<Animator>().SetTrigger("StartFadeIn");
+    }
+
     private IEnumerator TransitionRoutine(string sceneName, string cameraId)
     {
         // Load new scene additively if not already loaded

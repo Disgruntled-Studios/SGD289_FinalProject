@@ -23,6 +23,15 @@ public class MainMenuController : MonoBehaviour, IMenuController
 
     void Start()
     {
+        if (SoundManager.Instance.IsSFXPlaying("EndSceneTheme"))
+        {
+            SoundManager.Instance.FadeOutSFX("EndSceneTheme");
+        }
+
+        if (SoundManager.Instance.IsSFXPlaying("MainMenuTheme"))
+        {
+            SoundManager.Instance.FadeInSFX("MainMenuTheme");
+        }
         SoundManager.Instance.PlaySfx("MainMenuTheme");
     }
 

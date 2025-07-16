@@ -42,7 +42,7 @@ public class SoundManager : MonoBehaviour
             s.source.loop = s.isLooping;
             s.source.spatialBlend = s.spatialBlend;
         }
-        
+
     }
 
     void Start()
@@ -60,7 +60,7 @@ public class SoundManager : MonoBehaviour
             mainMixer.SetFloat("Music", Mathf.Log10(0.5f) * 20);
             mainMixer.SetFloat("SFX", Mathf.Log10(0.5f) * 20);
             mainMixer.SetFloat("Ambiance", Mathf.Log10(0.5f) * 20);
-            
+
             PlayerPrefs.SetFloat("MasterVolume", 0.5f);
             PlayerPrefs.SetFloat("MusicVolume", 0.5f);
             PlayerPrefs.SetFloat("SFXVolume", 0.5f);
@@ -150,6 +150,12 @@ public class SoundManager : MonoBehaviour
             s.source.time = 0;
         }
 
+    }
+
+    public bool IsSFXPlaying(string sfxName)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == sfxName);
+        return s.source.isPlaying;
     }
 
     // public void SetMasterVolume(float value)

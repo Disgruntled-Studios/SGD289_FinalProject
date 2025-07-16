@@ -10,7 +10,8 @@ public class ExitDoor : MonoBehaviour, IInteractable
     {
         if (!string.IsNullOrEmpty(_targetSceneName))
         {
-            TransitionManager.Instance.TransitionToScene(_targetSceneName, _targetCameraId);
+            TransitionManager.Instance.GetComponent<Animator>().SetTrigger("StartFadeOut");
+            GameManager.Instance.PlayerController.enabled = false;
         }
     }
 
