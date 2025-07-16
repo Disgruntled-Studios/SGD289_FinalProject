@@ -300,26 +300,10 @@ public class UIManager : MonoBehaviour
         {
             _puzzlePanel.SetActive(isActive);
         }
-    }
 
-    public void UpdatePuzzleInstructions(string instructions)
-    {
-        if (_puzzleInstructions)
+        if (_hudPanel)
         {
-            _puzzleInstructions.text = instructions;
-        }
-    }
-
-    public void UpdateTileControls(string moveText, string rotateText)
-    {
-        if (_tileMoveInstructions)
-        {
-            _tileMoveInstructions.text = moveText;
-        }
-
-        if (_tileRotateInstructions)
-        {
-            _tileRotateInstructions.text = rotateText;
+            _hudPanel.SetActive(!isActive);
         }
     }
 
