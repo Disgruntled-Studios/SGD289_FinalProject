@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
         playerMap.Sprint.canceled += OnSprint;
         playerMap.Interact.performed += OnInteract;
         playerMap.Pause.performed += OnPause;
+        playerMap.Settings.performed += OnSettings;
     }
 
     private void OnDisable()
@@ -122,6 +123,7 @@ public class PlayerController : MonoBehaviour
         playerMap.Sprint.canceled -= OnSprint;
         playerMap.Interact.performed -= OnInteract;
         playerMap.Pause.performed -= OnPause;
+        playerMap.Settings.performed -= OnSettings;
     }
 
     public float GetCurrentTurnInput() => _currentRotationInput;
@@ -279,7 +281,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                
+                // TODO: Block incorrect items
             }
         }
     }
@@ -287,8 +289,6 @@ public class PlayerController : MonoBehaviour
     public void OnSpecial(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
-
-        // _gunController.StartCoroutine(_gunController.ReloadGun());
     }
 
     public void OnPause(InputAction.CallbackContext context)
@@ -296,6 +296,13 @@ public class PlayerController : MonoBehaviour
         if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
 
         UIManager.Instance.OpenPauseMenu();
+    }
+
+    public void OnSettings(InputAction.CallbackContext context)
+    {
+        if (InputManager.Instance.ShouldBlockInput(context) || IsMovementLocked) return;
+
+        UIManager.Instance.OpenPauseMenuWithPanel(1);
     }
 
     private void ApplyRotation()

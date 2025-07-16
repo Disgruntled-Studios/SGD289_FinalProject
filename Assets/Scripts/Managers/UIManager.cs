@@ -179,6 +179,37 @@ public class UIManager : MonoBehaviour
         InputManager.Instance.SwitchToDefaultInput();
     }
 
+    public void OpenPauseMenuWithPanel(int index)
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        _hudPanel.SetActive(false);
+        _pausePanel.SetActive(true);
+        _uiAudio.PlaySound(UISound.Open);
+        IsGamePaused = true;
+
+        _currentPanelIndex = Mathf.Clamp(index, 0, _subPanels.Count - 1);
+
+        for (var i = 0; i < _subPanels.Count; i++)
+        {
+            var isActive = i == _currentPanelIndex;
+            _subPanels[i].SetActive(isActive);
+
+            if (isActive)
+            {
+                _panelControllers[i]?.OnPanelActivated();
+            }
+            else
+            {
+                _panelControllers[i]?.OnPanelDeactivated();
+            }
+        }
+
+        HighlightActiveButton(_currentPanelIndex);
+        InputManager.Instance.SwitchToUIInput();
+    }
+
     public void OpenGameOverScreen()
     {
         Cursor.lockState = CursorLockMode.None;
