@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
         CallAnimationUnpause();
         IsGameOver = false;
         PlayerController.IsMovementLocked = false;
+        UIManager.Instance.ActivateHudPanel();
     }
 
     public void ResetEnemies()
