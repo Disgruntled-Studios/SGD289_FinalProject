@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+        // Commenting out for testing - thanks nate
+        //TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
         Cursor.lockState = CursorLockMode.Confined;
     }
 

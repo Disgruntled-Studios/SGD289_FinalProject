@@ -156,7 +156,7 @@ public class UIManager : MonoBehaviour
     public void OpenGameOverScreen()
     {
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        //Cursor.visible = true;
 
         _hudPanel.SetActive(false);
         _gameOverPanel.SetActive(true);
@@ -378,9 +378,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void CloseKeycodePanel()
+    public void CloseKeycodePanel(bool wasCodeCorrect)
     {
-        _keycodeUIController.Close();
+        if (wasCodeCorrect)
+        {
+            _keycodeUIController.ResetDigitsAndClose();
+        }
+        else
+        {
+            _keycodeUIController.Close();
+        }
 
         foreach (var icon in _digitIcons)
         {

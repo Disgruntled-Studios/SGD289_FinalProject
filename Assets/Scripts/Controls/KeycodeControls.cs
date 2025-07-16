@@ -42,7 +42,7 @@ public class KeycodeControls : MonoBehaviour
     public void OnCancel(InputAction.CallbackContext context)
     {
         if (InputManager.Instance.ShouldBlockInput(context)) return;
-        
-        UIManager.Instance.CloseKeycodePanel();
+
+        UIManager.Instance.CloseKeycodePanel(false);
     }
 }
