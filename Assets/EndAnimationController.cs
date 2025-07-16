@@ -20,6 +20,13 @@ public class EndAnimationController : MonoBehaviour
         cameraDirector.gameObject.SetActive(false);
     }
 
+    void Start()
+    {
+        Destroy(GameManager.Instance.Player);
+        GetComponent<AudioListener>().enabled = true;
+        StartEndAnim();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == GameManager.Instance.Player)
