@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class VisualUIController : MonoBehaviour, IUIPanelController
 {
     [Header("Controls")] 
-    [SerializeField] private Slider _brightnessSlider;
     [SerializeField] private Toggle _fullscreenToggle;
     [SerializeField] private Toggle _vignetteToggle;
     [SerializeField] private Toggle _typingToggle;
@@ -26,12 +25,10 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         _vignetteObject = GameManager.Instance.Player.GetComponent<PlayerHealth>().VignetteObject;
         _vignette = GameManager.Instance.Player.GetComponent<PlayerHealth>().Vignette;
         
-        _brightnessSlider.value = 0.5f;
         _fullscreenToggle.isOn = Screen.fullScreen;
         _vignetteToggle.isOn = _vignette.active;
         _typingToggle.isOn = UIManager.Instance.PopUpTypingEnabled;
-
-        _brightnessSlider.onValueChanged.AddListener(OnBrightnessChanged);
+        
         _fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
         _vignetteToggle.onValueChanged.AddListener(OnVignetteChanged);
         _typingToggle.onValueChanged.AddListener(OnTypingChanged);
@@ -39,18 +36,9 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
 
     private void OnEnable()
     {
-        _selectables.Add(_brightnessSlider);
         _selectables.Add(_fullscreenToggle);
         _selectables.Add(_vignetteToggle);
         _selectables.Add(_typingToggle);
-    }
-
-    private void OnBrightnessChanged(float value)
-    {
-        if (_brightnessOverlay)
-        {
-            _brightnessOverlay.alpha = value;
-        }
     }
 
     private void OnFullscreenChanged(bool isOn)
@@ -75,7 +63,6 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
     {
         _selectables = new List<Selectable>
         {
-            _brightnessSlider,
             _fullscreenToggle,
             _vignetteToggle,
             _typingToggle
@@ -84,7 +71,6 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         _currentIndex = 0;
         UIManager.Instance.SetEventSystemObject(_selectables[_currentIndex].gameObject);
         
-        SetSliderHighlight(_brightnessSlider, false);
         SetToggleHighlight(_fullscreenToggle, false);
         SetToggleHighlight(_vignetteToggle, false);
         SetToggleHighlight(_typingToggle, false);
@@ -102,7 +88,6 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
 
     public void OnPanelDeactivated()
     {
-        SetSliderHighlight(_brightnessSlider, false);
         SetToggleHighlight(_fullscreenToggle, false);
         SetToggleHighlight(_vignetteToggle, false);
         SetToggleHighlight(_typingToggle, false);
@@ -126,13 +111,13 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
                 _currentIndex = 0;
             }
         }
-
-        SetSliderHighlight(_brightnessSlider, false);
+        
         SetToggleHighlight(_fullscreenToggle, false);
         SetToggleHighlight(_vignetteToggle, false);
         SetToggleHighlight(_typingToggle, false);
 
         var selected = _selectables[_currentIndex];
+        
         if (selected is Slider slider)
         {
             SetSliderHighlight(slider, true);

@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Settings",
+                    "type": "Button",
+                    "id": "61270225-6fea-4b01-9bb0-42f37f1fabe7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -424,7 +433,7 @@
                 {
                     "name": "",
                     "id": "d1145490-dfb6-4eda-93ff-81516ee63650",
-                    "path": "<Gamepad>/start",
+                    "path": "<DualSenseGamepadHID>/touchpadButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -435,11 +444,33 @@
                 {
                     "name": "",
                     "id": "4f6fc497-e1d8-4d7a-a27e-e887d5c6a145",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b37a3c3c-7664-44a3-91b4-df04f581ccbd",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Settings",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f342c2e8-5571-4f00-add8-07570fbb40c8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Settings",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -936,17 +967,6 @@
                 },
                 {
                     "name": "",
-                    "id": "dd1f7eb9-f81e-45bc-b20c-6406bc64797e",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Navigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ba436134-dbe0-4f20-91a7-5b5fee438209",
                     "path": "<Gamepad>/dpad",
                     "interactions": "",
@@ -1222,17 +1242,6 @@
                     "name": "",
                     "id": "120b390f-691f-4f3e-a579-1c56566b633a",
                     "path": "<Gamepad>/dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "InventoryNavigate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e6f6cd16-a9fa-467e-8f19-89eb77a8b609",
-                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",

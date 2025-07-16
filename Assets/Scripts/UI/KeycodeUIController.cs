@@ -161,6 +161,8 @@ public class KeycodeUIController
             yield return new WaitForSeconds(stepDelay);
         }
 
+        RumbleController.Instance.TriggerPresetRumble(RumblePreset.KeycodeSequenceComplete);
+        
         _isAnimating = false;
         onComplete?.Invoke();
     }
