@@ -8,7 +8,11 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private string _itemName;
     [SerializeField, TextArea] private string _additionalText;
     public string AdditionalText => _additionalText;
-    [SerializeField] private Sprite _icon;
+    [FormerlySerializedAs("_icon")] [SerializeField] private Sprite _readIcon;
+    public Sprite ReadIcon => _readIcon;
+    
+    [SerializeField] private Sprite _unreadIcon;
+    public Sprite UnreadIcon => _unreadIcon;
 
     private bool _isGun; // PlayerGun script sets this automatically
     public bool IsGun => _isGun;
@@ -46,7 +50,7 @@ public class PickupItem : MonoBehaviour, IInteractable
         }
         else
         {
-            var item = new InventoryItem(_itemName, _isGun, _isNote, _icon, _additionalText);
+            var item = new InventoryItem(_itemName, _isGun, _isNote, _readIcon, _additionalText);
             inventory.AddItem(item);
             UIManager.Instance.ActivateInventoryIndicator();
         }

@@ -65,7 +65,7 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
         if (PlayerHasItemInInventory)
         {
-            UIManager.Instance.StartPopUpText(_popUpMessage, 0f);
+            UIManager.Instance.StartPopUpText(_popUpMessage, 0f, false);
             _interactionPrompt.SetActive(true);
         }
     }

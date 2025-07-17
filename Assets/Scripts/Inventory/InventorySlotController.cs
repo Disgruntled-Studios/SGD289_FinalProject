@@ -10,7 +10,6 @@ public class InventorySlotController : MonoBehaviour
     [SerializeField] private GameObject _iconObject;
     [SerializeField] private Image _itemIconImage;
     [SerializeField] private Image _backgroundImage;
-    [SerializeField] private GameObject _indicatorImage;
 
     private InventoryItem _itemInSlot;
     public InventoryItem ItemInSlot => _itemInSlot;
@@ -30,8 +29,6 @@ public class InventorySlotController : MonoBehaviour
         }
         
         _itemIconImage.transform.localScale = Vector3.one;
-        
-        _indicatorImage.SetActive(!_itemInSlot.hasBeenRead);
     }
 
     public void SetHighlighted(bool highlighted)
@@ -41,7 +38,6 @@ public class InventorySlotController : MonoBehaviour
         if (highlighted && _itemInSlot != null && !_itemInSlot.hasBeenRead)
         {
             _itemInSlot.hasBeenRead = true;
-            _indicatorImage.SetActive(false);
         }
     }
 
