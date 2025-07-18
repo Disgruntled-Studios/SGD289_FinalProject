@@ -41,6 +41,14 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         HighlightSlot(_selectedIndex);
 
         UIManager.Instance.SetEventSystemObject(_slots[_selectedIndex].gameObject);
+
+        foreach (var slot in _slots)
+        {
+            if (slot.ItemInSlot != null && !slot.ItemInSlot.hasBeenRead)
+            {
+                slot.RefreshWiggle();
+            }
+        }
     }
 
     public void OnPanelDeactivated()
@@ -48,6 +56,7 @@ public class InventoryUIController : MonoBehaviour, IUIPanelController
         foreach (var slot in _slots)
         {
             slot.SetHighlighted(false);
+            slot.ForceStopWiggle();
         }
 
         _descriptionText.gameObject.SetActive(false);

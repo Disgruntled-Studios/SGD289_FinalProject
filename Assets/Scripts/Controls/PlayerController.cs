@@ -277,7 +277,8 @@ public class PlayerController : MonoBehaviour
             if (correctItem == null) return;
             if (_currentItemReceiver.TryReceiveItem(_inventory, correctItem))
             {
-                UIManager.Instance.StartPopUpText($"{correctItem.itemName} used on {_currentItemReceiver.Name}");
+                UIManager.Instance.StartPopUpText($"{correctItem.itemName} used on {_currentItemReceiver.Name}", 3f,
+                    false);
 
                 if (_inventory.AllItemsHaveBeenRead())
                 {
