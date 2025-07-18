@@ -6,7 +6,7 @@ public class InventoryItem
 {
     public string itemName;
     public string additionalText;
-    [FormerlySerializedAs("icon")] public Sprite readIcon;
+    public Sprite readIcon;
     public Sprite unreadIcon;
     public readonly bool isGun;
     public readonly bool isNote;

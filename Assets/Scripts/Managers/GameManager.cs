@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         }
         
         // Commenting out for testing - thanks nate
-        TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+        //TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
     }
 
     private void Update()
