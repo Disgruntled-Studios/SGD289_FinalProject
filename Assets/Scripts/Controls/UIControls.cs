@@ -82,7 +82,12 @@ public class UIControls : MonoBehaviour
         if (!ShouldProcessInput(context, isSubmit: true)) return;
         
         var intro = UIManager.Instance.IntroController;
-        if (intro && intro.ShouldHandleSubmit())
+        if (!intro || !intro.gameObject.activeInHierarchy) return;
+        if (!intro.ShouldHandleSubmit())
+        {
+            intro.SkipTyping();
+        }
+        else
         {
             intro.OnContinuePressed();
         }
@@ -93,10 +98,8 @@ public class UIControls : MonoBehaviour
         if (!context.performed) return false;
 
         var intro = UIManager.Instance.IntroController;
-        if (isSubmit && intro && intro.ShouldHandleSubmit())
-        {
-            return true;
-        }
+
+        if (isSubmit && intro && intro.gameObject.activeInHierarchy) return true;
         
         if (InputManager.Instance.ShouldBlockInput(context)) return false;
         if (!_ui || !InputManager.Instance.IsInUI) return false;

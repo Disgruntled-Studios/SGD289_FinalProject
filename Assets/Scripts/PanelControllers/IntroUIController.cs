@@ -25,12 +25,13 @@ public class IntroUIController : MonoBehaviour, IUIPanelController
     public bool IsIntroComplete { get; private set; }
 
     private Coroutine _promptPulse;
+    private Coroutine _typingCoroutine;
     
     public void OnPanelActivated()
     {
         ResetState();
         Time.timeScale = 0f;
-        StartCoroutine(TypeText());
+        _typingCoroutine = StartCoroutine(TypeText());
     }
 
     public void OnPanelDeactivated()
@@ -104,8 +105,6 @@ public class IntroUIController : MonoBehaviour, IUIPanelController
 
         if (_promptPulse != null) StopCoroutine(_promptPulse);
         
-        // TODO: Add the intro journal to inventory if needed
-        
         GameManager.Instance.MarkIntroSeen();
         UIManager.Instance.SetIntroComplete();
         InputManager.Instance.SwitchToDefaultInput();
@@ -127,6 +126,27 @@ public class IntroUIController : MonoBehaviour, IUIPanelController
         {
             HandleSubmit();
         }
+    }
+
+    public void SkipTyping()
+    {
+        if (_hasFinishedTyping || _typingCoroutine == null) return;
+
+        StopCoroutine(_typingCoroutine);
+        _typingCoroutine = null;
+
+        _journalText.text = _introText;
+        _typingAudio.Stop();
+
+        _hasFinishedTyping = true;
+        _continuePrompt.SetActive(true);
+
+        if (_promptPulse != null)
+        {
+            StopCoroutine(_promptPulse);
+        }
+
+        _promptPulse = StartCoroutine(AnimatePrompt());
     }
 
     public bool ShouldHandleSubmit()
