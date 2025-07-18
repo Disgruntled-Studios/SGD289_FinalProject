@@ -49,17 +49,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
 
-        if (_isTesting)
+        if (!_isTesting)
         {
-            Player.GetComponent<PlayerController>().GunController.HasGun = true;
-            
-        }
-        else
-        {
-                        
             TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+            StartCoroutine(BeginIntroRoutine());
         }
+    }
+    
+    private IEnumerator BeginIntroRoutine()
+    {
+        yield return null;
+        UIManager.Instance.ShowJournalIntro();
     }
 
     private void Update()

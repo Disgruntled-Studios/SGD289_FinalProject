@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour
 
         _playerInput = new PlayerInput();
         _playerInput.Enable();
-        SwitchToDefaultInput();
+        //SwitchToDefaultInput();
 
         // Reset just in case
         InputSystem.onEvent -= OnInputEvent;
@@ -197,6 +197,6 @@ public class InputManager : MonoBehaviour
 
     public bool ShouldBlockInput(InputAction.CallbackContext context)
     {
-        return !context.performed || Instance.IsInputLocked;
+        return !context.performed || Instance.IsInputLocked || UIManager.Instance.IsIntroActive;
     }
 }
