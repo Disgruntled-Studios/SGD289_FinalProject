@@ -1295,6 +1295,10 @@ MonoBehaviour:
   coinsText: {fileID: 1160604938}
   gameOverText: {fileID: 606103470}
   livesText: {fileID: 1702864151}
+  gameOverWait: 0
+  _world: 0
+  _sceneSwitchName: 
+  _cameraSwitchId: 
 --- !u!4 &478023431
 Transform:
   m_ObjectHideFlags: 0
@@ -2173,7 +2177,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808806259}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3966,7 +3970,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 174610806}
   _cameraTarget: {fileID: 1088026820}
-  _jumpOnEnemyObject: {fileID: 1560111298}
+  _groundCheckObject: {fileID: 1560111298}
+  _invCube: {fileID: 808806259}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -3975,10 +3980,11 @@ MonoBehaviour:
   _gunScript: {fileID: 1830421142}
   _fpsGun: {fileID: 702842417}
   _tpGunModel: {fileID: 1777082248}
-  _playerCollisions: {fileID: 1843236091624525649}
+  _platformingCollisions: {fileID: 1843236091624525649}
   _isBulletTime: 0
   _standingCollider: {fileID: 0}
   _crouchCollider: {fileID: 0}
+  IsInFPS: 0
 --- !u!4 &1954876345
 Transform:
   m_ObjectHideFlags: 0
@@ -4299,6 +4305,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1413294863027320353, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1530952318979573157, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4468,6 +4478,7 @@ MonoBehaviour:
   dmgInvTime: 1
   invObj: {fileID: 808806259}
   bounceForce: 300
+  hasShip: 0
 --- !u!1001 &3777585560039643143
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
 
+        
         if (PlayerController.isTestingTank)
         {
             TransitionManager.Instance.TransitionToScene("PowerPlant", "CAM01", World.Tank);
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
             SwitchPlayerMode(World.Hub);
             TransitionManager.Instance.TransitionToScene("BJ_Hub", "HUBCAM", World.Hub);
         }
+        
     }
 
 #if UNITY_EDITOR

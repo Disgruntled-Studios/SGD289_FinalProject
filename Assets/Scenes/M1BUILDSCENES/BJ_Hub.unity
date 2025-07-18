@@ -832,7 +832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6999248939152927278, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7003088282356920907, guid: 2eb6760baf6eb7446886d8a91804f007, type: 3}
       propertyPath: _fpHands
@@ -2840,6 +2840,7 @@ MonoBehaviour:
   _isBulletTime: 0
   _standingCollider: {fileID: 1078754793}
   _crouchCollider: {fileID: 1078754790}
+  IsInFPS: 0
 --- !u!1 &1500785864
 GameObject:
   m_ObjectHideFlags: 0
