@@ -20,6 +20,7 @@ public enum RumblePreset
     DeathShock,
     ItemPickup,
     KeycodeDigitSuccess,
+    KeycodeInvalid,
     KeycodeSequenceComplete,
     ConnectedFeedback,
     DisconnectedFeedback
@@ -101,6 +102,9 @@ public class RumbleController : MonoBehaviour
                 break;
             case RumblePreset.DisconnectedFeedback:
                 TriggerPatternedRumble(0.4f, 0.1f, RumblePattern.RampDown);
+                break;
+            case RumblePreset.KeycodeInvalid:
+                TriggerPatternedRumble(0.8f, 0.2f, RumblePattern.RampDown);
                 break;
         }
     }

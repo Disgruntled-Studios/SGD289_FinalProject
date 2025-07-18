@@ -89,6 +89,7 @@ public class KeycodeUIController
     {
         ResetDigits();
         UIManager.Instance.ShakeKeycodePanel();
+        RumbleController.Instance.TriggerPresetRumble(RumblePreset.KeycodeInvalid);
     }
 
     private void HighlightActiveDigit()
