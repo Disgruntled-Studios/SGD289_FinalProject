@@ -22,7 +22,7 @@ public enum RumblePreset
     KeycodeDigitSuccess,
     KeycodeSequenceComplete,
     ConnectedFeedback,
-    DisconnectedFeeback
+    DisconnectedFeedback
 }
 
 public class RumbleController : MonoBehaviour
@@ -99,7 +99,7 @@ public class RumbleController : MonoBehaviour
             case RumblePreset.ConnectedFeedback:
                 TriggerPatternedRumble(0.4f, 0.1f, RumblePattern.RampUp);
                 break;
-            case RumblePreset.DisconnectedFeeback:
+            case RumblePreset.DisconnectedFeedback:
                 TriggerPatternedRumble(0.4f, 0.1f, RumblePattern.RampDown);
                 break;
         }

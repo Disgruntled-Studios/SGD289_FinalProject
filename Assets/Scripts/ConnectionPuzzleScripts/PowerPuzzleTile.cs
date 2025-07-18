@@ -25,7 +25,7 @@ public class PowerPuzzleTile : MonoBehaviour
                 else
                 {
                     // UIManager.Instance.UIAudioController.PlaySound(UISound.TileDisconnected);
-                    RumbleController.Instance.TriggerPresetRumble(RumblePreset.DisconnectedFeeback);
+                    RumbleController.Instance.TriggerPresetRumble(RumblePreset.DisconnectedFeedback);
                 }
             }
         }
