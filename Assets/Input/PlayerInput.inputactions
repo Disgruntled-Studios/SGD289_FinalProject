@@ -1026,6 +1026,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "IntroSubmit",
+                    "type": "Button",
+                    "id": "ece1829b-3f22-42f2-8257-1dd13922834f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1246,6 +1255,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "InventoryNavigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94f23351-140d-445a-ac8e-baa3002a64f6",
+                    "path": "<DualShockGamepad>/touchpadButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "IntroSubmit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55b13650-f0c5-4e03-bee0-9f955211ee66",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "IntroSubmit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

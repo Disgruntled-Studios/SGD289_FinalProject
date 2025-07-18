@@ -25,6 +25,7 @@ public class UIControls : MonoBehaviour
         uiMap.NextPanel.performed += OnNextPanel;
         uiMap.PreviousPanel.performed += OnPreviousPanel;
         uiMap.InventoryCancel.performed += OnInventoryCancel;
+        uiMap.IntroSubmit.performed += OnIntroSubmit;
     }
     
     private void OnDisable()
@@ -36,6 +37,7 @@ public class UIControls : MonoBehaviour
         uiMap.NextPanel.performed -= OnNextPanel;
         uiMap.PreviousPanel.performed -= OnPreviousPanel;
         uiMap.InventoryCancel.performed -= OnInventoryCancel;
+        uiMap.IntroSubmit.performed -= OnIntroSubmit;
     }
     
     public void OnNavigate(InputAction.CallbackContext context)
@@ -49,14 +51,7 @@ public class UIControls : MonoBehaviour
     // AKA USE ITEM
     public void OnInventorySubmit(InputAction.CallbackContext context)
     {
-        if (!ShouldProcessInput(context, isSubmit: true)) return;
-        
-        var intro = UIManager.Instance.IntroController;
-        if (intro && intro.ShouldHandleSubmit())
-        {
-            intro.OnContinuePressed();
-            return;
-        }
+        if (!ShouldProcessInput(context)) return;
         
         _ui.GetActivePanelController()?.HandleSubmit();
     }
@@ -80,6 +75,17 @@ public class UIControls : MonoBehaviour
         if (!ShouldProcessInput(context)) return;
 
         _ui.NavigatePanel(-1);
+    }
+
+    public void OnIntroSubmit(InputAction.CallbackContext context)
+    {
+        if (!ShouldProcessInput(context, isSubmit: true)) return;
+        
+        var intro = UIManager.Instance.IntroController;
+        if (intro && intro.ShouldHandleSubmit())
+        {
+            intro.OnContinuePressed();
+        }
     }
 
     private bool ShouldProcessInput(InputAction.CallbackContext context, bool isSubmit = false)

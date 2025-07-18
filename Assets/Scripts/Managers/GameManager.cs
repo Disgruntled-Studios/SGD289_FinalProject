@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreen;
 
     public bool IsGameOver { get; private set; }
+    public bool HasSeenIntro { get; private set; }
 
     [Header("Dev Level Cheat Vars")]
     [SerializeField] private string levelOneFileName;
@@ -46,12 +47,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MarkIntroSeen()
+    {
+        HasSeenIntro = true;
+    }
+
+    public void ResetIntroSeen()
+    {
+        HasSeenIntro = false;
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-
-        if (!_isTesting)
+        
+        if (_isTesting)
+        {
+            UIManager.Instance.ActivateHudPanel();
+            InputManager.Instance.SwitchToDefaultInput();
+            PlayerController.GunController.HasGun = true;
+        }
+        else
         {
             TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
             StartCoroutine(BeginIntroRoutine());
@@ -88,6 +105,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         IsGameOver = false;
+        ResetIntroSeen();
         CallAnimationUnpause();
 
         Cursor.lockState = CursorLockMode.None;
