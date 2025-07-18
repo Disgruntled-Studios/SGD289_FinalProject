@@ -53,10 +53,13 @@ public class GameManager : MonoBehaviour
         if (_isTesting)
         {
             Player.GetComponent<PlayerController>().GunController.HasGun = true;
+            
         }
-        
-        // Commenting out for testing - thanks nate
-        //TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+        else
+        {
+                        
+            TransitionManager.Instance.SetPlayerToSpawnPoint(SceneManager.GetActiveScene());
+        }
     }
 
     private void Update()
