@@ -321,6 +321,11 @@ public class UIManager : MonoBehaviour
         _gunImage.SetActive(isActive);
     }
 
+    public bool IsInventoryPanelActive()
+    {
+        return _inventoryController.gameObject.activeSelf;
+    }
+
     #endregion
 
     #region PopUp Methods
@@ -329,10 +334,7 @@ public class UIManager : MonoBehaviour
     // CLEAR WITH ClearPopUpText()
     public void StartPopUpText(string message, float duration = 3f, bool withPrompt = true)
     {
-        if (!withPrompt)
-        {
-            _buttonPrompt.SetActive(false);
-        }
+        _buttonPrompt.SetActive(withPrompt);
         
         if (_popUpCoroutine != null)
         {
@@ -346,7 +348,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            ShowPermanentPopUpText(message);
+            ShowPermanentPopUpText(message, withPrompt);
         }
     }
 
@@ -360,6 +362,8 @@ public class UIManager : MonoBehaviour
 
         _popUpBox.SetActive(false);
         _popUpText.text = "";
+
+        _buttonPrompt.SetActive(true);
     }
 
     private IEnumerator TypePopUpText(string message, float duration)
@@ -388,10 +392,12 @@ public class UIManager : MonoBehaviour
         _popUpCoroutine = null;
     }
 
-    private void ShowPermanentPopUpText(string message)
+    private void ShowPermanentPopUpText(string message, bool withPrompt = true)
     {
         _popUpBox.SetActive(true);
         _popUpText.text = PopUpTypingEnabled ? "" : message;
+
+        _buttonPrompt.SetActive(withPrompt);
 
         if (PopUpTypingEnabled)
         {

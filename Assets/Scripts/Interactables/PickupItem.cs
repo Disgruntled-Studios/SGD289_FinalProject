@@ -47,15 +47,15 @@ public class PickupItem : MonoBehaviour, IInteractable
             player.gameObject.GetComponent<PlayerController>().GunController.HasGun = true;
             UIManager.Instance.ToggleGunImage(true);
             onGunPickup?.Invoke();
+            UIManager.Instance.StartPopUpText(_itemName, 3f, false);
         }
         else
         {
-            var item = new InventoryItem(_itemName, _isGun, _isNote, _readIcon, _additionalText);
+            var item = new InventoryItem(_itemName, _isGun, _isNote, _readIcon, _unreadIcon, _additionalText);
             inventory.AddItem(item);
             UIManager.Instance.ActivateInventoryIndicator();
+            UIManager.Instance.StartPopUpText(_itemName);
         }
-
-        UIManager.Instance.StartPopUpText(_itemName);
 
         if (_interactionClip != null)
         {

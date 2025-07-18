@@ -20,11 +20,6 @@ public class PlayerInventory : MonoBehaviour
             _items.Add(item);
         }
         
-        if (UIManager.Instance)
-        {
-            UIManager.Instance.StartPopUpText($"{item.itemName}");
-        }
-        
         OnInventoryChanged?.Invoke();
     }
 
