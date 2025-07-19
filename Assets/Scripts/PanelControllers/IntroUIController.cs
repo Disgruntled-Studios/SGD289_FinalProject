@@ -13,7 +13,7 @@ public class IntroUIController : MonoBehaviour, IUIPanelController
     [TextArea] [SerializeField] private string _introText;
 
     [Header("Settings")] 
-    private const float PromptDelay = 0.5f;
+    private const float PromptDelay = 1.5f;
     private const float FadeDuration = 2.5f;
     private const float CharDelay = 0.02f;
 

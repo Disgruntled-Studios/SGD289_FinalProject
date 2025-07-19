@@ -521,6 +521,23 @@ public class PlayerController : MonoBehaviour
             _currentItemReceiver = null;
         }
     }
-    
+
+    public void ResetMovementState()
+    {
+        _currentMoveInput = 0f;
+        _currentRotationInput = 0f;
+        _smoothedRotationInput = 0f;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        _isSprinting = false;
+        _isCrouching = false;
+        IsMovementLocked = false;
+
+        _animationController.Sprint(false);
+        _animationController.Crouch(false);
+        _animationController.Aim(false);
+        
+        UpdateSpeed();
+    }
 }
 
