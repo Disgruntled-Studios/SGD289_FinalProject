@@ -165,6 +165,8 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        ClearPopUpText();
+        
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
@@ -218,6 +220,8 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        ClearPopUpText();
+        
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
