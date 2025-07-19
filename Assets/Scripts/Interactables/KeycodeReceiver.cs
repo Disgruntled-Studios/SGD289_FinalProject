@@ -41,7 +41,8 @@ public class KeycodeReceiver : MonoBehaviour, IInteractable
             SoundUtility.PlayClipAtPoint(_interactionClip, transform.position, _volume, _pitch, _outputGroup,
                 _spatialBlend);
         }
-            
+         
+        RumbleController.Instance?.TriggerPresetRumble(RumblePreset.KeycodeInteract);
         UIManager.Instance.OpenKeycodePanel(this);
     }
 

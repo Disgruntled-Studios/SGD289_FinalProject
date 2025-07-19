@@ -44,7 +44,7 @@ public class KeycodeUIController
 
     public void Close()
     {
-        if (!IsOpen) return;
+        if (!IsOpen || _isAnimating) return;
 
         _keycodePanel.SetActive(false);
         _activeReceiver = null;
@@ -53,7 +53,7 @@ public class KeycodeUIController
 
     public void Navigate(Vector2 input)
     {
-        if (!IsOpen) return;
+        if (!IsOpen || _isAnimating) return;
 
         if (input.x > 0.1f)
         {

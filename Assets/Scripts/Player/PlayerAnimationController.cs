@@ -154,7 +154,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void OnHitAnimationComplete()
     {
-        _playerController.IsMovementLocked = false;
+        _playerController.ResetMovementState();
     }
 }
 

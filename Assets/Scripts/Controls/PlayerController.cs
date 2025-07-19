@@ -531,6 +531,7 @@ public class PlayerController : MonoBehaviour
         _rb.angularVelocity = Vector3.zero;
         _isSprinting = false;
         _isCrouching = false;
+        _gunController.EndGunAim();
         IsMovementLocked = false;
 
         _animationController.Sprint(false);
