@@ -18,7 +18,7 @@ public class ExitDoor : MonoBehaviour, IInteractable
     {
         if (string.IsNullOrEmpty(_targetSceneName)) return;
 
-        if (_meshRenderer != null && _glitchDoorMat != null && _glitchKnobMat != null)
+        if (_meshRenderer && _glitchDoorMat && _glitchKnobMat)
         {
             var newMats = _meshRenderer.materials;
             if (newMats.Length >= 2)
@@ -26,6 +26,15 @@ public class ExitDoor : MonoBehaviour, IInteractable
                 newMats[0] = _glitchDoorMat;
                 newMats[1] = _glitchKnobMat;
                 _meshRenderer.materials = newMats;
+
+                // Force glitch shader to activate immediately
+                newMats[0].SetFloat("_Amplitude", 1f);
+                newMats[0].SetFloat("_Speed", 10f);
+                newMats[0].SetFloat("_TimeOffset", Mathf.PI * 0.5f); // strong right away
+
+                newMats[1].SetFloat("_Amplitude", 1f);
+                newMats[1].SetFloat("_Speed", 10f);
+                newMats[1].SetFloat("_TimeOffset", Mathf.PI * 0.5f);
             }
         }
 
@@ -51,8 +60,11 @@ public class ExitDoor : MonoBehaviour, IInteractable
 
     private IEnumerator FadeAndLoadScene()
     {
+        RumbleController.Instance?.TriggerPresetRumble(RumblePreset.Outro);
+        
         yield return UIManager.Instance.StartCoroutine(UIManager.Instance.Fade(0f, 1f, 2.5f, () =>
         {
+            RumbleController.Instance?.StopAllRumbles();
             SceneManager.LoadScene(_targetSceneName);
         }));
     }
