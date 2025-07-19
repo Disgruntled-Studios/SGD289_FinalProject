@@ -15,9 +15,13 @@ public class EnemyAnimationEvents : MonoBehaviour
 
     public void SpawnObjectOnDeath()
     {
-        if (_objectToSpawn)
+        if (!_objectToSpawn) return;
+
+        if (_objectToSpawn.transform.IsChildOf(transform))
         {
-            _objectToSpawn.SetActive(true);
+            _objectToSpawn.transform.SetParent(null);
         }
+
+        _objectToSpawn.SetActive(true);
     }
 }
