@@ -16,6 +16,8 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     public BehaviorState currentState;
+    private BehaviorState _originalState;
+    public BehaviorState OriginalState => _originalState;
     //[SerializeField] float chaseDistance = 10f;
     [SerializeField] float attackDistance = 2f;
     [SerializeField] float attackStrength = 15f;
@@ -74,6 +76,7 @@ public class EnemyBehavior : MonoBehaviour
             currentPatrolPoint = transform;
         }
 
+        _originalState = currentState;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
