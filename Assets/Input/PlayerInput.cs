@@ -1112,6 +1112,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""IntroSubmit"",
+                    ""type"": ""Button"",
+                    ""id"": ""ece1829b-3f22-42f2-8257-1dd13922834f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1334,6 +1343,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""InventoryNavigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94f23351-140d-445a-ac8e-baa3002a64f6"",
+                    ""path"": ""<DualShockGamepad>/touchpadButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""IntroSubmit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55b13650-f0c5-4e03-bee0-9f955211ee66"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""IntroSubmit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1438,6 +1469,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UIMap_InventoryCancel = m_UIMap.FindAction("InventoryCancel", throwIfNotFound: true);
         m_UIMap_NextPanel = m_UIMap.FindAction("NextPanel", throwIfNotFound: true);
         m_UIMap_PreviousPanel = m_UIMap.FindAction("PreviousPanel", throwIfNotFound: true);
+        m_UIMap_IntroSubmit = m_UIMap.FindAction("IntroSubmit", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -2045,6 +2077,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIMap_InventoryCancel;
     private readonly InputAction m_UIMap_NextPanel;
     private readonly InputAction m_UIMap_PreviousPanel;
+    private readonly InputAction m_UIMap_IntroSubmit;
     /// <summary>
     /// Provides access to input actions defined in input action map "UIMap".
     /// </summary>
@@ -2076,6 +2109,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UIMap/PreviousPanel".
         /// </summary>
         public InputAction @PreviousPanel => m_Wrapper.m_UIMap_PreviousPanel;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/IntroSubmit".
+        /// </summary>
+        public InputAction @IntroSubmit => m_Wrapper.m_UIMap_IntroSubmit;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2117,6 +2154,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PreviousPanel.started += instance.OnPreviousPanel;
             @PreviousPanel.performed += instance.OnPreviousPanel;
             @PreviousPanel.canceled += instance.OnPreviousPanel;
+            @IntroSubmit.started += instance.OnIntroSubmit;
+            @IntroSubmit.performed += instance.OnIntroSubmit;
+            @IntroSubmit.canceled += instance.OnIntroSubmit;
         }
 
         /// <summary>
@@ -2143,6 +2183,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PreviousPanel.started -= instance.OnPreviousPanel;
             @PreviousPanel.performed -= instance.OnPreviousPanel;
             @PreviousPanel.canceled -= instance.OnPreviousPanel;
+            @IntroSubmit.started -= instance.OnIntroSubmit;
+            @IntroSubmit.performed -= instance.OnIntroSubmit;
+            @IntroSubmit.canceled -= instance.OnIntroSubmit;
         }
 
         /// <summary>
@@ -2475,5 +2518,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPreviousPanel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "IntroSubmit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnIntroSubmit(InputAction.CallbackContext context);
     }
 }

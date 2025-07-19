@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
@@ -7,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UIManager : MonoBehaviour
 {
@@ -30,8 +32,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private AudioUIController _audioController;
     [SerializeField] private VisualUIController _visualController;
     [SerializeField] private MoreUIController _moreController;
+    
     private List<IUIPanelController> _panelControllers;
     private int _currentPanelIndex;
+    
+    [Header("Game Intro")]
+    [SerializeField] private GameObject _introPanel;
+    [SerializeField] private IntroUIController _introController;
+    public IntroUIController IntroController => _introController;
+    public bool IsIntroActive { get; private set; }
+
+    [Header("Transitions")] 
+    [SerializeField] private GameObject _fadePanel;
+    [SerializeField] private CanvasGroup _fadeGroup;
 
     [Header("Puzzle UI Elements")] 
     [SerializeField] private TMP_Text _tileMoveInstructions;
@@ -125,6 +138,19 @@ public class UIManager : MonoBehaviour
     public void DeactivateInventoryIndicator()
     {
         _inventoryIndicator.SetActive(false);
+    }
+
+    public void ShowJournalIntro()
+    {
+        IsIntroActive = true;
+        _introPanel.SetActive(true);
+        _introController.OnPanelActivated();
+        InputManager.Instance.SwitchToUIInput();
+    }
+
+    public void SetIntroComplete()
+    {
+        IsIntroActive = false;
     }
 
     #region UI Navigation
@@ -505,6 +531,36 @@ public class UIManager : MonoBehaviour
     public GameObject GetCurrentSelectedObject()
     {
         return _gameEventSystem.currentSelectedGameObject;
+    }
+
+    #endregion
+
+    #region Transitions
+
+    public IEnumerator Fade(float fromAlpha, float toAlpha, float duration, Action onComplete = null)
+    {
+        _fadePanel.SetActive(true);
+
+        if (!_fadeGroup) yield break;
+
+        _fadeGroup.alpha = fromAlpha;
+
+        var time = 0f;
+        while (time < duration)
+        {
+            _fadeGroup.alpha = Mathf.Lerp(fromAlpha, toAlpha, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        _fadeGroup.alpha = toAlpha;
+
+        if (toAlpha == 0f)
+        {
+            _fadePanel.SetActive(false);
+        }
+        
+        onComplete?.Invoke();
     }
 
     #endregion

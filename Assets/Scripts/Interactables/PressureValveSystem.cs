@@ -54,6 +54,7 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         OpenDoor();
         _hasBeenInteractedWith = true;
         _interactionPrompt.SetActive(false);
+        UIManager.Instance.ClearPopUpText();
     }
 
     private void BuildPressure()
@@ -118,6 +119,7 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         }
         else
         {
+            UIManager.Instance.StartPopUpText("Turn Pressure Valve?", 0f, false);
             _interactionPrompt.SetActive(true);
         }
     }
@@ -132,6 +134,7 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
         }
         else
         {
+            UIManager.Instance.ClearPopUpText();
             _interactionPrompt.SetActive(false);
         }
     }

@@ -23,7 +23,7 @@ public enum RumblePreset
     KeycodeInvalid,
     KeycodeSequenceComplete,
     ConnectedFeedback,
-    DisconnectedFeedback
+    DisconnectedFeedback,
 }
 
 public class RumbleController : MonoBehaviour
@@ -186,10 +186,15 @@ public class RumbleController : MonoBehaviour
         _activeRumble = null;
     }
 
-    public void StopAllVibration()
+    public void StopAllRumbles()
     {
         var gamepad = Gamepad.current;
 
         gamepad?.SetMotorSpeeds(0f, 0f);
+    }
+
+    public void SetMotorSpeeds(float lowFreq, float highFreq)
+    {
+        Gamepad.current?.SetMotorSpeeds(lowFreq, highFreq);
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3587327429847566686}
   - component: {fileID: 895080629193886541}
   - component: {fileID: 8118185164639072151}
-  - component: {fileID: 1351288336068510668}
+  - component: {fileID: 6664248633974757317}
   m_Layer: 11
   m_Name: InteractionZone
   m_TagString: Untagged
@@ -67,19 +67,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27e97d2d292df747a20292f27578741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemName: 
-  _additionalText: 
-  _readIcon: {fileID: 21300000, guid: 5526ed37ac94b93428c1d1f3874b99ee, type: 3}
+  _itemName: 'Journal Entry: Day 0'
+  _additionalText: "Journal Entry:\n\nDay... I dunno. Let\u2019s call it Day Zero.\r\n\r\nThe
+    Geiger counter\u2019s been screaming ever since I got within a mile of this place.
+    Something\u2019s alive in here, or...was, and whatever it is, it\u2019s emitting
+    enough radiation to grill a steak.\r\n\r\nI told myself I came to figure out
+    what happened. To get answers. But maybe that\u2019s a lie. Maybe I just wanted
+    to feel something again. The silence, the static, the rot \u2014 it\u2019s loud
+    here. And that weird part of me? The part that never learned to quit? It won\u2019t
+    let go.\r\n\r\nIf someone\u2019s reading this... well, I guess that means I made
+    it in. Probably still alive. Probably not glowing...yet. \r\n\r\nKeep your eyes
+    open. People left clues all over \u2014 scribbled notes, half-burnt logs, whatever
+    they could manage before they went under.\n \nRead. Everything.\n \nPiecing it
+    together might be the only way out of here. Or at least, the only way to understand
+    what this place is doing to people.\r\n\r\nTime to move. I can feel the buzz
+    crawling under my skin again. Like something\u2019s watching. Like the place
+    knows I\u2019m here.\r\n\r\n- Vera"
+  _readIcon: {fileID: 21300000, guid: 48e794a48349b694a9236f793cd9d68c, type: 3}
   _unreadIcon: {fileID: -844843681, guid: 618e234db78fbaa41a3c736d57746550, type: 3}
   onGunPickup:
     m_PersistentCalls:
       m_Calls: []
   _interactionPrompt: {fileID: 0}
-  _interactionClip: {fileID: 8300000, guid: 941b409719b84d34f93ec3590afa6a13, type: 3}
-  _outputGroup: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
+  _interactionClip: {fileID: 0}
+  _outputGroup: {fileID: 0}
   _volume: 1
   _pitch: 1
---- !u!114 &1351288336068510668
+--- !u!114 &6664248633974757317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 853f53b5ff75ed5448803fa8211dec79, type: 2}
     - target: {fileID: 919132149155446097, guid: 08b4f55db07708d45a88a9a0f491f2ce, type: 3}
       propertyPath: m_Name
-      value: NoteGreen
+      value: StartingNote
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 08b4f55db07708d45a88a9a0f491f2ce, type: 3}
       propertyPath: m_Layer

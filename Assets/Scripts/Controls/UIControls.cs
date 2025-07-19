@@ -1,8 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
 
 public class UIControls : MonoBehaviour
 {
@@ -28,6 +25,7 @@ public class UIControls : MonoBehaviour
         uiMap.NextPanel.performed += OnNextPanel;
         uiMap.PreviousPanel.performed += OnPreviousPanel;
         uiMap.InventoryCancel.performed += OnInventoryCancel;
+        uiMap.IntroSubmit.performed += OnIntroSubmit;
     }
     
     private void OnDisable()
@@ -39,6 +37,7 @@ public class UIControls : MonoBehaviour
         uiMap.NextPanel.performed -= OnNextPanel;
         uiMap.PreviousPanel.performed -= OnPreviousPanel;
         uiMap.InventoryCancel.performed -= OnInventoryCancel;
+        uiMap.IntroSubmit.performed -= OnIntroSubmit;
     }
     
     public void OnNavigate(InputAction.CallbackContext context)
@@ -55,7 +54,6 @@ public class UIControls : MonoBehaviour
         if (!ShouldProcessInput(context)) return;
         
         _ui.GetActivePanelController()?.HandleSubmit();
-        
     }
     
     public void OnInventoryCancel(InputAction.CallbackContext context)
@@ -79,9 +77,30 @@ public class UIControls : MonoBehaviour
         _ui.NavigatePanel(-1);
     }
 
-    private bool ShouldProcessInput(InputAction.CallbackContext context)
+    public void OnIntroSubmit(InputAction.CallbackContext context)
+    {
+        if (!ShouldProcessInput(context, isSubmit: true)) return;
+        
+        var intro = UIManager.Instance.IntroController;
+        if (!intro || !intro.gameObject.activeInHierarchy) return;
+        if (!intro.ShouldHandleSubmit())
+        {
+            intro.SkipTyping();
+        }
+        else
+        {
+            intro.OnContinuePressed();
+        }
+    }
+
+    private bool ShouldProcessInput(InputAction.CallbackContext context, bool isSubmit = false)
     {
         if (!context.performed) return false;
+
+        var intro = UIManager.Instance.IntroController;
+
+        if (isSubmit && intro && intro.gameObject.activeInHierarchy) return true;
+        
         if (InputManager.Instance.ShouldBlockInput(context)) return false;
         if (!_ui || !InputManager.Instance.IsInUI) return false;
 

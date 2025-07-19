@@ -227,14 +227,14 @@ public class EnemyBehavior : MonoBehaviour
                 }
 
                 if (!meshAgent.isStopped)
-                    {
-                        anim.SetBool("IsMoving", false);
-                        anim.SetBool("IsChasing", true);
-                    }
-                    else
-                    {
-                        anim.SetBool("IsChasing", false);
-                    }
+                {
+                    anim.SetBool("IsMoving", false);
+                    anim.SetBool("IsChasing", true);
+                }
+                else
+                {
+                    anim.SetBool("IsChasing", false);
+                }
 
                 break;
             case BehaviorState.Resting:
