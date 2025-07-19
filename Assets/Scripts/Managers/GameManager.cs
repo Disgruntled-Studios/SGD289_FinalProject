@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         if (_isTesting)
         {
             UIManager.Instance.ActivateHudPanel();
+            UIManager.Instance.DeactivateIntroPanel();
             InputManager.Instance.SwitchToDefaultInput();
             PlayerController.GunController.HasGun = true;
         }

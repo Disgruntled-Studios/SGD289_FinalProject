@@ -57,15 +57,13 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
     private void OnTriggerEnter(Collider other)
     {
-        if (string.IsNullOrEmpty(_popUpMessage)) return;
-
         if (!other.CompareTag("Player")) return;
 
         if (!_playerInventory || ItemHasBeenReceived) return;
 
         if (PlayerHasItemInInventory)
         {
-            UIManager.Instance.StartPopUpText(_popUpMessage, 0f, false);
+            UIManager.Instance.StartPopUpText($"Use {_requiredItemName}?", 0f, false);
             _interactionPrompt.SetActive(true);
         }
     }

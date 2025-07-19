@@ -148,6 +148,11 @@ public class UIManager : MonoBehaviour
         InputManager.Instance.SwitchToUIInput();
     }
 
+    public void DeactivateIntroPanel()
+    {
+        _introPanel.SetActive(false);
+    }
+
     public void SetIntroComplete()
     {
         IsIntroActive = false;
