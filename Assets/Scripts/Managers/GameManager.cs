@@ -154,12 +154,12 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         UIManager.Instance.CloseGameOverScreen();
-        Player.GetComponent<PlayerHealth>().ResetVignette();
+        Player.GetComponent<PlayerHealth>().ResetHealth();
+        PlayerController.ResetMovementState();
         ResetEnemies();
         CallAnimationUnpause();
         CallFadeInOnGameOver();
         IsGameOver = false;
-        PlayerController.IsMovementLocked = false;
         UIManager.Instance.ActivateHudPanel();
     }
 

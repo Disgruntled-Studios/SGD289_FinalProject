@@ -169,7 +169,8 @@ public class UIManager : MonoBehaviour
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
         IsGamePaused = true;
-
+        GameManager.Instance.CallAnimationPause();
+        
         _currentPanelIndex = 0;
 
         for (var i = 0; i < _subPanels.Count; i++)
@@ -201,6 +202,8 @@ public class UIManager : MonoBehaviour
         _pausePanel.SetActive(false);
         _uiAudio.PlaySound(UISound.Close);
         IsGamePaused = false;
+        
+        GameManager.Instance.CallAnimationUnpause();
 
         if (_inventoryController.HaveAllItemsBeenRead())
         {
