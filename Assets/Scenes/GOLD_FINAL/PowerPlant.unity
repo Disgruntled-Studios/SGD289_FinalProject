@@ -5576,7 +5576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3820555561549382041, guid: 9021b82e6ce93424fb614d80ec8e4669, type: 3}
       propertyPath: _itemName
-      value: Cabinet 4 Key
+      value: Halverson's Key
       objectReference: {fileID: 0}
     - target: {fileID: 3820555561549382041, guid: 9021b82e6ce93424fb614d80ec8e4669, type: 3}
       propertyPath: _outputGroup
@@ -5584,9 +5584,12 @@ PrefabInstance:
       objectReference: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     - target: {fileID: 3820555561549382041, guid: 9021b82e6ce93424fb614d80ec8e4669, type: 3}
       propertyPath: _additionalText
-      value: 'The metal is slightly warped from heat, but the label charm still dangles
-        loosely: <i>Records - Cabinet 4.</i> There''s faint residue on the teeth...ash,
-        maybe. Or something worse. '
+      value: 'The metal is warped - heat damage, maybe - but the label still clings
+        on by a brittle chain: <color=red>Records - Cabinet 4</color>
+
+
+        There''s
+        a powdery residue caked around the teeth. Ash, or something worse. '
       objectReference: {fileID: 0}
     - target: {fileID: 3820555561549382041, guid: 9021b82e6ce93424fb614d80ec8e4669, type: 3}
       propertyPath: _interactionClip
@@ -15569,7 +15572,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _name: <i>Records - Cabinet 4</i>
+  _name: Records - Cabinet 4
   _interactionPrompt: {fileID: 364670479}
   _interactionClip: {fileID: 8300000, guid: 3cc15f7a397dd7943bf0dd40fdb0efb2, type: 3}
   _outputGroup: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
@@ -26467,7 +26470,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2245138685921768623, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.78
+      value: 32.6
       objectReference: {fileID: 0}
     - target: {fileID: 2245138685921768623, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -26475,7 +26478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2245138685921768623, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.07
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 2245138685921768623, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26504,6 +26507,10 @@ PrefabInstance:
     - target: {fileID: 2245138685921768623, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083099752162043505, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
+      propertyPath: MaxDistance
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8025001611930578618, guid: de9a6e43ad3f41b41a05a22721174a3e, type: 3}
       propertyPath: m_Name
@@ -33748,7 +33755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: de0c515be4fde374dac2bc88d24d6e98, type: 3}
       propertyPath: _itemName
-      value: Folded Note
+      value: Note From Halverson
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: de0c515be4fde374dac2bc88d24d6e98, type: 3}
       propertyPath: _outputGroup
@@ -33756,14 +33763,12 @@ PrefabInstance:
       objectReference: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     - target: {fileID: 8118185164639072151, guid: de0c515be4fde374dac2bc88d24d6e98, type: 3}
       propertyPath: _additionalText
-      value: 'The hallway outside Reactor B is gone, completely melted. I think I''m
-        the last one from Control still moving. I''ve got the cabinet key, Singh
-        said the <color=red><i>code to the lockbox is filed in the second one from
-        the right.</color></i> If that box really has a <color=red><i>sidearm</color></i>
-        in it...that might be our only chance. If you find this, I didn''t make it,
-        but the key still should still be on me.
-
-        -Halverson'
+      value: "The hallway outside Reactor B is gone. Melted. I think I'm the last
+        one from Control still moving. \nI've got the cabinet key. Singh said the
+        <color=red>code to the lockbox is filed in the second cabinet from the right.</color>\nIf
+        that box really has a <color=red>sidearm</color> in it...it might be our
+        only shot. \nIf you're reading this, I didn't make it, but the key should
+        still be on me.\n-Halverson"
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: de0c515be4fde374dac2bc88d24d6e98, type: 3}
       propertyPath: _interactionClip
@@ -34311,7 +34316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 0
+    m_Value: 110
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -34393,7 +34398,7 @@ MonoBehaviour:
   levelOneStartingCam: CAM10
   levelTwoFileName: Reactor
   levelTwoStartingCam: CAM32
-  _isTesting: 0
+  _isTesting: 1
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -34903,20 +34908,23 @@ PrefabInstance:
       objectReference: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _additionalText
-      value: 'You''re not alone in here, so stay sharp.
+      value: 'You''re not alone in here. Stay sharp. Stay quiet. Stay moving.
 
-        Press <i><color=red>Triangle</i></color>
-        to interact with the world - open doors, search surroundings, and use items.
 
-        Press
-        <i><color=red>Start</i></color> to access your inventory - manage items,
-        read collected documents, and check your status.
+        -
+        Press <color=red>Triangle</color> to <b>interact</b> - open doors, search
+        surroundings, and use items.
 
-        Press <i><color=red>Circle</i></color>
-        to crouch into tight spaces.
+        - Press the <color=red>Touchpad</color>
+        to <b>open your inventory</b> - read notes, check vitals, and examine items.
 
-        Everything you need to survive...if
-        you''re fast enough to use it. '
+        -
+        Press <color=red>Circle</color> to <b>crouch</b> - squeeze through tight
+        spaces and stay out of sight.
+
+
+        Everything you need to survive is
+        at your fingertips...If you''re fast enough to use it. '
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _interactionClip
@@ -56900,6 +56908,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4776443129880948982, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
+      propertyPath: _introText
+      value: "Journal Entry:\n\nDay... I dunno. Let\u2019s call it Day Zero.\r\n\r\nThe
+        Geiger counter\u2019s been screaming ever since I got within a mile of this
+        place. Something\u2019s alive in here - or was. Whatever it is, it\u2019s
+        pumping out enough radiation to grill a steak.\r\n\r\nI told myself I came
+        to figure out what happened. To get answers. But maybe that was a lie. Maybe
+        I just wanted to feel something again. The silence, the static, the rot \u2014
+        it\u2019s loud here. And that weird part of me? The part that never learned
+        to quit? It won\u2019t let go.\r\n\r\nIf someone\u2019s reading this... well,
+        I guess that means I made it in. Still alive, I think. Not glowing...yet.
+        \r\n\r\nKeep your eyes open. People left clues all over \u2014 scribbled
+        notes, half-burnt logs, whatever they could manage before this place swalled
+        them whole. \n \nRead. Everything.\n \nPiecing it together might be the only
+        way out of here. Or at least the only way to understand what this place does
+        to people.\r\n\r\nTime to move. I can feel the buzz crawling under my skin
+        again. Like something\u2019s watching. Like the place knows I\u2019m here.\r\n\r\n-
+        Vera"
+      objectReference: {fileID: 0}
     - target: {fileID: 5490890756535210044, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -847
@@ -59308,7 +59335,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c4e218d8859c1f14abd1b67992dfbf55, type: 3}
   m_Resource: {fileID: 8300000, guid: c4e218d8859c1f14abd1b67992dfbf55, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.33
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -100868,7 +100895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _itemName
-      value: Evacuation Notice
+      value: Emergency Bulletin
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _outputGroup
@@ -100876,10 +100903,11 @@ PrefabInstance:
       objectReference: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _additionalText
-      value: "To All Facility Personnel: \nEffective immediately, all employees are
-        ordered to evacuate the premises due to critical instability in Reactor Core
-        B. Proceed to your assigned emergency exits and assemble at the designated
-        safety areas. \n- Robert Singh: Head of Security"
+      value: "To all facility personnel:\nEffective immediately, you are to evacuate
+        the premises due to critical instability in Reactor Core B.  Proceed to your
+        assigned emergency exits and assemble at the designated safety zones. Do
+        not attempt to retrieve personal belongings. Do not enter restricted maintenance
+        corridors.  \n\nThis is not a drill.\n\n- Robert Singh\nHead of Security\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: 3343a3afc05174c41a99c6d218f545bf, type: 3}
       propertyPath: _interactionClip
@@ -107230,59 +107258,59 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.02
+      value: 0.024999999
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.02
+      value: 0.024999999
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.02
+      value: 0.024999999
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0009
+      value: 0.0029
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0202
+      value: 0.0952
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0184
+      value: -0.045
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9708476
+      value: 0.8531976
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.23969759
+      value: -0.21065037
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.46324825
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.11437376
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -27.737
+      value: -14.684
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -60.11
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 23.798
       objectReference: {fileID: 0}
     - target: {fileID: 525745120811818899, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4266581780698325620, guid: f33cc3a143950314f8bd526d341420f7, type: 3}
       propertyPath: m_Name
@@ -107512,7 +107540,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 91.8
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -107538,8 +107566,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409810674}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.97384876, z: -0.22719736, w: 0}
-  m_LocalPosition: {x: 15.5, y: 5.11, z: 14.55}
+  m_LocalRotation: {x: 0, y: 0.36765608, z: 0, w: 0.92996186}
+  m_LocalPosition: {x: 8.39, y: 1.696, z: 23.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175417,7 +175445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: b7002d92ef7b313448647db35bf3d3c6, type: 3}
       propertyPath: _itemName
-      value: Security Notice
+      value: Lockbox Authorization
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: b7002d92ef7b313448647db35bf3d3c6, type: 3}
       propertyPath: _outputGroup
@@ -175425,10 +175453,18 @@ PrefabInstance:
       objectReference: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
     - target: {fileID: 8118185164639072151, guid: b7002d92ef7b313448647db35bf3d3c6, type: 3}
       propertyPath: _additionalText
-      value: "<b>Confidential - Emergency Access Authorization</b>\nIn light of recent
-        behavorial anomalies among staff, the emergency lockbox in Hallway 2 has
-        been restricted to security personnel only. \nLockbox Code: <color=red><i>3157</color></i>\n-R.
-        Singh"
+      value: 'Due to ongoing behavioral irregularities among staff, the emergency
+        lockbox in Hallway 2 has been restricted to security personnel. If you''re
+        reading this...protocol has already failed.
+
+
+        Lockbox Code: <color=red>3157</color>
+
+
+        -R.
+        Singh
+
+        Head of Security'
       objectReference: {fileID: 0}
     - target: {fileID: 8118185164639072151, guid: b7002d92ef7b313448647db35bf3d3c6, type: 3}
       propertyPath: _interactionClip
@@ -189516,7 +189552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.65
+      value: 6.03
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -189524,7 +189560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.26
+      value: 40.66
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalRotation.w
