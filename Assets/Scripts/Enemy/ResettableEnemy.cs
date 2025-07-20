@@ -84,5 +84,11 @@ public class ResettableEnemy : MonoBehaviour
     {
         yield return null;
         _enemyBehavior.InitializeAfterSpawn();
+
+        var animPause = _enemy.GetComponentInChildren<AnimationPause>();
+        if (animPause)
+        {
+            animPause.Unpause();
+        }
     }
 }
