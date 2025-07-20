@@ -540,5 +540,31 @@ public class PlayerController : MonoBehaviour
         
         UpdateSpeed();
     }
+    
+    public void FreezeMovement()
+    {
+        _currentMoveInput = 0f;
+        _currentRotationInput = 0f;
+        _smoothedRotationInput = 0f;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+
+        _isSprinting = false;
+        _isCrouching = false;
+
+        _gunController.EndGunAim();
+        IsMovementLocked = true;
+
+        _animationController.Sprint(false);
+        _animationController.Crouch(false);
+        _animationController.Aim(false);
+
+        UpdateSpeed();
+    }
+
+    public void UnfreezeMovement()
+    {
+        IsMovementLocked = false;
+    }
 }
 

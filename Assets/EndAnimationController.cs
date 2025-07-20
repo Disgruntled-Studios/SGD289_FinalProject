@@ -48,7 +48,7 @@ public class EndAnimationController : MonoBehaviour
         Destroy(UIManager.Instance.gameObject);
         if (endSceneSong != string.Empty)
         {
-            SoundManager.Instance.FadeInSFX(endSceneSong, 43.5f, 1.5f);
+            SoundManager.Instance.FadeInSFX(endSceneSong, 43f, 1.5f);
         }
         cameraDirector.Play();
         playerEndAnim.speed = 1;

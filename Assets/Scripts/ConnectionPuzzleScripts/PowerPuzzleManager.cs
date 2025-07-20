@@ -123,6 +123,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     private void ReturnToGameplay()
     {
+        GameManager.Instance.PlayerController.UnfreezeMovement();
+        
         CameraManager.Instance.TrySwitchToCamera(_sceneCamera.CameraID, "EaseInOut", 1.25f);
         InputManager.Instance.SwitchToDefaultInput();
         UIManager.Instance.SetPuzzlePanelActive(false);
@@ -227,6 +229,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     public void Interact(Transform player, PlayerInventory inventory)
     {
         if (_isPuzzleDone) return;
+        
+        GameManager.Instance.PlayerController.FreezeMovement();
+        
         InputManager.Instance.SwitchToPuzzleInput();
         CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
         UIManager.Instance.SetPuzzlePanelActive(true);
