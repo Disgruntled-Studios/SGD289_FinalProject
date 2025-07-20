@@ -32,6 +32,9 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [TextArea] public string puzzleOnEnterDialogue;
     public bool hasEnterPopUpTriggered;
 
+    [Header("Audio")] 
+    [SerializeField] private AudioSource _enterAudio;
+
     public Transform HighlightableObj;
     
     private readonly List<PowerPuzzleTile> _tiles = new();
@@ -223,13 +226,18 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        if (!_isPuzzleDone)
+        if (_isPuzzleDone) return;
+        InputManager.Instance.SwitchToPuzzleInput();
+        CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
+        UIManager.Instance.SetPuzzlePanelActive(true);
+        if (selectionLight != null) selectionLight.enabled = true;
+
+        if (_enterAudio)
         {
-            InputManager.Instance.SwitchToPuzzleInput();
-            CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
-            UIManager.Instance.SetPuzzlePanelActive(true);
-            if (selectionLight != null) selectionLight.enabled = true;
+            _enterAudio.Play();
         }
+            
+        RumbleController.Instance.TriggerPresetRumble(RumblePreset.ConnectionPuzzleEntry);
     }
 
     public void OnEnter()

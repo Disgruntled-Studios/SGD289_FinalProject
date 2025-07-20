@@ -16,7 +16,6 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
     private int _currentIndex;
     
     [Header("References")] 
-    [SerializeField] private CanvasGroup _brightnessOverlay;
     private GameObject _vignetteObject;
     private Vignette _vignette;
     

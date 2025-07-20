@@ -8,7 +8,8 @@ public enum RumblePattern
     Pulse,
     RampUp,
     RampDown,
-    Heartbeat
+    Heartbeat,
+    ZapPulse
 }
 
 public enum RumblePreset
@@ -24,12 +25,18 @@ public enum RumblePreset
     KeycodeSequenceComplete,
     ConnectedFeedback,
     DisconnectedFeedback,
-    EnemyGrowl
+    EnemyGrowl,
+    KeycodeInteract,
+    Outro,
+    ItemSubmission,
+    ConnectionPuzzleEntry
 }
 
 public class RumbleController : MonoBehaviour
 {
     public static RumbleController Instance { get; private set; }
+
+    public static bool rumbleEnabled = true;
     
     private Coroutine _activeRumble;
 
@@ -46,7 +53,7 @@ public class RumbleController : MonoBehaviour
 
     public void TriggerConstantRumble(float low, float high, float duration)
     {
-        if (Gamepad.current == null) return;
+        if (Gamepad.current == null || !rumbleEnabled) return;
 
         if (_activeRumble != null)
         {
@@ -59,7 +66,7 @@ public class RumbleController : MonoBehaviour
 
     public void TriggerPatternedRumble(float intensity, float duration, RumblePattern pattern)
     {
-        if (Gamepad.current == null) return;
+        if (Gamepad.current == null || !rumbleEnabled) return;
 
         if (_activeRumble != null)
         {
@@ -72,6 +79,8 @@ public class RumbleController : MonoBehaviour
 
     public void TriggerPresetRumble(RumblePreset preset)
     {
+        if (!rumbleEnabled) return;
+        
         switch (preset)
         {
             case RumblePreset.GunRecoil:
@@ -110,11 +119,25 @@ public class RumbleController : MonoBehaviour
             case RumblePreset.EnemyGrowl:
                 TriggerPatternedRumble(0.8f, 1.5f, RumblePattern.RampUp);
                 break;
+            case RumblePreset.KeycodeInteract:
+                TriggerPatternedRumble(0.4f, 0.2f, RumblePattern.RampUp);
+                break;
+            case RumblePreset.Outro:
+                TriggerPatternedRumble(1.0f, 2.5f, RumblePattern.RampDown);
+                break;
+            case RumblePreset.ItemSubmission:
+                TriggerPatternedRumble(0.6f, 0.4f, RumblePattern.Pulse);
+                break;
+            case RumblePreset.ConnectionPuzzleEntry:
+                TriggerPatternedRumble(0.75f, 0.5f, RumblePattern.ZapPulse);
+                break;
         }
     }
 
     private IEnumerator RumbleRoutine(float low, float high, float duration)
     {
+        if (!rumbleEnabled) yield return null;
+        
         var gamepad = Gamepad.current;
 
         gamepad.SetMotorSpeeds(low, high);
@@ -128,6 +151,8 @@ public class RumbleController : MonoBehaviour
 
     private IEnumerator RumblePatternRoutine(float intensity, float duration, RumblePattern pattern)
     {
+        if (!rumbleEnabled) yield return null;
+        
         var gamepad = Gamepad.current;
 
         switch (pattern)
@@ -182,6 +207,16 @@ public class RumbleController : MonoBehaviour
                     yield return new WaitForSeconds(0.1f);
                 }
 
+                break;
+            case RumblePattern.ZapPulse:
+                var zapDurations = new[] { 0.05f, 0.1f, 0.07f };
+                foreach (var zap in zapDurations)
+                {
+                    gamepad.SetMotorSpeeds(intensity, intensity);
+                    yield return new WaitForSeconds(zap);
+                    gamepad.SetMotorSpeeds(0f, 0f);
+                    yield return new WaitForSeconds(0.1f);
+                }
                 break;
         }
 

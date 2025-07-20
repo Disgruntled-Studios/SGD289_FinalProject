@@ -86,6 +86,7 @@ public class UIManager : MonoBehaviour
     public KeycodeUIController KeycodeUIController => _keycodeUIController;
 
     private Coroutine _popUpCoroutine;
+    private Coroutine _typingCoroutine;
 
     public bool PopUpTypingEnabled { get; set; } = true;
     
@@ -165,6 +166,8 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        ClearPopUpText();
+        
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
@@ -218,6 +221,8 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        ClearPopUpText();
+        
         _hudPanel.SetActive(false);
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
@@ -369,21 +374,60 @@ public class UIManager : MonoBehaviour
     public void StartPopUpText(string message, float duration = 3f, bool withPrompt = true)
     {
         _buttonPrompt.SetActive(withPrompt);
-        
+        _popUpBox.SetActive(true);
+
+
         if (_popUpCoroutine != null)
         {
             StopCoroutine(_popUpCoroutine);
             _popUpCoroutine = null;
         }
 
-        if (duration > 0f)
+        if (_typingCoroutine != null)
         {
-            _popUpCoroutine = StartCoroutine(TypePopUpText(message, duration));
+            StopCoroutine(_typingCoroutine);
+            _typingCoroutine = null;
+        }
+
+        _popUpText.text = "";
+
+        if (PopUpTypingEnabled)
+        {
+            _typingCoroutine = StartCoroutine(TypeText(message));
         }
         else
         {
-            ShowPermanentPopUpText(message, withPrompt);
+            _popUpText.text = message;
         }
+
+        // Auto-close coroutine
+        if (duration > 0f)
+        {
+            _popUpCoroutine = StartCoroutine(AutoClosePopUp(duration));
+        }
+    }
+    
+    private IEnumerator TypeText(string message)
+    {
+        _popUpText.text = "";
+        
+        foreach (var c in message)
+        {
+            _popUpText.text += c;
+            yield return new WaitForSeconds(0.025f);
+        }
+
+        _typingCoroutine = null;
+    }
+    
+    private IEnumerator AutoClosePopUp(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        _popUpBox.SetActive(false);
+        _popUpText.text = "";
+
+        _popUpCoroutine = null;
     }
 
     public void ClearPopUpText()
@@ -394,58 +438,15 @@ public class UIManager : MonoBehaviour
             _popUpCoroutine = null;
         }
 
+        if (_typingCoroutine != null)
+        {
+            StopCoroutine(_typingCoroutine);
+            _typingCoroutine = null;
+        }
+
         _popUpBox.SetActive(false);
         _popUpText.text = "";
-
         _buttonPrompt.SetActive(true);
-    }
-
-    private IEnumerator TypePopUpText(string message, float duration)
-    {
-        _popUpBox.SetActive(true);
-        _popUpText.text = "";
-
-        if (PopUpTypingEnabled)
-        {
-            var typingSpeed = 0.025f;
-
-            foreach (var c in message)
-            {
-                _popUpText.text += c;
-                yield return new WaitForSeconds(typingSpeed);
-            }
-        }
-        else
-        {
-            _popUpText.text = message;
-        }
-
-        yield return new WaitForSeconds(duration);
-
-        _popUpBox.SetActive(false);
-        _popUpCoroutine = null;
-    }
-
-    private void ShowPermanentPopUpText(string message, bool withPrompt = true)
-    {
-        _popUpBox.SetActive(true);
-        _popUpText.text = PopUpTypingEnabled ? "" : message;
-
-        _buttonPrompt.SetActive(withPrompt);
-
-        if (PopUpTypingEnabled)
-        {
-            StartCoroutine(TypeTextWithoutAutoClear(message));
-        }
-    }
-
-    private IEnumerator TypeTextWithoutAutoClear(string message)
-    {
-        foreach (var c in message)
-        {
-            _popUpText.text += c;
-            yield return new WaitForSeconds(0.025f);
-        }
     }
 
     #endregion

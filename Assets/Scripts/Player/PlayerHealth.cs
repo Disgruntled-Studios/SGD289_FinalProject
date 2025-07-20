@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -6,6 +7,8 @@ using UnityEngine.Rendering.Universal;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private PlayerAnimationController _animController;
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
+    [SerializeField] private AudioSource _hitAudio;
 
     private const float MaxHealth = 3.0f;
 
@@ -33,7 +36,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        // Health = new UnitHealth(MaxHealth);
         IsDead = false;
         _volume.profile.TryGet(out _vignette);
     }
@@ -58,9 +60,15 @@ public class PlayerHealth : MonoBehaviour
     {
         // const float amount = 1.0f;
         // Health.Damage(amount);
-
+        
         GameManager.Instance.PlayerController.IsMovementLocked = true;
         _animController.TriggerHit();
+
+        _impulseSource?.GenerateImpulse();
+
+        _hitAudio.PlayOneShot(_hitAudio.clip);
+        
+        RumbleController.Instance?.TriggerPresetRumble(RumblePreset.DamageImpact);
 
         switch (HitsRemaining)
         {

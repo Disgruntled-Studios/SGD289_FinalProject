@@ -30,6 +30,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private float _pitch = 1f;
     [SerializeField] private float _spatialBlend = 0f;
 
+    [SerializeField] private bool _shouldPlayRumble;
+    
     private void Awake()
     {
         if (string.IsNullOrEmpty(_name))
@@ -47,11 +49,9 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     {
         foreach (var item in _playerInventory.Items)
         {
-            if (item.itemName == _requiredItemName)
-            {
-                PlayerHasItemInInventory = true;
-                break;
-            }
+            if (item.itemName != _requiredItemName) continue;
+            PlayerHasItemInInventory = true;
+            break;
         }
     }
 
@@ -61,11 +61,10 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
 
         if (!_playerInventory || ItemHasBeenReceived) return;
 
-        if (PlayerHasItemInInventory)
-        {
-            UIManager.Instance.StartPopUpText($"Use {_requiredItemName}?", 0f, false);
-            _interactionPrompt.SetActive(true);
-        }
+        if (!PlayerHasItemInInventory) return;
+        
+        UIManager.Instance.StartPopUpText($"Use {_requiredItemName}?", 0f, false);
+        _interactionPrompt.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
@@ -89,6 +88,11 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
             return false;
         }
 
+        if (_shouldPlayRumble)
+        {
+            RumbleController.Instance.TriggerPresetRumble(RumblePreset.ItemSubmission);
+        }
+        
         if (_consumeItem)
         {
             inventory.RemoveItem(item);

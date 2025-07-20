@@ -169,10 +169,9 @@ public class GameManager : MonoBehaviour
 
         foreach (EnemyBehavior enemy in enemies)
         {
-            Debug.Log(enemy + " is in the list");
-            if (enemy.currentState == EnemyBehavior.BehaviorState.chasing)
+            if (enemy)
             {
-                enemy.currentState = EnemyBehavior.BehaviorState.patrolling;
+                enemy.currentState = enemy.OriginalState;
             }
         }
     }
