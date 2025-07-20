@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AnimationPause : MonoBehaviour
@@ -7,6 +8,16 @@ public class AnimationPause : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        if (anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
+
+        anim.speed = 1;
     }
 
     [ContextMenu("Pause")]

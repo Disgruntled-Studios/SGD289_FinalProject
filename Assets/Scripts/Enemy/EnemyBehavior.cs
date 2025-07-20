@@ -244,7 +244,6 @@ public class EnemyBehavior : MonoBehaviour
             meshAgent.enabled = false;
             capsuleCollider.enabled = false;
         }
-
     }
 
     IEnumerator SetNextPatrolPoint()
