@@ -57451,7 +57451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1861386171744686620, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2247201039403326905, guid: 5eeaabec8e40f994e8aaee01f351df83, type: 3}
       propertyPath: m_IsActive
@@ -135518,7 +135518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 977277536611342964, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 987702546726522398, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_Layer
@@ -185248,7 +185248,19 @@ MonoBehaviour:
   _camId: CAM30
   onEnterEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1642183968}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!65 &2058636363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -192399,7 +192411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.65
+      value: 3.1
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -192407,7 +192419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.36
+      value: 13.14
       objectReference: {fileID: 0}
     - target: {fileID: 6830290257046777792, guid: 7e7e50aa3edf73d4f8901836609c88bb, type: 3}
       propertyPath: m_LocalRotation.w
