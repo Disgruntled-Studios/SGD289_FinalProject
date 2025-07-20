@@ -30,6 +30,8 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
     [SerializeField] private float _pitch = 1f;
     [SerializeField] private float _spatialBlend = 0f;
 
+    [SerializeField] private bool _shouldPlayRumble;
+    
     private void Awake()
     {
         if (string.IsNullOrEmpty(_name))
@@ -86,7 +88,10 @@ public class ItemReceiver : MonoBehaviour, IItemReceiver
             return false;
         }
 
-        RumbleController.Instance.TriggerPresetRumble(RumblePreset.ItemSubmission);
+        if (_shouldPlayRumble)
+        {
+            RumbleController.Instance.TriggerPresetRumble(RumblePreset.ItemSubmission);
+        }
         
         if (_consumeItem)
         {
