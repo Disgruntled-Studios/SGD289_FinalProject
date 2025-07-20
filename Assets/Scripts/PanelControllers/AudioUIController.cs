@@ -9,8 +9,8 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
     [Header("Volume Sliders")] 
     [SerializeField] private Slider _masterVolumeSlider;
     [SerializeField] private Slider _musicVolumeSlider;
-    [SerializeField] private Slider _sfxVolumeSlider;
-    [FormerlySerializedAs("_ambianceVolumeSlider")] [SerializeField] private Slider _ambienceVolumeSlider;
+    [SerializeField] private Slider _sfxVolumeSlider; 
+    [SerializeField] private Slider _ambienceVolumeSlider;
 
     private readonly List<Slider> _sliders = new();
     private int _currentIndex;
@@ -28,10 +28,6 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
             slider.minValue = 0.0001f;
             slider.value = 0.5f;
         }
-
-        // _masterVolumeSlider.value = SoundManager.Instance.MasterVolume;
-        // _musicVolumeSlider.value = SoundManager.Instance.MusicVolume;
-        // _sfxVolumeSlider.value = SoundManager.Instance.SfxVolume;
 
         _masterVolumeSlider.onValueChanged.AddListener(delegate { SetMasterVolume(); });
         _musicVolumeSlider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
@@ -96,21 +92,6 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         SoundManager.Instance.mainMixer.SetFloat("Ambiance", Mathf.Log10(volume)*20);
         PlayerPrefs.SetFloat("AmbianceVolume", volume);
     }
-
-    // private void OnMasterVolumeChanged(float value)
-    // {
-    //     SoundManager.Instance.SetMasterVolume(value);
-    // }
-
-    // private void OnMusicVolumeChanged(float value)
-    // {
-    //     SoundManager.Instance.SetMusicVolume(value);
-    // }
-
-    // private void OnSfxVolumeChanged(float value)
-    // {
-    //     SoundManager.Instance.SetSfxVolume(value);
-    // }
     
     public void OnPanelActivated()
     {
