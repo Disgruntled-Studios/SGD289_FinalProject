@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (IsMovementLocked || _isCrouching) return;
+        if (IsMovementLocked || _isCrouching || _gunController.IsAiming) return;
         
         if (context.started)
         {
