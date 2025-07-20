@@ -17,6 +17,8 @@ public class ResettableEnemy : MonoBehaviour
     private CapsuleCollider _collider;
     private Animator _anim;
 
+    [SerializeField] private bool _skipActivationIfPuzzleCompleted;
+
     private void Awake()
     {
         if (!_enemy) _enemy = gameObject;
@@ -53,7 +55,15 @@ public class ResettableEnemy : MonoBehaviour
 
     public void ResetEnemy()
     {
-        _enemy.SetActive(_wasInitiallyActive);
+        if (!_skipActivationIfPuzzleCompleted)
+        {
+            _enemy.SetActive(_wasInitiallyActive);
+        }
+        else
+        {
+            _enemy.SetActive(true);
+        }
+        
         _enemy.transform.position = _initialPosition;
         _enemy.transform.rotation = _initialRotation;
 

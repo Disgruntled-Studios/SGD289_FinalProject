@@ -30,8 +30,10 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
     [SerializeField] private Transform _highlightableObj;
     public Transform HighlightableObj => _highlightableObj;
 
-    [FormerlySerializedAs("_spriteObject")] [SerializeField] private GameObject _interactionPrompt;
+    [SerializeField] private GameObject _interactionPrompt;
 
+    [SerializeField] private GameObject _finalEnemy;
+    
     private bool _isBuilding = false;
     private bool _isDoorOpened = false;
 
@@ -138,5 +140,4 @@ public class PressureValveSystem : MonoBehaviour, IInteractable
             _interactionPrompt.SetActive(false);
         }
     }
-
 }

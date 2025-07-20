@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool _isTesting = true;
 
+    private int _checkpointIndex;
+    public int CheckpointIndex => _checkpointIndex;
+
     private void Awake()
     {
         if (Instance && Instance != this)
@@ -45,6 +48,11 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(_player.gameObject);
         }
+    }
+
+    public void SetCheckpoint(int index)
+    {
+        _checkpointIndex = Mathf.Max(_checkpointIndex, index);
     }
 
     public void MarkIntroSeen()
