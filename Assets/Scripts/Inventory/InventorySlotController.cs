@@ -105,39 +105,23 @@ public class InventorySlotController : MonoBehaviour
 
     private IEnumerator WiggleIcon()
     {
-        var burstDuration = .85f;
-        var restDuration = 1.5f;
+        var pulseAmplitude = 0.02f;
+        var pulseFrequency = 0.5f;
 
-        var shakeAngle = 15f;
-        var shakeOffset = 3f;
-        var shakeFrequency = 0.03f;
-
-        var timer = 0f;
+        var time = 0f;
 
         while (true)
         {
-            // === Burst Phase ===
-            timer = 0f;
-            while (timer < burstDuration)
-            {
-                timer += Time.deltaTime;
+            time += Time.deltaTime * pulseFrequency;
 
-                var angle = Random.Range(-shakeAngle, shakeAngle);
-                var offsetX = Random.Range(-shakeOffset, shakeOffset);
+            var scale = 1f + Mathf.Sin(time * Mathf.PI * 2f) * pulseAmplitude;
+            _itemIconImage.transform.localScale = Vector3.one * scale;
 
-                _itemIconImage.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-                _itemIconImage.transform.localPosition = _originalPosition + new Vector3(offsetX, 0f, 0f);
-
-                yield return new WaitForSeconds(shakeFrequency);
-            }
-
-            // === Rest Phase ===
-            _itemIconImage.transform.localRotation = _originalRotation;
-            _itemIconImage.transform.localPosition = _originalPosition;
-            
-            yield return new WaitForSeconds(restDuration);
+            yield return null;
         }
     }
+
+
 
     public void RefreshWiggle()
     {

@@ -111,7 +111,6 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (GameManager.Instance.IsGameOver && currentState != BehaviorState.patrolling)
         {
-            Debug.Log("Game OVer");
             currentState = BehaviorState.patrolling;
             StartCoroutine("SetNextPatrolPoint");
             meshAgent.speed = patrolSpeed;
@@ -215,10 +214,10 @@ public class EnemyBehavior : MonoBehaviour
                     anim.SetBool("IsMoving", false);
                     anim.SetBool("IsChasing", false);
                     anim.SetBool("Attacking", true);
-                    Debug.Log("IM ATTACKING THE PLAYER ARE YA PROUD DAD!?!?!?!");
                     break;
                 }
-                else if (!health.IsDead)
+
+                if (!health.IsDead)
                 {
                     anim.SetBool("Attacking", false);
                     // Debug.Log("ChasingPlayer");

@@ -24,6 +24,7 @@ public enum RumblePreset
     KeycodeSequenceComplete,
     ConnectedFeedback,
     DisconnectedFeedback,
+    EnemyGrowl
 }
 
 public class RumbleController : MonoBehaviour
@@ -105,6 +106,9 @@ public class RumbleController : MonoBehaviour
                 break;
             case RumblePreset.KeycodeInvalid:
                 TriggerPatternedRumble(0.8f, 0.2f, RumblePattern.RampDown);
+                break;
+            case RumblePreset.EnemyGrowl:
+                TriggerPatternedRumble(0.8f, 1.5f, RumblePattern.RampUp);
                 break;
         }
     }

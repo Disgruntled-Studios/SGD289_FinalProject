@@ -130,13 +130,12 @@ public class PlayerHealth : MonoBehaviour
         onDeath?.Invoke();
     }
     
-    public void ResetVignette()
+    public void ResetHealth()
     {
         _vignette.intensity.value = 0f;
         HitsRemaining = 3;
         IsDead = false;
         IsInjured = false;
         _animController.SetInjured(IsInjured);
-        // Health.CurrentHealth = Health.MaxHealth;
     }
 }
