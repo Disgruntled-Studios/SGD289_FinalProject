@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,8 +20,16 @@ public class MoreUIController : MonoBehaviour, IUIPanelController
         _selectables.Add(_rumbleToggle);
         _selectables.Add(_quitToMenuButton);
         _selectables.Add(_quitToDesktopButton);
+
+        _rumbleToggle.isOn = RumbleController.rumbleEnabled;
+        _rumbleToggle.onValueChanged.AddListener((value) => RumbleController.rumbleEnabled = value);
     }
-    
+
+    private void OnDestroy()
+    {
+        _rumbleToggle.onValueChanged.RemoveAllListeners();
+    }
+
     public void OnPanelActivated()
     {
         _currentIndex = 0;
