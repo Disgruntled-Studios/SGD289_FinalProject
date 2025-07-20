@@ -25,7 +25,7 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
         _vignette = GameManager.Instance.Player.GetComponent<PlayerHealth>().Vignette;
         
         _fullscreenToggle.isOn = Screen.fullScreen;
-        _vignetteToggle.isOn = _vignette.active;
+        _vignetteToggle.isOn = _vignetteObject?.activeSelf ?? false;
         _typingToggle.isOn = UIManager.Instance.PopUpTypingEnabled;
         
         _fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
@@ -42,7 +42,7 @@ public class VisualUIController : MonoBehaviour, IUIPanelController
 
     private void OnFullscreenChanged(bool isOn)
     {
-        Screen.fullScreen = isOn;
+        Screen.SetResolution(1920, 1080, isOn);
     }
 
     private void OnVignetteChanged(bool isOn)
