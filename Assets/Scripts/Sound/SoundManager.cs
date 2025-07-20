@@ -11,11 +11,6 @@ public class SoundManager : MonoBehaviour
 
     public AudioMixer mainMixer;
 
-    // public float MasterVolume { get; private set; } = 1f;
-    // public float MusicVolume { get; private set; } = 1f;
-    // public float SfxVolume { get; private set; } = 1f;
-    // public float AmbianceVolume { get; private set; } = 1f;
-
     void Awake()
     {
         if (Instance == null)
@@ -61,10 +56,10 @@ public class SoundManager : MonoBehaviour
             mainMixer.SetFloat("SFX", Mathf.Log10(0.5f) * 20);
             mainMixer.SetFloat("Ambiance", Mathf.Log10(0.5f) * 20);
 
-            PlayerPrefs.SetFloat("MasterVolume", 0.5f);
-            PlayerPrefs.SetFloat("MusicVolume", 0.5f);
-            PlayerPrefs.SetFloat("SFXVolume", 0.5f);
-            PlayerPrefs.SetFloat("AmbianceVolume", 0.5f);
+            PlayerPrefs.SetFloat("MasterVolume", 1.0f);
+            PlayerPrefs.SetFloat("MusicVolume", 1.0f);
+            PlayerPrefs.SetFloat("SFXVolume", 1.0f);
+            PlayerPrefs.SetFloat("AmbianceVolume", 1.0f);
         }
     }
 
