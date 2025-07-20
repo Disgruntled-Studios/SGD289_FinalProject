@@ -83,23 +83,47 @@ public class TransitionManager : MonoBehaviour
 
     public void SetPlayerToSpawnPoint(Scene scene)
     {
-        foreach (var rootObject in scene.GetRootGameObjects())
+        var checkpoints = FindObjectsByType<CheckpointSpawnPoint>(FindObjectsSortMode.None);
+        CheckpointSpawnPoint bestMatch = null;
+        CheckpointSpawnPoint fallback = null;
+
+        foreach (var cp in checkpoints)
         {
-            var spawnPoint = rootObject.GetComponentInChildren<LevelStartPoint>();
-            if (spawnPoint)
+            if (cp.gameObject.scene != scene)
+                continue;
+
+            if (cp.checkpointIndex == GameManager.Instance.CheckpointIndex)
             {
-                var playerRb = GameManager.Instance.Player.GetComponent<Rigidbody>();
-                if (playerRb)
-                {
-                    playerRb.MovePosition(spawnPoint.transform.position);
-                    playerRb.MoveRotation(spawnPoint.transform.rotation);
-                }
-                
-                return;
+                bestMatch = cp;
+                break;
+            }
+
+            if (cp.checkpointIndex == 0)
+            {
+                fallback = cp;
             }
         }
 
-        Debug.LogWarning($"[SPAWN] No spawn point found in scene '{scene.name}'!");
+        if (bestMatch)
+        {
+            MovePlayerTo(bestMatch.transform);
+        }
+        else if (fallback)
+        {
+            MovePlayerTo(fallback.transform);
+        }
+        else
+        {
+            Debug.LogWarning($"[Checkpoint] No spawn point found in scene '{scene.name}'");
+        }
+    }
+    
+    private void MovePlayerTo(Transform t)
+    {
+        var rb = GameManager.Instance.Player.GetComponent<Rigidbody>();
+        if (!rb) return;
+        rb.MovePosition(t.position);
+        rb.MoveRotation(t.rotation);
     }
 
     private void DestroyDuplicatePlayers()
