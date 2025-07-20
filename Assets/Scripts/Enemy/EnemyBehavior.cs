@@ -97,6 +97,8 @@ public class EnemyBehavior : MonoBehaviour
         }
         else { meshAgent.isStopped = true; }
 
+        soundComponent.PlaySFX("Growl");
+
         StartCoroutine("EnemyDetectionWithDelay", .1f);
     }
 

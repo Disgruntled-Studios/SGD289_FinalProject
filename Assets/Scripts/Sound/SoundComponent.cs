@@ -31,9 +31,9 @@ public class SoundComponent : MonoBehaviour
         if (string.IsNullOrWhiteSpace(name)) return;
 
         var s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.clip == null) return;
+        if (s == null || !s.clip) return;
 
-        if (s.isLooping && s.source != null)
+        if (s.isLooping && s.source)
         {
             s.source.Play();
         }
