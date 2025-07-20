@@ -226,18 +226,18 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     public void Interact(Transform player, PlayerInventory inventory)
     {
-        if (!_isPuzzleDone)
-        {
-            InputManager.Instance.SwitchToPuzzleInput();
-            CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
-            UIManager.Instance.SetPuzzlePanelActive(true);
-            if (selectionLight != null) selectionLight.enabled = true;
+        if (_isPuzzleDone) return;
+        InputManager.Instance.SwitchToPuzzleInput();
+        CameraManager.Instance.TrySwitchToCamera(_puzzleCamera.CameraID, "EaseInOut", 0.75f);
+        UIManager.Instance.SetPuzzlePanelActive(true);
+        if (selectionLight != null) selectionLight.enabled = true;
 
-            if (_enterAudio)
-            {
-                _enterAudio.Play();
-            }
+        if (_enterAudio)
+        {
+            _enterAudio.Play();
         }
+            
+        RumbleController.Instance.TriggerPresetRumble(RumblePreset.ConnectionPuzzleEntry);
     }
 
     public void OnEnter()
