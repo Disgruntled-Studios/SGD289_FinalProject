@@ -13658,8 +13658,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150575611}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.01, y: 3.65, z: 8.32}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.0099993, y: 3.65, z: 8.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34975,7 +34975,7 @@ MonoBehaviour:
   levelOneStartingCam: CAM10
   levelTwoFileName: Reactor
   levelTwoStartingCam: CAM32
-  _isTesting: 0
+  _isTesting: 1
 --- !u!4 &432907883
 Transform:
   m_ObjectHideFlags: 0
@@ -68438,10 +68438,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 922888330}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 922888331}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -73586,12 +73586,12 @@ GameObject:
   - component: {fileID: 922888331}
   - component: {fileID: 922888333}
   m_Layer: 0
-  m_Name: GrowlingMonster
+  m_Name: Enemy2Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &922888331
 AudioSource:
   m_ObjectHideFlags: 0
@@ -73604,7 +73604,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4860857972919993609, guid: c14877f646aead94ab819de38256b961, type: 2}
   m_audioClip: {fileID: 8300000, guid: f601ec4a9aa6ec7428179178f7ad7c04, type: 3}
   m_Resource: {fileID: 8300000, guid: f601ec4a9aa6ec7428179178f7ad7c04, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -73613,7 +73613,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 4
   MaxDistance: 5.725437
   Pan2D: 0
   rolloffMode: 0
@@ -73697,12 +73697,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922888330}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.927, y: 1.485, z: 17.312}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1484251089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &922888333
 MonoBehaviour:
@@ -109812,7 +109812,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 922888332}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4343040317714320983, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       insertIndex: -1
@@ -111278,6 +111281,11 @@ Transform:
 --- !u!1 &1484251082 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 977277536611342964, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
+  m_PrefabInstance: {fileID: 1419459524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1484251089 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3350018882017823904, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
   m_PrefabInstance: {fileID: 1419459524}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1485871233
@@ -135605,7 +135613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 977277536611342964, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 987702546726522398, guid: 70e7fe89782e3184ba116320edd3213a, type: 3}
       propertyPath: m_Layer
@@ -194779,6 +194787,7 @@ SceneRoots:
   - {fileID: 1771359782}
   - {fileID: 1685572570}
   - {fileID: 956884604}
+  - {fileID: 150575613}
   - {fileID: 2073581799}
   - {fileID: 1344976418}
   - {fileID: 1817648759}
@@ -195136,7 +195145,6 @@ SceneRoots:
   - {fileID: 1632201526}
   - {fileID: 1370615561}
   - {fileID: 2129677197}
-  - {fileID: 922888332}
   - {fileID: 1151422731}
   - {fileID: 779502071}
   - {fileID: 760061081}
@@ -195147,5 +195155,4 @@ SceneRoots:
   - {fileID: 1021429916}
   - {fileID: 1678577118}
   - {fileID: 810387491}
-  - {fileID: 150575613}
   - {fileID: 248147124}

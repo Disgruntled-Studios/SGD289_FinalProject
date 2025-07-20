@@ -212,4 +212,24 @@ public class GameManager : MonoBehaviour
             fader.StartCoroutine(fader.FadeSoundOut());
         }
     }
+
+    public void PauseAllEnemyNav()
+    {
+        var enemies = FindObjectsByType<EnemyBehavior>(FindObjectsSortMode.None);
+
+        foreach (var enemy in enemies)
+        {
+            enemy?.PauseNavigation();
+        }
+    }
+
+    public void ResumeAllEnemyNav()
+    {
+        var enemies = FindObjectsByType<EnemyBehavior>(FindObjectsSortMode.None);
+
+        foreach (var enemy in enemies)
+        {
+            enemy?.ResumeNavigation();
+        }
+    }
 }

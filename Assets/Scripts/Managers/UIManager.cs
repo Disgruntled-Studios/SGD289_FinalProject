@@ -173,6 +173,7 @@ public class UIManager : MonoBehaviour
         _uiAudio.PlaySound(UISound.Open);
         IsGamePaused = true;
         GameManager.Instance.CallAnimationPause();
+        GameManager.Instance.PauseAllEnemyNav();
         
         _currentPanelIndex = 0;
 
@@ -207,7 +208,8 @@ public class UIManager : MonoBehaviour
         IsGamePaused = false;
         
         GameManager.Instance.CallAnimationUnpause();
-
+        GameManager.Instance.ResumeAllEnemyNav();
+        
         if (_inventoryController.HaveAllItemsBeenRead())
         {
             DeactivateInventoryIndicator();
@@ -227,6 +229,8 @@ public class UIManager : MonoBehaviour
         _pausePanel.SetActive(true);
         _uiAudio.PlaySound(UISound.Open);
         IsGamePaused = true;
+        GameManager.Instance.CallAnimationPause();
+        GameManager.Instance.PauseAllEnemyNav();
 
         _currentPanelIndex = Mathf.Clamp(index, 0, _subPanels.Count - 1);
 

@@ -386,4 +386,20 @@ public class EnemyBehavior : MonoBehaviour
         fov.enabled = true;
         enabled = true;
     }
+
+    public void PauseNavigation()
+    {
+        if (meshAgent && meshAgent.enabled)
+        {
+            meshAgent.isStopped = true;
+        }
+    }
+
+    public void ResumeNavigation()
+    {
+        if (meshAgent && meshAgent.enabled && currentState != BehaviorState.Dead)
+        {
+            meshAgent.isStopped = false;
+        }
+    }
 }
