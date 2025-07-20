@@ -26,7 +26,7 @@ public class AudioUIController : MonoBehaviour, IUIPanelController
         {
             slider.maxValue = 1;
             slider.minValue = 0.0001f;
-            slider.value = 0.5f;
+            slider.value = 1.0f;
         }
 
         _masterVolumeSlider.onValueChanged.AddListener(delegate { SetMasterVolume(); });
