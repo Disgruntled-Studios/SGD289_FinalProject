@@ -54,5 +54,7 @@ public class MenuButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         _buttonText.color = IsActivated ? _highlightColor : _defaultColor;
         _buttonText.transform.localScale = Vector3.one * (IsActivated ? _highlightScale : _defaultScale);
+        
+        SoundManager.Instance?.PlaySfx("ButtonActivation");
     }
 }

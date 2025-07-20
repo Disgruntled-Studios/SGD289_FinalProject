@@ -8,16 +8,14 @@ public class EnemyBehavior : MonoBehaviour
 {
     public enum BehaviorState
     {
-        patrolling,
-        chasing,
+        Patrolling,
+        Chasing,
         Resting,
         Dead,
         Confused
     }
 
     public BehaviorState currentState;
-    private BehaviorState _originalState;
-    public BehaviorState OriginalState => _originalState;
     //[SerializeField] float chaseDistance = 10f;
     [SerializeField] float attackDistance = 2f;
     [SerializeField] float attackStrength = 15f;
@@ -75,8 +73,6 @@ public class EnemyBehavior : MonoBehaviour
             currentTargetPoint = transform;
             currentPatrolPoint = transform;
         }
-
-        _originalState = currentState;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -112,9 +108,9 @@ public class EnemyBehavior : MonoBehaviour
             StateHandler();
             //anim.SetBool("IsMoving", !meshAgent.isStopped);
         }
-        else if (GameManager.Instance.IsGameOver && currentState != BehaviorState.patrolling)
+        else if (GameManager.Instance.IsGameOver && currentState != BehaviorState.Patrolling)
         {
-            currentState = BehaviorState.patrolling;
+            currentState = BehaviorState.Patrolling;
             StartCoroutine("SetNextPatrolPoint");
             meshAgent.speed = patrolSpeed;
             return;
@@ -133,7 +129,7 @@ public class EnemyBehavior : MonoBehaviour
 
         switch (currentState)
         {
-            case BehaviorState.patrolling:
+            case BehaviorState.Patrolling:
                 if (leftEyeLight.enabled == true || leftEyeLight.color == Color.red)
                 {
                     leftEyeLight.enabled = false;
@@ -151,27 +147,7 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     anim.SetBool("IsMoving", false);
                 }
-                // else if (fov.isPlayerInSight && playerDist < fov.viewRadius)
-                // {
-                //     StopCoroutine(SetAgentDestToCurrentTarget(6));
-                //     currentTargetPoint = fov.visibleTarget;
-                //     Debug.Log("Staring at player");
-                //     transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                //     meshAgent.speed = investigationMovSpeed;
-                //     meshAgent.SetDestination(currentTargetPoint.position);
-                // }
-                // else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && detectionLvl > 0 && Vector3.Distance(transform.position, fov.visibleTargetLastPos) > attackDistance)
-                // {
-                //     Debug.Log("Staring at player, and wandering towards them with a detection level of : " + detectionLvl);
-                //     transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-                //     meshAgent.SetDestination(fov.visibleTargetLastPos);
-                // }
-                // else if (!fov.isPlayerInSight && currentTargetPoint != currentPatrolPoint && Vector3.Distance(transform.position, fov.visibleTargetLastPos) <= attackDistance + .3f)
-                // {
-                //     currentTargetPoint = currentPatrolPoint;
-                //     Debug.Log("Invoking set destination in 6 seconds");
-                //     StartCoroutine(SetAgentDestToCurrentTarget(6));
-                // }
+                
                 if (currentTargetPoint == currentPatrolPoint && Vector3.Distance(transform.position, currentTargetPoint.position) <= attackDistance && patrolPattern != null)
                 {
                     anim.SetBool("IsMoving", false);
@@ -189,7 +165,7 @@ public class EnemyBehavior : MonoBehaviour
 
                 break;
 
-            case BehaviorState.chasing:
+            case BehaviorState.Chasing:
 
                 if (playerRef.GetComponent<PlayerHealth>().IsDead)
                 {
@@ -198,7 +174,7 @@ public class EnemyBehavior : MonoBehaviour
                     anim.SetBool("Attacking", false);
                     meshAgent.SetDestination(patrolPoints[patrolIndex].position);
                     meshAgent.speed = patrolSpeed;
-                    currentState = BehaviorState.patrolling;
+                    currentState = BehaviorState.Patrolling;
                     return;
                 }
 
@@ -271,31 +247,6 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
-    // IEnumerator SetAgentDestToCurrentTarget(float delay)
-    // {
-    //     //Debug.Log("Starting delay");
-    //     yield return new WaitForSeconds(delay);
-    //     meshAgent.SetDestination(currentTargetPoint.position);
-    //     //Debug.Log("Stopping delay");
-    // }
-
-    // void ToggleEnemyMaterial()
-    // {
-    //     MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
-    //     //Debug.Log("ToggleMatIsCalled " + meshRenderer.gameObject.name);
-    //     if (meshRenderer.sharedMaterial == normalMat)
-    //     {
-    //         //Debug.Log("Switching material to damaged");
-    //         meshRenderer.material = damagedMat;
-    //         Invoke("ToggleEnemyMaterial", 0.5f);
-    //     }
-    //     else if (meshRenderer.sharedMaterial == damagedMat)
-    //     {
-    //         //Debug.Log("Switching material to normal");
-    //         meshRenderer.material = normalMat;
-    //     }
-    // }
-
     IEnumerator SetNextPatrolPoint()
     {
         meshAgent.isStopped = true;
@@ -327,78 +278,12 @@ public class EnemyBehavior : MonoBehaviour
                 fov.enabled = true;
             }
             
-            if (fov.isPlayerInSight && currentState == BehaviorState.patrolling)
+            if (fov.isPlayerInSight && currentState == BehaviorState.Patrolling)
             {
-                currentState = BehaviorState.chasing;
+                currentState = BehaviorState.Chasing;
                 if (meshAgent.isStopped == true) meshAgent.isStopped = false;
             }
-
-            // switch (fov.isPlayerInSight)
-            // {
-            //     case true:
-            //         /*
-            //             if (playerRef.GetComponent<PlayerController>().IsCrouching)
-            //             {
-            //                 // Debug.Log("Enemy sees player crouched");
-            //                 detectionLvl += (detectionRate / 2) * Time.deltaTime;
-            //             }
-            //             else if (Vector3.Distance(transform.position, playerRef.transform.position) <= fov.viewRadius / 2)
-            //             {
-            //                 // Debug.Log("Player in close proximity");
-            //                 detectionLvl = (detectionRate * 2) * Time.deltaTime;
-            //             }
-            //             else
-            //             {
-            //                 // Debug.Log("Player within sight range");
-            //                 detectionLvl += detectionRate * Time.deltaTime;
-            //             }
-            //         */
-
-            //             break;
-            //     case false:
-            //         /*
-            //         yield return new WaitForSeconds(Random.Range(2, 7));
-            //         if (detectionLvl - detectionRate <= 0)
-            //         {
-            //             // Debug.Log("Detection dropped to 0");
-            //             detectionLvl = 0;
-            //         }
-            //         else
-            //         {
-            //             // Debug.Log("Detection dropping");
-            //             detectionLvl -= detectionRate * Time.deltaTime;
-            //         }
-            //         */
-            //         break;
-            // }
-
-            /*
-            if (awarenessImage.fillAmount <= detectionLvl / 1 && detectionLvl / 1 != 1)
-            {
-                // Debug.Log(detectionLvl + " = detection lvl / " + (detectionLvl / 1) + " = FillAmount");
-                awarenessImage.fillAmount = detectionLvl / 1;
-            }
-
-            if (detectionLvl >= 1)
-            {
-                detectionLvl = 1;
-                awarenessImage.fillAmount = 1;
-                // Debug.Log("Player has been detected with a detectionLvl of : " + detectionLvl);
-                currentState = BehaviorState.chasing;
-                anim.SetBool("IsMoving", false);
-                anim.SetBool("IsChasing", true);
-            }
-            else if (detectionLvl <= 0 && currentState != BehaviorState.patrolling)
-            {
-                currentState = BehaviorState.patrolling;
-                anim.SetBool("IsMoving", true);
-                anim.SetBool("IsChasing", false);
-                Debug.Log("Player has escaped returning to patrol");
-            }
-            */
-
-
-
+            
             yield return new WaitForSeconds(delay);
         }
     }
@@ -418,7 +303,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public void EndAttackStunPause()
     {
-        if (currentState != BehaviorState.chasing) { meshAgent.SetDestination(playerRef.transform.position); }
+        if (currentState != BehaviorState.Chasing) { meshAgent.SetDestination(playerRef.transform.position); }
         meshAgent.isStopped = false;
     }
 
@@ -437,44 +322,69 @@ public class EnemyBehavior : MonoBehaviour
         //Destroy(gameObject);
     }
 
-    public void WakeEnemy()
-    {
-        anim.SetBool("IsResting", false);
-        meshAgent.enabled = true;
-        capsuleCollider.enabled = true;
-        currentState = BehaviorState.chasing;
-        Invoke("SetEnemyToAttackPlayer", 4f);
-        Debug.Log(name + " is waking up");
-    }
-
     public void SetEnemyToAttackPlayer()
     {
         meshAgent.SetDestination(playerRef.transform.position);
     }
 
-    //Deprecated Code
-    /*
-    #region SmoothRotationToLookAtPlayer
-
-    float xVel;
-    float yVel;
-    float zVel;
-    Vector3 newRotation;
-
-    private void SmoothRotationLook(Vector3 targetPos, Vector3 rotatingObjPosition)
+    public void InitializeAfterSpawn()
     {
-        Vector3 direction = targetPos - rotatingObjPosition;
-        Vector3 targetRotation = Quaternion.LookRotation(direction).eulerAngles;
+        if (anim == null)
+            anim = GetComponentInChildren<Animator>();
 
-        newRotation = new Vector3(
-            Mathf.SmoothDampAngle(newRotation.x, targetRotation.x, ref xVel, 1f),
-            Mathf.SmoothDampAngle(newRotation.y, targetRotation.y, ref yVel, 1f),
-            Mathf.SmoothDampAngle(newRotation.z, targetRotation.z, ref zVel, 1f)
-        );
+        if (meshAgent == null)
+            meshAgent = GetComponent<NavMeshAgent>();
 
-        transform.eulerAngles = newRotation;
+        if (capsuleCollider == null)
+            capsuleCollider = GetComponent<CapsuleCollider>();
+
+        if (fov == null)
+            fov = GetComponent<EnemyFOV>();
+
+        // Animator rebinding + dummy evaluation
+        anim.Rebind();
+        anim.Update(0f); // Ensures it evaluates entry state
+
+        // Ensure proper animation state based on AI
+        switch (currentState)
+        {
+            case BehaviorState.Patrolling:
+                anim.SetBool("IsMoving", true);
+                anim.SetBool("IsChasing", false);
+                anim.SetBool("Attacking", false);
+                break;
+
+            case BehaviorState.Chasing:
+                anim.SetBool("IsMoving", false);
+                anim.SetBool("IsChasing", true);
+                anim.SetBool("Attacking", false);
+                break;
+
+            case BehaviorState.Resting:
+                anim.SetBool("IsResting", true);
+                break;
+
+            case BehaviorState.Confused:
+                anim.SetBool("IsConfused", true);
+                break;
+
+            case BehaviorState.Dead:
+                anim.SetTrigger("IsDead");
+                meshAgent.enabled = false;
+                capsuleCollider.enabled = false;
+                break;
+        }
+
+        // Ensure movement resumes
+        meshAgent.enabled = true;
+        meshAgent.ResetPath();
+        meshAgent.isStopped = false;
+
+        if (currentState == BehaviorState.Patrolling && patrolPattern != null)
+            meshAgent.SetDestination(currentTargetPoint.position);
+
+        capsuleCollider.enabled = true;
+        fov.enabled = true;
+        enabled = true;
     }
-
-    #endregion
-    */
 }

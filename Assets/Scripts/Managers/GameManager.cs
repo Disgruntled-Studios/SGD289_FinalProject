@@ -165,14 +165,11 @@ public class GameManager : MonoBehaviour
 
     public void ResetEnemies()
     {
-        EnemyBehavior[] enemies = FindObjectsByType<EnemyBehavior>(FindObjectsSortMode.None);
+        var resetters = FindObjectsByType<ResettableEnemy>(FindObjectsSortMode.None);
 
-        foreach (EnemyBehavior enemy in enemies)
+        foreach (var resetter in resetters)
         {
-            if (enemy)
-            {
-                enemy.currentState = enemy.OriginalState;
-            }
+            resetter.ResetEnemy();
         }
     }
 
@@ -182,7 +179,6 @@ public class GameManager : MonoBehaviour
 
         foreach (AnimationPause animPause in animPauses)
         {
-            Debug.Log(animPause.name + "'s animator is set to zero speed.");
             animPause.Pause();
         }
     }
@@ -193,7 +189,6 @@ public class GameManager : MonoBehaviour
 
         foreach (AnimationPause animPause in animPauses)
         {
-            Debug.Log(animPause.name + "'s animator is set to one speed.");
             animPause.Unpause();
         }
     }
