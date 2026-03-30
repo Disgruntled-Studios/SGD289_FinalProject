@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
+
+#region Setup Variables
+
     [Header("Puzzle Nodes")]
     [SerializeField] private PowerPuzzleTile _powerNode;
     [SerializeField] private PowerPuzzleTile _receiverNode;
@@ -21,11 +25,11 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
     [SerializeField] private GameCamera _sceneCamera;
     [SerializeField] private GameCamera _puzzleCamera;
     public bool hasCameraCut;
-    public GameCamera cutCam;
-    public float camCutLength;
+    [HideInInspector] public GameCamera cutCam;
+    [HideInInspector] public float camCutLength;
     
-    [Header("Puzzle Events")]
-    [SerializeField] private UnityEvent _onPuzzleComplete;
+    //[Header("Puzzle Events")]
+    [HideInInspector] public UnityEvent _onPuzzleComplete;
     
     [Header("Dialog")]
     [SerializeField, TextArea] private string puzzleCompletionDialogue;
@@ -34,6 +38,8 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
 
     [Header("Audio")] 
     [SerializeField] private AudioSource _enterAudio;
+
+#endregion Setup Variables
 
     public Transform HighlightableObj;
     
@@ -258,3 +264,42 @@ public class PowerPuzzleManager : MonoBehaviour, IInteractable
         _interactionPrompt.SetActive(false);
     }
 }
+
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(PowerPuzzleManager))]
+public class PowerPuzzleManager_Editor : Editor
+{
+    private SerializedProperty cutCam;
+    private SerializedProperty camCutLength;
+    private SerializedProperty _onPuzzleComplete;
+
+    void OnEnable()
+    {
+        cutCam = serializedObject.FindProperty("cutCam");
+        camCutLength = serializedObject.FindProperty("camCutLength");
+        _onPuzzleComplete = serializedObject.FindProperty("_onPuzzleComplete");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        serializedObject.Update();
+        PowerPuzzleManager targetScript = (PowerPuzzleManager)target;
+
+        if (targetScript.hasCameraCut)
+        {
+            EditorGUILayout.PropertyField(cutCam);
+            EditorGUILayout.PropertyField(camCutLength);
+        }
+
+        EditorGUILayout.PropertyField(_onPuzzleComplete);
+
+
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+
+#endif
