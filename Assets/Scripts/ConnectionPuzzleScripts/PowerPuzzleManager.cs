@@ -11,41 +11,60 @@ using UnityEngine.Serialization;
 public class PowerPuzzleManager : MonoBehaviour, IInteractable
 {
 
-    [HideInInspector] public int currentTab;
+#region Custom Editor Vars
+
+    [HideInInspector] public int toolbarTab;
+    [HideInInspector] public string currentTab;
+
+#endregion Custom Editor Vars
 
 #region Setup Variables
 
     [Header("Puzzle Nodes")]
-    public PowerPuzzleTile _powerNode;
-    public PowerPuzzleTile _receiverNode;
+    [SerializeField, Tooltip("This is the node that has power and will need to connect to the RecieverNode to complete the puzzle")]
+    private PowerPuzzleTile _powerNode;
+    [SerializeField, Tooltip("This is the node that has no power and will need to connect to the PowerNode to complete the puzzle")]
+    private PowerPuzzleTile _receiverNode;
     
     [Header("Puzzle Components")]
-    public TileSelection _tileSelection;
-    public Light selectionLight;
+    [SerializeField,Tooltip("This is the tile selection gameobject reference it'll act as a cursor for the puzzle.")]
+    private TileSelection _tileSelection;
+    [SerializeField,Tooltip("This is the light that may turn on while the player is solving the puzzle.")] 
+    Light selectionLight;
     
     [Header("Cameras")]
+    [Tooltip("This is what camera in the scene the game should switch from when the puzzle starts and switch back to once the puzzle ends.")]
     public GameCamera _sceneCamera;
+    [Tooltip("This is what camera in the scene the game should switch to when the puzzle starts.")]
     public GameCamera _puzzleCamera;
     
     [Header("Camera Cut")]
+    [Tooltip("Boolean check to see wether or not the puzzle cuts to another camera to showcase an animation after the puzzle ends.")]
     public bool hasCameraCut;
+    [Tooltip("The camera that the puzzle will cut to after the puzzle before returning to the scene camera.")]
     public GameCamera cutCam;
+    [Tooltip("The length that the camera cut will last for after the puzzle is completed.")]
     public float camCutLength;
     
     [Header("Puzzle Events")]
-    public UnityEvent _onPuzzleComplete;
+    [SerializeField, Tooltip("The UnityEvent that will be called after the puzzle is completed. You can use this to reference outside scripts to trigger other functions that you want to use as the event is called")]
+    private UnityEvent _onPuzzleComplete;
     
     [Header("Dialog")]
-    [TextArea] public string puzzleCompletionDialogue;
-    [TextArea] public string puzzleOnEnterDialogue;
+    [TextArea, Tooltip("This is the text that can appear after the puzzle is completed.")]
+     public string puzzleCompletionDialogue;
+    [TextArea, Tooltip("What text can appear once the player gets close to the puzzle.")] 
+    public string puzzleOnEnterDialogue;
     public bool hasEnterPopUpTriggered;
 
     [Header("Audio")] 
+    [Tooltip("The AudioSource that will play once the player enters the puzzle.")]
     [SerializeField] private AudioSource _enterAudio;
+
+    public Transform HighlightableObj;
 
 #endregion Setup Variables
 
-    public Transform HighlightableObj;
     
     private readonly List<PowerPuzzleTile> _tiles = new();
     private bool _isPuzzleDone;
@@ -289,7 +308,7 @@ public class PowerPuzzleManager_Editor : Editor
 #region  PuzzleComponents
 
     private SerializedProperty _powerNode;
-    private SerializedProperty _receieverNode;
+    private SerializedProperty _receiverNode;
     private SerializedProperty _tileSelection;
     
 #endregion
@@ -317,12 +336,12 @@ public class PowerPuzzleManager_Editor : Editor
         hasCameraCut = soTarget.FindProperty("hasCameraCut");
 
         _powerNode = soTarget.FindProperty("_powerNode");
-        _receieverNode = soTarget.FindProperty("_receiverNode");
+        _receiverNode = soTarget.FindProperty("_receiverNode");
         _tileSelection = soTarget.FindProperty("_tileSelection");
 
         puzzleCompletionDialogue = soTarget.FindProperty("puzzleCompletionDialogue");
         puzzleOnEnterDialogue = soTarget.FindProperty("puzzleOnEnterDialogue");
-        _onPuzzleComplete = serializedObject.FindProperty("_onPuzzleComplete");
+        _onPuzzleComplete = soTarget.FindProperty("_onPuzzleComplete");
         _enterAudio = soTarget.FindProperty("_enterAudio");
         highlightableObj = soTarget.FindProperty("HighlightableObj");
         _doorAnimator = soTarget.FindProperty("_doorAnimator");
@@ -331,53 +350,80 @@ public class PowerPuzzleManager_Editor : Editor
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
-        
+        soTarget.Update();
         EditorGUI.BeginChangeCheck();
         
-        targetScript.currentTab = GUILayout.Toolbar(targetScript.currentTab, new string[] {"Cameras","PuzzleComponents","OutsideReferences"});
+        targetScript.toolbarTab = GUILayout.Toolbar(targetScript.toolbarTab, new string[] {"Cameras","Puzzle Vars","Outside Vars"});
+
+        switch (targetScript.toolbarTab)
+        {
+            case 0:
+                targetScript.currentTab = "Cameras";
+                
+                break;
+            case 1:
+                targetScript.currentTab = "Puzzle Vars";
+
+            
+                break;
+            case 2:
+                targetScript.currentTab = "Outside Vars";
+
+                
+                break;
+        }
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            soTarget.ApplyModifiedProperties();
+            GUI.FocusControl(null);
+        }
+
+        EditorGUI.BeginChangeCheck();
+
 
         switch (targetScript.currentTab)
         {
-            case 0:
+            case "Cameras":
 
+                EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(_sceneCamera);
                 EditorGUILayout.PropertyField(_puzzleCamera);
+                EditorGUI.indentLevel--;
+
+                
                 EditorGUILayout.PropertyField(hasCameraCut);
 
                 if (targetScript.hasCameraCut)
                 {
+                    EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(cutCam);
                     EditorGUILayout.PropertyField(camCutLength);
+                    EditorGUI.indentLevel--;
                 }
-                break;
-            case 1:
 
+                break;
+            case "Puzzle Vars":
                 EditorGUILayout.PropertyField(_powerNode);
-                EditorGUILayout.PropertyField(_receieverNode);
+                EditorGUILayout.PropertyField(_receiverNode);
                 EditorGUILayout.PropertyField(_tileSelection);
             
                 break;
-            case 2:
-
+            case "Outside Vars":
                 EditorGUILayout.PropertyField(puzzleCompletionDialogue);
                 EditorGUILayout.PropertyField(puzzleOnEnterDialogue);
                 EditorGUILayout.PropertyField(_onPuzzleComplete);
                 EditorGUILayout.PropertyField(_enterAudio);
                 EditorGUILayout.PropertyField(highlightableObj);
                 EditorGUILayout.PropertyField(_doorAnimator);
+
                 break;
         }
-
+        
         if (EditorGUI.EndChangeCheck())
         {
-            serializedObject.ApplyModifiedProperties();
-            GUI.FocusControl(null);
+            soTarget.ApplyModifiedProperties();
         }
-        
-
-
-
         
     }
 }
